@@ -19,13 +19,12 @@ public class Main {
 
   public static void main(String[] args) throws SQLException {
 
-    // TableController.setConnection(true);
+    // Initializes the database tables in memory
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     LaundryTbl.getInstance();
-    MedEquipmentTbl.getInstance().loadBackup("Backups/MedEquipment.csv");
+    MedEquipmentTbl.getInstance();
     MedicineTbl.getInstance();
-    PatientTbl.getInstance();
     GiftTbl.getInstance();
 
     RequestTable.getInstance();
