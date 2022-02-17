@@ -1,0 +1,7 @@
+requestID,locationID,empInitiated,empCompleter,timeStart,timeEnd,patientID,requestType,requestStatus,notes,medEquipID
+120,FDEPT00101,123,456,0,123,111,MedEquipDelivery,Submitted,,123
+121,FDEPT00201,456,456,0,100,222,MedEquipDelivery,In_Progress,,436
+122,FDEPT00301,666,456,0,123,123,MedEquipDelivery,Completed,,306
+123,FDEPT00401,123,777,0,100,555,MedEquipDelivery,In_Progress,,183
+124,FDEPT00501,888,456,0,123,666,MedEquipDelivery,Submitted,,607
+125,FDEPT00601,123,999,0,100,456,MedEquipDelivery,Completed,,780

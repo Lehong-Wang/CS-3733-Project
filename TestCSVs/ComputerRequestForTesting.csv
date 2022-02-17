@@ -1,0 +1,3 @@
+requestID,nodeID,empInitiated,empCompleter,timeStart,timeEnd,patientID,requestType,requestStatus,notes,computerID,problemType,priority
+60,FDEPT00101,123,999,0,864000,111,Computer,Submitted,note1,111,power,high
+61,FDEPT00201,456,888,0,864000,222,Computer,Completed,note2,222,off,low

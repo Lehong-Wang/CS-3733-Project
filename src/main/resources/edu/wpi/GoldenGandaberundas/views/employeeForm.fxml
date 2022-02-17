@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.AddEmployeeController">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="600.0">
+         <top>
+            <VBox prefHeight="74.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="74.0" prefWidth="533.0" text="Add Employee Form">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="B" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <VBox prefHeight="318.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane prefHeight="294.0" prefWidth="560.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="130.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.0" minWidth="10.0" prefWidth="337.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.0" minWidth="10.0" prefWidth="93.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="First Name:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="ID:" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Permissions:" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="firstName" onKeyReleased="#validateButton" GridPane.columnIndex="1" />
+                        <TextField fx:id="lastName" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="idField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label onKeyReleased="#validateButton" text="Last Name:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="permField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Role:" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Email:" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefWidth="150.0" text="Phone Number:" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Address:" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="roleField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="emailField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="phoneField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="adrField" onKeyReleased="#validateButton" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <Label alignment="CENTER" prefHeight="52.0" prefWidth="600.0" text="Additional Info" />
+                  <TextArea prefHeight="116.0" prefWidth="560.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <VBox BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="600.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="26.0" prefWidth="68.0" text="Submit" />
+                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clearAll" text="Clear" />
+                     </children>
+                     <padding>
+                        <Insets left="240.0" />
+                     </padding>
+                  </HBox>
+                  <Label fx:id="testLabel" prefHeight="74.0" prefWidth="600.0" text="Test Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

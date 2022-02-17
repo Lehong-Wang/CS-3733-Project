@@ -1,0 +1,9 @@
+reqID,nodeID,prescriberID,pharmacistID,timeStart,timeEnd,patientID,requestStatus,notes,medicineID,dosage,quantity
+420,GPATI00103,123,456,604800,864000,123,MedicineDelivery,Submitted,this is a note,111,2,10
+419,GPATI00203,456,123,604800,864000,111,MedicineDelivery,Completed,now,222,3,23
+418,GPATI00303,666,123,604800,864000,222,MedicineDelivery,In_Progress,help,333,9,5
+417,GPATI00403,777,456,604800,864000,333,MedicineDelivery,Completed,allergic to water,444,10,1
+416,GPATI00503,888,666,604800,864000,444,MedicineDelivery,In_Progress,allergic to others,555,6,2
+415,GPATI00603,999,777,604800,864000,555,MedicineDelivery,In_Progress,please help,666,69,8
+414,GPATI00703,123,888,604800,864000,666,MedicineDelivery,Submitted,urgent,111,60,9
+413,GPATI00803,456,999,604800,864000,456,MedicineDelivery,Submitted,needed soon,222,420,90

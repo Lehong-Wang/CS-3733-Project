@@ -1,0 +1,7 @@
+requestID,nodeID,prescriberID,pharmacistID,timeStart,timeEnd,patientID,requestStatus,notes,medicineID,dosage,quantity
+111,FDEPT00101,123,456,604800,864000,123,complete,needed,164,500,1
+222,FDEPT00101,123,123,604800,864000,123,incomplete,please,165,10,2
+333,FDEPT00201,456,456,604800,864000,123,in progress,thanks,164,50,3
+444,FDEPT00201,456,456,604800,864000,123,complete,quick,165,75,4
+555,FDEPT00301,456,123,604800,864000,123,incomplete,urgent,164,20,5
+666,FDEPT00301,456,123,604800,864000,123,in progress,fast,165,30,6

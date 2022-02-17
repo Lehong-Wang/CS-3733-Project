@@ -1,0 +1,7 @@
+avID,deviceType,locID,description
+111,TV,FDEPT00101,device 1
+222,TV,FDEPT00201,device 2
+333,Head phone,FDEPT00301,device 3
+444,Head phone,FDEPT00101,device 4
+555,Ipad,FDEPT00201,device 5
+666,Ipad,FDEPT00301,device 6

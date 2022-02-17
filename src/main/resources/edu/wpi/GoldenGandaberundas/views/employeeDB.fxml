@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EmployeeDBController">
+   <center>
+      <TableView fx:id="empTable" prefHeight="537.0" prefWidth="632.0" style="-fx-padding: 5;" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="empID" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="firstName" prefWidth="75.0" text="FName" />
+          <TableColumn fx:id="lastName" prefWidth="75.0" text="LName" />
+            <TableColumn fx:id="perms" prefWidth="75.0" text="Perms" />
+            <TableColumn fx:id="role" prefWidth="75.0" text="Role" />
+            <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="phoneNumber" prefWidth="75.0" text="Phone Number" />
+            <TableColumn fx:id="address" prefWidth="75.0" text="Address" />
+        </columns>
+      </TableView>
+   </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black;" text="Backup" />
+            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black;" text="Load" />
+         </children></VBox>
+   </right>
+   <top>
+      <VBox prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <VBox fx:id="sideMenuCont" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 5;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="32.0" prefWidth="90.0" style="-fx-padding: 3;">
+               <children>
+                  <JFXHamburger fx:id="hamburger" alignment="BOTTOM_LEFT" onMouseReleased="#hamburgerToggle" prefHeight="47.0" prefWidth="100.0" style="-fx-padding: 3;" />
+               </children>
+            </VBox>
+            <JFXDrawer fx:id="drawer" resizeContent="true">
+               <children>
+                  <VBox fx:id="sideMenuMax" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 3;">
+                     <children>
+                        <JFXButton fx:id="homeBtn" onAction="#goHome" text="Home" textAlignment="RIGHT">
+                           <graphic>
+                              <SVGPath content="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z" />
+                           </graphic>
+                           <font>
+                              <Font name="Neo Sans" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton text="Search">
+                           <graphic>
+                              <SVGPath content="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z" />
+                           </graphic>
+                           <font>
+                              <Font name="Comic Sans MS" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="formButton" onAction="#openForm" text="Form">
+                           <graphic>
+                              <SVGPath content="M16 2l5 5v14.008a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 21.008V2.992C3 2.444 3.445 2 3.993 2H16zm-4 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM7.527 17h8.946a4.5 4.5 0 0 0-8.946 0z" />
+                           </graphic>
+                           <font>
+                              <Font name="Comic Sans MS" size="12.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="sideMenuMin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="83.0" style="-fx-padding: 3;" visible="false">
+                     <children>
+                        <JFXButton fx:id="homeIconBtn" onAction="#goHome" text="  " textAlignment="RIGHT">
+                           <graphic>
+                              <SVGPath content="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z" />
+                           </graphic>
+                           <font>
+                              <Font name="Neo Sans" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="srchIconBtn" text=" ">
+                           <graphic>
+                              <SVGPath content="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z" />
+                           </graphic>
+                           <font>
+                              <Font name="Comic Sans MS" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="formIconButton" onAction="#openForm">
+                           <graphic>
+                              <SVGPath content="M16 2l5 5v14.008a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 21.008V2.992C3 2.444 3.445 2 3.993 2H16zm-4 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM7.527 17h8.946a4.5 4.5 0 0 0-8.946 0z" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </JFXDrawer>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

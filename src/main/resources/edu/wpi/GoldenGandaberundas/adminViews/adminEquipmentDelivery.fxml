@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1040.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EquipmentDeliveryController">
+   <children>
+      <VBox layoutX="-3.0" prefHeight="1042.0" prefWidth="1623.0">
+         <children>
+            <HBox prefHeight="1031.0" prefWidth="1603.0">
+               <children>
+                  <TableView fx:id="medEqTable" prefHeight="1022.0" prefWidth="965.0" style="-fx-padding: 5;">
+                     <columns>
+                        <TableColumn fx:id="reqID" prefWidth="75.0" text="Request ID" />
+                        <TableColumn fx:id="empID" prefWidth="75.0" text="Employee" />
+                        <TableColumn fx:id="medID" prefWidth="75.0" text="Item ID" />
+                        <TableColumn fx:id="destination" prefWidth="75.0" text="Destination" />
+                        <TableColumn fx:id="status" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="notes" prefWidth="75.0" text="Notes" />
+                     </columns>
+                  </TableView>
+                  <VBox prefHeight="564.0" prefWidth="227.0">
+                     <children>
+                        <JFXButton onAction="#backup" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup" />
+                        <JFXButton onAction="#loadDB" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load" />
+                        <JFXButton onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
+                        <JFXButton prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Edit" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers.EquipmentInventoryController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <JFXDrawer fx:id="drawer" alignment="CENTER_LEFT" defaultDrawerSize="300.0" onMouseEntered="#slideOpen" onMouseExited="#slideClose" prefHeight="952.0">
+               <children>
+                  <VBox fx:id="drawerBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #002D59 #002D59;">
+                     <children>
+                        <JFXButton fx:id="homeBtn" maxWidth="1.7976931348623157E308" onAction="#goHome" prefHeight="51.0" prefWidth="314.0" style="-fx-background-color: #002D59 #002D59;" text="Home" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <graphic>
+                              <SVGPath fx:id="btnIcon" content="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="backBtn" maxWidth="1.7976931348623157E308" onAction="#addEquipment" prefHeight="45.0" prefWidth="166.0" style="-fx-background-color: #002D59 #002D59; -fx-background-image: url(Brigham-Womens.jpg)" text="Add Equipment" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <graphic>
+                              <SVGPath content="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="backBtn1" maxWidth="1.7976931348623157E308" onAction="#backToReq" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Go To Requests" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <graphic>
+                              <SVGPath content="M20 22H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zm-1-2V4H5v16h14zM8 7h8v2H8V7zm0 4h8v2H8v-2zm0 4h8v2H8v-2zM20 22H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zm-1-2V4H5v16h14zM8 7h8v2H8V7zm0 4h8v2H8v-2zm0 4h8v2H8v-2z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" top="30.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </JFXDrawer>
+         </left>
+         <top>
+            <HBox prefHeight="40.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MenuBar prefHeight="40.0" prefWidth="1499.0" style="-fx-background-color: #0063a9;" HBox.hgrow="ALWAYS">
+                     <menus>
+                        <Menu mnemonicParsing="false">
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Switch Service" textAlignment="CENTER" wrappingWidth="175.83099365234375">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#goHome" text="Main Page" />
+                              <MenuItem mnemonicParsing="false" text="Medical Equipment" />
+                              <MenuItem mnemonicParsing="false" text="Medicine Delivery" />
+                              <MenuItem mnemonicParsing="false" text="Gift/Floral Delivery" />
+                              <MenuItem mnemonicParsing="false" text="Language Interpreter" />
+                              <MenuItem mnemonicParsing="false" text="Laundry Services" />
+                              <MenuItem mnemonicParsing="false" text="Computer Service Requests" />
+                              <MenuItem mnemonicParsing="false" text="Food Delivery" />
+                              <MenuItem mnemonicParsing="false" text="Patient Transportation" />
+                              <MenuItem mnemonicParsing="false" text="Religious Request" />
+                              <MenuItem mnemonicParsing="false" text="Employee Database" />
+                              <MenuItem mnemonicParsing="false" text="Floor Editor" />
+                              <MenuItem mnemonicParsing="false" text="Location Table" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" wrappingWidth="55.87416076660156">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="About" />
+                           </items>
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" textAlignment="CENTER" wrappingWidth="56.523529052734375">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                        </Menu>
+                     </menus>
+                  </MenuBar>
+               </children>
+            </HBox>
+         </top>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#backup" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup" />
+                  <JFXButton onAction="#loadDB" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load" />
+                  <JFXButton onAction="#loadDB" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Delete Equipment Request" textAlignment="CENTER" wrapText="true" />
+                  <JFXButton onAction="#loadDB" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Edit Equipment Request" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </VBox>
+         </right>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="equipmentTable" prefHeight="537.0" prefWidth="632.0" style="-fx-padding: 5;">
+                     <columns>
+                        <TableColumn fx:id="medID" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="type" prefWidth="75.0" text="Type" />
+                        <TableColumn fx:id="status" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="currentLoc" prefWidth="75.0" text="Location" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="equipOrdersTbl" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="reqID" prefWidth="75.0" text="reqID" />
+                      <TableColumn fx:id="medEquipID" prefWidth="75.0" text="medEquipID" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

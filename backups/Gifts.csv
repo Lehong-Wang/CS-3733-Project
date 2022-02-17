@@ -1,0 +1,7 @@
+giftID,giftName,description,price,instock
+111,ChocolateStrawberries,this is the first gift,1.11,TRUE
+222,LargeFlowers,this is the second gift,2.22,FALSE
+333,SmallFlowers,this is the third gift,3.33,TRUE
+444,TeddyBear,this is the fourth gift,4.44,FALSE
+555,Balloons,this is the fifth gift,5.55,TRUE
+666,Mug,this is the sixth gift,6.66,FALSE

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #002D59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.mainController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0000244140625" minWidth="10.0" prefWidth="266.0000244140625" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="333.9999755859375" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="640.0" prefWidth="248.0" />
+      <ScrollPane prefHeight="200.0" prefWidth="266.0000244140625" style="-fx-background-color: #002D59;">
+         <content>
+            <VBox prefHeight="670.0" prefWidth="283.0" scaleShape="false">
+               <children>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="53.0" prefWidth="282.0" style="-fx-background-color: #002D59;" text="Services" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="SansSerif Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="MedicalEquipmentButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchMedicalEquipment" prefHeight="51.0" prefWidth="266.0000244140625" style="-fx-background-color: #f1f1f1;" text="Medical Equipment" />
+                  <Button fx:id="MedicineDeliveryButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchMedicineDelivery" prefHeight="51.0" prefWidth="251.0" style="-fx-background-color: #0067B1;" text="Medicine Delivery" textFill="WHITE" />
+                  <Button fx:id="GiftFloralButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchGiftFloral" prefHeight="51.0" prefWidth="256.0" style="-fx-background-color: #f1f1f1;" text="Gift/Floral Delivery" />
+                  <Button fx:id="LanguageButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchLanguage" prefHeight="51.0" prefWidth="251.0" style="-fx-background-color: #0067B1;" text="Language Interpreter" textFill="WHITE" />
+                  <Button fx:id="LaundryButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchLaundry" prefHeight="51.0" prefWidth="251.0" style="-fx-background-color: #f1f1f1;" text="Laundry Services" />
+                  <Button fx:id="ComputerServiceButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchCompService" prefHeight="51.0" prefWidth="257.0" style="-fx-background-color: #0067B1;" text="Computer Service Requests" textFill="WHITE" />
+                  <Button fx:id="FoodButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchFood" prefHeight="51.0" prefWidth="253.0" style="-fx-background-color: #f1f1f1;" text="Food Delivery" />
+                  <Button fx:id="PatientTransportButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchPatientTransport" prefHeight="51.0" prefWidth="259.0" style="-fx-background-color: #0067B1;" text="Patient Transportation" textFill="WHITE" />
+                  <Button fx:id="ReligiousButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchReligious" prefHeight="51.0" prefWidth="251.0" style="-fx-background-color: #f1f1f1;" text="Religious Request" />
+                  <Button fx:id="EmployeeDBButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchEmployeeDB" prefHeight="51.0" prefWidth="264.0" style="-fx-background-color: #0067B1;" text="Employee Database" textFill="WHITE" />
+                  <Button fx:id="FloorEditButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchFloorEdit" prefHeight="51.0" prefWidth="255.0" style="-fx-background-color: #f1f1f1;" text="Floor Editor" />
+                  <Button fx:id="mapViewButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchMapView" prefHeight="51.0" prefWidth="264.0" style="-fx-background-color: #0067B1;" text="Map Viewer" textFill="WHITE" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <ImageView fx:id="mapView" fitHeight="861.0" fitWidth="1241.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/hospital.jpg" />
+         </image>
+      </ImageView>
+      <MenuButton fx:id="floorSelectionMenu" mnemonicParsing="false" prefHeight="60.0" prefWidth="111.0" style="-fx-background-color: #0067B1;" text="Floor Maps" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="TOP">
+        <items>
+            <MenuItem fx:id="floor3" mnemonicParsing="false" onAction="#setFloor3" text="floor3" />
+            <MenuItem fx:id="floor2" mnemonicParsing="false" onAction="#setFloor2" text="floor2" />
+          <MenuItem fx:id="floor1" mnemonicParsing="false" onAction="#setFloor1" text="floor1" />
+          <MenuItem fx:id="groundFloor" mnemonicParsing="false" onAction="#setGroundFloor" text="groundFloor" />
+            <MenuItem fx:id="lower1" mnemonicParsing="false" onAction="#setLower1" text="lower1" />
+            <MenuItem fx:id="lower2" mnemonicParsing="false" onAction="#setLower2" text="lower2" />
+        </items>
+         <GridPane.margin>
+            <Insets left="10.0" top="35.0" />
+         </GridPane.margin>
+      </MenuButton>
+      <MenuBar prefHeight="25.0" prefWidth="1010.0" style="-fx-background-color: #002D59;" GridPane.columnIndex="1" GridPane.valignment="TOP">
+        <menus>
+            <Menu mnemonicParsing="false">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#switchMedicalEquipment" text="Medical Equipment" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchMedicineDelivery" text="Medicine Delivery" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchGiftFloral" text="Gift/Floral Delivery" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchLanguage" text="Language Interpreter" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchLaundry" text="Laundry Services" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchCompService" text="Computer Service Requests" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchFood" text="Food Delivery" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchPatientTransport" text="Patient Transportation" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchReligious" text="Religious Request" />
+              <MenuItem mnemonicParsing="false" onAction="#switchEmployeeDB" text="Employee Database" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchFloorEdit" text="Floor Editor" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchLocationTable" text="Location Table" />
+              </items>
+               <graphic>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Services" />
+               </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" />
+               </graphic>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Exit" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</GridPane>

@@ -1,0 +1,7 @@
+medID,type,status,currLoc
+111,X-ray,In-use,FDEPT00301
+222,Recliner,Stored,FDEPT00101
+333,Infusion Pump,Dirty,FDEPT00201
+444,X-ray,Clean,FDEPT00101
+555,Bed,Dirty,FDEPT00201
+666,Recliner,In-use,FDEPT00101

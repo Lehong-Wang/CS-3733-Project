@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.adminControllers.AdminLaundryServiceController">
+   <center>
+      <HBox prefHeight="1028.0" prefWidth="1609.0">
+         <children>
+            <TableView fx:id="laundryStockTable" prefHeight="1028.0" prefWidth="568.0">
+               <columns>
+                  <TableColumn fx:id="laundryID" prefWidth="75.0" text="LaundryID" />
+                  <TableColumn fx:id="description" prefWidth="75.0" text="description" />
+                  <TableColumn fx:id="inStock" prefWidth="75.0" text="inStock" />
+               </columns>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </TableView>
+            <VBox>
+               <children>
+                  <JFXButton prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Create Backup" wrapText="true" />
+                  <JFXButton prefHeight="81.0" prefWidth="109.0" style="-fx-border-color: black;" text="Load Backup Laundry Table" wrapText="true" />
+               </children>
+            </VBox>
+            <TableView fx:id="requestTable" editable="true" prefHeight="1028.0" prefWidth="841.0">
+               <columns>
+                  <TableColumn fx:id="reqID" prefWidth="75.0" text="reqID" />
+                  <TableColumn fx:id="nodeID" prefWidth="75.0" text="nodeID" />
+                  <TableColumn fx:id="submittedTime" prefWidth="75.0" text="Submit Time" />
+                  <TableColumn fx:id="completedTime" prefWidth="99.0" text="Complete Time" />
+                  <TableColumn fx:id="requesterID" prefWidth="86.0" text="Requester ID" />
+                  <TableColumn fx:id="completerID" prefWidth="90.0" text="Completer ID" />
+                  <TableColumn fx:id="status" prefWidth="82.0" text="Status" />
+               </columns>
+            </TableView>
+            <VBox>
+               <children>
+                  <JFXButton fx:id="createBackupBtn" onAction="#createBackup" prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Create Backup" wrapText="true" />
+                  <JFXButton fx:id="loadBtn" onAction="#loadBackup" prefHeight="81.0" prefWidth="111.0" style="-fx-border-color: black;" text="Load Backup Request Table" wrapText="true" />
+                  <JFXButton fx:id="refreshBtn" onAction="#refresh" prefHeight="81.0" prefWidth="111.0" style="-fx-border-color: black;" text="Refresh" wrapText="true" />
+                  <JFXButton fx:id="editBtn" onAction="#edit" prefHeight="81.0" prefWidth="111.0" style="-fx-border-color: black;" text="Edit" wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

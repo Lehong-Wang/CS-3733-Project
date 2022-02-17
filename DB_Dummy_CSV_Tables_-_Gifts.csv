@@ -1,0 +1,7 @@
+giftID,description,price,instock
+111,this is the first gift,1.11,TRUE
+222,this is the second gift,2.22,FALSE
+333,this is the third gift,3.33,TRUE
+444,this is the fourth gift,4.44,FALSE
+555,this is the fifth gift,5.55,TRUE
+666,this is the sixth gift,6.66,FALSE

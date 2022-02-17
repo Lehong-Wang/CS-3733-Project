@@ -1,0 +1,7 @@
+laundryID,laundryType,description,inStock
+111,towels,this is the first gift,TRUE
+222,napkins,this is the second gift,FALSE
+333,pillows,this is the third gift,TRUE
+444,sheets,this is the fourth gift,FALSE
+555,comforter,this is the fifth gift,TRUE
+666,blankets,this is the sixth gift,FALSE
