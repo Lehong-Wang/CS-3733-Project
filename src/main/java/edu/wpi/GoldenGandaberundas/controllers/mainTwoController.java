@@ -36,7 +36,7 @@ public class mainTwoController {
   @FXML JFXButton PatientTransportButton;
   @FXML JFXButton ReligiousButton;
   @FXML JFXButton MapViewButton;
-  @FXML Button SideViewButton;
+  @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
 
   @FXML ImageView mainView;
@@ -74,6 +74,7 @@ public class mainTwoController {
     buttonStyle(ReligiousButton);
     buttonStyle(MapViewButton);
     buttonStyle(HomeButton);
+    //buttonStyle(sideViewButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -89,6 +90,7 @@ public class mainTwoController {
     HomeButton.setText("");
     SideViewButton.setText("");
 
+    // Hiding buttons until service is fully implemented
     FoodButton.setManaged(false);
     FoodButton.setVisible(false);
     AudioVisualButton.setManaged(false);
