@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -36,6 +37,8 @@ public class Main {
     MedicineRequestTbl.getInstance();
     MedEquipRequestTbl.getInstance();
     LaundryRequestTbl.getInstance();
+
+    FoodTbl.getInstance();
 
     floorMaps.load();
     App.launch(App.class, args);

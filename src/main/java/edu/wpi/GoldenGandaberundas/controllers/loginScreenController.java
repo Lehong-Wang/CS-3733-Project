@@ -10,6 +10,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsT
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
+import javafx.animation.RotateTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +52,6 @@ public class loginScreenController {
     if (credTable.entryExists(userID)) {
       if (((Credential) credTable.getEntry(userID)).checkPassword(password)) {
         CurrentUser.setUser(EmployeeTbl.getInstance().getEntry(userID));
-
         TranslateTransition moveLogo = new TranslateTransition();
         moveLogo.setToX(loginBtn.localToScene(loginBtn.getBoundsInLocal()).getCenterX());
         moveLogo.setByZ(2);
@@ -58,22 +59,47 @@ public class loginScreenController {
         moveLogo.setNode(logoImg);
         moveLogo.play();
 
-        moveLogo.setOnFinished(event -> {
-          Stage stage = (Stage) loginBtn.getScene().getWindow();
-          try {
-            stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/mainTwo.fxml"))));
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
-
-
+        moveLogo.setOnFinished(
+            event -> {
+              Stage stage = (Stage) loginBtn.getScene().getWindow();
+              try {
+                stage.setScene(
+                    new Scene(FXMLLoader.load(App.class.getResource("views/mainTwo.fxml"))));
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
       } else {
+
         loginBtn.setText("Invalid Login");
+        tellUserTheyreWrongGraphically();
       }
     } else {
       loginBtn.setText("Invalid Login");
+      tellUserTheyreWrongGraphically();
     }
+  }
+
+  private void tellUserTheyreWrongGraphically() {
+    RotateTransition rotateLogoRight = new RotateTransition();
+    rotateLogoRight.setToAngle(20);
+    rotateLogoRight.setDuration(Duration.millis(68));
+    rotateLogoRight.setNode(logoImg);
+
+    RotateTransition rotateLogoLeft = new RotateTransition();
+    rotateLogoLeft.setToAngle(-20);
+    rotateLogoLeft.setDuration(Duration.millis(68));
+    rotateLogoLeft.setNode(logoImg);
+
+    RotateTransition rotateLogoCenter = new RotateTransition();
+    rotateLogoCenter.setToAngle(0);
+    rotateLogoCenter.setDuration(Duration.millis(68));
+    rotateLogoCenter.setNode(logoImg);
+
+    SequentialTransition sequentialTransition =
+        new SequentialTransition(rotateLogoRight, rotateLogoLeft, rotateLogoCenter);
+    sequentialTransition.setCycleCount(3);
+    sequentialTransition.play();
   }
 }
