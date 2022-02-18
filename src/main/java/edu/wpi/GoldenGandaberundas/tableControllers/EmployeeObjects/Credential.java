@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,8 +49,12 @@ public class Credential {
       e.printStackTrace();
     }
     messageDigest.update((plainText + this.salt).getBytes(StandardCharsets.UTF_8));
+    BigInteger foo = new BigInteger(messageDigest.digest());
+    String hex = foo.toString(16);
     byte[] raw = messageDigest.digest();
-    return raw.toString();
+
+    System.out.println(hex);
+    return hex;
   }
 
   public static String getRandomString() {
@@ -66,6 +71,8 @@ public class Credential {
 
   public boolean checkPassword(String plainText) {
     String hashed = hashIt(plainText);
+    System.out.println("entered: " + hashed);
+    System.out.println("hashedPass: " + this.hashedPass);
     if (this.hashedPass.equals(hashed)) {
       return true;
     }

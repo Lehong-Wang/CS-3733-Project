@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
@@ -27,6 +28,7 @@ public class Main {
     MedEquipmentTbl.getInstance();
     MedicineTbl.getInstance();
     GiftTbl.getInstance();
+    CredentialsTbl.getInstance();
 
     RequestTable.getInstance();
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.loginScreenController">
+<AnchorPane fx:id="anchor" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #0485DB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.loginScreenController">
    <children>
       <ImageView fitHeight="870.0" fitWidth="1647.0" style="-fx-opacity: 50%;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -25,7 +25,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0063a9;" HBox.hgrow="ALWAYS">
                      <children>
-                        <ImageView fitHeight="320.0" fitWidth="249.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logoImg" fitHeight="320.0" fitWidth="249.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/Brigham_and_Womens_Hospital_logo.png" />
                            </image>
