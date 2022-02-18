@@ -29,12 +29,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -275,6 +273,21 @@ public class MapController {
         e -> {
           nodeDataPane.setManaged(true);
           nodeDataPane.setVisible(true);
+          nodeDataPane.getChildren().clear();
+          FXMLLoader controllerLoader =
+              new FXMLLoader(Main.class.getResource("views/mapViewDataEntry.fxml"));
+          nodeDataPane.setManaged(true);
+          nodeDataPane.setVisible(true);
+          try {
+            Node subPane = (Node) controllerLoader.load();
+            nodeDataPane.getChildren().add(subPane);
+            MapSubController subController = controllerLoader.getController();
+            subController.setMapController(this);
+
+            subController.setText(placeHolder.location);
+          } catch (IOException exc) {
+            exc.printStackTrace();
+          }
           System.out.println("alt click");
         });
   }
@@ -310,13 +323,14 @@ public class MapController {
           System.out.println("request edit selected");
           FXMLLoader controllerLoader =
               new FXMLLoader(Main.class.getResource("views/mapViewRequestEntry.fxml"));
+          nodeDataPane.setManaged(true);
+          nodeDataPane.setVisible(true);
           try {
             Node subPane = (Node) controllerLoader.load();
             nodeDataPane.getChildren().add(subPane);
             MapSubReqController subController = controllerLoader.getController();
             subController.setMapController(this);
-            nodeDataPane.setManaged(true);
-            nodeDataPane.setVisible(true);
+
             subController.setText(reqIcon.request);
           } catch (IOException exc) {
             exc.printStackTrace();
@@ -373,6 +387,23 @@ public class MapController {
     medIcon.setOnMouseReleased(
         e -> {
           subController.setText(medIcon.location);
+        });
+    medIcon.setOnContextMenuRequested(
+        e -> {
+          Popup popup = new Popup();
+
+          popup.setAnchorX(e.getSceneX());
+          popup.setAnchorY(e.getSceneY());
+          var popUpLoader = new FXMLLoader(Main.class.getResource("views/mapViewMedEquipLoc.fxml"));
+          try {
+            AnchorPane popupAnchor = popUpLoader.load();
+            popup.getContent().add(popupAnchor);
+            popup.show(imagePane.getScene().getWindow());
+          } catch (IOException ex) {
+            ex.printStackTrace();
+          }
+          EquipLocEditor popupController = popUpLoader.getController();
+          popupController.setMedEquipment(med, this);
         });
   }
 
@@ -517,6 +548,8 @@ public class MapController {
 
   public void refreshMap() {
     setLocations(currentFloor);
+    setEquipment();
+    setRequest();
   }
 
   private class MedEqpImageView extends ImageView {

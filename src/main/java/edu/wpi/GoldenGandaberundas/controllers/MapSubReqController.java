@@ -7,7 +7,11 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
+import java.util.ArrayList;
+import java.util.Locale;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,16 +20,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.SearchableComboBox;
 
-import java.util.ArrayList;
-
 public class MapSubReqController {
   @FXML private TextField reqIDText;
   @FXML private SearchableComboBox<String> locSearch;
-  @FXML private SearchableComboBox<Employee> empStartSearch;
-  @FXML private SearchableComboBox<Employee> empEndSearch;
-  @FXML private SearchableComboBox<Patient> patientIDSearch;
+  @FXML private SearchableComboBox<String> empStartSearch;
+  @FXML private SearchableComboBox<String> empEndSearch;
+  @FXML private SearchableComboBox<String> patientIDSearch;
   @FXML private SearchableComboBox<String> reqStatusSearch;
-  @FXML private SearchableComboBox<String> reqTypeSearch;
 
   @FXML private JFXButton submitBtn;
   @FXML private JFXButton clearBtn;
@@ -41,6 +42,8 @@ public class MapSubReqController {
   private MapController mapController = null;
   private TableController locationTbl = null;
 
+  Request reqs = null;
+
   public void initialize() {
     submitBtn.setDisable(true);
     clearBtn.setDisable(true);
@@ -54,11 +57,30 @@ public class MapSubReqController {
         });
 
     ObservableList<String> locList = FXCollections.observableArrayList();
-    ArrayList<Location> locs =LocationTbl.getInstance().readTable();
-    for(Location l : locs){
+    ArrayList<Location> locs = LocationTbl.getInstance().readTable();
+    for (Location l : locs) {
       locList.add(l.getNodeID());
     }
     locSearch.setItems(locList);
+
+    ObservableList<String> empList = FXCollections.observableArrayList();
+    for (Employee e : EmployeeTbl.getInstance().readTable()) {
+      empList.add((e.getFName() + " " + e.getLName() + " " + e.getEmpID()));
+    }
+    empStartSearch.setItems(empList);
+    empEndSearch.setItems(empList);
+
+    ObservableList<String> patList = FXCollections.observableArrayList();
+    for (Patient p : PatientTbl.getInstance().readTable()) {
+      patList.add(String.valueOf(p.getPatientID()));
+    }
+    patientIDSearch.setItems(patList);
+
+    ObservableList<String> reqStatusList = FXCollections.observableArrayList();
+    reqStatusList.add("Submitted");
+    reqStatusList.add("In_Progress");
+    reqStatusList.add("Submitted");
+    reqStatusSearch.setItems(reqStatusList);
   }
 
   public void setMapController(MapController mapCont) {
@@ -81,6 +103,8 @@ public class MapSubReqController {
     temp = EmployeeTbl.getInstance().getEntry(req.getEmpCompleter());
     empEndSearch.setPromptText(temp.getFName() + " " + temp.getLName());
     patientIDSearch.setPromptText(req.getPatientID().toString());
+
+    reqs = req;
 
     edit = true;
     clearBtn.setDisable(false);
@@ -132,5 +156,27 @@ public class MapSubReqController {
     //        locationTbl.entryExists(reqIDText.getText().trim().toUpperCase(Locale.ROOT)));
     //    mapController.refreshMap();
     clear();
+  }
+
+  public void submit() {
+    if (locSearch.getValue() != null) {
+      RequestTable.getInstance()
+          .editEntry(reqs, "locationID", locSearch.getValue().trim().toUpperCase(Locale.ROOT));
+      System.out.println(RequestTable.getInstance().getEntry(reqs.getRequestID()));
+    }
+    if (empStartSearch.getValue() != null) {
+      RequestTable.getInstance()
+          .editEntry(
+              reqs, "empInitiated", empStartSearch.getValue().trim().toUpperCase(Locale.ROOT));
+    }
+    if (empEndSearch.getValue() != null) {
+      RequestTable.getInstance()
+          .editEntry(reqs, "empCompleter", empEndSearch.getValue().trim().toUpperCase(Locale.ROOT));
+    }
+    if (reqStatusSearch.getValue() != null) {
+      RequestTable.getInstance()
+          .editEntry(reqs, "requestStatus", reqStatusSearch.getValue().trim());
+    }
+    mapController.setRequest();
   }
 }
