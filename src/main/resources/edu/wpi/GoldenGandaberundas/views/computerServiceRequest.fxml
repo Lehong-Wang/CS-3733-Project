@@ -95,9 +95,9 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="786.0" prefWidth="966.0">
+                  <VBox prefHeight="492.0" prefWidth="1149.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="782.0">
+                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS">
                            <children>
                               <JFXButton alignment="CENTER" onAction="#backupDB" style="-fx-background-color: #0067B1;" text="Backup" textFill="WHITE">
                                  <font>
@@ -111,23 +111,38 @@
                               </JFXButton>
                            </children>
                         </HBox>
-                        <TableView prefHeight="630.0" prefWidth="810.0">
+                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" VBox.vgrow="ALWAYS">
                            <columns>
-                              <TableColumn prefWidth="101.59997862577438" text="Request ID" />
-                              <TableColumn prefWidth="101.5999755859375" text="Requester ID" />
-                              <TableColumn prefWidth="99.19993591308594" text="Device Type" />
-                              <TableColumn prefWidth="84.0" text="Priority" />
-                              <TableColumn prefWidth="143.5" text="Location" />
-                              <TableColumn prefWidth="207.0" text="Problem" />
+                              <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
+                              <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
+                              <TableColumn fx:id="os" prefWidth="99.19993591308594" text="OS" />
+                              <TableColumn fx:id="processor" prefWidth="84.0" text="Processor" />
+                              <TableColumn fx:id="hostName" prefWidth="99.9998779296875" text="Host Name" />
+                              <TableColumn fx:id="model" prefWidth="100.7999267578125" text="Model" />
+                              <TableColumn fx:id="manufacturer" prefWidth="116.39990234375" text="Manufacturer" />
+                              <TableColumn fx:id="serialNumber" prefWidth="86.400146484375" text="Serial Number" />
                            </columns>
                         </TableView>
                      </children>
-                     <padding>
-                        <Insets right="50.0" />
-                     </padding>
                   </VBox>
                </children>
             </HBox>
+            <TableView fx:id="computerRequestsTbl" prefHeight="648.0" prefWidth="1600.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="requestID" prefWidth="75.0" text="requestID" />
+                  <TableColumn fx:id="locationID" prefWidth="75.0" text="locationID" />
+                  <TableColumn fx:id="timeStart" prefWidth="75.0" text="submitTime" />
+                  <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="completeTime" />
+                  <TableColumn fx:id="patientID" prefWidth="81.20001220703125" text="patientID" />
+                  <TableColumn fx:id="empInitiated" prefWidth="86.39996337890625" text="empInitiated" />
+                  <TableColumn fx:id="empCompleter" prefWidth="90.79998779296875" text="empCompleter" />
+                  <TableColumn fx:id="requestStatus" prefWidth="120.79998779296875" text="requestStatus" />
+                  <TableColumn fx:id="notes" prefWidth="75.0" text="notes" />
+                  <TableColumn fx:id="compID" prefWidth="120.79998779296875" text="computerID" />
+                  <TableColumn fx:id="problemType" prefWidth="120.79998779296875" text="problemType" />
+                  <TableColumn fx:id="priority" prefWidth="120.79998779296875" text="priority" />
+               </columns>
+            </TableView>
          </children>
       </VBox>
    </center>

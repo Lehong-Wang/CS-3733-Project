@@ -38,7 +38,6 @@ public class EquipmentDeliveryController {
   @FXML TableView medEqTable;
   @FXML TableColumn<MedEquipRequest, Integer> reqID;
   @FXML TableColumn<MedEquipRequest, Integer> empID;
-  @FXML TableColumn<MedEquipRequest, Integer> medID;
   @FXML TableColumn<MedEquipRequest, String> destination;
   @FXML TableColumn<MedEquipRequest, Integer> submitTime;
   @FXML TableColumn<MedEquipRequest, Integer> completeTime;

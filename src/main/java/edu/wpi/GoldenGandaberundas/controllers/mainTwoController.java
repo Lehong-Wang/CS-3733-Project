@@ -93,8 +93,8 @@ public class mainTwoController {
     FoodButton.setVisible(false);
     AudioVisualButton.setManaged(false);
     AudioVisualButton.setVisible(false);
-    ComputerServiceButton.setManaged(false);
-    ComputerServiceButton.setVisible(false);
+    // ComputerServiceButton.setManaged(false);
+    // ComputerServiceButton.setVisible(false);
     LanguageButton.setManaged(false);
     LanguageButton.setVisible(false);
     ReligiousButton.setManaged(false);
