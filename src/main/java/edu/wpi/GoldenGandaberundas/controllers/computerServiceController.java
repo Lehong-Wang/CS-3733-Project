@@ -27,6 +27,7 @@ public class computerServiceController implements Initializable {
   @FXML JFXDrawer drawer; // sliding side menu
   @FXML VBox drawerBox; // Cool Sliding Table
   @FXML JFXButton currProblemsBtn; // Cool Sliding Button
+  @FXML SearchableComboBox<Integer> deviceSearchBox;
 
   @FXML TableView computersTable;
   @FXML TableColumn<Computer, Integer> computerID;
@@ -81,6 +82,13 @@ public class computerServiceController implements Initializable {
     ArrayList<String> searchList = locList();
     ObservableList<String> oList = FXCollections.observableArrayList(searchList);
     locationSearchBox.setItems(oList);
+
+    ArrayList<Integer> computerIDs = new ArrayList<>();
+    for (Computer c : ComputerTbl.getInstance().readTable()) {
+      computerIDs.add(c.getComputerID());
+    }
+    ObservableList<Integer> ocomputerIDs = FXCollections.observableArrayList(computerIDs);
+    deviceSearchBox.setItems(ocomputerIDs);
 
     refresh();
   }
