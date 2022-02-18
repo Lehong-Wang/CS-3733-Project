@@ -65,7 +65,7 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
     if (!RequestTable.getInstance().entryExists(obj.getRequestID())) {
       RequestTable.getInstance().addEntry(obj);
     }
-    if (!this.getEmbedded()) {
+    if (this.getEmbedded()) {
       return addEntryOnline(obj);
     }
     LaundryRequest launReq = (LaundryRequest) obj; // **

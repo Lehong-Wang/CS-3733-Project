@@ -19,9 +19,9 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) throws IOException {
 
-    // Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("views/loginScreen.fxml"));
 
-    Parent root = FXMLLoader.load(getClass().getResource("views/mainTwo.fxml"));
+    // Parent root = FXMLLoader.load(getClass().getResource("views/mainTwo.fxml"));
     Scene scene = new Scene(root, 1280, 800);
     // Below line is to set styleSheet, does not maintain styleSheet when switching scenes unless
     // stylesheet is added in fxml file

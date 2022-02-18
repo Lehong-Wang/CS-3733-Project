@@ -13,9 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class loginScreenController {
+  @FXML AnchorPane anchor;
   @FXML TextField userField;
   @FXML TextField passField;
   @FXML JFXButton loginBtn;
@@ -26,6 +28,7 @@ public class loginScreenController {
 
   @FXML
   public void login(ActionEvent actionEvent) throws IOException {
+
     Integer userID = Integer.parseInt(userField.getText());
     String password = passField.getText();
     if (credTable.entryExists(userID)) {
