@@ -1,6 +1,7 @@
-package edu.wpi.GoldenGandaberundas.controllers;
+package edu.wpi.GoldenGandaberundas.controllers.GiftFloralControllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
@@ -8,15 +9,22 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
@@ -24,7 +32,7 @@ import org.controlsfx.control.SearchableComboBox;
 public class GiftFloralController implements Initializable {
 
   @FXML private TextField giftFlowersField;
-  @FXML private SearchableComboBox locationSearchBox;
+  @FXML private SearchableComboBox<String> locationSearchBox;
   @FXML private TextField quantityField;
   @FXML private TextField patientIDField;
   @FXML private TextField requesterIDField;
@@ -86,12 +94,45 @@ public class GiftFloralController implements Initializable {
     reqGiftID.setCellValueFactory(new PropertyValueFactory<GiftRequest, Integer>("giftID"));
     quantity.setCellValueFactory(new PropertyValueFactory<GiftRequest, Integer>("quantity"));
 
+    ArrayList<String> locs = new ArrayList<>();
+    for (Object l : LocationTbl.getInstance().readTable()) {
+      locs.add(((Location) l).getNodeID());
+    }
+    ObservableList<String> bruh = FXCollections.observableArrayList(locs);
+    locationSearchBox.setItems(bruh);
     refresh();
+
+    GiftOrderRequestTable.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            onEdit();
+          }
+        });
+  }
+
+  void onEdit() {
+    if (GiftOrderRequestTable.getSelectionModel().getSelectedItem() != null) {
+      GiftRequest selectedItem =
+          (GiftRequest) GiftOrderRequestTable.getSelectionModel().getSelectedItem();
+      try {
+        FXMLLoader load = new FXMLLoader(App.class.getResource("views/editGiftFloralReqForm.fxml"));
+        AnchorPane editForm = load.load();
+        editGiftFloralReqFormController edit = load.getController();
+        edit.editForm(RequestTable.getInstance().getEntry(selectedItem.getPK().get(0)));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(editForm));
+        stage.show();
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      System.out.println(selectedItem.getPK());
+    }
   }
 
   public void submit() {
     int idCounter = requestTableController.readTable().size() + 1;
-    String nodeID = locations;
+    String nodeID = locationSearchBox.getValue();
     int submittedTime;
     int completedTime;
     int patientID = Integer.parseInt(patientIDField.getText());
@@ -99,12 +140,25 @@ public class GiftFloralController implements Initializable {
     int completerID;
 
     String rowID; // placeholder for now = giftID + reqID
-    String giftID = giftFlowersField.getText();
+    int giftID = Integer.parseInt(giftFlowersField.getText());
     // String reqID;
     int quantity = Integer.parseInt(quantityField.getText());
 
-    //    GiftRequest giftRequest =
-    //        new GiftRequest(reqID, nodeID, 100, 100, patientID, requesterID, 123, "Initiated");
+    System.out.println(nodeID);
+    GiftRequest giftRequest =
+        new GiftRequest(
+            idCounter,
+            nodeID,
+            requesterID,
+            123,
+            0,
+            0,
+            patientID,
+            "Submitted",
+            "",
+            giftID,
+            quantity);
+    GiftRequestTbl.getInstance().addEntry(giftRequest);
     //    OrderedGift orderedGIft = new OrderedGift(giftID, reqID, quantity);
     //    requestTableController.addEntry(giftRequest);
     //    orderTableController.addEntry((orderedGIft));
@@ -167,5 +221,78 @@ public class GiftFloralController implements Initializable {
         e -> {
           buttonO.setStyle(IDLE_BUTTON_STYLE);
         });
+  }
+
+  @FXML
+  public void backupGift() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Gifts File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      GiftTbl.getInstance().createBackup(new File(selectedFile.toString() + "\\laundryBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Requests File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      GiftRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\medLaundryRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void loadDBGifts() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Gift File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      GiftTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
+  }
+
+  @FXML
+  public void loadDBRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Gifts Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      GiftRequestTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
   }
 }

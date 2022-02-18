@@ -16,21 +16,22 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.LaundryServiceController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.LaundryControllers.LaundryServiceController">
    <right>
-      <VBox prefHeight="760.0" prefWidth="163.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="800.0" prefWidth="105.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Refresh" />
-            <JFXButton onAction="#createBackupReqTable" prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Create Backup" />
-            <JFXButton onAction="#loadBackupLaundryStockTable" prefHeight="81.0" prefWidth="112.0" style="-fx-border-color: black;" text="Load Backup Stock Table" wrapText="true" />
-            <JFXButton onAction="#loadBackupLaundryStockTable" prefHeight="81.0" prefWidth="112.0" style="-fx-border-color: black;" text="Load Backup Request Table" wrapText="true" />
+            <JFXButton onAction="#backupLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Laundry" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Laundry Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>
    <center>
       <VBox prefHeight="760.0" prefWidth="988.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane prefHeight="86.0" prefWidth="1100.0">
+            <GridPane prefHeight="35.0" prefWidth="1235.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="541.1014404296875" minWidth="10.0" prefWidth="512.1810913085938" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.2681884765625" minWidth="10.0" prefWidth="587.8189086914062" />
@@ -39,12 +40,12 @@
                 <RowConstraints />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="37.0" prefWidth="588.0" text="Laundry Menu" underline="true" GridPane.columnIndex="1">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="726.0" text="Laundry Menu" underline="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="572.0" text="Request Laundry Service" underline="true">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="572.0" text="Request Laundry Service" underline="true" GridPane.hgrow="ALWAYS">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -56,7 +57,7 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <VBox prefHeight="341.0" prefWidth="480.0">
+                  <VBox prefHeight="341.0" prefWidth="480.0" HBox.hgrow="ALWAYS">
                      <children>
                         <GridPane prefHeight="45.0" prefWidth="562.0">
                           <columnConstraints>
@@ -140,7 +141,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <TableView fx:id="laundryStockTable" prefHeight="288.0" prefWidth="526.0">
+                  <TableView fx:id="laundryStockTable" prefHeight="288.0" prefWidth="526.0" HBox.hgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="laundryName" prefWidth="119.599853515625" text="Laundry Name" />
                         <TableColumn fx:id="laundryID" prefWidth="116.0" text="Laundry ID" />
@@ -154,13 +155,6 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </TableView>
-                  <VBox prefHeight="675.0" prefWidth="133.0">
-                     <children>
-                        <JFXButton onAction="#createBackupReqTable" prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Create Backup" />
-                        <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Refresh" />
-                        <JFXButton prefHeight="55.0" prefWidth="112.0" style="-fx-border-color: black;" text="Load Backup Request Table" wrapText="true" />
-                     </children>
-                  </VBox>
                </children>
             </HBox>
             <TableView fx:id="laundryTable" prefHeight="542.0" prefWidth="1037.0">

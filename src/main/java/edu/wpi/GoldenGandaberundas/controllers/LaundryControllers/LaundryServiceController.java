@@ -1,4 +1,4 @@
-package edu.wpi.GoldenGandaberundas.controllers;
+package edu.wpi.GoldenGandaberundas.controllers.LaundryControllers;
 
 import com.jfoenix.controls.JFXCheckBox;
 import edu.wpi.GoldenGandaberundas.App;
@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,7 +40,7 @@ public class LaundryServiceController implements Initializable {
   private boolean bedding = false;
   private boolean gown = false;
   private boolean towel = false;
-  @FXML private SearchableComboBox locationSearchBox;
+  @FXML private SearchableComboBox<String> locationSearchBox;
   private String locations;
   @FXML private TextField idField;
 
@@ -77,7 +78,7 @@ public class LaundryServiceController implements Initializable {
 
     // Factory for laundryStockTable
     laundryID.setCellValueFactory(new PropertyValueFactory<Laundry, Integer>("laundryID"));
-    laundryName.setCellValueFactory(new PropertyValueFactory<Laundry, String>("laundryName"));
+    laundryName.setCellValueFactory(new PropertyValueFactory<Laundry, String>("laundryType"));
     description.setCellValueFactory(new PropertyValueFactory<Laundry, String>("description"));
     inStock.setCellValueFactory(new PropertyValueFactory<Laundry, Boolean>("inStock"));
 
@@ -137,7 +138,34 @@ public class LaundryServiceController implements Initializable {
           locations = selectedItem;
         });
 
+    laundryTable.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            onEdit();
+          }
+        });
+
     refresh();
+  }
+
+  void onEdit() {
+    if (laundryTable.getSelectionModel().getSelectedItem() != null) {
+      LaundryRequest selectedItem =
+          (LaundryRequest) laundryTable.getSelectionModel().getSelectedItem();
+      try {
+        FXMLLoader load = new FXMLLoader(App.class.getResource("views/editLaundryReqForm.fxml"));
+        AnchorPane editForm = load.load();
+        editLaundryReqFormController edit = load.getController();
+        edit.editForm(RequestTable.getInstance().getEntry(selectedItem.getPK().get(0)));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(editForm));
+        stage.show();
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      System.out.println(selectedItem.getPK());
+    }
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -171,24 +199,25 @@ public class LaundryServiceController implements Initializable {
   public void submit() {
     int idCounter = requestTableController.readTable().size() + 1;
     int requesterID = Integer.parseInt(idField.getText());
+    locations = locationSearchBox.getValue();
 
     try {
       if (towel == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 1);
-        requestTableController.addEntry(tlr);
+            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 111);
+        LaundryRequestTbl.getInstance().addEntry(tlr);
       }
 
       if (gown == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 3);
-        requestTableController.addEntry(tlr);
+            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 333);
+        LaundryRequestTbl.getInstance().addEntry(tlr);
       }
 
       if (bedding == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 2);
-        requestTableController.addEntry(tlr);
+            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 222);
+        LaundryRequestTbl.getInstance().addEntry(tlr);
       }
     } catch (Exception e) {
       System.out.println("Invalid input: " + e);
@@ -204,19 +233,53 @@ public class LaundryServiceController implements Initializable {
     laundryTable.getItems().setAll(requestLaundryController.readTable());
   }
 
-  public void loadBackupLaundryStockTable() {
+  @FXML
+  public void backupLaundry() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Laundry File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      LaundryTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\laundryBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Requests File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      LaundryRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\medLaundryRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void loadDBLaundry() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select Back Up File");
+    fileChooser.setTitle("Select Back Up Laundry File To Load");
     fileChooser
         .getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
-
     Stage popUpDialog = new Stage();
     File selectedFile = fileChooser.showOpenDialog(popUpDialog);
     popUpDialog.show();
     if (selectedFile != null) {
       System.out.println(selectedFile.toString());
-      menuTableController.loadBackup(selectedFile.toString());
+      LaundryTbl.getInstance().loadBackup(selectedFile.toString());
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
@@ -224,26 +287,23 @@ public class LaundryServiceController implements Initializable {
     refresh();
   }
 
-  public void createBackupReqTable() {
-    DirectoryChooser directoryChooser = new DirectoryChooser();
-    directoryChooser.setTitle("Select Back Up File");
-
+  @FXML
+  public void loadDBRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Laundry Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
     Stage popUpDialog = new Stage();
-    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
     popUpDialog.show();
     if (selectedFile != null) {
-
       System.out.println(selectedFile.toString());
-      requestTableController.createBackup(
-          new File(selectedFile.toString() + "\\LaundryRequestBackup.csv"));
-      menuTableController.createBackup(
-          new File(selectedFile.toString() + "\\LaundryItemsBackup.csv"));
-      //      objectTableController.createBackup(
-      //          new File(selectedFile.toString() + "\\LaundryOrdersBackup.csv"));
-
+      LaundryRequestTbl.getInstance().loadBackup(selectedFile.toString());
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
+    refresh();
   }
 }

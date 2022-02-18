@@ -434,6 +434,9 @@ public abstract class TableController<T, T1> {
     }
     for (TableController table : allActiveTables) {
       TableController temp = table;
+      if (temp.tbName.equals("Requests")) {
+        continue;
+      }
       for (Object entry : table.objList) {
         table.addEntry(entry);
       }

@@ -1,0 +1,2 @@
+requestID,locationID,empInitiated,empCompleter,timeStart,timeEnd,patientID,requestType,requestStatus,notes,medID
+1,FDEPT00101,123,123,0,0,111,MedEquipDelivery,Submitted,123,123

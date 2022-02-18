@@ -51,6 +51,7 @@ public class EquipmentDeliveryController {
 
   @FXML TableView equipmentTable;
   // @FXML TableColumn<MedEquipment, Integer> medID;
+  @FXML TableColumn<MedEquipment, Integer> equipID;
   @FXML TableColumn<MedEquipment, String> type;
   @FXML TableColumn<MedEquipment, String> equipStatus;
   @FXML TableColumn<MedEquipment, String> loc;
@@ -88,7 +89,7 @@ public class EquipmentDeliveryController {
     // Sets all the ways for the tables to get the value from a list of requests
     reqID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("requestID"));
     empID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("empInitiated"));
-    medID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("medID"));
+    // medID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("medID"));
     destination.setCellValueFactory(
         new PropertyValueFactory<MedEquipRequest, String>("locationID"));
     submitTime.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("timeStart"));
@@ -99,7 +100,12 @@ public class EquipmentDeliveryController {
     patientID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("patientID"));
     status.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, String>("requestStatus"));
     notes.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, String>("notes"));
-    notes.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, String>("priority"));
+    equipmentID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("medID"));
+
+    equipID.setCellValueFactory(new PropertyValueFactory<MedEquipment, Integer>("medID"));
+    type.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("medEquipmentType"));
+    equipStatus.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("status"));
+    loc.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("currLoc"));
 
     refreshTable();
 
@@ -194,6 +200,80 @@ public class EquipmentDeliveryController {
       destinationField.setText("Invalid Data");
       notesField.setText("Invalid Data");
     }
+    refreshTable();
+  }
+
+  @FXML
+  public void backupEquipment() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Equipment File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      medEquipmentTable.createBackup(
+          new File(selectedFile.toString() + "\\medEquipmentBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Requests File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      MedEquipRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\medEquipmentRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void loadDBEquipment() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Equipment File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      medEquipmentTable.loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refreshTable();
+  }
+
+  @FXML
+  public void loadDBRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Equipment Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      MedEquipRequestTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
     refreshTable();
   }
 

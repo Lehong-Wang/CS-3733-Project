@@ -2,7 +2,6 @@ package edu.wpi.GoldenGandaberundas.controllers.MedicineControllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
-import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
@@ -177,34 +176,45 @@ public class MedicineDeliveryController {
   }
 
   @FXML
-  public void loadOrders() {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select Back Up File");
-    fileChooser
-        .getExtensionFilters()
-        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
-
+  public void backupMedicine() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Medicine File");
     Stage popUpDialog = new Stage();
-    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
     popUpDialog.show();
+
     if (selectedFile != null) {
-      System.out.println(selectedFile.toString());
-      // orderedMedicine.loadBackup(selectedFile.toString());
+      medicine.createBackup(new File(selectedFile.toString() + "\\medicineBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
-    refresh();
   }
 
   @FXML
-  public void loadMeds() {
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Requests File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      MedicineRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\medMedicineRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void loadDBMedicine() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select Back Up File");
+    fileChooser.setTitle("Select Back Up Medicine File To Load");
     fileChooser
         .getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
-
     Stage popUpDialog = new Stage();
     File selectedFile = fileChooser.showOpenDialog(popUpDialog);
     popUpDialog.show();
@@ -219,23 +229,23 @@ public class MedicineDeliveryController {
   }
 
   @FXML
-  public void backup() {
-    DirectoryChooser directoryChooser = new DirectoryChooser();
-    directoryChooser.setTitle("Select Back Up File");
-
+  public void loadDBRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Medicine Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
     Stage popUpDialog = new Stage();
-    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
     popUpDialog.show();
     if (selectedFile != null) {
-
       System.out.println(selectedFile.toString());
-      requestTable.createBackup(new File(selectedFile.toString() + "\\medicineRequestBackup.csv"));
-      medicine.createBackup(new File(selectedFile.toString() + "\\medicineBackup.csv"));
-
+      MedicineRequestTbl.getInstance().loadBackup(selectedFile.toString());
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
+    refresh();
   }
 
   @FXML
@@ -270,9 +280,6 @@ public class MedicineDeliveryController {
 
     Stage stage = new Stage();
     Scene scene = new Scene(FXMLLoader.load(App.class.getResource("views/editMedReqForm.fxml")));
-    scene
-        .getStylesheets()
-        .add(Main.class.getResource("styleSheets/controlStyle.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
   }

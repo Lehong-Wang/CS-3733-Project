@@ -5,17 +5,22 @@ import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.SearchableComboBox;
 
+import java.util.ArrayList;
+
 public class MapSubReqController {
   @FXML private TextField reqIDText;
-  @FXML private SearchableComboBox<Location> locSearch;
+  @FXML private SearchableComboBox<String> locSearch;
   @FXML private SearchableComboBox<Employee> empStartSearch;
   @FXML private SearchableComboBox<Employee> empEndSearch;
   @FXML private SearchableComboBox<Patient> patientIDSearch;
@@ -47,6 +52,13 @@ public class MapSubReqController {
           anchorPane.getParent().setVisible(false);
           System.out.println("alt click");
         });
+
+    ObservableList<String> locList = FXCollections.observableArrayList();
+    ArrayList<Location> locs =LocationTbl.getInstance().readTable();
+    for(Location l : locs){
+      locList.add(l.getNodeID());
+    }
+    locSearch.setItems(locList);
   }
 
   public void setMapController(MapController mapCont) {

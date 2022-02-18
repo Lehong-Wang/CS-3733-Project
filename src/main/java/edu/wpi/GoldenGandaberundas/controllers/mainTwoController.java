@@ -89,6 +89,19 @@ public class mainTwoController {
     HomeButton.setText("");
     SideViewButton.setText("");
 
+    FoodButton.setManaged(false);
+    FoodButton.setVisible(false);
+    AudioVisualButton.setManaged(false);
+    AudioVisualButton.setVisible(false);
+    ComputerServiceButton.setManaged(false);
+    ComputerServiceButton.setVisible(false);
+    LanguageButton.setManaged(false);
+    LanguageButton.setVisible(false);
+    ReligiousButton.setManaged(false);
+    ReligiousButton.setVisible(false);
+    PatientTransportButton.setManaged(false);
+    PatientTransportButton.setVisible(false);
+
     mainView.setFitHeight(1080);
     mainView.setFitWidth(1920);
     mainView.setImage(floorMaps.hospital);
@@ -164,7 +177,7 @@ public class mainTwoController {
   // goes to the Gift/Floral Delivery  page
   public void switchGiftFloral(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/giftFloralService.fxml");
-    nodeDataPane.setPadding(new Insets(0, 50, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   // goes to the Language Interpreter page

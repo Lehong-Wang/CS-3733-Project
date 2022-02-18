@@ -22,6 +22,7 @@ public class Main {
     // Initializes the database tables in memory
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
+    PatientTbl.getInstance();
     LaundryTbl.getInstance();
     MedEquipmentTbl.getInstance();
     MedicineTbl.getInstance();

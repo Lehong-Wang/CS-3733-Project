@@ -39,7 +39,6 @@ public class RequestTable extends TableController<Request, Integer> {
       "requestStatus", "notes"
     };
     createTable();
-    this.deleteEntries();
     objList = new ArrayList<Request>();
     objList = readTable();
   }
