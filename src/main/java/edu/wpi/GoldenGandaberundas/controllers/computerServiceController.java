@@ -53,30 +53,6 @@ public class computerServiceController implements Initializable {
   @FXML TableColumn<ComputerRequest, String> problemType;
   @FXML TableColumn<ComputerRequest, String> priority;
 
-  @FXML TableView computersTable;
-  @FXML TableColumn<Computer, Integer> computerID;
-  @FXML TableColumn<Computer, String> computerType;
-  @FXML TableColumn<Computer, String> os;
-  @FXML TableColumn<Computer, String> processor;
-  @FXML TableColumn<Computer, String> hostName;
-  @FXML TableColumn<Computer, String> model;
-  @FXML TableColumn<Computer, String> manufacturer;
-  @FXML TableColumn<Computer, String> serialNumber;
-
-  @FXML TableView computerRequestsTbl;
-  @FXML TableColumn<ComputerRequest, Integer> requestID;
-  @FXML TableColumn<ComputerRequest, String> locationID;
-  @FXML TableColumn<ComputerRequest, Integer> timeStart;
-  @FXML TableColumn<ComputerRequest, Integer> timeEnd;
-  @FXML TableColumn<ComputerRequest, Integer> patientID;
-  @FXML TableColumn<ComputerRequest, Integer> empInitiated;
-  @FXML TableColumn<ComputerRequest, Integer> empCompleter;
-  @FXML TableColumn<ComputerRequest, String> requestStatus;
-  @FXML TableColumn<ComputerRequest, String> notes;
-  @FXML TableColumn<ComputerRequest, Integer> compID;
-  @FXML TableColumn<ComputerRequest, String> problemType;
-  @FXML TableColumn<ComputerRequest, String> priority;
-
   @FXML private SearchableComboBox locationSearchBox; // Location drop box
 
   TableController locationTableController = LocationTbl.getInstance();
