@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
@@ -13,6 +14,8 @@ import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -32,12 +35,8 @@ public class loginScreenController {
 
   @FXML
   public void login() throws IOException {
-    TranslateTransition moveLogo = new TranslateTransition();
-    moveLogo.setByX(
-        loginBtn.getBoundsInLocal().getCenterX() - logoImg.getBoundsInLocal().getCenterX());
-    moveLogo.setDuration(Duration.millis(1000));
-    moveLogo.setNode(logoImg);
-    moveLogo.play();
+    // logoImg.getParent().toFront();
+
     System.out.println("LOGGING IN");
     Integer userID = null;
     try {
