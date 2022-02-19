@@ -164,10 +164,11 @@ public class computerServiceController implements Initializable {
   public void load() {}
 
   public void submit() {
-    int requestID = RequestTable.getInstance().readTable().get(
-            RequestTable.getInstance().readTable().size()-1
-    ).getRequestID();
-    
+    int requestID =
+        RequestTable.getInstance()
+            .readTable()
+            .get(RequestTable.getInstance().readTable().size() - 1)
+            .getRequestID();
   }
 
   public void clear() {}
