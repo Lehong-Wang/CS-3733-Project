@@ -1,8 +1,7 @@
 package edu.wpi.GoldenGandaberundas;
 
-import static edu.wpi.GoldenGandaberundas.tableControllers.AStar.Node.aStar;
-
-import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Node;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
@@ -19,6 +18,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -42,21 +42,21 @@ public class Main {
     LaundryRequestTbl.getInstance();
     FoodTbl.getInstance();
 
-    Node head = new Node(0, 0);
+    Point head = new Point("start", 0, 0);
     head.g = 0;
 
-    Node n1 = new Node(3, 4);
-    Node n2 = new Node(6, 9);
-    Node n3 = new Node(10, 15);
+    Point n1 = new Point("node1", 6, 4);
+    Point n2 = new Point("node2", 2, 10);
+    Point n3 = new Point("node3", 10, 15);
 
     head.addBranch(n1);
     head.addBranch(n2);
     head.addBranch(n3);
     n3.addBranch(n2);
 
-    Node n4 = new Node(15, 20);
-    Node n5 = new Node(23, 24);
-    Node target = new Node(17, 20);
+    Point n4 = new Point("node4", -1, 20);
+    Point n5 = new Point("node5", 23, 24);
+    Point target = new Point("target", 17, 20);
 
     n1.addBranch(n4);
     n2.addBranch(n5);
@@ -66,36 +66,16 @@ public class Main {
     n5.addBranch(n4);
     n5.addBranch(target);
 
-    ArrayList<Node> res = aStar(head, target);
-    System.out.println(res);
-    Node head = new Node(0, 0);
-    head.g = 0;
+    Point res = head.aStar(target);
+    List<String> loc = n1.locationsPath(res);
 
-    Node n1 = new Node(3, 4);
-    Node n2 = new Node(6, 9);
-    Node n3 = new Node(10, 15);
+    System.out.println(LocationTbl.getInstance().getNodes());
 
-    head.addBranch(n1);
-    head.addBranch(n2);
-    head.addBranch(n3);
-    n3.addBranch(n2);
+    PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    points = PathTbl.getInstance().createBranchedLocations(points);
+    System.out.println(points);
 
-    Node n4 = new Node(15, 20);
-    Node n5 = new Node(23, 24);
-    Node target = new Node(17, 20);
-
-    n1.addBranch(n4);
-    n2.addBranch(n5);
-    n3.addBranch(n4);
-
-    n4.addBranch(target);
-    n5.addBranch(n4);
-    n5.addBranch(target);
-
-    ArrayList<Node> res = aStar(head, target);
-    System.out.println(res);
-
->>>>>>> Stashed changes
     //    floorMaps.load();
     //    App.launch(App.class, args);
   }
