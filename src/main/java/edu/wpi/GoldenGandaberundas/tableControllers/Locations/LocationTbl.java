@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.Locations;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -303,5 +304,26 @@ public class LocationTbl extends TableController<Location, String> {
       return null;
     }
     return loc;
+  }
+
+  /**
+   * Creates a list of points with for each location with their x and y coordinates
+   *
+   * @return the list of points
+   */
+  public ArrayList<Point> getNodes() {
+    ArrayList<Point> points = new ArrayList<>();
+
+    try {
+      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      ResultSet r = s.executeQuery();
+      while (r.next()) {
+        points.add(new Point(r.getString(1), r.getInt(2), r.getInt(3)));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+    return points;
   }
 }
