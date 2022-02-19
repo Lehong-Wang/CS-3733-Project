@@ -1,6 +1,8 @@
 package edu.wpi.GoldenGandaberundas;
 
-import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import static edu.wpi.GoldenGandaberundas.tableControllers.AStar.Node.aStar;
+
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Node;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
@@ -16,6 +18,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.Medi
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -37,10 +40,63 @@ public class Main {
     MedicineRequestTbl.getInstance();
     MedEquipRequestTbl.getInstance();
     LaundryRequestTbl.getInstance();
-
     FoodTbl.getInstance();
 
-    floorMaps.load();
-    App.launch(App.class, args);
+    Node head = new Node(0, 0);
+    head.g = 0;
+
+    Node n1 = new Node(3, 4);
+    Node n2 = new Node(6, 9);
+    Node n3 = new Node(10, 15);
+
+    head.addBranch(n1);
+    head.addBranch(n2);
+    head.addBranch(n3);
+    n3.addBranch(n2);
+
+    Node n4 = new Node(15, 20);
+    Node n5 = new Node(23, 24);
+    Node target = new Node(17, 20);
+
+    n1.addBranch(n4);
+    n2.addBranch(n5);
+    n3.addBranch(n4);
+
+    n4.addBranch(target);
+    n5.addBranch(n4);
+    n5.addBranch(target);
+
+    ArrayList<Node> res = aStar(head, target);
+    System.out.println(res);
+    Node head = new Node(0, 0);
+    head.g = 0;
+
+    Node n1 = new Node(3, 4);
+    Node n2 = new Node(6, 9);
+    Node n3 = new Node(10, 15);
+
+    head.addBranch(n1);
+    head.addBranch(n2);
+    head.addBranch(n3);
+    n3.addBranch(n2);
+
+    Node n4 = new Node(15, 20);
+    Node n5 = new Node(23, 24);
+    Node target = new Node(17, 20);
+
+    n1.addBranch(n4);
+    n2.addBranch(n5);
+    n3.addBranch(n4);
+
+    n4.addBranch(target);
+    n5.addBranch(n4);
+    n5.addBranch(target);
+
+    ArrayList<Node> res = aStar(head, target);
+    System.out.println(res);
+
+>>>>>>> Stashed changes
+    //    floorMaps.load();
+    //    App.launch(App.class, args);
   }
 }
