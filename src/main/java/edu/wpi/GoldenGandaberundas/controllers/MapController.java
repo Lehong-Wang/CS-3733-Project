@@ -200,7 +200,6 @@ public class MapController {
         e -> {
           //          placeHolder.setStyle("-fx-background-color: blue");
           placeHolder.setFill(Color.BLUE);
-          System.out.println(placeHolder.getLayoutX() + " " + placeHolder.getLayoutY());
         });
     placeHolder.setOnMouseExited(
         e -> {
@@ -253,7 +252,6 @@ public class MapController {
 
   public void createRequestIcon(Request req, Location loc) {
     ReqImageView reqIcon = new ReqImageView(loc, req);
-    System.out.println(req.getRequestType());
     switch (req.getRequestType()) {
       case "MedEquipDelivery":
         reqIcon.setImage(floorMaps.medicalEquipmentGreen);
@@ -279,7 +277,6 @@ public class MapController {
     reqIcon.setOnContextMenuRequested(
         e -> {
           nodeDataPane.getChildren().clear();
-          System.out.println("request edit selected");
           FXMLLoader controllerLoader =
               new FXMLLoader(Main.class.getResource("views/mapViewRequestEntry.fxml"));
           nodeDataPane.setManaged(true);
@@ -337,7 +334,6 @@ public class MapController {
     medIcon.setOnMouseEntered(
         e -> {
           medIcon.setStyle("-fx-background-color: green");
-          System.out.println(medIcon.getLayoutX() + " " + medIcon.getLayoutY());
         });
     medIcon.setOnMouseExited(
         e -> {
@@ -369,51 +365,59 @@ public class MapController {
           medIcon.setLayoutY(medIcon.getLayoutY() + e.getY());
         });
     //
-    medIcon.setOnDragDone(
+    medIcon.setOnMouseReleased(
         e -> {
           System.out.println("DRAG RELEASE");
           gesturePane.setGestureEnabled(true);
-          double mouseX = e.getX() + loc.getXcoord();
-          double mouseY = e.getY() + loc.getYcoord();
-          float minDist = 100;
+          double mouseX = medIcon.getLayoutX();
+          double mouseY = medIcon.getLayoutY();
+          System.out.println(e.getX() + loc.getXcoord());
+          double minDist = 100;
           Location snapTo = loc;
           for (Location location : currentLocations) {
             double temp =
                 java.awt.geom.Point2D.distance(
                     mouseX, mouseY, location.getXcoord(), location.getYcoord());
             if (temp < minDist) {
-              snapTo = loc;
+              minDist = temp;
+              snapTo = location;
             }
           }
-          FXMLLoader popupLoader =
-              new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
-          Popup reqQuestion = new Popup();
-          try {
-            reqQuestion.getContent().add(popupLoader.load());
-            reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
-            while (((ConfirmationButtons) popupLoader.getController()).getChoice() == null) {}
-            medIcon.setLayoutX(snapTo.getXcoord() - 5);
-            medIcon.setLayoutY(snapTo.getYcoord() - 5);
-            if (((ConfirmationButtons) popupLoader.getController()).getChoice()) {
-              MedEquipRequest medEquipRequest =
-                  new MedEquipRequest(
-                      RequestTable.getInstance().readTable().size(),
-                      snapTo.getNodeID(),
-                      CurrentUser.getUser().getEmpID(),
-                      null,
-                      100,
-                      1000,
-                      null,
-                      "Submitted",
-                      " ",
-                      med.getMedID());
-              MedEquipRequestTbl.getInstance().addEntry(medEquipRequest);
-            } else {
-              MedEquipmentTbl.getInstance()
-                  .editEntry(med.getMedID(), "currLoc", snapTo.getNodeID());
+          if (!snapTo.getNodeID().equals(loc.getNodeID())) {
+            FXMLLoader popupLoader =
+                new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
+            Popup reqQuestion = new Popup();
+            try {
+              reqQuestion.getContent().add(popupLoader.load());
+              reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
+              while (((ConfirmationButtons) popupLoader.getController()).getChoice() == null) {}
+              medIcon.setLayoutX(snapTo.getXcoord() - 5);
+              medIcon.setLayoutY(snapTo.getYcoord() - 5);
+              if (((ConfirmationButtons) popupLoader.getController()).getChoice()) {
+                MedEquipRequest medEquipRequest =
+                    new MedEquipRequest(
+                        RequestTable.getInstance().readTable().size(),
+                        snapTo.getNodeID(),
+                        CurrentUser.getUser().getEmpID(),
+                        null,
+                        100,
+                        1000,
+                        null,
+                        "Submitted",
+                        " ",
+                        med.getMedID());
+                MedEquipRequestTbl.getInstance().addEntry(medEquipRequest);
+              } else {
+                MedEquipmentTbl.getInstance()
+                    .editEntry(med.getMedID(), "currLoc", snapTo.getNodeID());
+              }
+            } catch (IOException ioException) {
+              ioException.printStackTrace();
             }
-          } catch (IOException ioException) {
-            ioException.printStackTrace();
+          } else {
+            System.out.println(loc);
+            System.out.println(snapTo);
+            System.out.println(minDist);
           }
         });
   }
@@ -512,13 +516,10 @@ public class MapController {
                             .getFloor()
                             .equals(currentFloor);
                       }
-                      System.out.println(l.getCurrLoc());
                       return false;
                     })
                 .collect(Collectors.toList());
-    System.out.println("ReqList " + reqList);
     for (MedEquipment mer : reqList) {
-      System.out.println(mer.toString());
       createMedEquipIcon(mer, locations.getEntry(mer.getCurrLoc().trim()));
     }
   }
@@ -542,13 +543,10 @@ public class MapController {
                             .getFloor()
                             .equals(currentFloor);
                       }
-                      System.out.println(l.getLocationID());
                       return false;
                     })
                 .collect(Collectors.toList());
-    System.out.println("RequestList " + reqList);
     for (Request mer : reqList) {
-      System.out.println(mer.toString());
       createRequestIcon(mer, locations.getEntry(mer.getLocationID().trim()));
     }
   }
