@@ -181,7 +181,7 @@ public class EquipmentDeliveryController {
             "yes");
     if (valid.validateTextFields()) {
 
-      int requestNum = reqTable.readTable().size() + 1;
+      int requestNum = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID();
       int requesterID = Integer.parseInt(reqField.getText());
       int itemID = Integer.parseInt(itemField.getText());
       String node = destinationField.getText();
