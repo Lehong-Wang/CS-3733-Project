@@ -130,7 +130,7 @@ public class MedicineDeliveryController {
   @FXML
   public void submit() {
     requestTable = MedicineRequestTbl.getInstance();
-    int requestID = reqTable.readTable().size() + 1;
+    int requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID();
     String nodeID = locInput.getText();
     int patientID = Integer.parseInt(patientInput.getText());
     int requesterID = Integer.parseInt(requestInput.getText());

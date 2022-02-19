@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -36,8 +36,10 @@ public class mainTwoController {
   @FXML JFXButton PatientTransportButton;
   @FXML JFXButton ReligiousButton;
   @FXML JFXButton MapViewButton;
-  @FXML Button SideViewButton;
+  @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
+
+  @FXML Group medGroup;
 
   @FXML ImageView mainView;
   @FXML BorderPane homePageNode;
@@ -74,6 +76,7 @@ public class mainTwoController {
     buttonStyle(ReligiousButton);
     buttonStyle(MapViewButton);
     buttonStyle(HomeButton);
+    buttonStyle(SideViewButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -89,12 +92,13 @@ public class mainTwoController {
     HomeButton.setText("");
     SideViewButton.setText("");
 
+    // Hiding buttons until service is fully implemented
     FoodButton.setManaged(false);
     FoodButton.setVisible(false);
     AudioVisualButton.setManaged(false);
     AudioVisualButton.setVisible(false);
-    ComputerServiceButton.setManaged(false);
-    ComputerServiceButton.setVisible(false);
+    // ComputerServiceButton.setManaged(false);
+    // ComputerServiceButton.setVisible(false);
     LanguageButton.setManaged(false);
     LanguageButton.setVisible(false);
     ReligiousButton.setManaged(false);

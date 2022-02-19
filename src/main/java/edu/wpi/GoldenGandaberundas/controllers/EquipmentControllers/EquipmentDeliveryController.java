@@ -38,7 +38,6 @@ public class EquipmentDeliveryController {
   @FXML TableView medEqTable;
   @FXML TableColumn<MedEquipRequest, Integer> reqID;
   @FXML TableColumn<MedEquipRequest, Integer> empID;
-  @FXML TableColumn<MedEquipRequest, Integer> medID;
   @FXML TableColumn<MedEquipRequest, String> destination;
   @FXML TableColumn<MedEquipRequest, Integer> submitTime;
   @FXML TableColumn<MedEquipRequest, Integer> completeTime;
@@ -182,7 +181,7 @@ public class EquipmentDeliveryController {
             "yes");
     if (valid.validateTextFields()) {
 
-      int requestNum = reqTable.readTable().size() + 1;
+      int requestNum = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID();
       int requesterID = Integer.parseInt(reqField.getText());
       int itemID = Integer.parseInt(itemField.getText());
       String node = destinationField.getText();
