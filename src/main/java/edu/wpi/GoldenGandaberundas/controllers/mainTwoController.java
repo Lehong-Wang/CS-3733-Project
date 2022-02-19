@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -38,6 +38,8 @@ public class mainTwoController {
   @FXML JFXButton MapViewButton;
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
+
+  @FXML Group medGroup;
 
   @FXML ImageView mainView;
   @FXML BorderPane homePageNode;
@@ -74,7 +76,7 @@ public class mainTwoController {
     buttonStyle(ReligiousButton);
     buttonStyle(MapViewButton);
     buttonStyle(HomeButton);
-    //buttonStyle(sideViewButton);
+    buttonStyle(SideViewButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");

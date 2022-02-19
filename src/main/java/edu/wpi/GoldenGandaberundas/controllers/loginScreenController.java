@@ -65,6 +65,12 @@ public class loginScreenController {
               try {
                 stage.setScene(
                     new Scene(FXMLLoader.load(App.class.getResource("views/mainTwo.fxml"))));
+                // Jank resizing fix but it works, definitely a better way to do it but none will
+                // take
+                // less than 10 minutes to do.
+                //stage.setMaximized(true);
+                stage.setMaximized(false);
+                stage.setMaximized(true);
               } catch (IOException e) {
                 e.printStackTrace();
               }
