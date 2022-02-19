@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
@@ -76,7 +77,7 @@ public class Main {
     points = PathTbl.getInstance().createBranchedLocations(points);
     System.out.println(points);
 
-    //    floorMaps.load();
-    //    App.launch(App.class, args);
+    floorMaps.load();
+    App.launch(App.class, args);
   }
 }
