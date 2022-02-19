@@ -1,13 +1,15 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
@@ -26,7 +28,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -45,10 +46,6 @@ public class MapController {
 
   @FXML JFXButton homeBtn; // home btn with icon and text
   @FXML public JFXButton btn;
-  @FXML private JFXButton btn2;
-  @FXML private JFXButton btn3;
-  @FXML private JFXDrawer drawer;
-  @FXML private VBox drawerBox;
 
   @FXML private StackPane imagePane;
   @FXML private GesturePane gesturePane = new GesturePane(imagePane);
@@ -77,6 +74,8 @@ public class MapController {
   private final Image L1 = floorMaps.firstFloor;
   private final Image L2 = floorMaps.secondFloor;
   private final Image L3 = floorMaps.thirdFloor;
+
+  private ArrayList<Location> currentLocations = null;
 
   @FXML
   public void initialize() {
@@ -182,46 +181,6 @@ public class MapController {
     // !!!!!!!!!! NOTE: you can only access FXML files stored in a directory with the same name as
     // the package!!!!!!!!!
     stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
-  }
-
-  // Method to set buttons style, used in initialize method with slide panel buttons as params
-  public void buttonStyle(JFXButton buttonO) {
-    buttonO.setStyle(IDLE_BUTTON_STYLE);
-    buttonO.setOnMouseEntered(
-        e -> {
-          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-        });
-    buttonO.setOnMouseExited(
-        e -> {
-          buttonO.setStyle(IDLE_BUTTON_STYLE);
-        });
-  }
-
-  // Method for opening slider when mouse over. TODO Button text must be repopulated in here
-  public void slideOpen() {
-    if (drawer.isClosed()) {
-      drawer.open();
-      btn.setText("Medical Equipment");
-      btn2.setText("Medicine Delivery");
-      btn3.setText("Gift Delivery");
-      homeBtn.setText("  Home");
-      // Lines below do not work in this current state maybe text is added and removed in a seperate
-      // function
-      btn.setContentDisplay(ContentDisplay.LEFT);
-      btn2.setContentDisplay(ContentDisplay.LEFT);
-      btn3.setContentDisplay(ContentDisplay.LEFT);
-    }
-  }
-
-  // Method for closing slider when mouse leaves. TODO Button text must be set to empty in here
-  public void slideClose() {
-    if (drawer.isOpened()) {
-      drawer.close();
-      btn.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-      btn2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-      btn3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-      homeBtn.setText("");
-    }
   }
 
   public void createIcon(Location loc) {
@@ -384,10 +343,7 @@ public class MapController {
         e -> {
           medIcon.setStyle("-fx-background-color: cyan");
         });
-    medIcon.setOnMouseReleased(
-        e -> {
-          subController.setText(medIcon.location);
-        });
+
     medIcon.setOnContextMenuRequested(
         e -> {
           Popup popup = new Popup();
@@ -404,6 +360,61 @@ public class MapController {
           }
           EquipLocEditor popupController = popUpLoader.getController();
           popupController.setMedEquipment(med, this);
+          subController.setText(medIcon.location);
+        });
+    medIcon.setOnMouseDragged(
+        e -> {
+          gesturePane.setGestureEnabled(false);
+          medIcon.setLayoutX(medIcon.getLayoutX() + e.getX());
+          medIcon.setLayoutY(medIcon.getLayoutY() + e.getY());
+        });
+    //
+    medIcon.setOnDragDone(
+        e -> {
+          System.out.println("DRAG RELEASE");
+          gesturePane.setGestureEnabled(true);
+          double mouseX = e.getX() + loc.getXcoord();
+          double mouseY = e.getY() + loc.getYcoord();
+          float minDist = 100;
+          Location snapTo = loc;
+          for (Location location : currentLocations) {
+            double temp =
+                java.awt.geom.Point2D.distance(
+                    mouseX, mouseY, location.getXcoord(), location.getYcoord());
+            if (temp < minDist) {
+              snapTo = loc;
+            }
+          }
+          FXMLLoader popupLoader =
+              new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
+          Popup reqQuestion = new Popup();
+          try {
+            reqQuestion.getContent().add(popupLoader.load());
+            reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
+            while (((ConfirmationButtons) popupLoader.getController()).getChoice() == null) {}
+            medIcon.setLayoutX(snapTo.getXcoord() - 5);
+            medIcon.setLayoutY(snapTo.getYcoord() - 5);
+            if (((ConfirmationButtons) popupLoader.getController()).getChoice()) {
+              MedEquipRequest medEquipRequest =
+                  new MedEquipRequest(
+                      RequestTable.getInstance().readTable().size(),
+                      snapTo.getNodeID(),
+                      CurrentUser.getUser().getEmpID(),
+                      null,
+                      100,
+                      1000,
+                      null,
+                      "Submitted",
+                      " ",
+                      med.getMedID());
+              MedEquipRequestTbl.getInstance().addEntry(medEquipRequest);
+            } else {
+              MedEquipmentTbl.getInstance()
+                  .editEntry(med.getMedID(), "currLoc", snapTo.getNodeID());
+            }
+          } catch (IOException ioException) {
+            ioException.printStackTrace();
+          }
         });
   }
 
@@ -474,13 +485,13 @@ public class MapController {
   public void setLocations(String floor) {
     locNodePane.getChildren().clear();
     currentFloor = floor;
-    ArrayList<Location> locationList = locations.readTable();
-    locationList =
+    currentLocations = locations.readTable();
+    currentLocations =
         (ArrayList)
-            locationList.stream()
+            currentLocations.stream()
                 .filter(l -> l.getFloor().equals(floor))
                 .collect(Collectors.toList());
-    for (Location l : locationList) {
+    for (Location l : currentLocations) {
       createIcon(l);
     }
   }
