@@ -364,7 +364,6 @@ public class MapController {
         });
     medIcon.setOnMouseDragged(
         e -> {
-
           gesturePane.setGestureEnabled(false);
           medIcon.setLayoutX(medIcon.getLayoutX() + e.getX());
           medIcon.setLayoutY(medIcon.getLayoutY() + e.getY());
@@ -372,7 +371,6 @@ public class MapController {
     //
     medIcon.setOnDragDone(
         e -> {
-
           System.out.println("DRAG RELEASE");
           gesturePane.setGestureEnabled(true);
           double mouseX = e.getX() + loc.getXcoord();
