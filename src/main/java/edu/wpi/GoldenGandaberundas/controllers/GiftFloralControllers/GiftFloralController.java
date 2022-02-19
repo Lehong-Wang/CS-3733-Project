@@ -131,7 +131,11 @@ public class GiftFloralController implements Initializable {
   }
 
   public void submit() {
-    int idCounter = requestTableController.readTable().get(requestTableController.readTable().size() - 1).getRequestID();
+    int idCounter =
+        requestTableController
+            .readTable()
+            .get(requestTableController.readTable().size() - 1)
+            .getRequestID();
     String nodeID = locationSearchBox.getValue();
     int submittedTime;
     int completedTime;
