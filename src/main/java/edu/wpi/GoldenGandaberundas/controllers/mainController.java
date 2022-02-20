@@ -163,7 +163,7 @@ public class mainController {
   // goes to the Computer Services page
   public void switchCompService(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/computerServiceRequest.fxml");
-    nodeDataPane.setPadding(new Insets(0, 50, 0, 0));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   // goes to the Employee Database page

@@ -81,8 +81,8 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <TextArea prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                              <TextArea fx:id="problemField" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="priorityField" prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
                               <SearchableComboBox fx:id="locationSearchBox" prefHeight="40.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets bottom="25.0" top="25.0" />
@@ -141,14 +141,13 @@
                   <TableColumn fx:id="locationID" prefWidth="75.0" text="locationID" />
                   <TableColumn fx:id="timeStart" prefWidth="75.0" text="submitTime" />
                   <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="completeTime" />
-                  <TableColumn fx:id="patientID" prefWidth="81.20001220703125" text="patientID" />
                   <TableColumn fx:id="empInitiated" prefWidth="86.39996337890625" text="empInitiated" />
                   <TableColumn fx:id="empCompleter" prefWidth="90.79998779296875" text="empCompleter" />
                   <TableColumn fx:id="requestStatus" prefWidth="120.79998779296875" text="requestStatus" />
-                  <TableColumn fx:id="notes" prefWidth="75.0" text="notes" />
-                  <TableColumn fx:id="compID" prefWidth="120.79998779296875" text="compID" />
-                  <TableColumn fx:id="problemType" prefWidth="120.79998779296875" text="problemType" />
-                  <TableColumn fx:id="priority" prefWidth="120.79998779296875" text="priority" />
+                  <TableColumn fx:id="notes" prefWidth="268.4000244140625" text="notes" />
+                  <TableColumn fx:id="compID" prefWidth="94.4000244140625" text="compID" />
+                  <TableColumn fx:id="problemType" prefWidth="140.40008544921875" text="problemType" />
+                  <TableColumn fx:id="priority" minWidth="4.4000244140625" prefWidth="174.39990234375" text="priority" />
                </columns>
             </TableView>
          </children>

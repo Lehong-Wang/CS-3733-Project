@@ -2,6 +2,7 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.Computer;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequest;
@@ -17,9 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
@@ -31,6 +30,8 @@ public class computerServiceController implements Initializable {
   @FXML JFXButton currProblemsBtn; // Cool Sliding Button
   @FXML SearchableComboBox<Integer> deviceSearchBox;
   @FXML ComboBox<String> problemTypeBox;
+  @FXML TextArea problemField;
+  @FXML TextField priorityField;
 
   @FXML TableView computersTable;
   @FXML TableColumn<Computer, Integer> computerID;
@@ -56,7 +57,7 @@ public class computerServiceController implements Initializable {
   @FXML TableColumn<ComputerRequest, String> problemType;
   @FXML TableColumn<ComputerRequest, String> priority;
 
-  @FXML private SearchableComboBox locationSearchBox; // Location drop box
+  @FXML private SearchableComboBox<String> locationSearchBox; // Location drop box
 
   TableController locationTableController = LocationTbl.getInstance();
   ComputerTbl computers = ComputerTbl.getInstance();
@@ -88,7 +89,8 @@ public class computerServiceController implements Initializable {
     locationID.setCellValueFactory(new PropertyValueFactory<ComputerRequest, String>("locationID"));
     timeStart.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("timeStart"));
     timeEnd.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("timeEnd"));
-    patientID.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("patientID"));
+    // patientID.setCellValueFactory(new PropertyValueFactory<ComputerRequest,
+    // Integer>("patientID"));
     empInitiated.setCellValueFactory(
         new PropertyValueFactory<ComputerRequest, Integer>("empInitiated"));
     empCompleter.setCellValueFactory(
@@ -164,11 +166,43 @@ public class computerServiceController implements Initializable {
   public void load() {}
 
   public void submit() {
+
     int requestID =
-        RequestTable.getInstance()
-            .readTable()
-            .get(RequestTable.getInstance().readTable().size() - 1)
-            .getRequestID();
+        RequestTable.getInstance().readTable().size() - 1 < 0
+            ? 0
+            : RequestTable.getInstance()
+                    .readTable()
+                    .get(RequestTable.getInstance().readTable().size() - 1)
+                    .getRequestID()
+                + 1;
+    String locationID = locationSearchBox.getValue();
+    int submitTime = 0;
+    int completeTime = 0;
+    // Patient ID = null
+    int empInitiated = CurrentUser.getUser().getEmpID();
+    // Emp Completer = null
+    String requestStatus = "Submitted";
+    String notes = problemField.getText();
+    int compID = deviceSearchBox.getValue();
+    String problemType = problemTypeBox.getValue();
+    String priority = priorityField.getText();
+
+    ComputerRequest request =
+        new ComputerRequest(
+            requestID,
+            locationID,
+            empInitiated,
+            null,
+            submitTime,
+            completeTime,
+            null,
+            requestStatus,
+            notes,
+            compID,
+            problemType,
+            priority);
+    ComputerRequestTbl.getInstance().addEntry(request);
+    refresh();
   }
 
   public void clear() {}

@@ -6,6 +6,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
@@ -20,8 +21,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
-import java.io.File;
 import java.sql.SQLException;
 
 public class Main {
@@ -44,13 +43,6 @@ public class Main {
     FoodTbl.getInstance();
     PathTbl.getInstance();
 
-    GiftRequestTbl.getInstance();
-    MedicineRequestTbl.getInstance();
-    MedEquipRequestTbl.getInstance();
-    LaundryRequestTbl.getInstance();
-    FoodTbl.getInstance();
-
-
     LocationTbl.getInstance();
     PathTbl.getInstance();
 
@@ -64,6 +56,18 @@ public class Main {
 
     PathTbl.getInstance().createAStarPath("FDEPT00101", "WHALL00702");
     MedEquipmentTbl.getInstance();
+
+    LocationTbl.getInstance().loadBackup("BackupsCSVs\\locationTbl.csv");
+    EmployeeTbl.getInstance().loadBackup("BackupsCSVs\\employeeTbl.csv");
+    ComputerTbl.getInstance().loadBackup("BackupsCSVs\\computerTbl.csv");
+    FoodTbl.getInstance().loadBackup("BackupsCSVs\\foodTbl.csv");
+    GiftTbl.getInstance().loadBackup("BackupsCSVs\\giftTbl.csv");
+    LaundryTbl.getInstance().loadBackup("BackupsCSVs\\laundryTbl.csv");
+    MedicineTbl.getInstance().loadBackup("BackupsCSVs\\medicineTbl.csv");
+    PatientTbl.getInstance().loadBackup("BackupsCSVs\\patientTbl.csv");
+    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    PathTbl.getInstance().loadBackup("BackupsCSVs\\pathTbl.csv");
+    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs\\medEquipmentTbl.csv");
 
     floorMaps.load();
     App.launch(App.class, args);
