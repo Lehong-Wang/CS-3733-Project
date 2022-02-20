@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -69,7 +70,7 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
 
   @Override
   public boolean addEntry(Employee obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Employee emp = (Employee) obj;
@@ -173,10 +174,10 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       createOnlineTable();
-      return;
+      
     }
     try {
       PreparedStatement s =

@@ -135,7 +135,7 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
     try {
       PreparedStatement s =
           connection.prepareStatement("SELECT count(*) FROM sqlite_master WHERE tbl_name = ?;");
@@ -143,11 +143,11 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -155,7 +155,7 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -176,9 +176,12 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
               + "CONSTRAINT AudioVisualFK FOREIGN KEY (audioVisualID) REFERENCES AudioVisual (avID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE);");
+      this.writeTable();
+      return true;
 
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

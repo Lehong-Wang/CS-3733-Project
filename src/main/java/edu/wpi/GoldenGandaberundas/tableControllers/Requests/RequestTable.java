@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.Requests;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
@@ -228,10 +229,9 @@ public class RequestTable extends TableController<Request, Integer> {
   //  }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
     }
     try {
       PreparedStatement s =
@@ -241,18 +241,18 @@ public class RequestTable extends TableController<Request, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
     System.out.println("SQLite driver registered");
 
@@ -288,14 +288,17 @@ public class RequestTable extends TableController<Request, Integer> {
                   + "CONSTRAINT reqTypeEnum CHECK(requestType in('MedEquipDelivery','MedicineDelivery', 'GiftFloral','LaundryService','Food', 'Computer','AudioVisual')),"
                   + "CONSTRAINT reqStatusEnum CHECK(requestStatus in('Submitted', 'In_Progress', 'Completed')));");
       s.executeUpdate();
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       System.out.println(e.getErrorCode());
       e.printStackTrace();
       System.out.println("Exception in request table creation");
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
 
       PreparedStatement s1 =
@@ -304,7 +307,7 @@ public class RequestTable extends TableController<Request, Integer> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
@@ -331,8 +334,11 @@ public class RequestTable extends TableController<Request, Integer> {
               + "   ON DELETE NO ACTION,"
               + "CONSTRAINT reqTypeEnum CHECK(requestType in('MedEquipDelivery','MedicineDelivery', 'GiftFloral','LaundryService','Food', 'Computer','AudioVisual')),"
               + "CONSTRAINT reqStatusEnum CHECK(requestStatus in('Submitted', 'In_Progress', 'Completed')));");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

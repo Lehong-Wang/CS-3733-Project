@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.Patients;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class PatientTbl extends TableController<Patient, Integer> {
 
   @Override
   public boolean addEntry(Patient obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Patient pat = obj;
@@ -139,10 +140,9 @@ public class PatientTbl extends TableController<Patient, Integer> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
     }
     try {
       PreparedStatement s =
@@ -152,11 +152,11 @@ public class PatientTbl extends TableController<Patient, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -164,7 +164,7 @@ public class PatientTbl extends TableController<Patient, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -184,13 +184,15 @@ public class PatientTbl extends TableController<Patient, Integer> {
               + " ON UPDATE CASCADE "
               + " ON DELETE SET NULL"
               + ");");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
       PreparedStatement s1 =
           connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
@@ -198,7 +200,7 @@ public class PatientTbl extends TableController<Patient, Integer> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
 
       Statement s = connection.createStatement();
@@ -213,8 +215,11 @@ public class PatientTbl extends TableController<Patient, Integer> {
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE "
               + ");");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

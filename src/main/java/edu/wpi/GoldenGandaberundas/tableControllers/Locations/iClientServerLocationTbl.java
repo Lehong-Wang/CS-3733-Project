@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class iEmbeddedLocationTbl extends TableController<Location, String>
+public class iClientServerLocationTbl extends TableController<Location, String>
     implements LocationTable {
-  private static iEmbeddedLocationTbl instance = null;
 
-  private iEmbeddedLocationTbl() throws SQLException {
+  private static iClientServerLocationTbl instance = null;
+
+  private iClientServerLocationTbl() throws SQLException {
     super(
         "Locations",
         Arrays.asList(
@@ -35,12 +36,12 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
     objList = readTable();
   }
 
-  public static iEmbeddedLocationTbl getInstance() {
+  public static iClientServerLocationTbl getInstance() {
     if (instance == null) {
       synchronized (TableController.class) {
         if (instance == null) {
           try {
-            instance = new iEmbeddedLocationTbl();
+            instance = new iClientServerLocationTbl();
 
           } catch (SQLException e) {
             e.printStackTrace();
@@ -48,7 +49,7 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
         }
       }
     }
-    return (iEmbeddedLocationTbl) instance;
+    return (iClientServerLocationTbl) instance;
   }
 
   // method to read the table and output an ArrayList of Locations
@@ -81,32 +82,35 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
   // this function is used for putting objList into table
   // SO DO NOT DO THAT
   public boolean addEntry(Location loc) {
-    if (entryExists(loc.getNodeID())) {
-      System.out.println("loc ID exists: " + loc.getNodeID());
-      return false;
-    }
-    PreparedStatement s = null;
     try {
-      // check if exists and add to DB
-      s =
-          connection.prepareStatement(
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
+      PreparedStatement s =
+          connection.prepareStatement(
+              " IF NOT EXISTS (SELECT 1 FROM "
+                  + tbName
+                  + " WHERE "
+                  + colNames.get(0)
+                  + " = ?)"
+                  + "BEGIN"
+                  + " INSERT INTO "
+                  + tbName
+                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                  + "end");
       s.setString(1, loc.getNodeID());
-      s.setInt(2, loc.getXcoord());
-      s.setInt(3, loc.getYcoord());
-      s.setString(4, loc.getFloor());
-      s.setString(5, loc.getBuilding());
-      s.setString(6, loc.getNodeType());
-      s.setString(7, loc.getLongName());
-      s.setString(8, loc.getShortName());
+      s.setString(2, loc.getNodeID());
+      s.setInt(3, loc.getXcoord());
+      s.setInt(4, loc.getYcoord());
+      s.setString(5, loc.getFloor());
+      s.setString(6, loc.getBuilding());
+      s.setString(7, loc.getNodeType());
+      s.setString(8, loc.getLongName());
+      s.setString(9, loc.getShortName());
       s.executeUpdate();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
-
-    return true;
+    return false;
   }
 
   // create list of objects from CSV file
@@ -157,38 +161,18 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
   // initiialize table
   public boolean createTable() {
     try {
-      // check if there is table with same name
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
-      s.setString(1, tbName);
-      ResultSet r = s.executeQuery();
+      PreparedStatement s1 =
+          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+      s1.setString(1, tbName);
+      ResultSet r = s1.executeQuery();
       r.next();
-      // if there is already table, exit
       if (r.getInt(1) != 0) {
-        System.out.println("Locations Table Already Exists");
+        return false;
       }
-      // check for SQL driver
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
-      e.printStackTrace();
-      return false;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-
-    System.out.println("SQLite driver registered!");
-
-    // create new SQL table
-    Statement s = null;
-    try {
-      s = connection.createStatement();
-      s.execute("PRAGMA foreign_keys = ON");
+      Statement s = connection.createStatement();
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Locations("
-              + "nodeID TEXT NOT NULL ,"
+          "CREATE TABLE Locations("
+              + "nodeID VARCHAR(50) NOT NULL ,"
               + "xcoord INTEGER NOT NULL, "
               + "ycoord INTEGER NOT NULL, "
               + "floor TEXT NOT NULL, "
@@ -196,7 +180,7 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
               + "nodeType TEXT NOT NULL,"
               + "longName TEXT NOT NULL,"
               + "shortName TEXT NOT NULL, "
-              + "PRIMARY KEY ('nodeID'));");
+              + "PRIMARY KEY (nodeID));");
       this.writeTable();
       return true;
     } catch (SQLException e) {

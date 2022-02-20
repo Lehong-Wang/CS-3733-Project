@@ -23,20 +23,23 @@ public abstract class TableController<T, T1> {
   /** list that contains the objects stored in the database */
   protected ArrayList<T> objList;
   /** relative path to the database file */
-  private static String dbPath = new String("jdbc:sqlite:hospitalData.db");
+  private static final String dbPath = new String("jdbc:sqlite:hospitalData.db");
 
-  private static String clientServerPath =
+  private static final String clientServerPath =
       new String("jdbc:sqlserver://130.215.250.187:58910;databaseName=gandaberunda");
   /** connection object used to access the database */
   protected static Connection connection;
   /** single object allowed to be instantiated in subclasses */
-  private static boolean embedded = true;
+  private static ConnectionType connectionType = ConnectionType.embedded;
 
-  private static ArrayList<TableController> allActiveTables = new ArrayList<TableController>();
+  private static ArrayList<TableController> embeddedTables = new ArrayList<TableController>();
+  private static ArrayList<TableController> clientServerTables = new ArrayList<TableController>();
+  private static ArrayList<TableController> cloudTables = new ArrayList<TableController>();
+  private static ArrayList<TableController> currentTables = null;
 
-  /**
-   * procedure to connect to the database APP NEEDS TO FAIL IF THIS DOES NOT CONNECT IT IS ESSENTIAL
-   * THAT THIS EXECUTES CORRECTLY
+  /*
+   * procedure to connect to the database
+   * APP NEEDS TO FAIL IF THIS DOES NOT CONNECT IT IS ESSENTIAL THAT THIS EXECUTES CORRECTLY
    */
   static {
     try {
@@ -47,6 +50,7 @@ public abstract class TableController<T, T1> {
           DriverManager.getConnection(dbPath, config.toProperties()); // create a connection object
       PreparedStatement s = connection.prepareStatement("PRAGMA foreign_keys = ON;");
       s.execute();
+      currentTables = embeddedTables;
     } catch (SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }
@@ -56,7 +60,13 @@ public abstract class TableController<T, T1> {
     this.tbName = tableName;
     this.colNames = colNames;
     this.pkCols = colNames.get(0);
-    allActiveTables.add(this);
+    if (connectionType == ConnectionType.embedded) {
+      embeddedTables.add(this);
+    } else if (connectionType == ConnectionType.clientServer) {
+      clientServerTables.add(this);
+    } else if (connectionType == ConnectionType.cloud) {
+      cloudTables.add(this);
+    }
   }
 
   protected TableController(String tableName, List<String> colNames, String pkCols)
@@ -64,35 +74,47 @@ public abstract class TableController<T, T1> {
     this.tbName = tableName;
     this.colNames = colNames;
     this.pkCols = pkCols;
-    allActiveTables.add(this);
+    if (connectionType == ConnectionType.embedded) {
+      embeddedTables.add(this);
+    } else if (connectionType == ConnectionType.clientServer) {
+      clientServerTables.add(this);
+    } else if (connectionType == ConnectionType.cloud) {
+      cloudTables.add(this);
+    }
   }
 
   public String getTableName() {
     return tbName;
   }
 
-  public static void setConnection(boolean embed) {
-    embedded = embed;
-
+  public static void setConnection(ConnectionType connect) {
+    connectionType = connect;
     try {
-      if (embedded) {
+      if (connectionType == ConnectionType.embedded) {
         connection.close();
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true);
         connection = DriverManager.getConnection(dbPath, config.toProperties());
         TransferAllData();
-      } else {
+        currentTables = embeddedTables;
+      } else if (connectionType == ConnectionType.clientServer) {
         connection.close();
         connection = DriverManager.getConnection(clientServerPath, "admin", "admin");
         TransferAllData();
+        currentTables = clientServerTables;
+      } else if (connectionType == ConnectionType.cloud) {
+        TransferAllData();
+        currentTables = cloudTables;
+      } else {
+        System.out.println("Connection type error in Table Controller");
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  public boolean getEmbedded() {
-    return embedded;
+  protected static ConnectionType getConnectionType() {
+    return connectionType;
   }
 
   /**
@@ -329,7 +351,7 @@ public abstract class TableController<T, T1> {
   }
 
   /** runs SQL commands to create the table in the hospitalData.db file */
-  public abstract void createTable();
+  public abstract boolean createTable();
 
   // checks if an entry exists
   public boolean entryExists(T1 pkID) {
@@ -399,7 +421,7 @@ public abstract class TableController<T, T1> {
     if (!backupDir.exists()) {
       backupDir.mkdir();
     }
-    for (TableController table : allActiveTables) {
+    for (TableController table : currentTables) {
       table.createBackup(
           new File(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv"));
     }
@@ -411,26 +433,28 @@ public abstract class TableController<T, T1> {
       System.err.println("load dir fails");
       return;
     }
-    for (TableController table : allActiveTables) {
+    for (TableController table : currentTables) {
       table.loadBackup(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv");
     }
   }
 
   public static void TransferAllData() {
-    for (TableController table : allActiveTables) {
-      table.createTable();
-      table.deleteTableData();
-    }
-    for (TableController table : allActiveTables) {
-      TableController temp = table;
-      if (temp.tbName.equals("Requests")) {
-        continue;
+    for (TableController table : currentTables) {
+      if (!table.createTable()) {
+        table.deleteTableData();
+        table.writeTable();
       }
-      for (Object entry : table.objList) {
-        table.addEntry(entry);
-      }
-      table.readTable();
     }
+    //    for (TableController table : allActiveTables) {
+    //      TableController temp = table;
+    //      if (temp.tbName.equals("Requests")) {
+    //        continue;
+    //      }
+    //      for (Object entry : table.objList) {
+    //        table.addEntry(entry);
+    //      }
+    //      table.readTable();
+    //    }
   }
 
   private void deleteTableData() {

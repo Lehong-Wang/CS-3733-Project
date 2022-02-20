@@ -2,6 +2,7 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -322,10 +323,10 @@ public class mainController {
   }
 
   public void enableClientServer(ActionEvent actionEvent) {
-    TableController.setConnection(false);
+    TableController.setConnection(ConnectionType.clientServer);
   }
 
   public void enableEmbedded(ActionEvent actionEvent) {
-    TableController.setConnection(true);
+    TableController.setConnection(ConnectionType.embedded);
   }
 }

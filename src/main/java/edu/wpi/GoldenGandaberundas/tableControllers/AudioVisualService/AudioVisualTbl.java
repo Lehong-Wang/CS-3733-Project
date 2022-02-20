@@ -114,7 +114,7 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -123,11 +123,11 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -135,7 +135,7 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -155,9 +155,12 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE"
               + ");");
+      this.writeTable();
+      return true;
 
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

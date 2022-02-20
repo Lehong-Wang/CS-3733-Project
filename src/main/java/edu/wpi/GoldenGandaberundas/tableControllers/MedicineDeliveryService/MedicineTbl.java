@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -60,7 +61,7 @@ public class MedicineTbl extends TableController<Medicine, String> {
 
   @Override
   public boolean addEntry(Medicine obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Medicine med = (Medicine) obj; // **
@@ -152,10 +153,9 @@ public class MedicineTbl extends TableController<Medicine, String> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
     }
     try {
       PreparedStatement s =
@@ -165,11 +165,11 @@ public class MedicineTbl extends TableController<Medicine, String> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -177,7 +177,7 @@ public class MedicineTbl extends TableController<Medicine, String> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -188,13 +188,15 @@ public class MedicineTbl extends TableController<Medicine, String> {
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
           "CREATE TABLE IF NOT EXISTS  Medicine(medicineID TEXT NOT NULL ,medName TEXT, description TEXT, price DOUBLE, inStock BOOLEAN, PRIMARY KEY ('medicineID'));");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
       PreparedStatement s1 =
           connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
@@ -202,13 +204,16 @@ public class MedicineTbl extends TableController<Medicine, String> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
           "CREATE TABLE  Medicine(medicineID Integer NOT NULL ,medName TEXT,description TEXT, price float , inStock BIT, PRIMARY KEY (medicineID));");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

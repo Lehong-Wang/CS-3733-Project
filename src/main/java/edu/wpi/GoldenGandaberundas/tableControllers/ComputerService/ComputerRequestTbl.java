@@ -139,7 +139,7 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -148,11 +148,11 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -160,7 +160,7 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -182,9 +182,12 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
               + "CONSTRAINT ComputerFK FOREIGN KEY (computerID) REFERENCES Computer (computerID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE);");
+      this.writeTable();
+      return true;
 
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

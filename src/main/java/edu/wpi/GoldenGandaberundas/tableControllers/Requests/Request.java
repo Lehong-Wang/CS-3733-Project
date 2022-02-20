@@ -6,7 +6,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Requests;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Request{
+public class Request {
   protected Integer requestID = -1;
   protected String locationID = "";
   protected Integer empInitiated = -1;

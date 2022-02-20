@@ -107,7 +107,7 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
 
     try {
       PreparedStatement s =
@@ -117,11 +117,11 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -129,7 +129,7 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -150,10 +150,11 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
                   + "ON DELETE CASCADE"
                   + "); ");
       statement.executeUpdate();
-      System.out.println("MADE THE TABLE");
+      this.writeTable();
+      return true;
     } catch (SQLException throwables) {
-
       throwables.printStackTrace();
+      return false;
     }
   }
 

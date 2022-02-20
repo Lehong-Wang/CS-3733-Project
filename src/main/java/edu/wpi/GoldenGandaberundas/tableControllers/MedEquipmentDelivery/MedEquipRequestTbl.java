@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
@@ -79,7 +80,7 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
       RequestTable.getInstance().addEntry(obj);
     }
 
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
 
@@ -167,11 +168,10 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
 
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
     }
 
     try { // if code works, do this:
@@ -184,19 +184,19 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
       int count = r.getInt(1);
       if (count != 0) {
         System.out.println("TABLE DETECTED");
-        return;
+        return false;
       } else System.out.println("COUNT: " + count);
     } catch (SQLException e) {
       System.out.println("MASSIVE ERROR");
       e.printStackTrace();
-      return;
+      return false;
     }
     try {
       Class.forName("org.sqlite.JDBC"); // connects to db
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -219,13 +219,15 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
               + "        ON DELETE CASCADE  "
               + "        ON UPDATE CASCADE "
               + ");");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
 
       PreparedStatement s1 =
@@ -234,7 +236,7 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
@@ -249,8 +251,11 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
               + "        ON DELETE CASCADE, "
               + "    CONSTRAINT MedEquipReqFK2 FOREIGN KEY (medEquipID) REFERENCES MedEquipment (medID) "
               + ");");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

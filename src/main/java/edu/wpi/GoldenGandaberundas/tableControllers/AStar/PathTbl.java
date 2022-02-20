@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import java.io.*;
@@ -62,7 +63,7 @@ public class PathTbl extends TableController<Path, String> {
 
   @Override
   public boolean addEntry(Path obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Path path = (Path) obj;
@@ -141,10 +142,10 @@ public class PathTbl extends TableController<Path, String> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       createTableOnline();
-      return;
+      return false;
     }
     try {
       PreparedStatement s =
@@ -154,11 +155,11 @@ public class PathTbl extends TableController<Path, String> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -166,7 +167,7 @@ public class PathTbl extends TableController<Path, String> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -187,9 +188,11 @@ public class PathTbl extends TableController<Path, String> {
               + "CONSTRAINT PathFk2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID) "
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE );");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

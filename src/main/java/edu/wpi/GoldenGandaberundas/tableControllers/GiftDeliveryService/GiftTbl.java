@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -64,7 +65,7 @@ public class GiftTbl extends TableController<Gift, String> {
 
   @Override
   public boolean addEntry(Gift obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Gift gift = (Gift) obj;
@@ -156,10 +157,10 @@ public class GiftTbl extends TableController<Gift, String> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
+
     }
     try {
       PreparedStatement s =
@@ -169,11 +170,11 @@ public class GiftTbl extends TableController<Gift, String> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -181,7 +182,7 @@ public class GiftTbl extends TableController<Gift, String> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -198,13 +199,16 @@ public class GiftTbl extends TableController<Gift, String> {
               + "price DOUBLE NOT NULL, "
               + "inStock BOOLEAN NOT NULL, "
               + "PRIMARY KEY ('giftID'));");
+      this.writeTable();
+      return true;
 
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
 
       PreparedStatement s1 =
@@ -213,7 +217,7 @@ public class GiftTbl extends TableController<Gift, String> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
@@ -224,8 +228,11 @@ public class GiftTbl extends TableController<Gift, String> {
               + "price FLOAT NOT NULL, "
               + "inStock BIT NOT NULL, "
               + "PRIMARY KEY (giftID));");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.*;
@@ -73,7 +74,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
   @Override
   public boolean addEntry(MedEquipment obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     MedEquipment med = (MedEquipment) obj;
@@ -146,10 +147,10 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
   }
 
   @Override
-  public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
+  public boolean createTable() {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      return createTableOnline();
+
     }
     try {
       PreparedStatement s =
@@ -159,11 +160,11 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -171,7 +172,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -191,13 +192,15 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE"
               + ");");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
       PreparedStatement s1 =
           connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
@@ -205,7 +208,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
 
       Statement s = connection.createStatement();
@@ -220,9 +223,11 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE"
               + ");");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

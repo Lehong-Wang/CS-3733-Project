@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.LaundryService;
 
+import edu.wpi.GoldenGandaberundas.ConnectionType;
 import edu.wpi.GoldenGandaberundas.TableController;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -62,7 +63,7 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
 
   @Override
   public boolean addEntry(Laundry obj) {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return addEntryOnline(obj);
     }
     Laundry laundry = (Laundry) obj; // **
@@ -153,7 +154,7 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
+    if (TableController.getConnectionType() == ConnectionType.clientServer) {
       createTableOnline();
       return;
     }
