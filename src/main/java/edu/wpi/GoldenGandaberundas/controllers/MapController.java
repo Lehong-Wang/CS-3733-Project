@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -13,8 +14,11 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -31,6 +35,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import net.kurobako.gesturefx.GesturePane;
+import org.controlsfx.control.SearchableComboBox;
 
 /** Controller class for template file. Template FXML file is templatetemplate.fxml */
 
@@ -51,10 +56,12 @@ public class MapController {
   private ImageView mapImage = null;
   private Group imageGroup = null;
   private Pane locNodePane = null;
+  private Pane pathNodePane = null;
   private MapSubController subController = null;
   private String currentFloor = "1";
   private Group equipGroup = null;
   private Group requestGroup = null;
+  private List<String> astar = null;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -73,6 +80,8 @@ public class MapController {
   private ArrayList<Location> currentLocations = null;
 
   private PathTbl path = PathTbl.getInstance();
+  private TableController locationTableController = LocationTbl.getInstance();
+
 
   @FXML
   public void initialize() {
@@ -111,6 +120,9 @@ public class MapController {
 
     requestGroup = new Group();
     imageGroup.getChildren().add(requestGroup);
+
+    pathNodePane = new Pane();
+    imageGroup.getChildren().add(pathNodePane);
 
     // creates button to select visible floor
     HBox floorSelect = createFloorSelector();
@@ -152,8 +164,47 @@ public class MapController {
         e -> {
           requestGroup.setVisible(!requestGroup.isVisible());
         });
+    // add path planning open button
+    JFXButton openNodes = new JFXButton();
+    openNodes.setText("Path Planning");
+    openNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
 
-    HBox buttonHolder = new HBox(toggleNodes, toggleEquip);
+    // add searchable combo box for location
+    SearchableComboBox<String> startLoc = new SearchableComboBox<>();
+    SearchableComboBox<String> endLoc = new SearchableComboBox<>();
+    startLoc.setValue("Start Location");
+    endLoc.setValue("End Location");
+
+    // Populating location choice box
+    ArrayList<String> searchList = locList();
+    ObservableList<String> oList = FXCollections.observableArrayList(searchList);
+    startLoc.setItems(oList);
+    endLoc.setItems(oList);
+
+    // add button to generate path
+    JFXButton enterPath = new JFXButton();
+    enterPath.setText("Find Path");
+    enterPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+
+    // creates the nodes list
+    JFXNodesList togglePathInputs = new JFXNodesList();
+    togglePathInputs.setRotate(270);
+    togglePathInputs.spacingProperty().setValue(150);
+    togglePathInputs.addAnimatedNode(openNodes);
+    togglePathInputs.addAnimatedNode(startLoc);
+    togglePathInputs.addAnimatedNode(endLoc);
+    togglePathInputs.addAnimatedNode(enterPath);
+
+    enterPath.setOnAction(
+        (event) -> {
+          String start = (String) startLoc.getSelectionModel().getSelectedItem();
+          String end = (String) endLoc.getSelectionModel().getSelectedItem();
+          astar = PathTbl.getInstance().createAStarPath(start, end);
+          buildPath(astar);
+          pathNodePane.setVisible(!pathNodePane.isVisible());
+        });
+
+    HBox buttonHolder = new HBox(toggleNodes, toggleEquip, togglePathInputs);
     Group buttonGroup = new Group();
     buttonGroup.getChildren().add(buttonHolder);
     imagePane.getChildren().add(buttonGroup);
@@ -530,6 +581,30 @@ public class MapController {
     setRequest();
   }
 
+  /** Function for populating the location choice box, called in initialize */
+  public ArrayList<String> locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = locationTableController.readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+      // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
+      System.out.println(locNodeAr.get(i));
+    }
+    return locNodeAr;
+  }
+
+  public void buildPath(List<String> locs) {
+    int place = 0;
+    for (int i = 0; i < locs.size() - 2; i++) {
+      Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+      Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+      PathBar path = new PathBar(loc, loc1);
+      pathNodePane.getChildren().add(path);
+    }
+  }
+
   private class MedEqpImageView extends ImageView {
     public Location location = null;
     public MedEquipment medEquipment = null;
@@ -586,12 +661,14 @@ public class MapController {
     }
   }
 
-  private class PathLine extends Line {
 
-    public PathLine(Location startLocs, Location endLoc) {
-      super(startLocs.getXcoord(), startLocs.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
+  /** Creates a path bar class for path to follow */
+  private class PathBar extends Line {
+
+    public PathBar(Location startLoc, Location endLoc) {
+      super(startLoc.getXcoord(), startLoc.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
       this.setStrokeWidth(15);
-      this.setFill(Color.rgb(7, 16, 115));
+      this.setStroke(Color.rgb(7, 16, 115));
     }
   }
 }
