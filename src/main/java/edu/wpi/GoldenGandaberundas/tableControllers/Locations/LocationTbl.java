@@ -32,7 +32,6 @@ public class LocationTbl extends TableController<Location, String> {
       "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
     };
     colNames = Arrays.asList(cols);
-    objList = new ArrayList<Location>();
     objList = readTable();
   }
 

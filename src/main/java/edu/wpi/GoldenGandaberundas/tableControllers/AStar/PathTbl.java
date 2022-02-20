@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class PathTbl extends TableController<Path, String> {
@@ -277,4 +279,26 @@ public class PathTbl extends TableController<Path, String> {
     return points;
   }
 
+  public List<String> createAStarPath(String start, String end) {
+    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    if (points.size() != 0) {
+
+      points = PathTbl.getInstance().createBranchedLocations(points);
+
+      int startID = 0;
+      int endID = 0;
+      for (Point o : points) {
+        if (o.loc.equals(start)) {
+          startID = points.indexOf(o);
+        }
+        if (o.loc.equals(end)) {
+          endID = points.indexOf(o);
+        }
+      }
+      points.get(startID).g = 0;
+      Point test = points.get(startID).aStar(points.get(endID));
+      return points.get(startID).locationsPath(test);
+    }
+    return null;
+  }
 }
