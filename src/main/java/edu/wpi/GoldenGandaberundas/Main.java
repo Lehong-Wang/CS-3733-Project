@@ -57,17 +57,17 @@ public class Main {
     PathTbl.getInstance().createAStarPath("FDEPT00101", "WHALL00702");
     MedEquipmentTbl.getInstance();
 
-    LocationTbl.getInstance().loadBackup("BackupsCSVs\\locationTbl.csv");
-    EmployeeTbl.getInstance().loadBackup("BackupsCSVs\\employeeTbl.csv");
-    ComputerTbl.getInstance().loadBackup("BackupsCSVs\\computerTbl.csv");
-    FoodTbl.getInstance().loadBackup("BackupsCSVs\\foodTbl.csv");
-    GiftTbl.getInstance().loadBackup("BackupsCSVs\\giftTbl.csv");
-    LaundryTbl.getInstance().loadBackup("BackupsCSVs\\laundryTbl.csv");
-    MedicineTbl.getInstance().loadBackup("BackupsCSVs\\medicineTbl.csv");
-    PatientTbl.getInstance().loadBackup("BackupsCSVs\\patientTbl.csv");
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
+    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
+    ComputerTbl.getInstance().loadBackup("BackupsCSVs/computerTbl.csv");
+    FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
+    GiftTbl.getInstance().loadBackup("BackupsCSVs/giftTbl.csv");
+    LaundryTbl.getInstance().loadBackup("BackupsCSVs/laundryTbl.csv");
+    MedicineTbl.getInstance().loadBackup("BackupsCSVs/medicineTbl.csv");
+    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
-    PathTbl.getInstance().loadBackup("BackupsCSVs\\pathTbl.csv");
-    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs\\medEquipmentTbl.csv");
+    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
 
     floorMaps.load();
     App.launch(App.class, args);
