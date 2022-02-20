@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
@@ -27,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -69,6 +71,8 @@ public class MapController {
   private final Image L3 = floorMaps.thirdFloor;
 
   private ArrayList<Location> currentLocations = null;
+
+  private PathTbl path = PathTbl.getInstance();
 
   @FXML
   public void initialize() {
@@ -579,6 +583,15 @@ public class MapController {
 
     void setLocation(Location loc) {
       location = loc;
+    }
+  }
+
+  private class PathLine extends Line {
+
+    public PathLine(Location startLocs, Location endLoc) {
+      super(startLocs.getXcoord(), startLocs.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
+      this.setStrokeWidth(15);
+      this.setFill(Color.rgb(7, 16, 115));
     }
   }
 }

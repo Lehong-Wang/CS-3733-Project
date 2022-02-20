@@ -17,6 +17,8 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
     tbName = "Credentials";
     colNames = Arrays.asList(new String[] {"empID", "password", "salt"});
     createTable();
+
+    objList = readTable();
   }
 
   /**

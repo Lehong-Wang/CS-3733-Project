@@ -1,0 +1,7 @@
+computerID,computerType,os,processor,hostName,model,manufacturer,serialNumber
+111,type1,os1,processor1,host1,model1,manufacturer1,1
+222,type2,os2,processor2,host2,model2,manufacturer2,2
+333,type3,os3,processor3,host3,model3,manufacturer3,3
+444,type4,os4,processor4,host4,model4,manufacturer4,4
+555,type5,os5,processor5,host5,model5,manufacturer5,5
+666,type6,os6,processor6,host6,model6,manufacturer6,6
