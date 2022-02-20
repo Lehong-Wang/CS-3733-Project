@@ -1,0 +1,126 @@
+.border-pane{
+    -fx-background-color: #3d9421;
+}
+
+.table-view{
+    -fx-background-color: blue;
+    -fx-font-family: Comic Sans MS;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.button{
+    -fx-font-family: Comic Sans MS;
+}
+
+/*
+.main-frame-anchor {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-color:  #013D7B;
+    -fx-height: 800px;
+    -fx-width: 1280px;
+}
+
+.stage-frame {
+    -fx-pref-height: 800px;
+    -fx-pref-width: 1222px;
+    -fx-translate-x: 58px;
+    -fx-translate-y: 0px;
+    -fx-padding: 25px;
+}
+
+.service-pane {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: white;
+    -fx-pref-width: 1150px;
+    -fx-pref-height: 740px;
+    -fx-alignment: center;
+    -fx-translate-x: 35px;
+    -fx-translate-y: 30px;
+}
+
+.title-pane {
+    -fx-height: 185px;
+    -fx-max-width: 575px;
+    -fx-padding: 50px;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 0px;
+}
+
+.right-pane-notification-center {
+    -fx-height: 185px;
+    -fx-width: 575px;
+    -fx-padding: 50px;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 0px;
+}
+
+.body-pane {
+    -fx-height:  555px;
+    -fx-width: 1150px;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 185px;
+}
+
+.side-pane {
+    -fx-border-color: #FBC44E;
+    -fx-border-width: 1px 0 0 0;
+}
+
+.title {
+    -fx-font-size: 34pt;
+    -fx-font-family: "Segoe UI Black";
+    -fx-text-fill: #012D5A;
+    -fx-max-width: 520px;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 0px;
+    -fx-content-display: center;
+}
+
+.general-text {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semilight";
+    -fx-text-fill: #012D5A;
+}
+
+.label-style {
+    -fx-font-size: 18pt;
+    -fx-start-margin: 25px;
+    -fx-font-family: "Segoe UI Semilight";
+    -fx-text-fill: #012D5A;
+}
+.user-field {
+    -fx-max-height: 35px;
+}
+.cancel-button {
+    -fx-font-size: 16pt;
+    -fx-border-color: #4059a9;
+    -fx-border-width: 2px;
+    -fx-text-fill: #4059a9;
+    -fx-font-family: "Segoe UI Semilight";
+
+}
+.extra-box {
+    -fx-background-color: #EBECF0;
+}
+
+.submit-button {
+    -fx-font-size: 20pt;
+    -fx-background-color: #4059a9;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Semilight";
+}
+
+.img-style {
+    -fx-background-radius: 4pt;
+}
+
+.jfx-text-box{
+    -fx-border-width: .5pt;
+    -fx-border-color: #4d4d4d;
+    -fx-background-color: transparent;
+} */
