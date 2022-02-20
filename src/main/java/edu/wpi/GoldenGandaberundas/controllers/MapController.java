@@ -2,14 +2,11 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
-import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
@@ -241,7 +238,6 @@ public class MapController {
             nodeDataPane.getChildren().add(subPane);
             MapSubController subController = controllerLoader.getController();
             subController.setMapController(this);
-
             subController.setText(placeHolder.location);
           } catch (IOException exc) {
             exc.printStackTrace();
@@ -371,7 +367,6 @@ public class MapController {
           gesturePane.setGestureEnabled(true);
           double mouseX = medIcon.getLayoutX();
           double mouseY = medIcon.getLayoutY();
-          System.out.println(e.getX() + loc.getXcoord());
           double minDist = 100;
           Location snapTo = loc;
           for (Location location : currentLocations) {
@@ -388,29 +383,14 @@ public class MapController {
                 new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
             Popup reqQuestion = new Popup();
             try {
+              System.out.println("SNAP TO: " + snapTo);
               reqQuestion.getContent().add(popupLoader.load());
               reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
-              while (((ConfirmationButtons) popupLoader.getController()).getChoice() == null) {}
+              MapViewConfirmationButtons subController = popupLoader.getController();
+              subController.setMainController(this, med, snapTo);
               medIcon.setLayoutX(snapTo.getXcoord() - 5);
               medIcon.setLayoutY(snapTo.getYcoord() - 5);
-              if (((ConfirmationButtons) popupLoader.getController()).getChoice()) {
-                MedEquipRequest medEquipRequest =
-                    new MedEquipRequest(
-                        RequestTable.getInstance().readTable().size(),
-                        snapTo.getNodeID(),
-                        CurrentUser.getUser().getEmpID(),
-                        null,
-                        100,
-                        1000,
-                        null,
-                        "Submitted",
-                        " ",
-                        med.getMedID());
-                MedEquipRequestTbl.getInstance().addEntry(medEquipRequest);
-              } else {
-                MedEquipmentTbl.getInstance()
-                    .editEntry(med.getMedID(), "currLoc", snapTo.getNodeID());
-              }
+
             } catch (IOException ioException) {
               ioException.printStackTrace();
             }

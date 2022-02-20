@@ -126,7 +126,9 @@ public class RequestTable extends TableController<Request, Integer> {
       s.setInt(1, obj.getRequestID());
       s.setString(2, obj.getLocationID());
       s.setInt(3, obj.getEmpInitiated());
-      s.setInt(4, obj.getEmpCompleter());
+      if (obj.getEmpCompleter() != null) {
+        s.setInt(4, obj.getEmpCompleter());
+      } else s.setNull(4, Types.NULL);
       s.setLong(5, obj.getTimeStart());
       if (obj.getTimeEnd() != null) {
         s.setLong(6, obj.getTimeEnd());
