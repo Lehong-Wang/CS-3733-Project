@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.computerServiceController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers.computerServiceController">
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
          <children>
@@ -81,8 +81,8 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <TextArea prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                              <TextArea fx:id="problemField" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="priorityField" prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
                               <SearchableComboBox fx:id="locationSearchBox" prefHeight="40.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets bottom="25.0" top="25.0" />
@@ -105,21 +105,7 @@
                   </VBox>
                   <VBox prefHeight="492.0" prefWidth="1149.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <JFXButton alignment="CENTER" onAction="#backupDB" style="-fx-background-color: #0067B1;" text="Backup" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                              <JFXButton onAction="#load" style="-fx-background-color: #0067B1;" text="Load" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
                               <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
@@ -141,17 +127,27 @@
                   <TableColumn fx:id="locationID" prefWidth="75.0" text="locationID" />
                   <TableColumn fx:id="timeStart" prefWidth="75.0" text="submitTime" />
                   <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="completeTime" />
-                  <TableColumn fx:id="patientID" prefWidth="81.20001220703125" text="patientID" />
                   <TableColumn fx:id="empInitiated" prefWidth="86.39996337890625" text="empInitiated" />
                   <TableColumn fx:id="empCompleter" prefWidth="90.79998779296875" text="empCompleter" />
                   <TableColumn fx:id="requestStatus" prefWidth="120.79998779296875" text="requestStatus" />
-                  <TableColumn fx:id="notes" prefWidth="75.0" text="notes" />
-                  <TableColumn fx:id="compID" prefWidth="120.79998779296875" text="compID" />
-                  <TableColumn fx:id="problemType" prefWidth="120.79998779296875" text="problemType" />
-                  <TableColumn fx:id="priority" prefWidth="120.79998779296875" text="priority" />
+                  <TableColumn fx:id="notes" prefWidth="268.4000244140625" text="notes" />
+                  <TableColumn fx:id="compID" prefWidth="94.4000244140625" text="compID" />
+                  <TableColumn fx:id="problemType" prefWidth="140.40008544921875" text="problemType" />
+                  <TableColumn fx:id="priority" minWidth="4.4000244140625" prefWidth="174.39990234375" text="priority" />
                </columns>
             </TableView>
          </children>
       </VBox>
    </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Computers" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
+         </children>
+      </VBox>
+   </right>
 </BorderPane>
