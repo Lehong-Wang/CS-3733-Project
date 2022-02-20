@@ -2,20 +2,14 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
-import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.componentObjects.religiousRequest;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class ReligiousServicesController implements Initializable {
   @FXML JFXDrawer drawer; // sliding side menu
@@ -43,16 +37,6 @@ public class ReligiousServicesController implements Initializable {
     // Setting buttons to empty for closed slider, could also delete their names in SceneBuilder but
     // for now this is fine.
     servicesBtn.setText("");
-  }
-
-  public void goHome(ActionEvent actionEvent) throws IOException {
-    // gets the current stage that the button exists on
-    Stage stage = (Stage) servicesBtn.getScene().getWindow();
-
-    // sets the current scene back to the home screen
-    // !!!!!!!!!! NOTE: you can only access FXML files stored in a directory with the same name as
-    // the package!!!!!!!!!
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
   }
 
   // Method to set buttons style, used in initialize method with slide panel buttons as params

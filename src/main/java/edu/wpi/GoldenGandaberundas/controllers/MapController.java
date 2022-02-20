@@ -1,7 +1,6 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -23,7 +21,6 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,7 +28,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 import net.kurobako.gesturefx.GesturePane;
 
 /** Controller class for template file. Template FXML file is templatetemplate.fxml */
@@ -167,17 +163,6 @@ public class MapController {
 
     nodeDataPane.setManaged(false);
     nodeDataPane.setVisible(false);
-  }
-
-  @FXML
-  public void goHome(ActionEvent actionEvent) throws IOException {
-    // gets the current stage that the button exists on
-    Stage stage = (Stage) homeBtn.getScene().getWindow();
-
-    // sets the current scene back to the home screen
-    // !!!!!!!!!! NOTE: you can only access FXML files stored in a directory with the same name as
-    // the package!!!!!!!!!
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
   }
 
   public void createIcon(Location loc) {

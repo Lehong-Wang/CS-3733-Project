@@ -208,12 +208,6 @@ public class GiftFloralController implements Initializable {
     return locNodeAr;
   }
 
-  //  public void goGiftOrders(ActionEvent actionEvent) throws IOException {
-  //    Stage stage = (Stage) ordersButton.getScene().getWindow();
-  //    stage.setScene(
-  //        new Scene(FXMLLoader.load(App.class.getResource("views/giftFloralOrders.fxml"))));
-  //  }
-
   // Method to set buttons style, used in initialize method with slide panel buttons as params
   public void buttonStyle(JFXButton buttonO) {
     buttonO.setStyle(IDLE_BUTTON_STYLE);

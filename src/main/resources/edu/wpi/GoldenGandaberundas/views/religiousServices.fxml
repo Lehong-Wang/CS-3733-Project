@@ -58,7 +58,7 @@
                               </Text>
                            </graphic>
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#goHome" text="Main Page" />
+                              <MenuItem mnemonicParsing="false" text="Main Page" />
                               <MenuItem mnemonicParsing="false" text="Medical Equipment" />
                               <MenuItem mnemonicParsing="false" text="Medicine Delivery" />
                               <MenuItem mnemonicParsing="false" text="Gift/Floral Delivery" />

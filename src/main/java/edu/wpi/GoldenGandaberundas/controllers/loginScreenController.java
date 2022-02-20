@@ -64,7 +64,7 @@ public class loginScreenController {
               Stage stage = (Stage) loginBtn.getScene().getWindow();
               try {
                 stage.setScene(
-                    new Scene(FXMLLoader.load(App.class.getResource("views/mainTwo.fxml"))));
+                    new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
 
                 // Jank resizing fix but it works, definitely a better way to do it but none will
                 // take

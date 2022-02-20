@@ -30,7 +30,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </Label>
-                        <JFXButton fx:id="homeBtn" layoutX="319.0" onAction="#goHome" prefHeight="31.0" prefWidth="81.0" style="-fx-border-color: black;" text="Home" />
+                        <JFXButton fx:id="homeBtn" layoutX="319.0" prefHeight="31.0" prefWidth="81.0" style="-fx-border-color: black;" text="Home" />
                      </children>
                   </Group>
                </children>

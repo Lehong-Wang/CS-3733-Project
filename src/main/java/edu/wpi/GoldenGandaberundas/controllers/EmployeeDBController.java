@@ -51,17 +51,6 @@ public class EmployeeDBController implements Initializable {
   TableController tbCont;
 
   @FXML
-  public void goHome(ActionEvent actionEvent) throws IOException {
-    // gets the current stage that the button exists on
-    Stage stage = (Stage) homeBtn.getScene().getWindow();
-
-    // sets the current scene back to the home screen
-    // !!!!!!!!!! NOTE: you can only access FXML files stored in a directory with the same name as
-    // the package!!!!!!!!!
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
-  }
-
-  @FXML
   public void openForm(ActionEvent actionEvent) throws IOException {
     Stage stage = (Stage) formButton.getScene().getWindow();
 

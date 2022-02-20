@@ -77,7 +77,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton onAction="#load" style="-fx-background-color: #0067B1;" text="Load" textFill="WHITE">
+                              <JFXButton style="-fx-background-color: #0067B1;" text="Load" textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

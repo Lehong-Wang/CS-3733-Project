@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
@@ -26,14 +27,14 @@ public class Main {
   public static void main(String[] args) throws SQLException {
 
     // Initializes the database tables in memory
-    EmployeeTbl.getInstance();
-    LocationTbl.getInstance();
-    PatientTbl.getInstance();
-    LaundryTbl.getInstance();
-    MedEquipmentTbl.getInstance();
+    EmployeeTbl.getInstance().loadBackup("backups/employeesTbl.csv");
+    LocationTbl.getInstance().loadBackup("backups/TowerLocationsGCropped.csv");
+    PatientTbl.getInstance().loadBackup("backups/patientTbl.csv");
+    LaundryTbl.getInstance().loadBackup("backups/laundryTbl.csv");
+    MedEquipmentTbl.getInstance().loadBackup("backups/medEquipReqTbl.csv");
     MedicineTbl.getInstance();
-    GiftTbl.getInstance();
-    CredentialsTbl.getInstance();
+    GiftTbl.getInstance().loadBackup("backups/giftTbl.csv");
+    CredentialsTbl.getInstance(); // .loadBackup("backups/");
 
     RequestTable.getInstance();
 
@@ -76,6 +77,9 @@ public class Main {
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
     System.out.println(points);
+
+    Credential cred = new Credential(123, "p");
+    CredentialsTbl.getInstance().addEntry(cred);
 
     floorMaps.load();
     App.launch(App.class, args);

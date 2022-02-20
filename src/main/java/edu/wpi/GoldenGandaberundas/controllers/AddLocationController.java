@@ -1,22 +1,16 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.controllers.validators.AddLocationValidator;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class AddLocationController implements Initializable {
 
@@ -34,12 +28,6 @@ public class AddLocationController implements Initializable {
   @FXML JFXButton clearBtn;
   @FXML private Label errorLabel;
   private TableController tbCont = null;
-
-  @FXML
-  public void goHome(ActionEvent actionEvent) throws IOException {
-    Stage stage = (Stage) homeBtn.getScene().getWindow();
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
-  }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

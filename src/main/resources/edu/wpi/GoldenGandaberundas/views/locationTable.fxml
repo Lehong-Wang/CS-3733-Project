@@ -80,7 +80,7 @@
                <children>
                   <VBox fx:id="sideMenuMax" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 3;">
                      <children>
-                        <JFXButton fx:id="homeBtn" onAction="#goHome" text="Home" textAlignment="RIGHT">
+                        <JFXButton fx:id="homeBtn" text="Home" textAlignment="RIGHT">
                            <graphic>
                               <SVGPath content="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z" />
                            </graphic>
@@ -117,7 +117,7 @@
                   </VBox>
                   <VBox fx:id="sideMenuMin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="83.0" style="-fx-padding: 3;" visible="false">
                      <children>
-                        <JFXButton fx:id="homeIconBtn" onAction="#goHome" text="  " textAlignment="RIGHT">
+                        <JFXButton fx:id="homeIconBtn" text="  " textAlignment="RIGHT">
                            <graphic>
                               <SVGPath content="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z" />
                            </graphic>

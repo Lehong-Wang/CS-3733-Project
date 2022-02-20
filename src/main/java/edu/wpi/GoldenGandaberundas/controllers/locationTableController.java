@@ -49,16 +49,6 @@ public class locationTableController implements Initializable {
 
   TableController tc = null;
 
-  public void goHome(ActionEvent actionEvent) throws IOException {
-    // gets the current stage that the button exists on
-    Stage stage = (Stage) homeBtn.getScene().getWindow();
-
-    // sets the current scene back to the home screen
-    // !!!!!!!!!! NOTE: you can only access FXML files stored in a directory with the same name as
-    // the package!!!!!!!!!
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
-  }
-
   /** clicking on the backup btn opens a file selection dialog to choose the file name used to * */
   @FXML
   public void backup() {
