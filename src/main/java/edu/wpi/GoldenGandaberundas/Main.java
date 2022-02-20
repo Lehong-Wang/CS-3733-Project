@@ -43,8 +43,10 @@ public class Main {
     LaundryRequestTbl.getInstance();
     FoodTbl.getInstance();
 
+
     LocationTbl.getInstance();
     PathTbl.getInstance();
+
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
 
@@ -61,7 +63,7 @@ public class Main {
     points.get(start).g = 0;
     Point test = points.get(start).aStar(points.get(end));
     points.get(start).locationsPath(test);
-
+    
     Credential cred = new Credential(123, "p");
     CredentialsTbl.getInstance().addEntry(cred);
 
