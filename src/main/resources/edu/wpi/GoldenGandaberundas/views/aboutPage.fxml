@@ -16,7 +16,7 @@
          <children>
             <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="About">
                <font>
-                  <Font size="36.0" />
+                  <Font size="48.0" />
                </font>
             </Label>
             <HBox prefHeight="786.0" prefWidth="1496.0">
@@ -35,7 +35,7 @@
                      <children>
                         <Label text="Special Thanks To:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="48.0" />
                            </font>
                         </Label>
                         <Label text="WPI Computer Science Department" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -65,7 +65,7 @@
                         </Label>
                         <Label text="CS3733-C22 Software Engineering" GridPane.halignment="CENTER">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="48.0" />
                            </font>
                         </Label>
                         <Label text="Michael O’Connor, Lead Software Engineer" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
