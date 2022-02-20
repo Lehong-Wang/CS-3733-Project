@@ -136,8 +136,8 @@ public class MedicineTbl extends TableController<Medicine, String> {
                 Integer.parseInt(element[0]),
                 element[1],
                 element[2],
-                Double.parseDouble(element[2]),
-                Boolean.parseBoolean(element[3])); // **
+                Double.parseDouble(element[3]),
+                Boolean.parseBoolean(element[4])); // **
         medList.add(med); // adds the location to the list
         currentLine = buffer.readLine();
       }

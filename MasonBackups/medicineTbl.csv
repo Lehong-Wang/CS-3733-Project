@@ -1,0 +1,7 @@
+medicineID,medName,description,price,inStock
+111,tylenol,this is the first gift,1.11,true
+222,ibuprofen,this is the second gift,2.22,false
+333,nyquil,this is the third gift,3.33,true
+444,aspirin,this is the fourth gift,4.44,false
+555,zyrtec,this is the fifth gift,5.55,true
+666,acetaminophen,this is the sixth gift,6.66,false
