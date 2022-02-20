@@ -394,17 +394,6 @@ public abstract class TableController<T, T1> {
    */
   public abstract T getEntry(T1 pkID);
 
-  //  /**
-  //   * set the objList to the list passed in only used for testing
-  //   *
-  //   * @param list
-  //   * @return the new objList
-  //   */
-  //  public ArrayList<T> setObjList(ArrayList<T> list) {
-  //    objList = list;
-  //    return objList;
-  //  }
-
   public void backUpAllTables() {
     File backupDir = new File("Backups");
     if (!backupDir.exists()) {

@@ -6,7 +6,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Requests;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Request implements iRequestObjects {
+public class Request{
   protected Integer requestID = -1;
   protected String locationID = "";
   protected Integer empInitiated = -1;
@@ -86,7 +86,6 @@ public class Request implements iRequestObjects {
     return requestID;
   }
 
-  @Override
   public ArrayList<Integer> getPK() {
     return new ArrayList<Integer>(Arrays.asList(this.requestID));
   }
