@@ -1,7 +1,8 @@
-package edu.wpi.GoldenGandaberundas.controllers;
+package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
+import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.Computer;
@@ -11,16 +12,24 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
 public class computerServiceController implements Initializable {
@@ -109,6 +118,13 @@ public class computerServiceController implements Initializable {
           locations = selectedItem;
         });
 
+    computerRequestsTbl.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            onEdit();
+          }
+        });
+
     ArrayList<String> searchList = locList();
     ObservableList<String> oList = FXCollections.observableArrayList(searchList);
     locationSearchBox.setItems(oList);
@@ -152,6 +168,24 @@ public class computerServiceController implements Initializable {
     refresh();
   }
 
+  void onEdit() {
+    if (computerRequestsTbl.getSelectionModel().getSelectedItem() != null) {
+      try {
+        ComputerRequest selectedItem =
+            (ComputerRequest) computerRequestsTbl.getSelectionModel().getSelectedItem();
+        FXMLLoader load = new FXMLLoader(App.class.getResource("views/editComputerReqForm.fxml"));
+        AnchorPane editForm = load.load();
+        editComputerReqFormController edit = load.getController();
+        edit.editForm(RequestTable.getInstance().getEntry(selectedItem.getPK().get(0)));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(editForm));
+        stage.show();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   /**
    * Gets the table from the database for computers and computer requests and sets the table views
    * to those values.
@@ -161,9 +195,79 @@ public class computerServiceController implements Initializable {
     computerRequestsTbl.getItems().setAll(computerRequests.readTable());
   }
 
-  public void backupDB() {}
+  @FXML
+  public void backupComputers() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Computers File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
 
-  public void load() {}
+    if (selectedFile != null) {
+      ComputerTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\computerTblBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Requests File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      ComputerRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "\\computerRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  @FXML
+  public void loadDBComputers() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Computers File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      ComputerTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
+  }
+
+  @FXML
+  public void loadDBRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Computer Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      ComputerRequestTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
+  }
 
   public void submit() {
 
