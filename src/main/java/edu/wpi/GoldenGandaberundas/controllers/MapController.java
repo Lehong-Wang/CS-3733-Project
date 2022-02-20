@@ -188,6 +188,18 @@ public class MapController {
     enterPath.setText("Find Path");
     enterPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
 
+    // clear path button
+    JFXButton clearPath = new JFXButton();
+    clearPath.setText("Clear Path");
+    clearPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+
+    clearPath.setOnMouseReleased(
+        (event) -> {
+          pathNodePane.getChildren().clear();
+          startTemp = null;
+          endTemp = null;
+        });
+
     // creates the nodes list
     JFXNodesList togglePathInputs = new JFXNodesList();
     togglePathInputs.setRotate(270);
@@ -196,6 +208,7 @@ public class MapController {
     togglePathInputs.addAnimatedNode(startLoc);
     togglePathInputs.addAnimatedNode(endLoc);
     togglePathInputs.addAnimatedNode(enterPath);
+    togglePathInputs.addAnimatedNode(clearPath);
 
     enterPath.setOnMouseReleased(
         (event) -> {
@@ -475,37 +488,32 @@ public class MapController {
     floorL2.setOnAction(
         e -> {
           mapImage.setImage(LL2);
-          setLocations("L2");
-          setEquipment();
-          setRequest();
+          currentFloor = "L2";
+          refreshMap();
         });
     floorL1.setOnAction(
         e -> {
           mapImage.setImage(LL1);
-          setLocations("L1");
-          setEquipment();
-          setRequest();
+          currentFloor = "L1";
+          refreshMap();
         });
     floor01.setOnAction(
         e -> {
           mapImage.setImage(L1);
-          setLocations("1");
-          setEquipment();
-          setRequest();
+          currentFloor = "1";
+          refreshMap();
         });
     floor02.setOnAction(
         e -> {
           mapImage.setImage(L2);
-          setLocations("2");
-          setEquipment();
-          setRequest();
+          currentFloor = "2";
+          refreshMap();
         });
     floor03.setOnAction(
         e -> {
           mapImage.setImage(L3);
-          setLocations("3");
-          setEquipment();
-          setRequest();
+          currentFloor = "3";
+          refreshMap();
         });
 
     return floorSelect;
@@ -584,6 +592,7 @@ public class MapController {
     setLocations(currentFloor);
     setEquipment();
     setRequest();
+    refreshPath();
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -595,11 +604,16 @@ public class MapController {
     for (int i = 0; i < locArray.size(); i++) {
       locNodeAr.add(i, locArray.get(i).getNodeID());
       // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
-      System.out.println(locNodeAr.get(i));
+      // System.out.println(locNodeAr.get(i));
     }
     return locNodeAr;
   }
 
+  /**
+   * creates the path for using the a star path
+   *
+   * @param locs the list of String location node ids
+   */
   public void buildPath(List<String> locs) {
     pathNodePane.getChildren().clear();
     for (int i = 0; i < locs.size() - 2; i++) {
@@ -607,11 +621,33 @@ public class MapController {
       Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
       PathBar path = new PathBar(loc, loc1);
       pathNodePane.getChildren().add(path);
+      if (!path.floor.equals(currentFloor)) {
+        path.setVisible(false);
+      }
     }
     startTemp = locs.get(0);
     endTemp = locs.get(locs.size() - 1);
   }
 
+  /** refreshes the map to load the path to the appropriate floor (inspired by Will) */
+  public void refreshPath() {
+    for (Node p : pathNodePane.getChildren()) {
+      PathBar pb = (PathBar) p;
+      if (!pb.floor.equals(currentFloor)) {
+        pb.setVisible(false);
+      } else {
+        pb.setVisible(true);
+      }
+    }
+  }
+
+  /**
+   * checks to see if the previous path was already use
+   *
+   * @param start the initial starting location
+   * @param end the initial ending location
+   * @return returns a bool if the locations match
+   */
   public boolean previouslyUsed(String start, String end) {
     return start.equals(startTemp) && end.equals(endTemp);
   }
@@ -675,11 +711,19 @@ public class MapController {
 
   /** Creates a path bar class for path to follow */
   private class PathBar extends Line {
+    private String floor = "00";
 
     public PathBar(Location startLoc, Location endLoc) {
       super(startLoc.getXcoord(), startLoc.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
       this.setStrokeWidth(15);
       this.setStroke(Color.rgb(7, 16, 115));
+      if (startLoc.getFloor().equals(endLoc.getFloor())) {
+        floor = startLoc.getFloor();
+      }
+    }
+
+    public String getFloor() {
+      return floor;
     }
   }
 }
