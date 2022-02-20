@@ -62,6 +62,8 @@ public class MapController {
   private Group equipGroup = null;
   private Group requestGroup = null;
   private List<String> astar = null;
+  private String startTemp = null;
+  private String endTemp = null;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -195,13 +197,16 @@ public class MapController {
     togglePathInputs.addAnimatedNode(endLoc);
     togglePathInputs.addAnimatedNode(enterPath);
 
-    enterPath.setOnAction(
+    enterPath.setOnMouseReleased(
         (event) -> {
           String start = (String) startLoc.getSelectionModel().getSelectedItem();
           String end = (String) endLoc.getSelectionModel().getSelectedItem();
-          astar = PathTbl.getInstance().createAStarPath(start, end);
-          buildPath(astar);
-          pathNodePane.setVisible(!pathNodePane.isVisible());
+          System.out.println(previouslyUsed(start, end));
+          if (!previouslyUsed(start, end)) {
+            astar = PathTbl.getInstance().createAStarPath(start, end);
+            buildPath(astar);
+            pathNodePane.setVisible(true);
+          }
         });
 
     HBox buttonHolder = new HBox(toggleNodes, toggleEquip, togglePathInputs);
@@ -596,13 +601,19 @@ public class MapController {
   }
 
   public void buildPath(List<String> locs) {
-    int place = 0;
+    pathNodePane.getChildren().clear();
     for (int i = 0; i < locs.size() - 2; i++) {
       Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
       Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
       PathBar path = new PathBar(loc, loc1);
       pathNodePane.getChildren().add(path);
     }
+    startTemp = locs.get(0);
+    endTemp = locs.get(locs.size() - 1);
+  }
+
+  public boolean previouslyUsed(String start, String end) {
+    return start.equals(startTemp) && end.equals(endTemp);
   }
 
   private class MedEqpImageView extends ImageView {
