@@ -134,7 +134,7 @@ public class MedicineDeliveryController {
     if (reqTable.readTable().size() == 0) {
       requestID = 0;
     } else {
-      requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID();
+      requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
     }
     String nodeID = locInput.getText();
     int patientID = Integer.parseInt(patientInput.getText());

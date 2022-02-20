@@ -26,13 +26,13 @@ public class Main {
   public static void main(String[] args) throws SQLException {
 
     // Initializes the database tables in memory
-    EmployeeTbl.getInstance().loadBackup("backups/employeesTbl.csv");
-    LocationTbl.getInstance().loadBackup("backups/TowerLocationsGCropped.csv");
-    PatientTbl.getInstance().loadBackup("backups/patientTbl.csv");
-    LaundryTbl.getInstance().loadBackup("backups/laundryTbl.csv");
-    MedEquipmentTbl.getInstance().loadBackup("backups/medEquipReqTbl.csv");
+    EmployeeTbl.getInstance();
+    LocationTbl.getInstance();
+    PatientTbl.getInstance();
+    LaundryTbl.getInstance();
+    MedEquipmentTbl.getInstance();
     MedicineTbl.getInstance();
-    GiftTbl.getInstance().loadBackup("backups/giftTbl.csv");
+    GiftTbl.getInstance();
     CredentialsTbl.getInstance(); // .loadBackup("backups/");
 
     RequestTable.getInstance();
@@ -43,8 +43,8 @@ public class Main {
     LaundryRequestTbl.getInstance();
     FoodTbl.getInstance();
 
-    LocationTbl.getInstance().loadBackup("backups/TowerLocationsGCropped.csv");
-    PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+    LocationTbl.getInstance();
+    PathTbl.getInstance();
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
 
@@ -61,7 +61,6 @@ public class Main {
     points.get(start).g = 0;
     Point test = points.get(start).aStar(points.get(end));
     points.get(start).locationsPath(test);
-
 
     Credential cred = new Credential(123, "p");
     CredentialsTbl.getInstance().addEntry(cred);
