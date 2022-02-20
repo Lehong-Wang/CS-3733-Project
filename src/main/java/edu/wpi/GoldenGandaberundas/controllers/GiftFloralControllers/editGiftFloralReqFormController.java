@@ -24,36 +24,29 @@ public class editGiftFloralReqFormController {
   @FXML TextField giftField;
   @FXML JFXButton editButton;
 
-  @FXML JFXButton locBtn;
-  @FXML JFXButton subBtn;
-  @FXML JFXButton finishBtn;
-  @FXML JFXButton requestBtn;
-  @FXML JFXButton completeBtn;
-  @FXML JFXButton statusBtn;
-
   RequestTable requests = RequestTable.getInstance();
   GiftRequestTbl giftReqs = GiftRequestTbl.getInstance();
   GiftTbl gifts = GiftTbl.getInstance();
   ArrayList<Integer> pkIDs = new ArrayList<Integer>();
 
-  public void editForm(Request medReq) throws IOException {
-    giftRequestIDField.setText(String.valueOf(medReq.getRequestID()));
-    locField.setText(medReq.getLocationID());
-    subTimeField.setText(String.valueOf(medReq.getTimeStart()));
-    finishTimeField.setText(String.valueOf(medReq.getTimeEnd()));
-    patientIDField.setText(String.valueOf(medReq.getPatientID()));
-    requesterIDField.setText(String.valueOf(medReq.getEmpInitiated()));
-    completerIDField.setText(String.valueOf(medReq.getEmpCompleter()));
-    statusField.setText(medReq.getRequestStatus());
+  public void editForm(Request giftReq) throws IOException {
+    giftRequestIDField.setText(String.valueOf(giftReq.getRequestID()));
+    locField.setText(giftReq.getLocationID());
+    subTimeField.setText(String.valueOf(giftReq.getTimeStart()));
+    finishTimeField.setText(String.valueOf(giftReq.getTimeEnd()));
+    patientIDField.setText(String.valueOf(giftReq.getPatientID()));
+    requesterIDField.setText(String.valueOf(giftReq.getEmpInitiated()));
+    completerIDField.setText(String.valueOf(giftReq.getEmpCompleter()));
+    statusField.setText(giftReq.getRequestStatus());
   }
 
-  private boolean medRequestExists() {
+  private boolean giftRequestExists() {
     return requests.entryExists(Integer.parseInt(giftRequestIDField.getText()));
   }
 
   @FXML
   public void editRequest() {
-    if (medRequestExists()) {
+    if (giftRequestExists()) {
       String locationID = locField.getText();
       Integer pkID = Integer.parseInt(giftRequestIDField.getText());
       Integer empInitiated = Integer.parseInt(requesterIDField.getText());

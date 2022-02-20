@@ -198,10 +198,13 @@ public class LaundryServiceController implements Initializable {
 
   public void submit() {
     int idCounter =
-        requestTableController
-            .readTable()
-            .get(requestTableController.readTable().size() - 1)
-            .getRequestID();
+        RequestTable.getInstance().readTable().size() - 1 < 0
+            ? 0
+            : requestTableController
+                    .readTable()
+                    .get(requestTableController.readTable().size() - 1)
+                    .getRequestID()
+                + 1;
     int requesterID = Integer.parseInt(idField.getText());
     locations = locationSearchBox.getValue();
 

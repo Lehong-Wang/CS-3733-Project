@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.computerServiceController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers.computerServiceController">
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
          <children>
@@ -105,21 +105,7 @@
                   </VBox>
                   <VBox prefHeight="492.0" prefWidth="1149.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <JFXButton alignment="CENTER" onAction="#backupDB" style="-fx-background-color: #0067B1;" text="Backup" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                              <JFXButton onAction="#load" style="-fx-background-color: #0067B1;" text="Load" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
                               <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
@@ -153,4 +139,15 @@
          </children>
       </VBox>
    </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Computers" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
+         </children>
+      </VBox>
+   </right>
 </BorderPane>
