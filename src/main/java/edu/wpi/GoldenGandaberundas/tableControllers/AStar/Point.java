@@ -3,8 +3,9 @@ package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
-public class Point {
+public class Point implements Comparable<Point> {
 
   public int x;
   public int y;
@@ -36,14 +37,14 @@ public class Point {
   }
 
   public Point aStar(Point target) {
-    ArrayList<Point> closedList = new ArrayList<>();
-    ArrayList<Point> openList = new ArrayList<>();
+    PriorityQueue<Point> closedList = new PriorityQueue<>();
+    PriorityQueue<Point> openList = new PriorityQueue<>();
 
     this.f = this.g + this.calculateHeuristic(target);
     openList.add(this);
 
     while (!openList.isEmpty()) {
-      Point n = openList.get(openList.size() - 1);
+      Point n = openList.peek();
       if (n == target) {
         return n;
       }
@@ -105,5 +106,10 @@ public class Point {
     stringBuilder.append(",");
     stringBuilder.append(neighbors);
     return stringBuilder.toString();
+  }
+
+  @Override
+  public int compareTo(Point o) {
+    return Double.compare(this.f, o.f);
   }
 }

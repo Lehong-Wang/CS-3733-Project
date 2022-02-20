@@ -153,7 +153,7 @@ public class LocationTbl extends TableController<Location, String> {
       File csvFile = new File(fileName);
       BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
       String currentLine = buffer.readLine(); // reads a line from the csv file
-      System.out.println(currentLine);
+      //      System.out.println(currentLine);
       if (!currentLine
           .toLowerCase(Locale.ROOT)
           .trim()
@@ -176,7 +176,7 @@ public class LocationTbl extends TableController<Location, String> {
                   element[6],
                   element[7]);
           locList.add(loc); // adds the location to the list
-          System.out.println(loc.toString());
+          //          System.out.println(loc.toString());
         }
         currentLine = buffer.readLine();
       }
