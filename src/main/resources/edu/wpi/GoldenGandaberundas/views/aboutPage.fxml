@@ -57,6 +57,9 @@
                            <font>
                               <Font size="30.0" />
                            </font>
+                           <padding>
+                              <Insets top="15.0" />
+                           </padding>
                         </Label>
                         <Label text="Andrew Shinn" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
@@ -92,6 +95,9 @@
                            <font>
                               <Font size="30.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
                         </Label>
                         <Label text="Jason Martino, Scrum Master" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
@@ -107,6 +113,9 @@
                            <font>
                               <Font size="30.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
                         </Label>
                         <Label text="Lehong Wang, Back-end Database Engineer" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                            <font>
