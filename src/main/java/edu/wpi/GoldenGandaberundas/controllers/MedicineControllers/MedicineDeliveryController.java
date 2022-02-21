@@ -1,7 +1,10 @@
 package edu.wpi.GoldenGandaberundas.controllers.MedicineControllers;
 
-import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
+import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
@@ -9,6 +12,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,14 +23,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.SearchableComboBox;
 
 public class MedicineDeliveryController {
 
   @FXML Button submitBtn;
-  @FXML TextField locInput;
-  @FXML TextField patientInput;
-  @FXML TextField requestInput;
-  @FXML TextField medicineInput;
+  @FXML private SearchableComboBox<String> locationSearchBox;
+  // String that holds the location selected in search box used for object creation
+  private String locations;
+  private int currentPatientID;
+  private int currentMedicineID;
+  @FXML private SearchableComboBox<Integer> medicineSearchBox;
+  @FXML private SearchableComboBox<Integer> patientSearchBox;
+  @FXML private TextArea notesField;
 
   @FXML TableView medicineTbl; // Service Table
 
@@ -43,7 +53,7 @@ public class MedicineDeliveryController {
   @FXML TableColumn<MedicineRequest, Integer> dosage;
   @FXML TableColumn<MedicineRequest, String> priority;
 
-  @FXML TableView medicineTable;
+  @FXML TableView medicineMenuTable;
   @FXML TableColumn<Medicine, String> medName;
   @FXML TableColumn<Medicine, String> medicineID;
   @FXML TableColumn<Medicine, String> description;
@@ -54,6 +64,9 @@ public class MedicineDeliveryController {
   private MedicineTbl medicine;
   private MedicineRequestTbl requestTable;
   private RequestTable reqTable = RequestTable.getInstance();
+  private TableController locationTableController = LocationTbl.getInstance();
+  private TableController patientTableController = PatientTbl.getInstance();
+  private TableController medicineTableController = MedicineTbl.getInstance();
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE =
@@ -62,6 +75,7 @@ public class MedicineDeliveryController {
       "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left";
 
   // Runs when scene loads
+  @FXML
   public void initialize() {
 
     reqID.setCellValueFactory(new PropertyValueFactory<MedicineRequest, String>("requestID"));
@@ -90,9 +104,16 @@ public class MedicineDeliveryController {
     // MedicineRequest testReq = new MedicineRequest("bruh", "FDEPT00101", 0, 0, 123, 123, 123,
     // "ok");
 
+    // Populating location choice box
+    locList();
+    patientList();
+    medList();
+    // Setting up choice box Listeners
+    setupComboListeners();
+
+    // Populating the Medicine choice box with
     // patients = PatientTbl.getInstance();
     // patients.addEntry(patient);
-    medicine = MedicineTbl.getInstance();
 
     requestTable = MedicineRequestTbl.getInstance();
     // orderedMedicine = OrderedMedicineTbl.getInstance();
@@ -104,6 +125,75 @@ public class MedicineDeliveryController {
           if (e.getClickCount() > 1) {
             onEdit();
           }
+        });
+  }
+
+  /**
+   * Method that populates the location combo box from the locationTbl
+   * Called in initialize
+   */
+  public void locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = locationTableController.readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+    }
+    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
+    locationSearchBox.setItems(oList);
+  }
+
+  /**
+   * Method that populates the patient combo box from the patientTbl
+   * Called in initialize
+   */
+  public void patientList() {
+    ArrayList<Patient> patientArray = new ArrayList<Patient>();
+    patientArray = patientTableController.readTable();
+    ArrayList<Integer> patientIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < patientArray.size(); i++) {
+      patientIDAr.add(i, patientArray.get(i).getPatientID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(patientIDAr);
+    patientSearchBox.setItems(oList);
+  }
+
+  /**
+   * Method that populates the medicine combo box from the MedicineTbl
+   * Called in initialize
+   */
+  public void medList() {
+    ArrayList<Medicine> medArray = new ArrayList<Medicine>();
+    medArray = medicineTableController.readTable();
+    ArrayList<Integer> medIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < medArray.size(); i++) {
+      medIDAr.add(i, medArray.get(i).getMedicineID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
+    medicineSearchBox.setItems(oList);
+  }
+
+  /**
+   * Method that sets up the event listeners for the searchable combo boxes
+   * Called in initialize
+   */
+  public void setupComboListeners() {
+    locationSearchBox.setOnAction(
+        (event) -> {
+          String selectedItem = (String) locationSearchBox.getSelectionModel().getSelectedItem();
+          locations = selectedItem;
+        });
+
+    medicineSearchBox.setOnAction(
+        (event) -> {
+          Integer selectedItem = (Integer) medicineSearchBox.getSelectionModel().getSelectedItem();
+          currentMedicineID = selectedItem;
+        });
+
+    patientSearchBox.setOnAction(
+        (event) -> {
+          Integer selectedItem = (Integer) patientSearchBox.getSelectionModel().getSelectedItem();
+          currentPatientID = selectedItem;
         });
   }
 
@@ -131,15 +221,16 @@ public class MedicineDeliveryController {
   public void submit() {
     requestTable = MedicineRequestTbl.getInstance();
     int requestID = 0;
+    String notes = notesField.getText();
     if (reqTable.readTable().size() == 0) {
       requestID = 0;
     } else {
       requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
     }
-    String nodeID = locInput.getText();
-    int patientID = Integer.parseInt(patientInput.getText());
-    int requesterID = Integer.parseInt(requestInput.getText());
-    int medicineID = Integer.parseInt(medicineInput.getText());
+    String nodeID = locations;
+    int patientID = currentPatientID;
+    int requesterID = CurrentUser.getUser().getEmpID();
+    int medicineID = currentMedicineID;
 
     MedicineRequest medicineRequest2 =
         new MedicineRequest(
@@ -151,7 +242,7 @@ public class MedicineDeliveryController {
             000,
             patientID,
             "Submitted",
-            "",
+            notes,
             medicineID,
             000,
             000);
@@ -258,23 +349,10 @@ public class MedicineDeliveryController {
     requestTable = MedicineRequestTbl.getInstance();
 
     RequestTable test = RequestTable.getInstance();
-    medicine = MedicineTbl.getInstance();
+    medicineTableController = MedicineTbl.getInstance();
     medicineTbl.getItems().setAll(requestTable.readTable());
 
-    medicineTable.getItems().setAll(medicine.readTable());
-  }
-
-  // Method to set buttons style, used in initialize method with slide panel buttons as params
-  public void buttonStyle(JFXButton buttonO) {
-    buttonO.setStyle(IDLE_BUTTON_STYLE);
-    buttonO.setOnMouseEntered(
-        e -> {
-          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-        });
-    buttonO.setOnMouseExited(
-        e -> {
-          buttonO.setStyle(IDLE_BUTTON_STYLE);
-        });
+    medicineMenuTable.getItems().setAll(medicineTableController.readTable());
   }
 
   public void editEntry() throws IOException {

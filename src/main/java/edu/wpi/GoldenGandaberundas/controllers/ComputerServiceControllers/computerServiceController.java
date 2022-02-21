@@ -1,7 +1,5 @@
 package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
@@ -26,7 +24,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -34,9 +31,6 @@ import org.controlsfx.control.SearchableComboBox;
 
 public class computerServiceController implements Initializable {
 
-  @FXML JFXDrawer drawer; // sliding side menu
-  @FXML VBox drawerBox; // Cool Sliding Table
-  @FXML JFXButton currProblemsBtn; // Cool Sliding Button
   @FXML SearchableComboBox<Integer> deviceSearchBox;
   @FXML ComboBox<String> problemTypeBox;
   @FXML TextArea problemField;
@@ -125,9 +119,7 @@ public class computerServiceController implements Initializable {
           }
         });
 
-    ArrayList<String> searchList = locList();
-    ObservableList<String> oList = FXCollections.observableArrayList(searchList);
-    locationSearchBox.setItems(oList);
+    locList();
 
     /*
      * Gets the list of computer IDs from ComputersTable and sets
@@ -311,16 +303,15 @@ public class computerServiceController implements Initializable {
 
   public void clear() {}
 
-  public ArrayList<String> locList() {
+  public void locList() {
     ArrayList<Location> locArray = new ArrayList<Location>();
     locArray = locationTableController.readTable();
     ArrayList<String> locNodeAr = new ArrayList<String>();
 
     for (int i = 0; i < locArray.size(); i++) {
       locNodeAr.add(i, locArray.get(i).getNodeID());
-      // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
-      System.out.println(locNodeAr.get(i));
     }
-    return locNodeAr;
+    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
+    locationSearchBox.setItems(oList);
   }
 }

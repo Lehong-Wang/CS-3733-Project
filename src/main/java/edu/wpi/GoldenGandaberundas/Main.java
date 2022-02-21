@@ -8,7 +8,9 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequ
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeePermission;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
@@ -69,6 +71,11 @@ public class Main {
     PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
     MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
 
+    EmployeePermissionTbl.getInstance();
+    EmployeePermission adminPerm = new EmployeePermission(123, 111);
+    EmployeePermission staffPerm = new EmployeePermission(456, 222);
+    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
+    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
     floorMaps.load();
     App.launch(App.class, args);
   }
