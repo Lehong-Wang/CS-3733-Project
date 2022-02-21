@@ -64,6 +64,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false">
                            <items>
+                              <MenuItem mnemonicParsing="false" onAction="#logoutProgram" text="Logout" />
                               <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
                            </items>
                            <graphic>

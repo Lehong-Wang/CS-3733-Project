@@ -2,6 +2,8 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
+import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -313,6 +316,12 @@ public class mainController {
       HomeButton.setText("");
       SideViewButton.setText("");
     }
+  }
+
+  public void logoutProgram() throws IOException {
+    Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
+    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/loginScreen.fxml"))));
+    CurrentUser.clearUser();
   }
 
   @FXML

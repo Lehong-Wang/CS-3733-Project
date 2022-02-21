@@ -35,7 +35,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="184.0" prefWidth="364.0">
                            <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                              <Text fx:id="userText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -43,7 +43,7 @@
                               <TextField fx:id="userField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="59.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
                               <VBox alignment="CENTER" prefHeight="141.0" prefWidth="186.0">
                                  <children>
-                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                                    <Text fx:id="passText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                                        <font>
                                           <Font size="24.0" />
                                        </font>

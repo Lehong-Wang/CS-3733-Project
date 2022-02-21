@@ -244,6 +244,11 @@ public class PathTbl extends TableController<Path, String> {
     return path;
   }
 
+  /**
+   * searched the path table and returns and creates a list of path points
+   * @param startNode finds the starting node
+   * @return  update list of the string nodes
+   */
   public ArrayList<String> getConnectedPoints(String startNode) {
     ArrayList<String> connect = new ArrayList<>();
     try {
@@ -263,6 +268,11 @@ public class PathTbl extends TableController<Path, String> {
     return connect;
   }
 
+  /**
+   * takes in the path points and creates the proper branches for the points
+   * @param points  the lsit of every point in the path list
+   * @return updates points list
+   */
   public ArrayList<Point> createBranchedLocations(ArrayList<Point> points) {
 
     for (Point p : points) {
@@ -279,6 +289,12 @@ public class PathTbl extends TableController<Path, String> {
     return points;
   }
 
+  /**
+   * Takes in the name for the start and ending nodes and creates the appropriate a star path
+   * @param start string of the starting node
+   * @param end string of the ending node
+   * @return list of Strings created from the a star path
+   */
   public List<String> createAStarPath(String start, String end) {
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     if (points.size() != 0) {
