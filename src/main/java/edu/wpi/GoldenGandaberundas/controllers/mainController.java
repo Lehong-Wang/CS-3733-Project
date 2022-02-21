@@ -12,6 +12,8 @@ import java.io.IOException;
 
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeePermission;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.ArrayList;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
