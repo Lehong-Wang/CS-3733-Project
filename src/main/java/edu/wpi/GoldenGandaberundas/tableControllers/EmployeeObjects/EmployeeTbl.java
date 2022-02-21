@@ -109,13 +109,12 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
                   + " VALUES (?, ?, ?, ?, ?, ?, ?)"
                   + "end");
       s.setInt(1, obj.getEmpID());
-      s.setInt(2, obj.getEmpID());
-      s.setString(3, obj.getFName());
-      s.setString(4, obj.getLName());
-      s.setString(5, obj.getRole());
-      s.setString(6, obj.getEmail());
-      s.setString(7, obj.getPhoneNum());
-      s.setString(8, obj.getAddress());
+      s.setString(2, obj.getFName());
+      s.setString(3, obj.getLName());
+      s.setString(4, obj.getRole());
+      s.setString(5, obj.getEmail());
+      s.setString(6, obj.getPhoneNum());
+      s.setString(7, obj.getAddress());
       int r = s.executeUpdate();
       if (r != 0) {
         return true;

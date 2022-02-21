@@ -21,7 +21,6 @@
           <TableColumn fx:id="empID" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="firstName" prefWidth="75.0" text="FName" />
           <TableColumn fx:id="lastName" prefWidth="75.0" text="LName" />
-            <TableColumn fx:id="perms" prefWidth="75.0" text="Perms" />
             <TableColumn fx:id="role" prefWidth="75.0" text="Role" />
             <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
             <TableColumn fx:id="phoneNumber" prefWidth="75.0" text="Phone Number" />

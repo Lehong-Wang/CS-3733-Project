@@ -42,7 +42,6 @@ public class EmployeeDBController implements Initializable {
   @FXML TableColumn<Employee, Integer> empID;
   @FXML TableColumn<Employee, String> firstName;
   @FXML TableColumn<Employee, String> lastName;
-  @FXML TableColumn<Employee, String> perms;
   @FXML TableColumn<Employee, String> role;
   @FXML TableColumn<Employee, String> email;
   @FXML TableColumn<Employee, String> phoneNumber;
@@ -139,7 +138,6 @@ public class EmployeeDBController implements Initializable {
     empID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("empID"));
     firstName.setCellValueFactory(new PropertyValueFactory<Employee, String>("FName"));
     lastName.setCellValueFactory(new PropertyValueFactory<Employee, String>("LName"));
-    perms.setCellValueFactory(new PropertyValueFactory<Employee, String>("permission"));
     role.setCellValueFactory(new PropertyValueFactory<Employee, String>("role"));
     email.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
     phoneNumber.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNum"));
