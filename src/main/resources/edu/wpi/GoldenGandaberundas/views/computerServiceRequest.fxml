@@ -105,7 +105,21 @@
                   </VBox>
                   <VBox prefHeight="424.0" prefWidth="901.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="computersTable" prefHeight="453.0" prefWidth="901.0" VBox.vgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <JFXButton alignment="CENTER" onAction="#backupDB" styleClass="backupButton" text="Backup">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton onAction="#load" styleClass="backupButton" text="Load">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
                               <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
