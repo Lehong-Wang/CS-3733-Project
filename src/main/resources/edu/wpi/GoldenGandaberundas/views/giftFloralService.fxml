@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.GiftFloralControllers.GiftFloralController">
@@ -124,6 +123,11 @@
                         <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
                      </GridPane.margin>
                   </SearchableComboBox>
+                  <Label text="Order Gifts and Flowers" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
             <TableView fx:id="giftMenuTable" prefHeight="200.0" prefWidth="515.0" VBox.vgrow="ALWAYS">
@@ -155,11 +159,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" text="Backup Gifts"/>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests"/>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0"  text="Load GiftBackup"/>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup"/>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" text="Backup Gifts" styleClass="backupButton"/>
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests" styleClass="backupButton"/>
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0"  text="Load GiftBackup" styleClass="backupButton"/>
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup" styleClass="backupButton"/>
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" styleClass="backupButton"/>
          </children>
       </VBox>
    </right>
