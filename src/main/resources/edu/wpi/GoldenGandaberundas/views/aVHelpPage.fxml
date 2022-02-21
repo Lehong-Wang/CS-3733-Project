@@ -40,12 +40,12 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Use the drop down to select device type" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label text="Use the drop down to select device type" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="Enter the patient ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Enter patient ID in the second text box" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -79,17 +79,9 @@
                               <Insets top="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="The table on the right is for loading and creating backup CSVs for the AV table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                        <Label text="The table on the right is for loading and creating backup CSVs for the AV table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets top="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Add a description as needed" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="30.0" />
                            </font>
                         </Label>
                      </children>
