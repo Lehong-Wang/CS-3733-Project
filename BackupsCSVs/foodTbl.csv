@@ -7,5 +7,5 @@ foodID,foodName,ingredients,calories,allergens,price,inStock,foodType
 666,Chips,Potatoes,210,None,6.66,false,Side
 777,Salad,Lettuce/Dressing,300,None,7.77,true,Entree
 888,Cookie,Chocolate/Sugar/Flour,100,Peanuts,8.88,true,Dessert
-999,Corn,Corn,150,None,9.99,false,side
+999,Corn,Corn,150,None,9.99,false,Side
 1000,Sprite,Sprite/Water,200,None,10.10,true,Drink
