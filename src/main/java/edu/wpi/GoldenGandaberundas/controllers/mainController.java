@@ -57,8 +57,8 @@ public class mainController {
 
   public void initialize() {
     // BUTTONS HIDDEN TILL IMPLEMENTATION
-    FoodButton.setManaged(false);
-    FoodButton.setVisible(false);
+    // FoodButton.setManaged(false);
+    // FoodButton.setVisible(false);
     PatientTransportButton.setManaged(false);
     PatientTransportButton.setVisible(false);
     ReligiousButton.setManaged(false);
@@ -96,10 +96,7 @@ public class mainController {
     SideViewButton.setText("");
 
     // Hiding buttons until service is fully implemented
-    FoodButton.setManaged(false);
-    FoodButton.setVisible(false);
-    //    AudioVisualButton.setManaged(false);
-    //    AudioVisualButton.setVisible(false);
+
     // ComputerServiceButton.setManaged(false);
     // ComputerServiceButton.setVisible(false);
     LanguageButton.setManaged(false);
@@ -178,7 +175,8 @@ public class mainController {
   public void switchFood(ActionEvent actionEvent) throws IOException {
     //    Stage stage = (Stage) FoodButton.getScene().getWindow();
     //    stage.setScene(new Scene(loader.load(App.class.getResource("views/foodDelivery.fxml"))));
-    nodeSwitch("views/foodDelivery.fxml");
+    nodeSwitch("views/foodDeliveryForm.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   // goes to the Gift/Floral Delivery  page
