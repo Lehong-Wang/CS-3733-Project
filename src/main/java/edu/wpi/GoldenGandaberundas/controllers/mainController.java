@@ -45,6 +45,7 @@ public class mainController {
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
+
   @FXML Group medGroup;
 
   @FXML ImageView mainView;
