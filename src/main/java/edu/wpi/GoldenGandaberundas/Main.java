@@ -49,7 +49,7 @@ public class Main {
     FoodTbl.getInstance(); // .loadBackup("BackupsCSVs/foodTbl.csv");
 
     PathTbl.getInstance();
-
+    FoodTbl.getInstance();
     LocationTbl.getInstance();
     PathTbl.getInstance();
 
