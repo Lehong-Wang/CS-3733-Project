@@ -36,12 +36,12 @@ public class testFoodTbl {
   public ArrayList<Food> getRefList() { // **
     ArrayList<Food> refObjList = new ArrayList<Food>();
     // NEED ALL ENTRIES IN CSV
-    Food L1 = new Food(111, "", 1.11, true, "burger");
-    Food L2 = new Food(222, "", 2.22, false, "chips");
-    Food L3 = new Food(333, "", 3.33, true, "sandwich");
-    Food L4 = new Food(444, "", 4.44, false, "soda");
-    Food L5 = new Food(555, "", 5.55, true, "fries");
-    Food L6 = new Food(666, "", 6.66, false, "apple");
+    Food L1 = new Food(111, "Burger", "Bread/Meat/Cheese", 500, "Dairy/Meat", 1.11, true, "Entree");
+    Food L2 = new Food(222, "Coke", "Water/Coke", 200, "None", 2.22, false, "Drink");
+    Food L3 = new Food(333, "Fries", "Potatoes/Grease", 250, "None", 3.33, true, "Side");
+    Food L4 = new Food(444, "Sundae", "Chocolate/Ice cream", 340, "Dairy", 4.44, false, "Dessert");
+    Food L5 = new Food(555, "Sandwich", "Bread/Meat/Lettuce", 600, "None", 5.55, true, "Entree");
+    Food L6 = new Food(666, "Chips", "Potatoes", 210, "None", 6.66, false, "Side");
     refObjList.add(L1);
     refObjList.add(L2);
     refObjList.add(L3);
@@ -59,7 +59,7 @@ public class testFoodTbl {
     tbControl = setupFoodTbl(); // **
 
     // create test Object
-    Food testObj = new Food(777, "", 7.77, false, "food"); // **
+    Food testObj = new Food(777, "Apple", "Apple", 100, "None", 7.77, true, "Side"); // **
     // add Obj to DB
     tbControl.addEntry(testObj);
 
@@ -74,8 +74,10 @@ public class testFoodTbl {
     TableController tbControl;
     tbControl = setupFoodTbl(); // **
     // create object from first object in csv and get that object with getEntry
-    Food refObj = new Food(111, "", 1.11, true, "burger"); // **
+    Food refObj =
+        new Food(111, "Burger", "Bread/Meat/Cheese", 500, "Dairy/Meat", 1.11, true, "Entree"); // **
     Food tbObj = (Food) tbControl.getEntry(111); // **
+    System.out.println(tbObj);
     // compare them
     Assertions.assertTrue(refObj.equals(tbObj));
   }
@@ -116,7 +118,9 @@ public class testFoodTbl {
     }
 
     // check the columns    //**
-    String[] cols = {"foodID", "description", "price", "inStock", "foodType"};
+    String[] cols = {
+      "foodID", "foodName", "ingredients", "calories", "allergens", "price", "inStock", "foodType"
+    };
     ArrayList<String> refColNames = new ArrayList(Arrays.asList(cols));
 
     boolean isSame = refColNames.equals(testColNameList);

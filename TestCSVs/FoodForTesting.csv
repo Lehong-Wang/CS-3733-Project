@@ -1,7 +1,7 @@
-foodID,description,price,inStock,foodType
-111,,1.11,true,burger
-222,,2.22,false,chips
-333,,3.33,true,sandwich
-444,,4.44,false,soda
-555,,5.55,true,fries
-666,,6.66,false,apple
+foodID,foodName,ingredients,calories,allergens,price,inStock,foodType
+111,Burger,Bread/Meat/Cheese,500,Dairy/Meat,1.11,true,Entree
+222,Coke,Water/Coke,200,None,2.22,false,Drink
+333,Fries,Potatoes/Grease,250,None,3.33,true,Side
+444,Sundae,Chocolate/Ice cream,340,Dairy,4.44,false,Dessert
+555,Sandwich,Bread/Meat/Lettuce,600,None,5.55,true,Entree
+666,Chips,Potatoes,210,None,6.66,false,Side

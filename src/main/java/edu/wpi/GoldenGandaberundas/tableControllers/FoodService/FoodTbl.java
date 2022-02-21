@@ -17,8 +17,20 @@ public class FoodTbl extends TableController<Food, Integer> {
   private FoodTbl() throws SQLException { // **
     super(
         "Food",
-        Arrays.asList(new String[] {"foodID", "description", "price", "inStock", "foodType"}));
-    String[] cols = {"foodID", "description", "price", "inStock", "foodType"};
+        Arrays.asList(
+            new String[] {
+              "foodID",
+              "foodName",
+              "ingredients",
+              "calories",
+              "allergens",
+              "price",
+              "inStock",
+              "foodType"
+            }));
+    String[] cols = {
+      "foodID", "foodName", "ingredients", "calories", "allergens", "price", "inStock", "foodType"
+    };
     createTable();
     objList = new ArrayList<Food>();
     objList = readTable();
@@ -49,7 +61,14 @@ public class FoodTbl extends TableController<Food, Integer> {
       while (r.next()) {
         tableInfo.add(
             new Food( // **
-                r.getInt(1), r.getString(2), r.getDouble(3), r.getBoolean(4), r.getString(5)));
+                r.getInt(1),
+                r.getString(2),
+                r.getString(3),
+                r.getInt(4),
+                r.getString(5),
+                r.getDouble(6),
+                r.getBoolean(7),
+                r.getString(8)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
@@ -65,14 +84,17 @@ public class FoodTbl extends TableController<Food, Integer> {
     try {
       s =
           connection.prepareStatement( // **
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?);");
+              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
       // **
       s.setInt(1, med.getFoodID());
-      s.setString(2, med.getDescription());
-      s.setDouble(3, med.getPrice());
-      s.setBoolean(4, med.getInStock());
-      s.setString(5, med.getFoodType());
+      s.setString(2, med.getFoodName());
+      s.setString(3, med.getIngredients());
+      s.setInt(4, med.getCalories());
+      s.setString(5, med.getAllergens());
+      s.setDouble(6, med.getPrice());
+      s.setBoolean(7, med.getInStock());
+      s.setString(8, med.getFoodType());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -104,9 +126,12 @@ public class FoodTbl extends TableController<Food, Integer> {
             new Food(
                 Integer.parseInt(element[0]),
                 element[1],
-                Double.parseDouble(element[2]),
-                Boolean.parseBoolean(element[3]),
-                element[4]); // **
+                element[2],
+                Integer.parseInt(element[3]),
+                element[4],
+                Double.parseDouble(element[5]),
+                Boolean.parseBoolean(element[6]),
+                element[7]); // **
         medList.add(med); // adds the location to the list
         currentLine = buffer.readLine();
       }
@@ -154,11 +179,15 @@ public class FoodTbl extends TableController<Food, Integer> {
       s.execute(
           "CREATE TABLE IF NOT EXISTS  Food("
               + "foodID INTEGER NOT NULL ,"
-              + "description TEXT, "
+              + "foodName TEXT NOT NULL, "
+              + "ingredients TEXT, "
+              + "calories INTEGER, "
+              + "allergens TEXT, "
               + "price DOUBLE NOT NULL, "
               + "inStock BOOLEAN NOT NULL, "
               + "foodType TEXT NOT NULL, "
-              + "PRIMARY KEY ('foodID'));");
+              + "PRIMARY KEY ('foodID'), "
+              + "CONSTRAINT foodTypeEnum CHECK(foodType in('Entree','Side','Drink','Dessert')));");
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -177,10 +206,14 @@ public class FoodTbl extends TableController<Food, Integer> {
         ResultSet r = s.executeQuery();
         r.next();
         med.setFoodID(r.getInt(1));
-        med.setDescription(r.getString(2));
-        med.setPrice(r.getDouble(3));
-        med.setInStock(r.getBoolean(4));
-        med.setFoodType(r.getString(5));
+        med.setFoodName(r.getString(2));
+        med.setIngredients(r.getString(3));
+        med.setCalories(r.getInt(4));
+        med.setAllergens(r.getString(5));
+        med.setPrice(r.getDouble(6));
+        med.setInStock(r.getBoolean(7));
+        med.setFoodType(r.getString(8));
+        System.out.println(med);
         return med;
       } catch (SQLException e) {
         e.printStackTrace();
