@@ -23,8 +23,8 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black;" text="Backup" />
-            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black;" text="Load" />
+            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" />
+            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" />
          </children></VBox>
    </right>
 </BorderPane>

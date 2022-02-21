@@ -66,12 +66,12 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0"  styleClass="actionButton"  text="Submit"  GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Cancel" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0"  styleClass="actionButton"  text="Cancel"  GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

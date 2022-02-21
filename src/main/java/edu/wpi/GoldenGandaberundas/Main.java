@@ -45,7 +45,7 @@ public class Main {
     ComputerTbl.getInstance();
     //    FoodTbl.getInstance();
     PathTbl.getInstance();
-
+    FoodTbl.getInstance();
     LocationTbl.getInstance();
     PathTbl.getInstance();
 

@@ -55,8 +55,9 @@ public class mainController {
   // CSS Style strings, used to style drawer buttons
   private static final String IDLE_BUTTON_STYLE =
       "-fx-background-color: #002D59;-fx-alignment: center-left;";
-  private static final String HOVERED_BUTTON_STYLE =
-      "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
+  //  private static final String HOVERED_BUTTON_STYLE =
+  //      "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
+  // -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
 
   public void initialize() {
     // BUTTONS HIDDEN TILL IMPLEMENTATION
@@ -69,21 +70,20 @@ public class mainController {
     // Add in drawer lines
     drawer.setSidePane(drawerBox);
     drawer.setMiniDrawerSize(36);
-    buttonStyle(ComputerServiceButton);
-    buttonStyle(EmployeeDBButton);
-    buttonStyle(AudioVisualButton);
-    buttonStyle(FoodButton);
-    buttonStyle(GiftFloralButton);
-    buttonStyle(LanguageButton);
-    buttonStyle(LaundryButton);
-    buttonStyle(MedicineDeliveryButton);
-    buttonStyle(MedicalEquipmentButton);
-    buttonStyle(PatientTransportButton);
-    buttonStyle(ReligiousButton);
-    buttonStyle(MapViewButton);
-    buttonStyle(HomeButton);
-    buttonStyle(SideViewButton);
-    buttonStyle(allRequestsButton);
+    //    buttonStyle(ComputerServiceButton);
+    //    buttonStyle(EmployeeDBButton);
+    //    buttonStyle(AudioVisualButton);
+    //    buttonStyle(FoodButton);
+    //    buttonStyle(GiftFloralButton);
+    //    buttonStyle(LanguageButton);
+    //    buttonStyle(LaundryButton);
+    //    buttonStyle(MedicineDeliveryButton);
+    //    buttonStyle(MedicalEquipmentButton);
+    //    buttonStyle(PatientTransportButton);
+    //    buttonStyle(ReligiousButton);
+    //    buttonStyle(MapViewButton);
+    //    buttonStyle(HomeButton);
+    //    buttonStyle(SideViewButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -124,10 +124,10 @@ public class mainController {
    */
   public void buttonStyle(JFXButton buttonO) {
     buttonO.setStyle(IDLE_BUTTON_STYLE);
-    buttonO.setOnMouseEntered(
-        e -> {
-          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-        });
+    //    buttonO.setOnMouseEntered(
+    //        e -> {
+    //          buttonO.setStyle(HOVERED_BUTTON_STYLE);
+    //        });
     buttonO.setOnMouseExited(
         e -> {
           buttonO.setStyle(IDLE_BUTTON_STYLE);
