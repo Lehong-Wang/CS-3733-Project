@@ -243,7 +243,7 @@ public class SimulatePumps {
    */
   private static void setCurrentValidLocations() {
     currentValidPumpLocations.clear();
-    currentValidPumpLocations = (ArrayList<String>) SimulationController.validLocations.clone();
+    currentValidPumpLocations = (ArrayList<String>) Simulation.validLocations.clone();
 
     ArrayList<String> tempCurValidLoc = new ArrayList<>();
     boolean valid = false;

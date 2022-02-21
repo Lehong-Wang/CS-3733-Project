@@ -339,14 +339,14 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation bed : Beds_InRoom) {
       if (bed.getInRoomEndTime() <= hours) {
         bed.setStatus("Dirty");
-        bed.setCurrLoc(SimulationController.getCorrespondingLocation(bed.getCurrLoc()));
+        bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
           System.out.println("Bed # " + bed.getMedID() + " is now dirty");
         }
         newBedList.add(bed);
       } else if (ThreadLocalRandom.current().nextInt(50) == 7) {
         bed.setStatus("Awaiting Transport");
-        bed.setCurrLoc(SimulationController.getCorrespondingLocation(bed.getCurrLoc()));
+        bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
           System.out.println("Bed # " + bed.getMedID() + " is now awaiting transport");
         }
@@ -456,7 +456,7 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation recliner : Recliners_InRoom) {
       if (recliner.getInRoomEndTime() <= hours) {
         recliner.setStatus("Dirty");
-        recliner.setCurrLoc(SimulationController.getCorrespondingLocation(recliner.getCurrLoc()));
+        recliner.setCurrLoc(Simulation.getCorrespondingLocation(recliner.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
           System.out.println("Recliner # " + recliner.getMedID() + " is now dirty");
         }
@@ -492,7 +492,7 @@ public class SimulateBedsRecs {
         tempRec.setCurrLoc(tempBed.getCurrLoc());
         tempBed.setStatus("Temporarily Outside");
         tempBed.setOutsideEndTime(rndTTD);
-        tempBed.setCurrLoc(SimulationController.getCorrespondingLocation(tempBed.getCurrLoc()));
+        tempBed.setCurrLoc(Simulation.getCorrespondingLocation(tempBed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
           System.out.println(
               "Recliner # "
@@ -518,7 +518,7 @@ public class SimulateBedsRecs {
    */
   private static void setCurrentValidLocations() {
     currentValidBedLocations.clear();
-    currentValidBedLocations = (ArrayList<String>) SimulationController.validLocations.clone();
+    currentValidBedLocations = (ArrayList<String>) Simulation.validLocations.clone();
 
     ArrayList<String> tempCurValidLoc = new ArrayList<>();
     boolean valid = false;
@@ -557,7 +557,7 @@ public class SimulateBedsRecs {
   // TODO test/fix this
   private static String findKey(String value) {
     String key = null;
-    for (Map.Entry<String, String> entry : SimulationController.corrLoc.entrySet()) {
+    for (Map.Entry<String, String> entry : Simulation.corrLoc.entrySet()) {
       if (entry.getValue() == value) {
         //        System.out.println("The key for value " + value + " is " + entry.getKey());
         key = entry.getKey();

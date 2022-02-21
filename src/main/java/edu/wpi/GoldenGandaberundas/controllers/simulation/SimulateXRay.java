@@ -30,8 +30,8 @@ public class SimulateXRay {
       }
     } else if (XRay.getStatus().trim().toUpperCase(Locale.ROOT).equals("STORED")) {
       XRay.setStatus("In-Use");
-      int rnd = new Random().nextInt(SimulationController.validLocations.size());
-      String rndLoc = SimulationController.validLocations.get(rnd);
+      int rnd = new Random().nextInt(Simulation.validLocations.size());
+      String rndLoc = Simulation.validLocations.get(rnd);
       int rndTTD = ThreadLocalRandom.current().nextInt(1, 5);
       XRay.setInRoomEndTime(hours + rndTTD);
       XRay.setCurrLoc(rndLoc);

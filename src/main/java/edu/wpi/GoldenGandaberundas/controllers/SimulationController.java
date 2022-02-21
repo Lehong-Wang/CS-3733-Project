@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
@@ -248,6 +249,10 @@ public class SimulationController {
 
     nodeDataPane.setManaged(false);
     nodeDataPane.setVisible(false);
+
+    Simulation sim = new Simulation();
+    sim.update();
+    System.out.println(Simulation.pathList);
   }
 
   public void createIcon(Location loc) {

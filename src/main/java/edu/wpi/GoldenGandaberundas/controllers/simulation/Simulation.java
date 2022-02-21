@@ -5,7 +5,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.util.*;
 
-public class SimulationController {
+public class Simulation {
   static ArrayList<String> validLocations = new ArrayList<>();
   static Map<String, String> corrLoc;
 
@@ -59,7 +59,7 @@ public class SimulationController {
   private ArrayList<MedEquipmentSimulation> Recliners_List = new ArrayList<>();
   private ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
   private ArrayList<MedEquipmentSimulation> fullMedList = new ArrayList<>();
-  private static String[][] pathList;
+  public static String[][] pathList;
   private MedEquipmentSimulation XRay;
   TableController<MedEquipment, Integer> medTable;
 
