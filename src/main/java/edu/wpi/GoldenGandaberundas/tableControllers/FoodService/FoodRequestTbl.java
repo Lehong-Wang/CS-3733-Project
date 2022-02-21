@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.FoodService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
@@ -18,8 +19,20 @@ public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integ
   // created instance for singleton
   private static FoodRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<FoodRequest> objList;
+  /** relative path to the database file */
 
-  // **
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    // **
   // created constructor fo the table
   private FoodRequestTbl() throws SQLException {
     super(
@@ -371,5 +384,9 @@ public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integ
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

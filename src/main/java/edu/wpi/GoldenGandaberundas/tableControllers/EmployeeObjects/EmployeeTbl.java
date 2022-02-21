@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -17,8 +18,20 @@ import java.util.stream.Collectors;
 public class EmployeeTbl extends TableController<Employee, Integer> {
 
   private static EmployeeTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Employee> objList;
+  /** relative path to the database file */
 
-  private EmployeeTbl() throws SQLException {
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private EmployeeTbl() throws SQLException {
     super(
         "Employees",
         Arrays.asList(
@@ -424,5 +437,9 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
@@ -18,8 +19,20 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
   // created instance for singleton
   private static AudioVisualRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<AudioVisualRequest> objList;
+  /** relative path to the database file */
 
-  // **
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    // **
   // created constructor fo the table
   private AudioVisualRequestTbl() throws SQLException {
     super(
@@ -370,5 +383,9 @@ public class AudioVisualRequestTbl extends TableController<AudioVisualRequest, A
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

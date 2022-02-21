@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Requests;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -19,6 +20,18 @@ import java.util.stream.Collectors;
 
 public class RequestTable extends TableController<Request, Integer> {
   private static RequestTable instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Request> objList;
+  /** relative path to the database file */
+
+
+  ConnectionHandler connection = ConnectionHandler.getInstance();
 
   /**
    * creates an instance of the master request table this table holds common and meta data across
@@ -618,5 +631,9 @@ public class RequestTable extends TableController<Request, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

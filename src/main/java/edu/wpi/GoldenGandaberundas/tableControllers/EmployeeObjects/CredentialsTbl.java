@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -15,8 +16,20 @@ import java.util.stream.Collectors;
 public class CredentialsTbl extends TableController<Credential, Integer> {
   /** single instance of class allowed */
   private static CredentialsTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Credential> objList;
+  /** relative path to the database file */
 
-  private CredentialsTbl() throws SQLException {
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private CredentialsTbl() throws SQLException {
     super("Credentials", Arrays.asList(new String[] {"empID", "password", "salt"}));
     tbName = "Credentials";
     colNames = Arrays.asList(new String[] {"empID", "password", "salt"});
@@ -353,5 +366,9 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

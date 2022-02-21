@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Permission;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
@@ -19,6 +20,18 @@ public class PermissionTbl extends TableController<Permission, Integer> {
 
   // creates the instance for the table
   private static PermissionTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Permission> objList;
+  /** relative path to the database file */
+
+
+  ConnectionHandler connection = ConnectionHandler.getInstance();
 
   private PermissionTbl() throws SQLException {
     super("Permissions", Arrays.asList(new String[] {"permID", "type", "permDescription"}));
@@ -374,5 +387,9 @@ public class PermissionTbl extends TableController<Permission, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

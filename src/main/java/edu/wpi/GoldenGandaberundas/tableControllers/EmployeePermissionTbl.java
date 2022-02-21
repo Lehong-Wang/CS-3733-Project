@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeePermission;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
@@ -18,6 +19,18 @@ import java.util.stream.Collectors;
 public class EmployeePermissionTbl extends TableController<EmployeePermission, ArrayList<Integer>> {
   // creates the instance for the table
   private static EmployeePermissionTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<EmployeePermission> objList;
+  /** relative path to the database file */
+
+
+  ConnectionHandler connection = ConnectionHandler.getInstance();
 
   private EmployeePermissionTbl() throws SQLException {
     super("EmployeePermissions", Arrays.asList(new String[] {"empID", "permID"}), "empID,permID");
@@ -405,5 +418,9 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
 
     return permAr; // **
   }
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

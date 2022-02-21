@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
@@ -17,8 +18,20 @@ public class GiftRequestTbl extends TableController<GiftRequest, ArrayList<Integ
   // created instance for singleton
   private static GiftRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<GiftRequest> objList;
+  /** relative path to the database file */
 
-  // **
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    // **
   // created constructor fo the table
   private GiftRequestTbl() throws SQLException {
     super("GiftRequests", Arrays.asList("reqID", "giftID", "quantity"), "reqID, giftID");
@@ -434,5 +447,9 @@ public class GiftRequestTbl extends TableController<GiftRequest, ArrayList<Integ
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

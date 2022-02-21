@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -19,8 +20,20 @@ import java.util.stream.Collectors;
 public class GiftTbl extends TableController<Gift, String> {
 
   private static GiftTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Gift> objList;
+  /** relative path to the database file */
 
-  private GiftTbl() throws SQLException {
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private GiftTbl() throws SQLException {
     super(
         "Gifts",
         Arrays.asList(new String[] {"giftID", "giftType", "description", "price", "inStock"}));
@@ -417,5 +430,9 @@ public class GiftTbl extends TableController<Gift, String> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

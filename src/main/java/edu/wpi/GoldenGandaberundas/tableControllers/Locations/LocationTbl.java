@@ -2,31 +2,35 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Locations;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class LocationTbl extends TableController<Location, String> {
+public class LocationTbl implements TableController<Location, String> {
 
   private static LocationTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Location> objList;
+  /** relative path to the database file */
+
+
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private LocationTbl() throws SQLException {
-    super(
-        "Locations",
-        Arrays.asList(
-            new String[] {
-              "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
-            }),
-        "nodeID");
 
     // create a new table with column names if none table of same name exist
     // if there is one, do nothing
@@ -35,6 +39,7 @@ public class LocationTbl extends TableController<Location, String> {
     String[] cols = {
       "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
     };
+    pkCols = "nodeID";
     colNames = Arrays.asList(cols);
     objList = readTable();
   }
@@ -309,6 +314,7 @@ public class LocationTbl extends TableController<Location, String> {
     return loc;
   }
 
+
   /**
    * Creates a list of points with for each location with their x and y coordinates
    *
@@ -490,5 +496,9 @@ public class LocationTbl extends TableController<Location, String> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

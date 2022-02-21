@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
@@ -22,9 +23,21 @@ import java.util.*;
 public class PathTbl extends TableController<Path, String> {
 
   private static PathTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Path> objList;
+  /** relative path to the database file */
   private static HashMap<String, Integer> statsMap = new HashMap<>();
 
-  private PathTbl() throws SQLException {
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private PathTbl() throws SQLException {
     super("Paths", Arrays.asList(new String[] {"edgeID", "startNode", "endNode"}));
     String[] cols = {"edgeID", "startNode", "endNode"};
     createTable();
@@ -553,5 +566,9 @@ public class PathTbl extends TableController<Path, String> {
     retVal.add(1, Simulation.pathList[medID][fasterHour]);
     MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

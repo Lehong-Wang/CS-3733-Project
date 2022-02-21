@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.ComputerService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -17,8 +18,20 @@ import java.util.stream.Collectors;
 public class ComputerTbl extends TableController<Computer, Integer> {
 
   private static ComputerTbl instance = null; // **
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Computer> objList;
+  /** relative path to the database file */
 
-  private ComputerTbl() throws SQLException { // **
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private ComputerTbl() throws SQLException { // **
     super(
         "Computer",
         Arrays.asList(
@@ -392,5 +405,9 @@ public class ComputerTbl extends TableController<Computer, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

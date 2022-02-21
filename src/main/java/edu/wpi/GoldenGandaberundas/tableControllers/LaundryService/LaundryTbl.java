@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.LaundryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -17,8 +18,20 @@ import java.util.stream.Collectors;
 public class LaundryTbl extends TableController<Laundry, Integer> {
 
   private static LaundryTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Laundry> objList;
+  /** relative path to the database file */
 
-  private LaundryTbl() throws SQLException {
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private LaundryTbl() throws SQLException {
     super(
         "Laundry",
         Arrays.asList(new String[] {"laundryID", "laundryType", "description", "inStock"}));
@@ -400,5 +413,9 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

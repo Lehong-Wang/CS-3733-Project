@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
@@ -14,6 +15,18 @@ import java.util.stream.Collectors;
 public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayList<Integer>> {
   private static MedEquipRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null; // **
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<MedEquipRequest> objList;
+  /** relative path to the database file */
+
+
+  ConnectionHandler connection = ConnectionHandler.getInstance();
 
   // first entry in column name is primary key
   private MedEquipRequestTbl() throws SQLException { // creates the table
@@ -442,5 +455,9 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }

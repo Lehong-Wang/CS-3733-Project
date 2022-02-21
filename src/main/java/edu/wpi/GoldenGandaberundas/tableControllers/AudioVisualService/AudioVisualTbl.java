@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -17,8 +18,20 @@ import java.util.stream.Collectors;
 public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
 
   private static AudioVisualTbl instance = null; // **
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<AudioVisual> objList;
+  /** relative path to the database file */
 
-  private AudioVisualTbl() throws SQLException { // **
+
+    ConnectionHandler connection = ConnectionHandler.getInstance();
+
+    private AudioVisualTbl() throws SQLException { // **
     super(
         "AudioVisual", Arrays.asList(new String[] {"avID", "deviceType", "locID", "description"}));
     String[] cols = {"avID", "deviceType", "locID", "description"};
@@ -349,5 +362,9 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
       e.printStackTrace();
     }
     return exists;
+  }
+
+  public String getTableName() {
+    return tbName;
   }
 }
