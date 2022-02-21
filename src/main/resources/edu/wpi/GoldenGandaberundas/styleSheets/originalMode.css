@@ -50,11 +50,10 @@
 .label{
     -fx-text-fill: lawnGreen;
 }
+.text{
+    -fx-fill: darkcyan;
 
-/*.button{*/
-/*    -fx-background-color: black;*/
-/*    -fx-text-fill: pink;*/
-/*}*/
+}
 
 .backupButton{
     -fx-border-color: green;
@@ -64,11 +63,68 @@
     -fx-wrap-text: true;
 }
 
+/* hover? */
+.backupButton.hover{
+    -fx-background-radius: 10px;
+    -fx-background-color: blue;
+}
+
 .actionButton{
     -fx-background-color: purple;
     -fx-text-fill: seashell;
 
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(three-pass-box ,blue , 50, 0, 0, 3);
+
 }
+
+
+
+/**********************************/
+/* combo box */
+
+.combo-box-base{
+    -fx-background-color: mediumvioletred;
+    -fx-padding: 2 2;
+    -fx-effect: dropshadow(three-pass-box ,white , 5, 0, 0, 3);
+}
+
+.combo-box-base > .arrow-button {
+    -fx-background-color: darkblue;
+    -fx-padding: 0 4;
+}
+
+.combo-box-base > .arrow-button > .arrow {
+    -fx-background-color: black;
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 2 4;
+    -fx-shape: "M 0 0 H 7 L 3.5 4 z";
+}
+
+
+
+/*****************************/
+
+.text-field{
+    -fx-background-color: red;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+
+}
+.text-area{
+    -fx-background-color: darkturquoise;
+    -fx-effect: dropshadow(three-pass-box , green, 5, 0, 0, 0);
+}
+
+.text-input{
+    -fx-text-fill: green;
+
+}
+
+.textbox-base{
+    -fx-background-color: grey;
+}
+
+
 
 
 /**********************************/
@@ -90,6 +146,7 @@
     /*-fx-background-radius: 7px 7px 0px 0px;*/
     -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 5px 0;
+    -fx-background-radius: 5px;
 }
 .table-view .column-header {
     -fx-background-color: transparent;

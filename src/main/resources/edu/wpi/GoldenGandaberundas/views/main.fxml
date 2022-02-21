@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -324,8 +323,4 @@
          </padding>
       </JFXDrawer>
    </children>
-   <stylesheets>
-      <URL value="@../styleSheets/formView.css" />
-      <URL value="@../styleSheets/ButtonFromYouTube.css" />
-   </stylesheets>
 </AnchorPane>
