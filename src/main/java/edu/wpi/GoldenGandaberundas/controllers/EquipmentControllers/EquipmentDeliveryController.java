@@ -59,6 +59,13 @@ public class EquipmentDeliveryController {
   @FXML TableColumn<MedEquipment, String> equipStatus;
   @FXML TableColumn<MedEquipment, String> loc;
 
+  @FXML SearchableComboBox equipmentSearchBox;
+  private int selectedEquipment;
+  @FXML SearchableComboBox locationSearchBox;
+  private String selectedLocation;
+  @FXML TextField notesField;
+
+  @FXML SearchableComboBox<String> locationSearchBox;
   @FXML SearchableComboBox<Integer> equipmentSearchBox;
   private int selectedEquipment;
   @FXML SearchableComboBox<String> locationSearchBox;
@@ -205,6 +212,44 @@ public class EquipmentDeliveryController {
         });
   }
 
+  /** Methods that populates the equipment search box with equipment from Equipment Table */
+  public void equipmentList() {
+    ArrayList<MedEquipment> equipmentArray = new ArrayList<MedEquipment>();
+    equipmentArray = medEquipmentTable.readTable();
+    ArrayList<Integer> equipIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < equipmentArray.size(); i++) {
+      equipIDAr.add(i, equipmentArray.get(i).getMedID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(equipIDAr);
+    equipmentSearchBox.setItems(oList);
+  }
+
+  public void locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = locationTableController.readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+    }
+    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
+    locationSearchBox.setItems(oList);
+  }
+
+  /** Method that sets up the event listeners for the searchable combo boxes Called in initialize */
+  public void setupComboListeners() {
+    equipmentSearchBox.setOnAction(
+        (event) -> {
+          int selectedItem = (Integer) equipmentSearchBox.getSelectionModel().getSelectedItem();
+          selectedEquipment = selectedItem;
+        });
+
+    locationSearchBox.setOnAction(
+        (event) -> {
+          String selectedItem = (String) locationSearchBox.getSelectionModel().getSelectedItem();
+          selectedLocation = selectedItem;
+        });
+  }
+
   public void onEdit() {
     if (medEqTable.getSelectionModel().getSelectedItem() != null) {
       MedEquipRequest selectedItem =
@@ -320,6 +365,29 @@ public class EquipmentDeliveryController {
     }
     ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
     equipmentSearchBox.setItems(oList);
+  }
+
+  /** Method that populates the equipment combo box from the EquipmentTbl Called */
+  public void equipList() {
+    ArrayList<MedEquipment> medArray = new ArrayList<MedEquipment>();
+    medArray = MedEquipmentTbl.getInstance().readTable();
+    ArrayList<Integer> medIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < medArray.size(); i++) {
+      medIDAr.add(i, medArray.get(i).getMedID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
+    equipmentSearchBox.setItems(oList);
+  }
+
+  /** Method that populates the location combo box from the locationTbl Called */
+  public void locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = LocationTbl.getInstance().readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+    }
+    refreshTable();
   }
 
   @FXML
