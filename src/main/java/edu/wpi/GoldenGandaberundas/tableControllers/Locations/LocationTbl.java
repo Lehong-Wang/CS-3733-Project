@@ -280,7 +280,7 @@ public class LocationTbl extends TableController<Location, String> {
       if (!this.entryExists(pkID)) {
         return null;
       }
-      System.out.println(pkID);
+      // System.out.println(pkID);
       PreparedStatement s =
           connection.prepareStatement("SELECT * FROM " + tbName + " WHERE nodeID = ?");
       // s.setString(1, tbName);
