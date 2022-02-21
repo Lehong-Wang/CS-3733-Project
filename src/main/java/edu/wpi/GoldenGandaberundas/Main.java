@@ -58,19 +58,18 @@ public class Main {
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
 
-    int start = 0;
-    int end = 0;
-    for (Point o : points) {
-      if (o.loc.equals("FDEPT00101")) {
-        start = points.indexOf(o);
-      }
-      if (o.loc.equals("FRETL00201")) {
-        end = points.indexOf(o);
-      }
-    }
-    points.get(start).g = 0;
-    Point test = points.get(start).aStar(points.get(end));
-    points.get(start).locationsPath(test);
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
+    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
+    ComputerTbl.getInstance().loadBackup("BackupsCSVs/computerTbl.csv");
+    FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
+    GiftTbl.getInstance().loadBackup("BackupsCSVs/giftTbl.csv");
+    LaundryTbl.getInstance().loadBackup("BackupsCSVs/laundryTbl.csv");
+    MedicineTbl.getInstance().loadBackup("BackupsCSVs/medicineTbl.csv");
+    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
+    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
+    PathTbl.getInstance().loadBackup("BackupsCSVs\\pathTbl.csv");
+    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs\\medEquipmentTbl.csv");
 
     //    EmployeePermissionTbl.getInstance();
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
