@@ -2,15 +2,14 @@ package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -22,6 +21,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.Medi
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -29,7 +29,6 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
     // Initializes the database tables in memory
-
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     PatientTbl.getInstance();
@@ -40,7 +39,7 @@ public class Main {
     CredentialsTbl.getInstance();
     AudioVisualTbl.getInstance();
     ComputerTbl.getInstance();
-    FoodTbl.getInstance();
+    //    FoodTbl.getInstance();
     PathTbl.getInstance();
 
     LocationTbl.getInstance();
@@ -54,20 +53,24 @@ public class Main {
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
 
-    PathTbl.getInstance().createAStarPath("FDEPT00101", "WHALL00702");
-    MedEquipmentTbl.getInstance();
+    LocationTbl.getInstance().loadBackup("backups/TowerLocationsGCropped.csv");
+    PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    points = PathTbl.getInstance().createBranchedLocations(points);
 
-    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
-    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
-    ComputerTbl.getInstance().loadBackup("BackupsCSVs/computerTbl.csv");
-    FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
-    GiftTbl.getInstance().loadBackup("BackupsCSVs/giftTbl.csv");
-    LaundryTbl.getInstance().loadBackup("BackupsCSVs/laundryTbl.csv");
-    MedicineTbl.getInstance().loadBackup("BackupsCSVs/medicineTbl.csv");
-    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
-    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
-    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
-    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
+    int start = 0;
+    int end = 0;
+    for (Point o : points) {
+      if (o.loc.equals("FDEPT00101")) {
+        start = points.indexOf(o);
+      }
+      if (o.loc.equals("FRETL00201")) {
+        end = points.indexOf(o);
+      }
+    }
+    points.get(start).g = 0;
+    Point test = points.get(start).aStar(points.get(end));
+    points.get(start).locationsPath(test);
 
     //    EmployeePermissionTbl.getInstance();
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);

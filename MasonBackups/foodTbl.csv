@@ -1,7 +1,0 @@
-foodID,description,price,inStock,foodType
-111,,1.11,true,burger
-222,,2.22,false,chips
-333,,3.33,true,sandwich
-444,,4.44,false,soda
-555,,5.55,true,fries
-666,,6.66,false,apple

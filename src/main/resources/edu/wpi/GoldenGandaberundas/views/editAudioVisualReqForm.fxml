@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.editAudioVisualReqFormController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label text="Edit Audio/Visual Request">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="46.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="52.0" prefWidth="600.0">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="AV Request ID:" textAlignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="AVRequestIDField" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="52.0" prefWidth="600.0">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="Device ID:" textAlignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="deviceField" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <GridPane VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.20001220703125" minWidth="10.0" prefWidth="63.8" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.39996337890625" minWidth="10.0" prefWidth="84.20002441406251" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="117.99999237060547" minWidth="10.0" prefWidth="79.39996337890625" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="91.0" minWidth="10.0" prefWidth="73.39998779296877" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="98.60002441406249" minWidth="10.0" prefWidth="83.99996337890627" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="137.80002441406248" minWidth="10.0" prefWidth="104.40003662109376" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="124.0000122070312" minWidth="10.0" prefWidth="50.599987792968705" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.80001220703122" minWidth="10.0" prefWidth="60.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="77.39999771118164" minHeight="10.0" prefHeight="67.39999771118164" valignment="BOTTOM" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="117.0" minHeight="0.0" prefHeight="64.20000000000002" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="110.19997558593752" valignment="TOP" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="67.4000244140625" valignment="TOP" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Submit Time:" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="subTimeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="680.0" text="Location:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="locField" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Finish Time:" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="finishTimeField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="patientIDField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Patient ID:" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Completer ID:" GridPane.columnIndex="5">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="completerIDField" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="editButton" onAction="#editRequest" text="Edit" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <JFXButton alignment="CENTER" onAction="#deleteRequest" prefHeight="58.0" prefWidth="86.0" text="Delete Request" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Notes" GridPane.columnIndex="7">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="notesField" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                  <TextField fx:id="statusField" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Status" GridPane.columnIndex="6">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="requesterIDField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Requester ID" GridPane.columnIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

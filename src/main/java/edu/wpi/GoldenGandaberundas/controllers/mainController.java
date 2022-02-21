@@ -95,8 +95,8 @@ public class mainController {
     // Hiding buttons until service is fully implemented
     FoodButton.setManaged(false);
     FoodButton.setVisible(false);
-    AudioVisualButton.setManaged(false);
-    AudioVisualButton.setVisible(false);
+    //    AudioVisualButton.setManaged(false);
+    //    AudioVisualButton.setVisible(false);
     // ComputerServiceButton.setManaged(false);
     // ComputerServiceButton.setVisible(false);
     LanguageButton.setManaged(false);
@@ -226,7 +226,7 @@ public class mainController {
 
   public void switchAudioVisual(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/audioVisual.fxml");
-    nodeDataPane.setPadding(new Insets(0, 50, 0, 0));
+    nodeDataPane.setPadding(new Insets(0, 50, 0, 100));
   }
 
   public void switchSideView() {

@@ -1,7 +1,0 @@
-giftID,giftType,description,price,inStock
-111,ChocolateStrawberries,this is the first gift,1.11,true
-222,LargeFlowers,this is the second gift,2.22,false
-333,SmallFlowers,this is the third gift,3.33,true
-444,TeddyBear,this is the fourth gift,4.44,false
-555,Balloons,this is the fifth gift,5.55,true
-666,Mug,this is the sixth gift,6.66,false
