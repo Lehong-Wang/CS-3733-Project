@@ -1,0 +1,37 @@
+medID,type,status,currLoc
+1,Bed,In-Use,gPATI00103
+2,Bed,In-Use,gPATI00203
+3,Bed,Dirty,HHALL00103
+4,Bed,Dirty,HHALL00303
+5,Bed,Awaiting Transport,HHALL01203
+6,Bed,Temporarily Outside,HHALL01103
+7,Bed,Stored,gSTOR00103
+8,Bed,Stored,gSTOR00103
+9,Bed,Stored,gSTOR00103
+10,Bed,Stored,gSTOR00103
+11,Bed,Stored,gSTOR00103
+12,Recliner,Dirty,gSTOR00103
+13,Recliner,In-Use,gPATI00103
+14,Recliner,Stored,gSTOR00103
+15,Recliner,Stored,gSTOR00103
+16,Recliner,Stored,gSTOR00103
+17,Recliner,Stored,gSTOR00103
+18,X-ray,In-use,gSTOR00103
+19,Infusion Pump,In-Use,gPATI00103
+20,Infusion Pump,In-Use,gPATI00203
+21,Infusion Pump,In-Use,gPATI00303
+22,Infusion Pump,In-Use,gPATI00403
+23,Infusion Pump,Stored,gSTOR00103
+24,Infusion Pump,Stored,gSTOR00103
+25,Infusion Pump,Stored,gSTOR00103
+26,Infusion Pump,Stored,gSTOR00103
+27,Infusion Pump,Stored,gSTOR00103
+28,Infusion Pump,Stored,gSTOR00103
+29,Infusion Pump,Stored,gSTOR00103
+30,Infusion Pump,Stored,gSTOR00103
+31,Infusion Pump,Stored,gSTOR00103
+32,Infusion Pump,Stored,gSTOR00103
+33,Infusion Pump,Stored,gSTOR00103
+34,Infusion Pump,Dirty,gDIRT00103
+35,Infusion Pump,Dirty,gDIRT00103
+36,Infusion Pump,Dirty,gDIRT00103

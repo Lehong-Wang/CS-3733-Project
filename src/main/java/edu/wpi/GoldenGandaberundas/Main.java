@@ -21,7 +21,9 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -29,8 +31,10 @@ public class Main {
 
   public static void main(String[] args) throws SQLException {
 
+
     System.out.println(PathTbl.getInstance().objList);
     // Initializes the database tables in memory
+
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     PatientTbl.getInstance();
@@ -55,23 +59,9 @@ public class Main {
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
 
-    LocationTbl.getInstance().loadBackup("backups/TowerLocationsGCropped.csv");
     PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    points = PathTbl.getInstance().createBranchedLocations(points);
-
-    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
-    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
-    ComputerTbl.getInstance().loadBackup("BackupsCSVs/computerTbl.csv");
-    FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
-    GiftTbl.getInstance().loadBackup("BackupsCSVs/giftTbl.csv");
-    LaundryTbl.getInstance().loadBackup("BackupsCSVs/laundryTbl.csv");
-    MedicineTbl.getInstance().loadBackup("BackupsCSVs/medicineTbl.csv");
-    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
-    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
-    CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
-    PathTbl.getInstance().loadBackup("BackupsCSVs\\pathTbl.csv");
-    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs\\medEquipmentTbl.csv");
+    points = PathTbl.getInstance().createBranchedLocations(points); 
 
     //    EmployeePermissionTbl.getInstance();
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
@@ -80,5 +70,8 @@ public class Main {
     //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
     floorMaps.load();
     App.launch(App.class, args);
+
+    //    SimulationController sim = new SimulationController();
+    //    sim.update();
   }
 }
