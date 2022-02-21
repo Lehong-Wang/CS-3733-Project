@@ -44,7 +44,7 @@ public class mainController {
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
-
+  @FXML JFXButton SimulationButton;
   @FXML Group medGroup;
 
   @FXML ImageView mainView;
@@ -84,6 +84,7 @@ public class mainController {
     buttonStyle(HomeButton);
     buttonStyle(SideViewButton);
     buttonStyle(allRequestsButton);
+    buttonStyle(SimulationButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -99,6 +100,7 @@ public class mainController {
     HomeButton.setText("");
     SideViewButton.setText("");
     allRequestsButton.setText("");
+    SimulationButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -395,6 +397,13 @@ public class mainController {
   public void switchsideViewHelpPage() {
     nodeSwitch("views/sideViewHelpPage.fxml");
   }
+
+  public void switchSimulationView() {
+    nodeSwitch("views/simulationView.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+  }
+
+
   // Goes to the location table
   //  public void switchLocationTable(ActionEvent actionEvent) throws IOException {
   //    //    Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
@@ -433,6 +442,7 @@ public class mainController {
         HomeButton.setText("Home");
         SideViewButton.setText("Side View");
         allRequestsButton.setText("All Requests View");
+        SimulationButton.setText("Simulation");
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -449,6 +459,7 @@ public class mainController {
         HomeButton.setText("Neena Xiang");
         SideViewButton.setText("Neena Xiang");
         allRequestsButton.setText("Paul Godinez");
+        SimulationButton.setText("Mason Figler");
       }
     }
   }
@@ -476,9 +487,15 @@ public class mainController {
       HomeButton.setText("");
       SideViewButton.setText("");
       allRequestsButton.setText("");
+      SimulationButton.setText("");
     }
   }
 
+  /**
+   * This method logouts the user of the application and takes them to the login screen
+   *
+   * @throws IOException
+   */
   public void logoutProgram() throws IOException {
     Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
     stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/loginScreen.fxml"))));

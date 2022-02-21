@@ -93,9 +93,9 @@ GPATI01803,520,566,3,Tower,PATI,Patient room 318,RM01803
 GPATI01903,560,539,3,Tower,PATI,Patient room 319,RM01903
 GPATI02003,580,504,3,Tower,PATI,Patient room 320,RM02003
 GSTOR00103,470,468,3,Tower,STOR,Patient StoraGe,PATISTOR103
-GSTOR001l1,625,251,L1,Tower,STOR,OperatinG Room Bed Park ,OR Bed Park
-GSTOR002l1,476,324,1,Tower,STOR,West Plaza,W Plaz
-GSTOR003l1,485,159,3,Tower,STOR,In-patient Unit StoraGe,StoraGe 
+GSTOR001L1,625,251,L1,Tower,STOR,OperatinG Room Bed Park ,OR Bed Park
+GSTOR00201,476,324,1,Tower,STOR,West Plaza,W Plaz
+GSTOR00303,485,159,3,Tower,STOR,In-patient Unit StoraGe,StoraGe
 HBATH00102,568,401,2,Tower,BATH,Bathroom 1 Tower Floor 2,Bathroom 0102
 HBATH00103,748,223,3,Tower,BATH,Bathroom 1 Tower Floor 3,Bathroom 0103
 HBATH00203,713,378,3,Tower,BATH,Bathroom 2 Tower Floor 3,Bathroom 0203
