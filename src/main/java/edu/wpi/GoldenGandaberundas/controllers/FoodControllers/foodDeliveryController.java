@@ -224,8 +224,8 @@ public class foodDeliveryController {
   }
 
   /**
-   * Submits a request in the requests table when there is stuff in the "cart"
-   * Only things not auto-generated are the patientID, the locationID and the notes
+   * Submits a request in the requests table when there is stuff in the "cart" Only things not
+   * auto-generated are the patientID, the locationID and the notes
    */
   public void submit() {
     int requestNum =
@@ -260,10 +260,7 @@ public class foodDeliveryController {
     refresh();
   }
 
-  /**
-   * Opens a file directory and prompts the user to
-   * create a backup for the food menu database
-   */
+  /** Opens a file directory and prompts the user to create a backup for the food menu database */
   @FXML
   public void backupFood() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -281,8 +278,7 @@ public class foodDeliveryController {
   }
 
   /**
-   * Opens a file directory and prompts the user to
-   * create a backup for the food requests database
+   * Opens a file directory and prompts the user to create a backup for the food requests database
    */
   @FXML
   public void backupRequests() {
@@ -301,10 +297,7 @@ public class foodDeliveryController {
     popUpDialog.close();
   }
 
-  /**
-   * Opens a file directory and prompts the user to
-   * load a DB File Backup for the food menu
-   */
+  /** Opens a file directory and prompts the user to load a DB File Backup for the food menu */
   @FXML
   public void loadDBFood() {
     FileChooser fileChooser = new FileChooser();
@@ -326,8 +319,8 @@ public class foodDeliveryController {
   }
 
   /**
-   * Opens a file directory and prompts the user to
-   * load a DB File Backup for the food requests table
+   * Opens a file directory and prompts the user to load a DB File Backup for the food requests
+   * table
    */
   @FXML
   public void loadDBRequests() {
