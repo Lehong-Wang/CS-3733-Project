@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,12 +28,11 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.3999999999999" minWidth="10.0" prefWidth="180.9999755859376" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="203.99999084472657" minHeight="0.0" prefHeight="90.6" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="191.99999084472657" minHeight="10.0" prefHeight="74.59998779296875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="203.99999084472657" minHeight="0.0" prefHeight="82.19999389648437" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="191.99999084472657" minHeight="10.0" prefHeight="49.40000610351562" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="56.600012207031256" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="67.5999816894531" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="58.60000000000002" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="58.60000000000002" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="47.599999999999994" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="55.79999999999998" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="58.60000000000002" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -57,28 +57,7 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="264.0" text="Requester ID:" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
-                  </Label>
-                  <TextField fx:id="patientIDField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="requesterIDField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                  <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -99,12 +78,27 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="giftFlowersField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
                   <SearchableComboBox fx:id="locationSearchBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
+                  <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="264.0" text="Notes:" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
+                     </GridPane.margin>
+                  </TextArea>
+                  <SearchableComboBox fx:id="patientSearchBox" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
+                  <SearchableComboBox fx:id="giftSearchBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
                      </GridPane.margin>

@@ -2,10 +2,12 @@ package edu.wpi.GoldenGandaberundas.controllers.GiftFloralControllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.File;
@@ -21,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +40,9 @@ public class GiftFloralController implements Initializable {
   @FXML private TextField patientIDField;
   @FXML private TextField requesterIDField;
   @FXML private TextField reqIDField;
+  @FXML SearchableComboBox<Integer> giftSearchBox;
+  @FXML SearchableComboBox<Integer> patientSearchBox;
+  @FXML TextArea notesField;
 
   @FXML TableView giftMenuTable;
   @FXML private TableColumn<Gift, String> giftID;
@@ -98,9 +104,21 @@ public class GiftFloralController implements Initializable {
     for (Object l : LocationTbl.getInstance().readTable()) {
       locs.add(((Location) l).getNodeID());
     }
-    ObservableList<String> bruh = FXCollections.observableArrayList(locs);
-    locationSearchBox.setItems(bruh);
+    ObservableList<String> locations = FXCollections.observableArrayList(locs);
+    locationSearchBox.setItems(locations);
+
+    ArrayList<Integer> patientIDs = new ArrayList<>();
+    for (Patient p : PatientTbl.getInstance().readTable()) {
+      patientIDs.add(p.getPatientID());
+    }
+    patientSearchBox.setItems(FXCollections.observableArrayList(patientIDs));
     refresh();
+
+    ArrayList<Integer> giftIDs = new ArrayList<>();
+    for (Gift g : GiftTbl.getInstance().readTable()) {
+      giftIDs.add(g.getGiftID());
+    }
+    giftSearchBox.setItems(FXCollections.observableArrayList(giftIDs));
 
     GiftOrderRequestTable.setOnMouseClicked(
         e -> {
@@ -142,12 +160,12 @@ public class GiftFloralController implements Initializable {
     String nodeID = locationSearchBox.getValue();
     int submittedTime;
     int completedTime;
-    int patientID = Integer.parseInt(patientIDField.getText());
-    int requesterID = Integer.parseInt(requesterIDField.getText());
+    int patientID = patientSearchBox.getValue();
+    int requesterID = CurrentUser.getUser().getEmpID();
     int completerID;
 
     String rowID; // placeholder for now = giftID + reqID
-    int giftID = Integer.parseInt(giftFlowersField.getText());
+    int giftID = giftSearchBox.getValue();
     // String reqID;
     int quantity = Integer.parseInt(quantityField.getText());
 
@@ -169,6 +187,7 @@ public class GiftFloralController implements Initializable {
     //    OrderedGift orderedGIft = new OrderedGift(giftID, reqID, quantity);
     //    requestTableController.addEntry(giftRequest);
     //    orderTableController.addEntry((orderedGIft));
+    refresh();
 
     giftMenuTable.getItems().setAll(menuTableController.readTable());
   }

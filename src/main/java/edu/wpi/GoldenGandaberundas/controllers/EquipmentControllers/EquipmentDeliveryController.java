@@ -1,9 +1,9 @@
 package edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers;
 
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.validators.AddEquipmentRequestValidator;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +34,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.kurobako.gesturefx.GesturePane;
+import org.controlsfx.control.SearchableComboBox;
 
 public class EquipmentDeliveryController {
 
@@ -59,6 +62,9 @@ public class EquipmentDeliveryController {
   @FXML TextField itemField;
   @FXML TextField destinationField;
   @FXML TextField notesField;
+
+  @FXML SearchableComboBox<String> locationSearchBox;
+  @FXML SearchableComboBox<Integer> equipmentSearchBox;
 
   @FXML private StackPane mapStackPane;
   private GesturePane mapGesture = null;
@@ -105,6 +111,9 @@ public class EquipmentDeliveryController {
     type.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("medEquipmentType"));
     equipStatus.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("status"));
     loc.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("currLoc"));
+
+    locList();
+    equipList();
 
     refreshTable();
 
@@ -172,37 +181,47 @@ public class EquipmentDeliveryController {
   @FXML
   public void submit() {
 
-    AddEquipmentRequestValidator valid =
-        new AddEquipmentRequestValidator(
-            reqField.getText(),
-            itemField.getText(),
-            destinationField.getText(),
-            notesField.getText(),
-            "yes");
-    if (valid.validateTextFields()) {
+    int requestNum =
+        RequestTable.getInstance().readTable().size() - 1 < 0
+            ? 0
+            : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
+    int requesterID = CurrentUser.getUser().getEmpID();
+    int itemID = equipmentSearchBox.getValue();
+    String node = locationSearchBox.getValue();
+    String notes = notesField.getText();
+    String requestStatus = "not done";
 
-      int requestNum =
-          RequestTable.getInstance().readTable().size() - 1 < 0
-              ? 0
-              : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
-      int requesterID = Integer.parseInt(reqField.getText());
-      int itemID = Integer.parseInt(itemField.getText());
-      String node = destinationField.getText();
-      String notes = notesField.getText();
-      String requestStatus = "not done";
-
-      MedEquipRequest request =
-          new MedEquipRequest(
-              requestNum, node, requesterID, 123, 0, 0, 111, "Submitted", notes, itemID);
-      reqTable.addEntry(request);
-      refreshTable();
-    } else {
-      reqField.setText("Invalid Data");
-      itemField.setText("Invalid Data");
-      destinationField.setText("Invalid Data");
-      notesField.setText("Invalid Data");
-    }
+    MedEquipRequest request =
+        new MedEquipRequest(
+            requestNum, node, requesterID, 123, 0, 0, 111, "Submitted", notes, itemID);
+    reqTable.addEntry(request);
     refreshTable();
+
+    refreshTable();
+  }
+
+  /** Method that populates the equipment combo box from the EquipmentTbl Called */
+  public void equipList() {
+    ArrayList<MedEquipment> medArray = new ArrayList<MedEquipment>();
+    medArray = MedEquipmentTbl.getInstance().readTable();
+    ArrayList<Integer> medIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < medArray.size(); i++) {
+      medIDAr.add(i, medArray.get(i).getMedID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
+    equipmentSearchBox.setItems(oList);
+  }
+
+  /** Method that populates the location combo box from the locationTbl Called */
+  public void locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = LocationTbl.getInstance().readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+    }
+    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
+    locationSearchBox.setItems(oList);
   }
 
   @FXML
