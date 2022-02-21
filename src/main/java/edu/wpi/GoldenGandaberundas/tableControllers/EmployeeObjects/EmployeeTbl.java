@@ -176,8 +176,7 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
   @Override
   public boolean createTable() {
     if (TableController.getConnectionType() == ConnectionType.clientServer) {
-      createOnlineTable();
-      
+      return createOnlineTable();
     }
     try {
       PreparedStatement s =
@@ -187,11 +186,11 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -199,7 +198,7 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -210,13 +209,15 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
           "CREATE TABLE IF NOT EXISTS  Employees(empID INTEGER NOT NULL ,fName TEXT, lName TEXT, role TEXT,email TEXT NOT NULL UNIQUE,phoneNumber TEXT,address TEXT, PRIMARY KEY ('empID'));");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createOnlineTable() {
+  private boolean createOnlineTable() {
     try {
       PreparedStatement s1 =
           connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
@@ -224,14 +225,16 @@ public class EmployeeTbl extends TableController<Employee, Integer> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
           "CREATE TABLE  Employees(empID INTEGER NOT NULL ,fName TEXT, lName TEXT, role TEXT,email varchar(60) NOT NULL UNIQUE,phoneNumber TEXT,address TEXT, PRIMARY KEY (empID));");
-
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

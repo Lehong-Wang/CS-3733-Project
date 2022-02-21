@@ -3,45 +3,30 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Locations;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class iClientServerLocationTbl extends TableController<Location, String>
-    implements LocationTable {
+public class ClientServerLocationTblI implements iLocationTable {
 
-  private static iClientServerLocationTbl instance = null;
+  private static ClientServerLocationTblI instance = null;
+  String tbName = null;
+  private static Connection connection = null;
 
-  private iClientServerLocationTbl() throws SQLException {
-    super(
-        "Locations",
-        Arrays.asList(
-            new String[] {
-              "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
-            }),
-        "nodeID");
-
+  private ClientServerLocationTblI() throws SQLException {
     // create a new table with column names if none table of same name exist
     // if there is one, do nothing
     createTable();
     tbName = "Locations";
-    String[] cols = {
-      "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
-    };
-    colNames = Arrays.asList(cols);
-    objList = readTable();
   }
 
-  public static iClientServerLocationTbl getInstance() {
+  public static ClientServerLocationTblI getInstance() {
     if (instance == null) {
       synchronized (TableController.class) {
         if (instance == null) {
           try {
-            instance = new iClientServerLocationTbl();
+            instance = new ClientServerLocationTblI();
 
           } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +34,7 @@ public class iClientServerLocationTbl extends TableController<Location, String>
         }
       }
     }
-    return (iClientServerLocationTbl) instance;
+    return instance;
   }
 
   // method to read the table and output an ArrayList of Locations

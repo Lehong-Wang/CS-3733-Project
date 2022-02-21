@@ -4,7 +4,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import java.io.*;
 import java.util.ArrayList;
 
-public interface LocationTable {
+public interface iLocationTable {
 
   /**
    * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE

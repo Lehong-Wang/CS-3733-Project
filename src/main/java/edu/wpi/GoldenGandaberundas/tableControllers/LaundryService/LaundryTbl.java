@@ -153,10 +153,9 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
   }
 
   @Override
-  public void createTable() {
+  public boolean createTable() {
     if (TableController.getConnectionType() == ConnectionType.clientServer) {
-      createTableOnline();
-      return;
+      return createTableOnline();
     }
     try {
       PreparedStatement s =
@@ -166,11 +165,11 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return;
+      return false;
     }
 
     try {
@@ -178,7 +177,7 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
     } catch (ClassNotFoundException e) {
       System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
       e.printStackTrace();
-      return;
+      return false;
     }
 
     System.out.println("SQLite driver registered!");
@@ -189,13 +188,16 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
           "CREATE TABLE IF NOT EXISTS  Laundry(laundryID INTEGER NOT NULL ,laundryType TEXT, description TEXT, inStock BOOLEAN, PRIMARY KEY ('laundryID'));");
+      this.writeTable();
+      return true;
 
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 
-  private void createTableOnline() {
+  private boolean createTableOnline() {
     try {
 
       PreparedStatement s1 =
@@ -204,13 +206,16 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
-        return;
+        return false;
       }
       Statement s = connection.createStatement();
       s.execute(
           "CREATE TABLE  Laundry(laundryID INTEGER NOT NULL ,laundryType TEXT, description TEXT, inStock BIT, PRIMARY KEY (laundryID));");
+      this.writeTable();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
   }
 

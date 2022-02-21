@@ -180,7 +180,6 @@ public class MedicineRequestTbl extends TableController<MedicineRequest, ArrayLi
   public boolean createTable() {
     if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return createTableOnline();
-
     }
     try {
       PreparedStatement s =

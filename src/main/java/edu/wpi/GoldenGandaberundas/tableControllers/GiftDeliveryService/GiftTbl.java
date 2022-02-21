@@ -160,7 +160,6 @@ public class GiftTbl extends TableController<Gift, String> {
   public boolean createTable() {
     if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return createTableOnline();
-
     }
     try {
       PreparedStatement s =

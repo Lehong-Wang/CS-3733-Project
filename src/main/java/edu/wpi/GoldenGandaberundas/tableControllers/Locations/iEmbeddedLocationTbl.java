@@ -3,39 +3,29 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Locations;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class iEmbeddedLocationTbl extends TableController<Location, String>
-    implements LocationTable {
-  private static iEmbeddedLocationTbl instance = null;
-
+public class EmbeddedLocationTblI implements iLocationTable {
+  private static EmbeddedLocationTblI instance = null;
+  private String tbName = "Locations";
+  private Connection connection;
   private iEmbeddedLocationTbl() throws SQLException {
-    super(
-        "Locations",
-        Arrays.asList(
-            new String[] {
-              "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
-            }),
-        "nodeID");
-
     // create a new table with column names if none table of same name exist
     // if there is one, do nothing
-    createTable();
-    tbName = "Locations";
-    String[] cols = {
-      "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
-    };
-    colNames = Arrays.asList(cols);
-    objList = readTable();
+//    objList = new ArrayList<Location>();
+//    createTable();
+//    tbName = "Locations";
+//    String[] cols = {
+//      "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName"
+//    };
+//    colNames = Arrays.asList(cols);
+//    objList = readTable();
   }
 
-  public static iEmbeddedLocationTbl getInstance() {
+  public static EmbeddedLocationTblI getInstance() {
     if (instance == null) {
       synchronized (TableController.class) {
         if (instance == null) {
@@ -76,6 +66,16 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
     return tableInfo;
   }
 
+  @Override
+  public boolean editEntry(String pkid, String colName, Object value) {
+    return false;
+  }
+
+  @Override
+  public boolean deleteEntry(String pkid) {
+    return false;
+  }
+
   // add new object ONLY to DB
   // DO NOT add this to objList
   // this function is used for putting objList into table
@@ -107,6 +107,11 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
     }
 
     return true;
+  }
+
+  @Override
+  public void createBackup(File f) {
+
   }
 
   // create list of objects from CSV file
@@ -154,6 +159,11 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
     return locList;
   }
 
+  @Override
+  public ArrayList<Location> loadBackup(String fileName) {
+    return null;
+  }
+
   // initiialize table
   public boolean createTable() {
     try {
@@ -197,12 +207,16 @@ public class iEmbeddedLocationTbl extends TableController<Location, String>
               + "longName TEXT NOT NULL,"
               + "shortName TEXT NOT NULL, "
               + "PRIMARY KEY ('nodeID'));");
-      this.writeTable();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
     }
+  }
+
+  @Override
+  public boolean entryExists(String pkID) {
+    return false;
   }
 
   // get the Object with given pkID

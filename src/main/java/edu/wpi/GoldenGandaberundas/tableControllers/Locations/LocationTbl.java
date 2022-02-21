@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class LocationTbl extends TableController<Location, String> {
 
   private static LocationTbl instance = null;
-  private static LocationTable currentTable = null;
+  private static iLocationTable currentTable = null;
 
   private LocationTbl() throws SQLException {
     super(
@@ -34,6 +34,7 @@ public class LocationTbl extends TableController<Location, String> {
   }
 
   public static LocationTbl getInstance() {
+
     if (instance == null) {
       synchronized (TableController.class) {
         if (instance == null) {
@@ -46,15 +47,7 @@ public class LocationTbl extends TableController<Location, String> {
         }
       }
     }
-    if (TableController.getConnectionType() == ConnectionType.embedded) {
-      currentTable = iEmbeddedLocationTbl.getInstance();
-    } else if (TableController.getConnectionType() == ConnectionType.clientServer) {
-      currentTable = iClientServerLocationTbl.getInstance();
-    } else if (TableController.getConnectionType() == ConnectionType.cloud) {
 
-    } else {
-      System.err.println("Connection type error Location Table");
-    }
     return (LocationTbl) instance;
   }
 
@@ -78,7 +71,16 @@ public class LocationTbl extends TableController<Location, String> {
 
   // initiialize table
   public boolean createTable() {
-    return currentTable.createTable();
+    if (TableController.getConnectionType() == ConnectionType.embedded) {
+      currentTable = EmbeddedLocationTblI.getInstance();
+    } else if (TableController.getConnectionType() == ConnectionType.clientServer) {
+      currentTable = ClientServerLocationTblI.getInstance();
+    } else if (TableController.getConnectionType() == ConnectionType.cloud) {
+
+    } else {
+      System.err.println("Connection type error Location Table");
+    }
+    return true;
   }
 
   // get the Object with given pkID

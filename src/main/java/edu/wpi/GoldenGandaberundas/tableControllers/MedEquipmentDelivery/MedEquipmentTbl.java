@@ -150,7 +150,6 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
   public boolean createTable() {
     if (TableController.getConnectionType() == ConnectionType.clientServer) {
       return createTableOnline();
-
     }
     try {
       PreparedStatement s =
