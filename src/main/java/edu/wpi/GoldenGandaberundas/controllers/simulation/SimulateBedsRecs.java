@@ -563,6 +563,7 @@ public class SimulateBedsRecs {
     String key = null;
     for (Map.Entry<String, String> entry : Simulation.corrLoc.entrySet()) {
       if (entry.getValue().equals(value)) {
+
         //        System.out.println("The key for value " + value + " is " + entry.getKey());
         key = entry.getKey();
       }
