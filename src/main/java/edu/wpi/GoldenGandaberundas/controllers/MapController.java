@@ -26,7 +26,6 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -83,7 +82,6 @@ public class MapController {
 
   private PathTbl path = PathTbl.getInstance();
   private TableController locationTableController = LocationTbl.getInstance();
-
 
   @FXML
   public void initialize() {
@@ -146,22 +144,27 @@ public class MapController {
     }
     // subController.setText(locations.getEntry("FDEPT00101"));
 
-    Button toggleEquip = new Button();
+    JFXButton toggleEquip = new JFXButton();
     toggleEquip.setText("Equipment");
+    toggleEquip.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleEquip.setPrefWidth(110);
     toggleEquip.setOnMouseReleased(
         e -> {
           equipGroup.setVisible(!equipGroup.isVisible());
         });
     // imagePane.getChildren().add(toggleEquip);
     // imagePane.setAlignment(toggleEquip, Pos.TOP_LEFT);
-    Button toggleNodes = new Button();
+    JFXButton toggleNodes = new JFXButton();
     toggleNodes.setText("Locations");
+    toggleNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleNodes.setPrefWidth(110);
     toggleNodes.setOnMouseReleased(
         e -> {
           locNodePane.setVisible(!locNodePane.isVisible());
         });
-    Button toggleRequests = new Button();
+    JFXButton toggleRequests = new JFXButton();
     toggleRequests.setText("Requests");
+    toggleRequests.setPrefWidth(110);
     toggleRequests.setOnMouseReleased(
         e -> {
           requestGroup.setVisible(!requestGroup.isVisible());
@@ -170,12 +173,16 @@ public class MapController {
     JFXButton openNodes = new JFXButton();
     openNodes.setText("Path Planning");
     openNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    openNodes.setPrefWidth(110);
+    openNodes.setMaxWidth(110);
 
     // add searchable combo box for location
     SearchableComboBox<String> startLoc = new SearchableComboBox<>();
     SearchableComboBox<String> endLoc = new SearchableComboBox<>();
     startLoc.setValue("Start Location");
     endLoc.setValue("End Location");
+    startLoc.setMaxWidth(110);
+    endLoc.setMaxWidth(110);
 
     // Populating location choice box
     ArrayList<String> searchList = locList();
@@ -187,11 +194,13 @@ public class MapController {
     JFXButton enterPath = new JFXButton();
     enterPath.setText("Find Path");
     enterPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    enterPath.setMaxWidth(110);
 
     // clear path button
     JFXButton clearPath = new JFXButton();
     clearPath.setText("Clear Path");
     clearPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    clearPath.setMaxWidth(110);
 
     clearPath.setOnMouseReleased(
         (event) -> {
@@ -203,7 +212,8 @@ public class MapController {
     // creates the nodes list
     JFXNodesList togglePathInputs = new JFXNodesList();
     togglePathInputs.setRotate(270);
-    togglePathInputs.spacingProperty().setValue(150);
+    togglePathInputs.spacingProperty().setValue(90);
+    togglePathInputs.setMaxWidth(115);
     togglePathInputs.addAnimatedNode(openNodes);
     togglePathInputs.addAnimatedNode(startLoc);
     togglePathInputs.addAnimatedNode(endLoc);
@@ -223,6 +233,8 @@ public class MapController {
         });
 
     HBox buttonHolder = new HBox(toggleNodes, toggleEquip, togglePathInputs);
+    buttonHolder.setAlignment(Pos.TOP_LEFT);
+    buttonHolder.setSpacing(6);
     Group buttonGroup = new Group();
     buttonGroup.getChildren().add(buttonHolder);
     imagePane.getChildren().add(buttonGroup);
@@ -707,7 +719,6 @@ public class MapController {
       location = loc;
     }
   }
-
 
   /** Creates a path bar class for path to follow */
   private class PathBar extends Line {
