@@ -16,21 +16,20 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.foodDeliveryController">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Request Food">
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="1106.0" text="Request Food">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
             <HBox prefHeight="423.0" prefWidth="1106.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="416.0" prefWidth="330.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="593.0" text="Menu" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="593.0" text="Menu" textAlignment="CENTER" underline="true">
                            <VBox.margin>
                               <Insets right="10.0" />
                            </VBox.margin>
@@ -40,19 +39,22 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="336.0">
                            <children>
-                              <JFXButton prefHeight="34.0" prefWidth="157.0" text="Add To Cart" />
-                              <TextField HBox.hgrow="ALWAYS" />
+                              <JFXButton prefHeight="34.0" prefWidth="156.0" text="Add To Cart" HBox.hgrow="ALWAYS" />
+                              <TextField prefHeight="25.0" prefWidth="332.0" HBox.hgrow="ALWAYS" />
                            </children>
                            <VBox.margin>
                               <Insets right="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="foodMenuTable" prefHeight="355.0" prefWidth="440.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Food Name" />
-                            <TableColumn prefWidth="75.0" text="Price" />
-                              <TableColumn prefWidth="75.0" text="In Stock" />
-                              <TableColumn prefWidth="157.19998168945312" text="Ingredients" />
+                              <TableColumn fx:id="foodID" prefWidth="50.799986243247986" text="ID" />
+                            <TableColumn fx:id="foodType" prefWidth="82.4000015258789" text="Food Name" />
+                            <TableColumn fx:id="price" prefWidth="64.800048828125" text="Price" />
+                              <TableColumn fx:id="inStock" prefWidth="58.4000244140625" text="In Stock" />
+                              <TableColumn prefWidth="113.20001220703125" text="Ingredients" />
+                              <TableColumn prefWidth="57.20001220703125" text="Calories" />
+                              <TableColumn prefWidth="78.800048828125" text="Allergies" />
                           </columns>
                            <VBox.margin>
                               <Insets right="10.0" />
@@ -60,19 +62,19 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox prefHeight="423.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER" prefHeight="416.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="593.0" text="Cart" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="259.0" text="Cart" textAlignment="CENTER" underline="true">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="336.0">
                            <children>
-                              <JFXButton prefHeight="34.0" prefWidth="383.0" text="Remove Selected Item" HBox.hgrow="ALWAYS" />
+                              <JFXButton prefHeight="34.0" prefWidth="247.0" text="Remove Selected Item" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <TableView prefHeight="200.0" prefWidth="360.0" VBox.vgrow="SOMETIMES">
+                        <TableView prefHeight="355.0" prefWidth="0.0" VBox.vgrow="SOMETIMES">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Food Name" />
                             <TableColumn prefWidth="75.0" text="Quantity" />
@@ -84,9 +86,9 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="388.0" prefWidth="336.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <GridPane VBox.vgrow="ALWAYS">
+                        <GridPane prefHeight="416.0" prefWidth="296.0" VBox.vgrow="SOMETIMES">
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="134.7999267578125" minWidth="10.0" prefWidth="134.7999267578125" />
@@ -99,7 +101,6 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
-                              <RowConstraints maxHeight="28.399993896484375" minHeight="10.0" prefHeight="28.399993896484375" valignment="CENTER" />
                               <RowConstraints maxHeight="56.600006103515625" minHeight="0.0" prefHeight="19.600006103515625" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="91.0" valignment="CENTER" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -110,7 +111,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <SearchableComboBox prefHeight="58.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
+                              <SearchableComboBox fx:id="patientComboBox" prefHeight="58.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
                               <Label text="Location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="24.0" />
@@ -123,23 +124,38 @@
                                  </font>
                               </Label>
                               <SearchableComboBox prefHeight="58.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <Label text="Notes" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                              <Label text="Notes" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
-                              <TextArea prefHeight="75.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextArea prefHeight="75.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                            </children>
                         </GridPane>
                      </children>
                   </VBox>
                </children>
             </HBox>
+            <TableView fx:id="foodRequestsTable" prefHeight="236.0" prefWidth="1106.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="requestID" prefWidth="75.0" text="requestID" />
+                  <TableColumn fx:id="locationID" prefWidth="75.0" text="locationID" />
+                  <TableColumn fx:id="timeStart" prefWidth="75.0" text="submitTime" />
+                  <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="completeTime" />
+                  <TableColumn fx:id="empInitiated" prefWidth="86.39996337890625" text="empInitiated" />
+                  <TableColumn fx:id="patientID" prefWidth="105.59991455078125" text="patientID" />
+                  <TableColumn fx:id="empCompleter" prefWidth="113.60003662109375" text="empCompleter" />
+                  <TableColumn fx:id="requestStatus" prefWidth="98.0" text="requestStatus" />
+                  <TableColumn fx:id="notes" prefWidth="101.20001220703125" text="notes" />
+                  <TableColumn fx:id="foodTblID" minWidth="0.0" prefWidth="100.39996337890625" text="foodID" />
+                  <TableColumn fx:id="quantity" minWidth="0.0" prefWidth="100.39996337890625" text="quantity" />
+               </columns>
+            </TableView>
          </children>
       </VBox>
    </center>
