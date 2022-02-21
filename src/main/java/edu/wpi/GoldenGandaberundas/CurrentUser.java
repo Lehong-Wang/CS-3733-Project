@@ -10,6 +10,10 @@ public class CurrentUser {
     user = newUser;
   }
 
+  public static void clearUser() {
+    user = null;
+  }
+
   public static Employee getUser() {
     return user;
   }
