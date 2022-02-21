@@ -128,10 +128,7 @@ public class MedicineDeliveryController {
         });
   }
 
-  /**
-   * Method that populates the location combo box from the locationTbl
-   * Called in initialize
-   */
+  /** Method that populates the location combo box from the locationTbl Called in initialize */
   public void locList() {
     ArrayList<Location> locArray = new ArrayList<Location>();
     locArray = locationTableController.readTable();
@@ -143,10 +140,7 @@ public class MedicineDeliveryController {
     locationSearchBox.setItems(oList);
   }
 
-  /**
-   * Method that populates the patient combo box from the patientTbl
-   * Called in initialize
-   */
+  /** Method that populates the patient combo box from the patientTbl Called in initialize */
   public void patientList() {
     ArrayList<Patient> patientArray = new ArrayList<Patient>();
     patientArray = patientTableController.readTable();
@@ -158,10 +152,7 @@ public class MedicineDeliveryController {
     patientSearchBox.setItems(oList);
   }
 
-  /**
-   * Method that populates the medicine combo box from the MedicineTbl
-   * Called in initialize
-   */
+  /** Method that populates the medicine combo box from the MedicineTbl Called in initialize */
   public void medList() {
     ArrayList<Medicine> medArray = new ArrayList<Medicine>();
     medArray = medicineTableController.readTable();
@@ -173,10 +164,7 @@ public class MedicineDeliveryController {
     medicineSearchBox.setItems(oList);
   }
 
-  /**
-   * Method that sets up the event listeners for the searchable combo boxes
-   * Called in initialize
-   */
+  /** Method that sets up the event listeners for the searchable combo boxes Called in initialize */
   public void setupComboListeners() {
     locationSearchBox.setOnAction(
         (event) -> {
