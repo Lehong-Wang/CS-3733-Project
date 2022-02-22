@@ -389,6 +389,7 @@ public class TowerSideViewController {
 
   /**
    * sets the icons to 0.65 their size
+   *
    * @param image the icon
    */
   private void setIcon(ImageView image) {
@@ -400,6 +401,7 @@ public class TowerSideViewController {
 
   /**
    * turns off visibility for an icon
+   *
    * @param image the icon
    */
   private void hideIcon(ImageView image) {
@@ -411,6 +413,7 @@ public class TowerSideViewController {
 
   /**
    * sets a floor icon to .3 their size
+   *
    * @param image the floor icon
    */
   private void setFloorIcon(ImageView image) {
@@ -422,6 +425,7 @@ public class TowerSideViewController {
 
   /**
    * sets the location of an icon
+   *
    * @param image icon to be set
    * @param x x corrdinate
    * @param y y coordinate

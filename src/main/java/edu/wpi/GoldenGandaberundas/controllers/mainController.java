@@ -190,6 +190,7 @@ public class mainController {
 
   /**
    * switches to the map view
+   *
    * @throws IOException error
    */
   public void switchMapView() throws IOException {
@@ -313,10 +314,7 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
-
-  /**
-   * switches to the tower side view
-   */
+  /** switches to the tower side view */
   public void switchSideView() {
     FXMLLoader subControllerLoader =
         new FXMLLoader(App.class.getResource("views/towerSideView.fxml"));

@@ -613,6 +613,7 @@ public class MapController {
           rect.setY(282);
           gridPane.setVisible(true);
           setFloorView(getEquipNum(filteredEquipmentsL1));
+          floorLabel.setText("Lower Floor 1");
         });
     floor01.setOnAction(
         e -> {
@@ -622,6 +623,7 @@ public class MapController {
           rect.setY(242);
           gridPane.setVisible(true);
           setFloorView(getEquipNum(filteredEquipments1));
+          floorLabel.setText("Floor 1");
         });
     floor02.setOnAction(
         e -> {
@@ -639,6 +641,7 @@ public class MapController {
           rect.setY(166);
           gridPane.setVisible(true);
           setFloorView(getEquipNum(filteredEquipments3));
+          floorLabel.setText("Floor 3");
         });
 
     return floorSelect;
