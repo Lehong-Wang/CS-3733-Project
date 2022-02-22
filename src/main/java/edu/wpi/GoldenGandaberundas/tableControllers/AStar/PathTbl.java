@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import java.io.*;
@@ -349,5 +350,19 @@ public class PathTbl extends TableController<Path, String> {
     for (String key : statsMap.keySet()) {
       System.out.println(key + " = " + statsMap.get(key));
     }
+  }
+
+  /**
+   * Returns the starting and ending points of a MedEquip in the SimulationList
+   *
+   * @param medID - Piece of Equipment
+   * @param hour - Beginning hour of path
+   * @return List<String> where index 0 = starting point, index 1 = ending point
+   */
+  public static List<String> getPathPoints(int medID, int hour) {
+    List<String> retVal = new ArrayList<>();
+    retVal.add(0, Simulation.pathList[medID][hour]);
+    retVal.add(1, Simulation.pathList[medID][hour + 1]);
+    return retVal;
   }
 }

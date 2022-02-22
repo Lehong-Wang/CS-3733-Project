@@ -55,34 +55,33 @@ public class Simulation {
     corrLoc.put("gPATI02003", "HHALL01503");
   }
 
-  private ArrayList<MedEquipmentSimulation> Beds_List = new ArrayList<>();
-  private ArrayList<MedEquipmentSimulation> Recliners_List = new ArrayList<>();
-  private ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
-  private ArrayList<MedEquipmentSimulation> fullMedList = new ArrayList<>();
+  private static ArrayList<MedEquipmentSimulation> Beds_List = new ArrayList<>();
+  private static ArrayList<MedEquipmentSimulation> Recliners_List = new ArrayList<>();
+  private static ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
+  private static ArrayList<MedEquipmentSimulation> fullMedList = new ArrayList<>();
   public static String[][] pathList;
-  private MedEquipmentSimulation XRay;
-  TableController<MedEquipment, Integer> medTable;
+  private static MedEquipmentSimulation XRay;
+  static TableController<MedEquipment, Integer> medTable;
 
   private final String smallEqpCSV = "TestCSVs/medEquipSimulationSubset.csv";
-  private final String eqpCSV = "TestCSVs/medEquipSimulation.csv";
+  private static final String eqpCSV = "TestCSVs/medEquipSimulation.csv";
 
   private int numPumpsToSend, numReclinersToSend;
-  private final int endTime = 96;
+  private static final int endTime = 96;
   private static int hours = 0;
 
-  public void update() {
+  public static void update() {
     takeSnapshot();
     sortLists(fullMedList);
     makeSimulationLists(fullMedList);
 
     for (hours = 1; hours <= endTime; hours++) {
       ArrayList<MedEquipmentSimulation> tempBedsRecs =
-          SimulateBedsRecs.updateBedsRecliners(this.Beds_List, this.Recliners_List, hours);
+          SimulateBedsRecs.updateBedsRecliners(Beds_List, Recliners_List, hours);
 
-      ArrayList<MedEquipmentSimulation> tempPumps =
-          SimulatePumps.updatePumps(this.Pumps_List, hours);
+      ArrayList<MedEquipmentSimulation> tempPumps = SimulatePumps.updatePumps(Pumps_List, hours);
 
-      MedEquipmentSimulation tempXRay = SimulateXRay.updateXRay(this.XRay, hours);
+      MedEquipmentSimulation tempXRay = SimulateXRay.updateXRay(XRay, hours);
 
       ArrayList<MedEquipmentSimulation> tempFullList = new ArrayList<>();
       tempFullList.addAll(tempPumps);
@@ -99,7 +98,7 @@ public class Simulation {
    *
    * @param eqpList
    */
-  private void makeSimulationLists(ArrayList<MedEquipmentSimulation> eqpList) {
+  private static void makeSimulationLists(ArrayList<MedEquipmentSimulation> eqpList) {
     pathList = new String[eqpList.size() + 1][endTime];
   }
 
@@ -108,13 +107,13 @@ public class Simulation {
    *
    * @param eqpList
    */
-  private void addIterationToSimLists(ArrayList<MedEquipmentSimulation> eqpList) {
+  private static void addIterationToSimLists(ArrayList<MedEquipmentSimulation> eqpList) {
     for (MedEquipmentSimulation eqp : eqpList) {
       pathList[eqp.getMedID()][hours - 1] = eqp.getCurrLoc();
     }
   }
 
-  private void printSimList() {
+  private static void printSimList() {
     System.out.println('\n');
     for (int i = 1; i < pathList.length; i++) {
       System.out.println("EQP # " + i + ": " + Arrays.deepToString(pathList[i]));
@@ -122,7 +121,7 @@ public class Simulation {
   }
 
   /** Intended to take Snapshot from DB Currently loading CSV */
-  public void takeSnapshot() {
+  public static void takeSnapshot() {
     medTable = MedEquipmentTbl.getInstance();
     //    ArrayList<MedEquipment> MedDBList = medTable.readTable();
     ArrayList<MedEquipment> MedDBList = medTable.readBackup(eqpCSV);
@@ -141,10 +140,10 @@ public class Simulation {
    *
    * @param list full List of Med Equipment in DB
    */
-  public void sortLists(ArrayList<MedEquipmentSimulation> list) {
-    this.Beds_List.clear();
-    this.Recliners_List.clear();
-    this.Pumps_List.clear();
+  public static void sortLists(ArrayList<MedEquipmentSimulation> list) {
+    Beds_List.clear();
+    Recliners_List.clear();
+    Pumps_List.clear();
     for (MedEquipmentSimulation eqp : list) {
       //      System.out.println(eqp.getType().trim().toUpperCase(Locale.ROOT));
       switch (eqp.getMedEquipmentType().trim().toUpperCase(Locale.ROOT)) {
