@@ -1,19 +1,15 @@
 package edu.wpi.GoldenGandaberundas.controllers.validators;
-import java.util.regex.Matcher;
+
 import java.util.Locale;
 
 public class AudioVisualValidator {
   private String avID;
   private String deviceType;
-  //location foreign key doesnt need validation
+  // location foreign key doesnt need validation
   private String description;
-  //no priority validator.  make it a dropdown
+  // no priority validator.  make it a dropdown
 
-  public AudioVisualValidator(
-      String avID,
-      String deviceType,
-      String description
-      ) {
+  public AudioVisualValidator(String avID, String deviceType, String description) {
     this.avID = avID;
     this.deviceType = deviceType;
     this.description = description;
@@ -33,9 +29,15 @@ public class AudioVisualValidator {
    *
    * @return bool validation status
    */
-  private boolean validateDeviceType() {//set to contains() until we find something better or figure out how to use lookingAt()
-    return this.deviceType.trim().toLowerCase(Locale.ROOT).matches("[a-zA-Z\\w]+") &&
-    !this.deviceType.trim().toLowerCase(Locale.ROOT).contains("\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b");
+  private boolean
+      validateDeviceType() { // set to contains() until we find something better or figure out how
+    // to use lookingAt()
+    return this.deviceType.trim().toLowerCase(Locale.ROOT).matches("[a-zA-Z\\w]+")
+        && !this.deviceType
+            .trim()
+            .toLowerCase(Locale.ROOT)
+            .contains(
+                "\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b");
   }
 
   /**
@@ -43,8 +45,14 @@ public class AudioVisualValidator {
    *
    * @return bool validation status
    */
-  private boolean validateDescription() {//set to contains() until we find something better or figure out how to use lookingAt()
-    return !this.description.trim().toLowerCase(Locale.ROOT).contains("\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b");
+  private boolean
+      validateDescription() { // set to contains() until we find something better or figure out how
+    // to use lookingAt()
+    return !this.description
+        .trim()
+        .toLowerCase(Locale.ROOT)
+        .contains(
+            "\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b");
   }
 
   /**
@@ -53,9 +61,7 @@ public class AudioVisualValidator {
    * @return
    */
   public boolean validateTextFields() {
-    return validateAVID()
-        && validateDeviceType()
-        && validateDescription();
+    return validateAVID() && validateDeviceType() && validateDescription();
   }
 
   public String traceValidationError() {
