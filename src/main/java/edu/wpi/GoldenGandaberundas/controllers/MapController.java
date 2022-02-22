@@ -227,7 +227,7 @@ public class MapController {
     imagePane.getChildren().add(sideViewPane);
     gridPane.setTranslateX(600);
     setFloorView(getEquipNum(filteredEquipments1));
-    
+
     // creates button to select visible floor
     HBox floorSelect = createFloorSelector();
     floorSelect.setMaxHeight(25);

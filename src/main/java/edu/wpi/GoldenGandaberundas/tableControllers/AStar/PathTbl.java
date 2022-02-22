@@ -1,20 +1,19 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class PathTbl extends TableController<Path, String> {
 
   private static PathTbl instance = null;
+  private static HashMap<String, Integer> statsMap = new HashMap<>();
 
   private PathTbl() throws SQLException {
     super("Paths", Arrays.asList(new String[] {"edgeID", "startNode", "endNode"}));
@@ -319,5 +318,36 @@ public class PathTbl extends TableController<Path, String> {
       return points.get(startID).locationsPath(test);
     }
     return null;
+  }
+
+  /**
+   * Takes in the name for the start and ending nodes and creates the appropriate a star path Keeps
+   * Statistics using HashMap statsMap on Nodes visited
+   *
+   * @param start string of the starting node
+   * @param end string of the ending node
+   * @return list of Strings created from the a star path
+   */
+  public List<String> createAStarPathwStats(String start, String end) {
+    List<String> path = createAStarPath(start, end);
+    for (String node : path) {
+      statsMap.put(node, statsMap.get(node) + 1);
+    }
+    return path;
+  }
+
+  /** Creates a HashMap to use for keeping node traversal statistics */
+  public static void createStatsMap() {
+    ArrayList<Location> allLocs = LocationTbl.getInstance().readTable();
+    for (int i = 0; i < allLocs.size(); i++) {
+      String loc = allLocs.get(i).getNodeID();
+      statsMap.put(loc, 0);
+    }
+  }
+
+  public static void printStatsMap() {
+    for (String key : statsMap.keySet()) {
+      System.out.println(key + " = " + statsMap.get(key));
+    }
   }
 }

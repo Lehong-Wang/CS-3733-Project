@@ -32,9 +32,11 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
     // Initializes the database tables in memory
-
+      
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
+    EmployeeTbl.getInstance();
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
     PatientTbl.getInstance();
     LaundryTbl.getInstance();
     MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
@@ -75,11 +77,7 @@ public class Main {
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
-    //    EmployeePermissionTbl.getInstance();
-    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
-    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
-    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
-    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
+
 
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
@@ -87,6 +85,7 @@ public class Main {
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
     App.launch(App.class, args);
+
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();
