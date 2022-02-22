@@ -301,7 +301,6 @@ public class TowerSideViewController {
     gesturePane.setScrollBarPolicy(GesturePane.ScrollBarPolicy.NEVER);
     gesturePane.setMinScale(1);
 
-
     // map image to switch between
     mapPane.setContent(mapImage);
     mapPane.setFitMode(GesturePane.FitMode.COVER);

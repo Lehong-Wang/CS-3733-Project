@@ -46,14 +46,13 @@
             </VBox>
             <GridPane VBox.vgrow="ALWAYS">
                <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.20001220703125" minWidth="10.0" prefWidth="63.8" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.39996337890625" minWidth="10.0" prefWidth="84.20002441406251" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="117.99999237060547" minWidth="10.0" prefWidth="79.39996337890625" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="91.0" minWidth="10.0" prefWidth="73.39998779296877" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="98.60002441406249" minWidth="10.0" prefWidth="83.99996337890627" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="137.80002441406248" minWidth="10.0" prefWidth="104.40003662109376" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="124.0000122070312" minWidth="10.0" prefWidth="50.599987792968705" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.80001220703122" minWidth="10.0" prefWidth="60.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="127.99998016357422" minWidth="10.0" prefWidth="113.2" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="107.19996337890625" minWidth="10.0" prefWidth="81.2" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="117.99999237060547" minWidth="10.0" prefWidth="78.00003662109373" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="105.20002441406251" minWidth="10.0" prefWidth="72.40000000000003" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="108.4000244140625" minWidth="10.0" prefWidth="80.39997558593751" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="137.80002441406248" minWidth="10.0" prefWidth="90.0000122070312" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="124.0000122070312" minWidth="10.0" prefWidth="83.99998168945308" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="77.39999771118164" minHeight="10.0" prefHeight="67.39999771118164" valignment="BOTTOM" vgrow="SOMETIMES" />
@@ -62,7 +61,7 @@
                   <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="67.4000244140625" valignment="TOP" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Submit Time:" GridPane.columnIndex="1">
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="95.0" text="Submit Time:" GridPane.columnIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -91,15 +90,9 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="completerIDField" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <TextField fx:id="completerIDField" prefHeight="25.0" prefWidth="76.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <JFXButton fx:id="editButton" onAction="#editRequest" text="Edit" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <JFXButton alignment="CENTER" onAction="#deleteRequest" prefHeight="58.0" prefWidth="86.0" text="Delete Request" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Notes" GridPane.columnIndex="7">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="notesField" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                   <TextField fx:id="statusField" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Status" GridPane.columnIndex="6">
                      <font>

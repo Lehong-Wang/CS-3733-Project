@@ -243,40 +243,80 @@ public class foodDeliveryController {
   }
 
   /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (noteField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return noteField.getText().matches("[\\w\\d\\s\\d.]+")
+        && locationComboBox.getValue() != null
+        && patientComboBox.getValue() != null
+        && !currentMenu.isEmpty();
+  }
+
+  /**
    * Submits a request in the requests table when there is stuff in the "cart" Only things not
    * auto-generated are the patientID, the locationID and the notes
    */
   public void submit() {
-    int requestNum =
-        RequestTable.getInstance().readTable().size() - 1 < 0
-            ? 0
-            : RequestTable.getInstance()
-                    .readTable()
-                    .get(RequestTable.getInstance().readTable().size() - 1)
-                    .getRequestID()
-                + 1;
-    int requesterID = CurrentUser.getUser().getEmpID();
-    int patientID = patientComboBox.getValue();
-    String location = locationComboBox.getValue();
-    String notes = noteField.getText();
-    for (FoodMenuItem fm : currentMenu) {
-      FoodRequest foodRequest =
-          new FoodRequest(
-              requestNum,
-              location,
-              requesterID,
-              null,
-              0,
-              0,
-              patientID,
-              "Submitted",
-              notes,
-              fm.getFoodItem().getFoodID(),
-              fm.getQuantity());
-      RequestTable.getInstance().addEntry(foodRequest);
+    if (validateDataSafe()) {
+      int requestNum =
+          RequestTable.getInstance().readTable().size() - 1 < 0
+              ? 0
+              : RequestTable.getInstance()
+                      .readTable()
+                      .get(RequestTable.getInstance().readTable().size() - 1)
+                      .getRequestID()
+                  + 1;
+      int requesterID = CurrentUser.getUser().getEmpID();
+      int patientID = patientComboBox.getValue();
+      String location = locationComboBox.getValue();
+      String notes = noteField.getText();
+      for (FoodMenuItem fm : currentMenu) {
+        FoodRequest foodRequest =
+            new FoodRequest(
+                requestNum,
+                location,
+                requesterID,
+                null,
+                0,
+                0,
+                patientID,
+                "Submitted",
+                notes,
+                fm.getFoodItem().getFoodID(),
+                fm.getQuantity());
+        RequestTable.getInstance().addEntry(foodRequest);
+      }
+      currentMenu.clear();
+      refresh();
+    } else {
+      noteField.setText("Invalid Input");
     }
-    currentMenu.clear();
-    refresh();
   }
 
   /** Opens a file directory and prompts the user to create a backup for the food menu database */

@@ -218,47 +218,90 @@ public class MedicineDeliveryController {
     }
   }
 
+  /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (notesField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return notesField.getText().matches("[\\w\\d\\s\\d.]+")
+        && locationSearchBox.getValue() != null
+        && patientSearchBox.getValue() != null
+        && medicineSearchBox.getValue() != null
+        && dosageField.getText().matches("[\\d]+")
+        && quantityField.getText().matches("[\\d]+");
+  }
+
   @FXML
   public void submit() {
-    requestTable = MedicineRequestTbl.getInstance();
-    int requestID = 0;
-    String notes = notesField.getText();
-    if (reqTable.readTable().size() == 0) {
-      requestID = 0;
+    if (validateDataSafe()) {
+      requestTable = MedicineRequestTbl.getInstance();
+      int requestID = 0;
+      String notes = notesField.getText();
+      if (reqTable.readTable().size() == 0) {
+        requestID = 0;
+      } else {
+        requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
+      }
+      String nodeID = locations;
+      int patientID = currentPatientID;
+      int requesterID = CurrentUser.getUser().getEmpID();
+      int medicineID = currentMedicineID;
+      //    int dosage = 0;
+      //    int quantity = 0;
+      try {
+        int dosage = Integer.parseInt(dosageField.getText());
+        int quantity = Integer.parseInt(quantityField.getText());
+        MedicineRequest medicineRequest2 =
+            new MedicineRequest(
+                requestID,
+                nodeID,
+                requesterID,
+                123,
+                000,
+                000,
+                patientID,
+                "Submitted",
+                notes,
+                medicineID,
+                dosage,
+                quantity);
+        RequestTable.getInstance().addEntry(medicineRequest2);
+      } catch (NumberFormatException e) {
+        dosageField.setText("Invalid Input");
+        quantityField.setText("Invalid Input");
+        System.out.println("Invalid input, dosage and quantity must be integers");
+        e.printStackTrace();
+      }
     } else {
-      requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
-    }
-    String nodeID = locations;
-    int patientID = currentPatientID;
-    int requesterID = CurrentUser.getUser().getEmpID();
-    int medicineID = currentMedicineID;
-    //    int dosage = 0;
-    //    int quantity = 0;
-    try {
-      int dosage = Integer.parseInt(dosageField.getText());
-      int quantity = Integer.parseInt(quantityField.getText());
-      MedicineRequest medicineRequest2 =
-          new MedicineRequest(
-              requestID,
-              nodeID,
-              requesterID,
-              123,
-              000,
-              000,
-              patientID,
-              "Submitted",
-              notes,
-              medicineID,
-              dosage,
-              quantity);
-      RequestTable.getInstance().addEntry(medicineRequest2);
-    } catch (NumberFormatException e) {
+      notesField.setText("Invalid Input");
       dosageField.setText("Invalid Input");
       quantityField.setText("Invalid Input");
-      System.out.println("Invalid input, dosage and quantity must be integers");
-      e.printStackTrace();
     }
-
     refresh();
   }
 

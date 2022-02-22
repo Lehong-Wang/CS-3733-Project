@@ -11,6 +11,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +36,13 @@ import org.controlsfx.control.SearchableComboBox;
 public class AudioVisualController implements Initializable {
 
   @FXML private TextField patientField;
+  @FXML private TextField priorityField;
   @FXML private ChoiceBox<String> priorityBox;
   @FXML private TextArea descriptionBox;
   @FXML private SearchableComboBox<String> deviceIDBox;
   @FXML private SearchableComboBox<String> deviceTypeBox;
   @FXML private SearchableComboBox<String> locationBox;
+  @FXML private SearchableComboBox<Integer> patientComboBox;
 
   @FXML private TableView deviceMenu;
   @FXML private TableColumn<AudioVisual, Integer> deviceID;
@@ -73,8 +77,6 @@ public class AudioVisualController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
-    priorityBox.getItems().addAll("low", "medium", "high");
 
     deviceID.setCellValueFactory(new PropertyValueFactory<AudioVisual, Integer>("avID"));
     type.setCellValueFactory(new PropertyValueFactory<AudioVisual, String>("deviceType"));
@@ -112,7 +114,12 @@ public class AudioVisualController implements Initializable {
 
     // Populating device type choice box
     ObservableList<String> tList = FXCollections.observableArrayList(deviceTypeList());
-    deviceTypeBox.setItems(tList);
+
+    ArrayList<Integer> patientIDs = new ArrayList<>();
+    for (Patient p : PatientTbl.getInstance().readTable()) {
+      patientIDs.add(p.getPatientID());
+    }
+    patientComboBox.setItems(FXCollections.observableArrayList(patientIDs));
 
     avRequests.setOnMouseClicked(
         e -> {
@@ -179,9 +186,9 @@ public class AudioVisualController implements Initializable {
     int requesterID = CurrentUser.getUser().getEmpID();
     String location = locationBox.getValue();
     int deviceID = Integer.parseInt(deviceIDBox.getValue());
-    int patientID = Integer.parseInt(patientField.getText());
+    int patientID = patientComboBox.getValue();
     String note = descriptionBox.getText();
-    String priority = priorityBox.getValue();
+    String priority = priorityField.getText();
 
     AudioVisualRequest AVrequest =
         new AudioVisualRequest(
@@ -206,9 +213,6 @@ public class AudioVisualController implements Initializable {
    * clears the submissions fields
    */
   public void clear() {
-    patientField.setText("");
-    priorityBox.getItems().clear();
-    priorityBox.getItems().addAll("low", "medium", "high");
     descriptionBox.setText("");
     locationBox.getItems().clear();
 
@@ -223,10 +227,6 @@ public class AudioVisualController implements Initializable {
     ObservableList<String> dList = FXCollections.observableArrayList(findList);
     deviceIDBox.setItems(dList);
 
-    // Populating device type choice box
-    deviceTypeBox.getItems().clear();
-    ObservableList<String> tList = FXCollections.observableArrayList(deviceTypeList());
-    deviceTypeBox.setItems(tList);
     refresh();
   }
 

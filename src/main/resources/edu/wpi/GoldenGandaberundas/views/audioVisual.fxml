@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -48,12 +47,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Device Type" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="917.0" text="Location" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="917.0" text="Location" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -73,11 +67,6 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="patientField" prefHeight="26.0" prefWidth="61.0" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </GridPane.margin>
-                        </TextField>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <children>
                               <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="39.0" prefWidth="116.0" style="-fx-background-color: #0067B1; -fx-alignment: center;" text="Submit" textFill="WHITE" HBox.hgrow="ALWAYS">
@@ -97,29 +86,29 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Device ID" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Device ID" GridPane.rowIndex="3">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <SearchableComboBox fx:id="deviceIDBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <SearchableComboBox fx:id="deviceIDBox" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin></SearchableComboBox>
-                        <SearchableComboBox fx:id="locationBox" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <SearchableComboBox fx:id="locationBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin></SearchableComboBox>
-                        <SearchableComboBox fx:id="deviceTypeBox" GridPane.rowIndex="4">
+                        <TextField fx:id="priorityField" prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <SearchableComboBox fx:id="patientComboBox" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </SearchableComboBox>
-                        <ChoiceBox fx:id="priorityBox" prefHeight="25.0" prefWidth="306.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                        </ChoiceBox>
                      </children>
                      <HBox.margin>
                         <Insets left="10.0" />

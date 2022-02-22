@@ -69,7 +69,6 @@ public class MapController {
   private String startTemp = null;
   private String endTemp = null;
 
-
   // side view gridPane setup
   @FXML GridPane gridPane = new GridPane();
   @FXML private Label cleanLabel = new Label();
@@ -664,11 +663,12 @@ public class MapController {
     xrayLabel2.setText("  " + num[6]);
   }
 
-    /**
-     * gets an array of the number of each equipment
-     * @param filteredEquipments a list of equipment to sort
-     * @return int array of the equipment amounts
-     */
+  /**
+   * gets an array of the number of each equipment
+   *
+   * @param filteredEquipments a list of equipment to sort
+   * @return int array of the equipment amounts
+   */
   public int[] getEquipNum(ArrayList<MedEquipment> filteredEquipments) {
     int cleanBed = 0;
     int dirtyBed = 0;

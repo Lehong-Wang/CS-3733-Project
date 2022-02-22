@@ -19,7 +19,6 @@ public class editAudioVisualReqFormController {
   @FXML TextField patientIDField;
   @FXML TextField requesterIDField;
   @FXML TextField completerIDField;
-  @FXML TextField notesField;
   @FXML TextField statusField;
   @FXML JFXButton editButton;
 
@@ -42,7 +41,6 @@ public class editAudioVisualReqFormController {
     completerIDField.setText(String.valueOf(medReq.getEmpCompleter()));
     requesterIDField.setText(String.valueOf(medReq.getEmpInitiated()));
     statusField.setText(medReq.getRequestStatus());
-    notesField.setText(medReq.getNotes());
   }
 
   /**
@@ -66,7 +64,6 @@ public class editAudioVisualReqFormController {
       long timeEnd = Integer.parseInt(finishTimeField.getText());
       Integer patientID = Integer.parseInt(patientIDField.getText());
       String requestStatus = statusField.getText();
-      String notes = notesField.getText();
 
       requests.editEntry(pkID, "locationID", locationID);
       requests.editEntry(pkID, "empInitiated", empInitiated);
@@ -75,7 +72,6 @@ public class editAudioVisualReqFormController {
       requests.editEntry(pkID, "timeEnd", timeEnd);
       requests.editEntry(pkID, "patientID", patientID);
       requests.editEntry(pkID, "requestStatus", requestStatus);
-      requests.editEntry(pkID, "notes", notes);
     }
     Stage stage = (Stage) editButton.getScene().getWindow();
     stage.close();
