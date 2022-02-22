@@ -34,10 +34,10 @@
                      <children>
                         <Label text="What is on and how to use the employee database:" GridPane.halignment="CENTER">
                            <font>
-                              <Font size="32.0" />
+                              <Font size="29.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="90.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Backup CSVs can be loaded and added" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -45,7 +45,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Employees can be added and edited" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -53,7 +53,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Click on a request to open that specific request table" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -69,7 +69,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on and how to use the request view:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
@@ -77,20 +77,20 @@
                               <Font size="32.0" />
                            </font>
                         </Label>
-                        <Label text="The buttons on the right are for creating and loading" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="The buttons on the right are for creating and" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="20.0" />
+                              <Insets left="100.0" top="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="backup CSVs of the database" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="loading backup CSVs of the database" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="50.0" />
+                              <Insets left="100.0" top="50.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Has personal information about employees" GridPane.rowIndex="2">
@@ -98,7 +98,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Contains all requests" GridPane.columnIndex="1" GridPane.rowIndex="1">

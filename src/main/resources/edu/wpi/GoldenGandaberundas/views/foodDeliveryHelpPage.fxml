@@ -46,7 +46,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Include notes such as allergies or dietary restrictions" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -54,7 +54,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Enter the patient and location for the delivery" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -62,7 +62,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Submit once cart is complete" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -70,7 +70,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on the page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">

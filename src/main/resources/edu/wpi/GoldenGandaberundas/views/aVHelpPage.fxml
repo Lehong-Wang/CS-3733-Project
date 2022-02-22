@@ -45,7 +45,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Enter the patient ID" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -53,7 +53,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Select/enter the device ID" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -61,7 +61,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Indicate the priority of the request" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -69,7 +69,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Select the location that the device should be sent to" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -77,7 +77,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Add a description as needed" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
@@ -85,7 +85,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on the page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
