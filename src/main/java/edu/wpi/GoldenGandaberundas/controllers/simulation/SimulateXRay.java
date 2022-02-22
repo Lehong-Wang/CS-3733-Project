@@ -9,7 +9,7 @@ public class SimulateXRay {
   private static int hours = 0;
   private static MedEquipmentSimulation XRay;
   private static final boolean DEBUG_XRAY_SIM = false;
-  private static final boolean PRINT_XRAY_SIM = true;
+  private static final boolean PRINT_XRAY_SIM = false;
 
   public static MedEquipmentSimulation updateXRay(MedEquipmentSimulation currentXRay, int time) {
     hours = time;
@@ -19,7 +19,7 @@ public class SimulateXRay {
       // If time is expired, sent to storage
       if (XRay.getInRoomEndTime() <= hours) {
         XRay.setStatus("STORED");
-        XRay.setCurrLoc("gSTOR00103");
+        XRay.setCurrLoc("GSTOR00103");
         if (DEBUG_XRAY_SIM) {
           System.out.println("X-Ray is now in storage");
         }

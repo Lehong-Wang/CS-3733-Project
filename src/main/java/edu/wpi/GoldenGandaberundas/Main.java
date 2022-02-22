@@ -1,7 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
@@ -61,6 +60,7 @@ public class Main {
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
 
+
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
@@ -74,8 +74,11 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(420, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(69, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
+      
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
+    PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
     
@@ -85,6 +88,7 @@ public class Main {
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
 
+    //    Simulation.update();
 
     PathTbl.createStatsMap();
     //    List<String> points1 = PathTbl.getPathPoints(1, 2);
@@ -99,12 +103,18 @@ public class Main {
     //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    System.out.println(PathTbl.getInstance().createAStarPathwStats("gSTOR00103", "gSTOR00103"));
+    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103", "GSTOR00103"));
 
-    PathTbl.printStatsMap();
+    //    PathTbl.printStatsMap();
 
     //    EmployeePermissionTbl.getInstance();
-
+      
+    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
+    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
+    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
+    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
+    floorMaps.load();
+    App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();

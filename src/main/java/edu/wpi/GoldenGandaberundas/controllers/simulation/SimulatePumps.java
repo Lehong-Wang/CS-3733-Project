@@ -20,7 +20,7 @@ public class SimulatePumps {
   private static int hours = 0;
 
   private static final boolean DEUBUG_PUMP_SIM = false;
-  private static final boolean PRINT_PUMP_SIM = true;
+  private static final boolean PRINT_PUMP_SIM = false;
 
   public static ArrayList<MedEquipmentSimulation> updatePumps(
       ArrayList<MedEquipmentSimulation> currentPumpList, int time) {
@@ -137,7 +137,7 @@ public class SimulatePumps {
     for (MedEquipmentSimulation pump : Pumps_Dirty) {
       pump.setCleaningEndTime(PUMP_CLEANING_TIME);
       pump.setStatus("Cleaning");
-      pump.setCurrLoc("gSTOR002l1");
+      pump.setCurrLoc("GSTOR002L1");
       if (DEUBUG_PUMP_SIM) {
         System.out.println("Pump # " + pump.getMedID() + " is now in cleaning");
       }
@@ -150,7 +150,7 @@ public class SimulatePumps {
     for (MedEquipmentSimulation pump : Pumps_Cleaning) {
       if (pump.getCleaningEndTime() <= hours) {
         pump.setStatus("Stored");
-        pump.setCurrLoc("gSTOR00103");
+        pump.setCurrLoc("GSTOR00103");
         if (DEUBUG_PUMP_SIM) {
           System.out.println("Pump # " + pump.getMedID() + " is now in storage");
         }
@@ -165,7 +165,7 @@ public class SimulatePumps {
       // If In Room Time is Up
       if (pump.getInRoomEndTime() <= hours) {
         pump.setStatus("Dirty");
-        pump.setCurrLoc("gDIRT00103");
+        pump.setCurrLoc("GDIRT00103");
         if (DEUBUG_PUMP_SIM) {
           System.out.println("Pump # " + pump.getMedID() + " is now dirty");
         }

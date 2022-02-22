@@ -53,7 +53,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       e.printStackTrace();
       return null;
     }
-
+    objList = medEquipments;
     return medEquipments;
   }
 

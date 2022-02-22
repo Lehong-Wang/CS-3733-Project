@@ -33,7 +33,7 @@ public class SimulateBedsRecs {
   private static int numBedsToSend, numReclinersToSend;
 
   private static boolean DEUBUG_BED_SIM = false;
-  private static boolean PRINT_BED_SIM = true;
+  private static boolean PRINT_BED_SIM = false;
 
   public static ArrayList<MedEquipmentSimulation> updateBedsRecliners(
       ArrayList<MedEquipmentSimulation> currentBedList,
@@ -45,7 +45,7 @@ public class SimulateBedsRecs {
     sortReclinerLists(currentReclinerList);
     hours = time;
     if (DEUBUG_BED_SIM) {
-      System.out.println("TIME: " + hours);
+      //      System.out.println("TIME: " + hours);
     }
     if (PRINT_BED_SIM) {
       printBedReclinerLists();
@@ -187,32 +187,34 @@ public class SimulateBedsRecs {
 
   /** prints static lists to terminal */
   private static void printBedReclinerLists() {
-    System.out.println('\n' + "-------------------- HOUR: " + hours + " --------------------");
-    System.out.println("----------BEDS---------");
-    System.out.println("In Use Beds" + "(" + Beds_InRoom.size() + "): " + Beds_InRoom);
-    System.out.println("Dirty Beds" + "(" + Beds_Dirty.size() + "): " + Beds_Dirty);
-    System.out.println("Cleaning Beds" + "(" + Beds_Cleaning.size() + "): " + Beds_Cleaning);
-    System.out.println("Stored Beds" + "(" + Beds_Stored.size() + "): " + Beds_Stored);
-    System.out.println(
-        "Awaiting Transport Beds"
-            + "("
-            + Beds_AwaitingTransport.size()
-            + "): "
-            + Beds_AwaitingTransport);
-    System.out.println(
-        "Temporarily Outside Beds"
-            + "("
-            + Beds_TemporarilyOutside.size()
-            + "): "
-            + Beds_TemporarilyOutside);
-    System.out.println('\n' + "----------RECLINERS---------");
-    System.out.println(
-        "In Use Recliners" + "(" + Recliners_InRoom.size() + "): " + Recliners_InRoom);
-    System.out.println("Dirty Recliners" + "(" + Recliners_Dirty.size() + "): " + Recliners_Dirty);
-    System.out.println(
-        "Cleaning Recliners" + "(" + Recliners_Cleaning.size() + "): " + Recliners_Cleaning);
-    System.out.println(
-        "Stored Recliners" + "(" + Recliners_Stored.size() + "): " + Recliners_Stored);
+    //    System.out.println('\n' + "-------------------- HOUR: " + hours + "
+    // --------------------");
+    //    System.out.println("----------BEDS---------");
+    //    System.out.println("In Use Beds" + "(" + Beds_InRoom.size() + "): " + Beds_InRoom);
+    //    System.out.println("Dirty Beds" + "(" + Beds_Dirty.size() + "): " + Beds_Dirty);
+    //    System.out.println("Cleaning Beds" + "(" + Beds_Cleaning.size() + "): " + Beds_Cleaning);
+    //    System.out.println("Stored Beds" + "(" + Beds_Stored.size() + "): " + Beds_Stored);
+    //    System.out.println(
+    //        "Awaiting Transport Beds"
+    //            + "("
+    //            + Beds_AwaitingTransport.size()
+    //            + "): "
+    //            + Beds_AwaitingTransport);
+    //    System.out.println(
+    //        "Temporarily Outside Beds"
+    //            + "("
+    //            + Beds_TemporarilyOutside.size()
+    //            + "): "
+    //            + Beds_TemporarilyOutside);
+    //    System.out.println('\n' + "----------RECLINERS---------");
+    //    System.out.println(
+    //        "In Use Recliners" + "(" + Recliners_InRoom.size() + "): " + Recliners_InRoom);
+    //    System.out.println("Dirty Recliners" + "(" + Recliners_Dirty.size() + "): " +
+    // Recliners_Dirty);
+    //    System.out.println(
+    //        "Cleaning Recliners" + "(" + Recliners_Cleaning.size() + "): " + Recliners_Cleaning);
+    //    System.out.println(
+    //        "Stored Recliners" + "(" + Recliners_Stored.size() + "): " + Recliners_Stored);
   }
 
   /**
@@ -245,10 +247,10 @@ public class SimulateBedsRecs {
     }
 
     if (DEUBUG_BED_SIM) {
-      System.out.println("Bed Basis " + basis);
-      System.out.println("Bed Time Mod " + peakTimeMod);
-      System.out.println("Bed Storage Mod " + inStorageMod);
-      System.out.println("Beds to Send " + retVal);
+      //      System.out.println("Bed Basis " + basis);
+      //      System.out.println("Bed Time Mod " + peakTimeMod);
+      //      System.out.println("Bed Storage Mod " + inStorageMod);
+      //      System.out.println("Beds to Send " + retVal);
     }
     numBedsToSend = retVal;
   }
@@ -283,10 +285,10 @@ public class SimulateBedsRecs {
       retVal = Recliners_Stored.size();
     }
     if (DEUBUG_BED_SIM) {
-      System.out.println("Recliner Basis " + basis);
-      System.out.println("Recliner Time Mod " + peakTimeMod);
-      System.out.println("Recliner Storage Mod " + inStorageMod);
-      System.out.println("Recliners to Send " + retVal);
+      //      System.out.println("Recliner Basis " + basis);
+      //      System.out.println("Recliner Time Mod " + peakTimeMod);
+      //      System.out.println("Recliner Storage Mod " + inStorageMod);
+      //      System.out.println("Recliners to Send " + retVal);
     }
     //    System.out.println("Recliners to Send " + retVal);
     numReclinersToSend = retVal;
@@ -297,9 +299,9 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation bed : Beds_Dirty) {
       bed.setCleaningEndTime(hours + BED_CLEANING_TIME);
       bed.setStatus("Cleaning");
-      bed.setCurrLoc("gSTOR001l1");
+      bed.setCurrLoc("GSTOR001L1");
       if (DEUBUG_BED_SIM) {
-        System.out.println("Bed # " + bed.getMedID() + " is now in cleaning");
+        //        System.out.println("Bed # " + bed.getMedID() + " is now in cleaning");
       }
       newBedList.add(bed);
     }
@@ -310,9 +312,9 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation bed : Beds_Cleaning) {
       if (bed.getCleaningEndTime() <= hours) {
         bed.setStatus("Stored");
-        bed.setCurrLoc("gSTOR001l1");
+        bed.setCurrLoc("GSTOR001L1");
         if (DEUBUG_BED_SIM) {
-          System.out.println("Bed # " + bed.getMedID() + " is now in storage");
+          //          System.out.println("Bed # " + bed.getMedID() + " is now in storage");
         }
       }
       newBedList.add(bed);
@@ -328,7 +330,7 @@ public class SimulateBedsRecs {
       //      int rnd = new Random().nextInt(Beds_List.size());
       bed.setCurrLoc("FDEPT00101");
       if (DEUBUG_BED_SIM) {
-        System.out.println("Bed # " + bed.getMedID() + " has been transported");
+        //        System.out.println("Bed # " + bed.getMedID() + " has been transported");
       }
       newBedList.add(bed);
     }
@@ -341,24 +343,24 @@ public class SimulateBedsRecs {
         bed.setStatus("Dirty");
         bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
-          System.out.println("Bed # " + bed.getMedID() + " is now dirty");
+          //          System.out.println("Bed # " + bed.getMedID() + " is now dirty");
         }
         newBedList.add(bed);
       } else if (ThreadLocalRandom.current().nextInt(50) == 7) {
         bed.setStatus("Awaiting Transport");
         bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
-          System.out.println("Bed # " + bed.getMedID() + " is now awaiting transport");
+          //          System.out.println("Bed # " + bed.getMedID() + " is now awaiting transport");
         }
         newBedList.add(bed);
       } else {
         if (DEUBUG_BED_SIM) {
-          System.out.println(
-              "Bed # "
-                  + bed.getMedID()
-                  + " has "
-                  + (bed.getInRoomEndTime() - hours)
-                  + " hours remaining");
+          //          System.out.println(
+          //              "Bed # "
+          //                  + bed.getMedID()
+          //                  + " has "
+          //                  + (bed.getInRoomEndTime() - hours)
+          //                  + " hours remaining");
         }
         Beds_StillActive.add(bed);
       }
@@ -374,7 +376,7 @@ public class SimulateBedsRecs {
         if (bed.getInRoomEndTime() <= hours) {
           bed.setStatus("Dirty");
           if (DEUBUG_BED_SIM) {
-            System.out.println("Bed # " + bed.getMedID() + " is now dirty");
+            //            System.out.println("Bed # " + bed.getMedID() + " is now dirty");
           }
         } else {
           bed.setStatus("In-Use");
@@ -382,8 +384,9 @@ public class SimulateBedsRecs {
           // key
           bed.setCurrLoc(findKey(bed.getCurrLoc()));
           if (DEUBUG_BED_SIM) {
-            System.out.println(
-                "Bed # " + bed.getMedID() + " is now back in room " + bed.getCurrLoc());
+            //            System.out.println(
+            //                "Bed # " + bed.getMedID() + " is now back in room " +
+            // bed.getCurrLoc());
           }
         }
       }
@@ -410,11 +413,11 @@ public class SimulateBedsRecs {
       int rndTTD = ThreadLocalRandom.current().nextInt(12, 48);
       tempBed.setInRoomEndTime(hours + rndTTD);
       if (DEUBUG_BED_SIM) {
-        System.out.println(
-            "Bed # "
-                + tempBed.getMedID()
-                + " will be sent from storage to room "
-                + tempBed.getCurrLoc());
+        //        System.out.println(
+        //            "Bed # "
+        //                + tempBed.getMedID()
+        //                + " will be sent from storage to room "
+        //                + tempBed.getCurrLoc());
       }
       newBedList.add(tempBed);
     }
@@ -429,9 +432,10 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation recliner : Recliners_Cleaning) {
       if (recliner.getCleaningEndTime() <= hours) {
         recliner.setStatus("Stored");
-        recliner.setCurrLoc("gSTOR001l1");
+        recliner.setCurrLoc("GSTOR00201");
         if (DEUBUG_BED_SIM) {
-          System.out.println("Recliner # " + recliner.getMedID() + " is now in storage");
+          //          System.out.println("Recliner # " + recliner.getMedID() + " is now in
+          // storage");
         }
       }
       newReclinerList.add(recliner);
@@ -443,9 +447,9 @@ public class SimulateBedsRecs {
     for (MedEquipmentSimulation recliner : Recliners_Dirty) {
       recliner.setCleaningEndTime(hours + BED_CLEANING_TIME);
       recliner.setStatus("Cleaning");
-      recliner.setCurrLoc("gSTOR001l1");
+      recliner.setCurrLoc("GSTOR00201");
       if (DEUBUG_BED_SIM) {
-        System.out.println("Recliner # " + recliner.getMedID() + " is now in cleaning");
+        //        System.out.println("Recliner # " + recliner.getMedID() + " is now in cleaning");
       }
       newReclinerList.add(recliner);
     }
@@ -458,16 +462,16 @@ public class SimulateBedsRecs {
         recliner.setStatus("Dirty");
         recliner.setCurrLoc(Simulation.getCorrespondingLocation(recliner.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
-          System.out.println("Recliner # " + recliner.getMedID() + " is now dirty");
+          //          System.out.println("Recliner # " + recliner.getMedID() + " is now dirty");
         }
       } else {
         if (DEUBUG_BED_SIM) {
-          System.out.println(
-              "Recliner # "
-                  + recliner.getMedID()
-                  + " has "
-                  + (recliner.getInRoomEndTime() - hours)
-                  + " hours remaining");
+          //          System.out.println(
+          //              "Recliner # "
+          //                  + recliner.getMedID()
+          //                  + " has "
+          //                  + (recliner.getInRoomEndTime() - hours)
+          //                  + " hours remaining");
         }
       }
       newReclinerList.add(recliner);
@@ -477,7 +481,7 @@ public class SimulateBedsRecs {
   private static void updateStoredRecliners() {
     if (Beds_StillActive.size() < 1) {
       if (DEUBUG_BED_SIM) {
-        System.out.println("No Active Beds, No Recliners removed from storage");
+        //        System.out.println("No Active Beds, No Recliners removed from storage");
       }
     } else {
       for (int i = 0; i < numReclinersToSend; i++) {
@@ -494,13 +498,14 @@ public class SimulateBedsRecs {
         tempBed.setOutsideEndTime(rndTTD);
         tempBed.setCurrLoc(Simulation.getCorrespondingLocation(tempBed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
-          System.out.println(
-              "Recliner # "
-                  + tempRec.getMedID()
-                  + " will be sent from storage to room "
-                  + tempRec.getCurrLoc());
-          System.out.println(
-              "Bed # " + tempBed.getMedID() + " will be moved outside to " + tempBed.getCurrLoc());
+          //          System.out.println(
+          //              "Recliner # "
+          //                  + tempRec.getMedID()
+          //                  + " will be sent from storage to room "
+          //                  + tempRec.getCurrLoc());
+          //          System.out.println(
+          //              "Bed # " + tempBed.getMedID() + " will be moved outside to " +
+          // tempBed.getCurrLoc());
         }
         newReclinerList.add(tempRec);
         newBedList.add(tempBed);
@@ -522,13 +527,12 @@ public class SimulateBedsRecs {
 
     ArrayList<String> tempCurValidLoc = new ArrayList<>();
     boolean valid = false;
-
     for (String strLoc : currentValidBedLocations) {
       valid = true;
       for (MedEquipmentSimulation bed : Beds_StillActive) {
         if (bed.getCurrLoc().equals(strLoc)) {
           if (DEUBUG_BED_SIM) {
-            System.out.println("Location " + strLoc + " has bed # " + bed.getMedID());
+            //            System.out.println("Location " + strLoc + " has bed # " + bed.getMedID());
           }
           valid = false;
         }
@@ -537,7 +541,7 @@ public class SimulateBedsRecs {
       if (valid) {
         tempCurValidLoc.add(strLoc);
         if (DEUBUG_BED_SIM) {
-          System.out.println("No beds in room " + strLoc);
+          //          System.out.println("No beds in room " + strLoc);
         }
       }
     }
@@ -545,12 +549,12 @@ public class SimulateBedsRecs {
     currentValidBedLocations.addAll(tempCurValidLoc);
 
     if (DEUBUG_BED_SIM) {
-      System.out.println(
-          "Current Valid Locations: "
-              + "("
-              + currentValidBedLocations.size()
-              + "): "
-              + currentValidBedLocations);
+      //      System.out.println(
+      //          "Current Valid Locations: "
+      //              + "("
+      //              + currentValidBedLocations.size()
+      //              + "): "
+      //              + currentValidBedLocations);
     }
   }
 
@@ -558,10 +562,14 @@ public class SimulateBedsRecs {
   private static String findKey(String value) {
     String key = null;
     for (Map.Entry<String, String> entry : Simulation.corrLoc.entrySet()) {
-      if (entry.getValue() == value) {
+      if (entry.getValue().equals(value)) {
         //        System.out.println("The key for value " + value + " is " + entry.getKey());
         key = entry.getKey();
       }
+    }
+    if (key == null) {
+      System.err.println("HELP: " + value);
+      key = "GPATI00503";
     }
     return key;
   }

@@ -10,49 +10,50 @@ public class Simulation {
   static Map<String, String> corrLoc;
 
   static {
-    validLocations.add("gPATI00103");
-    validLocations.add("gPATI00203");
-    validLocations.add("gPATI00303");
-    validLocations.add("gPATI00403");
-    validLocations.add("gPATI00503");
-    validLocations.add("gPATI00603");
-    validLocations.add("gPATI00703");
-    validLocations.add("gPATI00803");
-    validLocations.add("gPATI00903");
-    validLocations.add("gPATI01003");
-    validLocations.add("gPATI01103");
-    validLocations.add("gPATI01203");
-    validLocations.add("gPATI01303");
-    validLocations.add("gPATI01403");
-    validLocations.add("gPATI01503");
-    validLocations.add("gPATI01603");
-    validLocations.add("gPATI01703");
-    validLocations.add("gPATI01803");
-    validLocations.add("gPATI01903");
-    validLocations.add("gPATI02003");
+    validLocations.add("GPATI00103");
+    validLocations.add("GPATI00203");
+    validLocations.add("GPATI00303");
+    validLocations.add("GPATI00403");
+    validLocations.add("GPATI00503");
+    validLocations.add("GPATI00603");
+    validLocations.add("GPATI00703");
+    validLocations.add("GPATI00803");
+    validLocations.add("GPATI00903");
+    validLocations.add("GPATI01003");
+    validLocations.add("GPATI01103");
+    validLocations.add("GPATI01203");
+    validLocations.add("GPATI01303");
+    validLocations.add("GPATI01403");
+    validLocations.add("GPATI01503");
+    validLocations.add("GPATI01603");
+    validLocations.add("GPATI01703");
+    validLocations.add("GPATI01803");
+    validLocations.add("GPATI01903");
+    validLocations.add("GPATI02003");
+    validLocations.add("GSTOR001L1"); // TODO add new location
 
     corrLoc = new HashMap<>();
     // TODO change the corresponding locations so they are not all the same
-    corrLoc.put("gPATI00103", "HHALL00103");
-    corrLoc.put("gPATI00203", "HHALL00103");
-    corrLoc.put("gPATI00303", "HHALL00203");
-    corrLoc.put("gPATI00403", "HHALL00203");
-    corrLoc.put("gPATI00503", "HHALL00303");
-    corrLoc.put("gPATI00603", "HHALL00403");
-    corrLoc.put("gPATI00703", "HHALL00503");
-    corrLoc.put("gPATI00803", "HHALL00603");
-    corrLoc.put("gPATI00903", "HHALL00703");
-    corrLoc.put("gPATI01003", "HHALL00803");
-    corrLoc.put("gPATI01103", "HHALL00903");
-    corrLoc.put("gPATI01203", "HHALL01003");
-    corrLoc.put("gPATI01303", "HHALL01103");
-    corrLoc.put("gPATI01403", "HHALL01103");
-    corrLoc.put("gPATI01503", "HHALL01203");
-    corrLoc.put("gPATI01603", "HHALL01303");
-    corrLoc.put("gPATI01703", "HHALL01303");
-    corrLoc.put("gPATI01803", "HHALL01403");
-    corrLoc.put("gPATI01903", "HHALL01503");
-    corrLoc.put("gPATI02003", "HHALL01503");
+    corrLoc.put("GPATI00103", "HHALL00103");
+    corrLoc.put("GPATI00203", "HHALL00103");
+    corrLoc.put("GPATI00303", "HHALL00203");
+    corrLoc.put("GPATI00403", "HHALL00203");
+    corrLoc.put("GPATI00503", "HHALL00303");
+    corrLoc.put("GPATI00603", "HHALL00403");
+    corrLoc.put("GPATI00703", "HHALL00503");
+    corrLoc.put("GPATI00803", "HHALL00603");
+    corrLoc.put("GPATI00903", "HHALL00703");
+    corrLoc.put("GPATI01003", "HHALL00803");
+    corrLoc.put("GPATI01103", "HHALL00903");
+    corrLoc.put("GPATI01203", "HHALL01003");
+    corrLoc.put("GPATI01303", "HHALL01103");
+    corrLoc.put("GPATI01403", "HHALL01103");
+    corrLoc.put("GPATI01503", "HHALL01203");
+    corrLoc.put("GPATI01603", "HHALL01303");
+    corrLoc.put("GPATI01703", "HHALL01303");
+    corrLoc.put("GPATI01803", "HHALL01403");
+    corrLoc.put("GPATI01903", "GSTOR001L1"); // TODO UPDATE THIS LOCATION TO NEW INPUT
+    corrLoc.put("GPATI02003", "HHALL01503");
   }
 
   private static ArrayList<MedEquipmentSimulation> Beds_List = new ArrayList<>();
@@ -67,7 +68,7 @@ public class Simulation {
   private static final String eqpCSV = "TestCSVs/medEquipSimulation.csv";
 
   private int numPumpsToSend, numReclinersToSend;
-  private static final int endTime = 96;
+  private static final int endTime = 40;
   private static int hours = 0;
 
   public static void update() {
@@ -124,7 +125,8 @@ public class Simulation {
   public static void takeSnapshot() {
     medTable = MedEquipmentTbl.getInstance();
     //    ArrayList<MedEquipment> MedDBList = medTable.readTable();
-    ArrayList<MedEquipment> MedDBList = medTable.readBackup(eqpCSV);
+    //    ArrayList<MedEquipment> MedDBList = medTable.readBackup(eqpCSV);
+    ArrayList<MedEquipment> MedDBList = medTable.readTable();
     for (MedEquipment eqp : MedDBList) {
       MedEquipmentSimulation newEqp =
           new MedEquipmentSimulation(
@@ -180,7 +182,7 @@ public class Simulation {
       return corrLoc.get(loc);
     } else {
       // TODO error handle here, maybe send to storage if the bed is in a weird spot?
-      return "gSTOR001l1";
+      return "GSTOR001L1";
     }
   }
 }

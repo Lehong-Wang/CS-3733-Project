@@ -252,7 +252,7 @@ public class SimulationController {
 
     Simulation sim = new Simulation();
     sim.update();
-    System.out.println(Simulation.pathList);
+    //    System.out.println(Simulation.pathList);
   }
 
   public void createIcon(Location loc) {
