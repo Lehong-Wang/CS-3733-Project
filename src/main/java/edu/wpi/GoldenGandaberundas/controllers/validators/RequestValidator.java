@@ -32,7 +32,8 @@ public class RequestValidator {
      * @return bool validation status
      */
     private boolean validateNotes() {
-        return this.notes.trim().toUpperCase(Locale.ROOT).matches("[\\w\\s]*");
+
+        return !this.notes.trim().toUpperCase(Locale.ROOT).matches("\\b(ALTER|CREATE|DELETE|DROP|DROP TABLE|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\\b");
     }
 
 
@@ -42,7 +43,13 @@ public class RequestValidator {
      * @return bool validation status
      */
     private boolean validateDosage() {
-        return this.dosage.trim().matches("[0-9]+");
+        //return this.dosage.trim().matches("[0-9]+|[0-9]+.[0-9]+");
+        try{
+             Double.parseDouble(this.dosage.trim());
+             return true;
+        } catch (NumberFormatException num){
+            return false;
+        }
     }
 
     /**
@@ -51,7 +58,13 @@ public class RequestValidator {
      * @return bool validation status
      */
     private boolean validateQuantity() {
-        return this.quantity.trim().matches("[0-9]+");
+        //return this.quantity.trim().matches("[0-9]+");
+        try{
+            Integer.parseInt(this.quantity.trim());
+            return true;
+        } catch (NumberFormatException num){
+            return false;
+        }
     }
 
     /**
