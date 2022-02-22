@@ -24,6 +24,7 @@
                   <GridPane prefHeight="786.0" prefWidth="1602.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,7 +40,7 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Select the language you need an interpreter for from the drop down" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Select the language you need an interpreter for" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -54,21 +55,10 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="The table on the right is for loading and creating backup CSVs for the computer service table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="What is on the page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="48.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets top="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="The table on the bottom shows the requests of this type" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets top="15.0" />
-                           </GridPane.margin>
                         </Label>
                      </children>
                      <HBox.margin>
