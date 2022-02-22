@@ -364,6 +364,7 @@ public class PathTbl extends TableController<Path, String> {
     retVal.add(0, Simulation.pathList[medID][hour]);
     retVal.add(1, Simulation.pathList[medID][hour + 1]);
     System.out.println("Eqp #" + medID + ": Starts: " + retVal.get(0) + " Ends: " + retVal.get(1));
+
     return retVal;
   }
 }

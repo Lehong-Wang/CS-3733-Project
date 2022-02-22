@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
@@ -107,20 +108,23 @@ public class Main {
 
     //    PathTbl.printStatsMap();
 
+    Simulation sim = new Simulation();
+    sim.update();
+
 
     PathTbl.createStatsMap();
-    System.out.println(
-        "PATH: "
-            + PathTbl.getInstance().createAStarPathwStats("gPATI00103", "HBATH00203")
-            + '\n'
-            + "PATH: "
-            + PathTbl.getInstance().createAStarPathwStats("HRETL00302", "FSERV00301")
-            + '\n'
-            + "PATH: "
-            + PathTbl.getInstance().createAStarPathwStats("FDEPT00301", "HBATH00201")
-            + '\n'
-            + "PATH: "
-            + PathTbl.getInstance().createAStarPathwStats("GPATI00603", "HSTAI00103"));
+    //    System.out.println(
+    //        "PATH: "
+    //            + PathTbl.getInstance().createAStarPathwStats("gPATI00103", "HBATH00203")
+    //            + '\n'
+    //            + "PATH: "
+    //            + PathTbl.getInstance().createAStarPathwStats("HRETL00302", "FSERV00301")
+    //            + '\n'
+    //            + "PATH: "
+    //            + PathTbl.getInstance().createAStarPathwStats("FDEPT00301", "HBATH00201")
+    //            + '\n'
+    //            + "PATH: "
+    //            + PathTbl.getInstance().createAStarPathwStats("GPATI00603", "HSTAI00103"));
     PathTbl.printStatsMap();
 
 
