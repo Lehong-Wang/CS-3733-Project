@@ -331,10 +331,14 @@ public class PathTbl extends TableController<Path, String> {
    */
   public List<String> createAStarPathwStats(String start, String end) {
     List<String> path = createAStarPath(start, end);
-    for (String node : path) {
-      statsMap.put(node, statsMap.get(node) + 1);
+    if (path != null) {
+      for (String node : path) {
+        statsMap.put(node, statsMap.get(node) + 1);
+      }
+      return path;
+    } else {
+      return null;
     }
-    return path;
   }
 
   /** Creates a HashMap to use for keeping node traversal statistics */
