@@ -10,8 +10,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -22,6 +22,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

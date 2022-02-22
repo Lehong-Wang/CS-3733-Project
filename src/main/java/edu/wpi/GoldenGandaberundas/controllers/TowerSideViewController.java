@@ -301,7 +301,6 @@ public class TowerSideViewController {
     gesturePane.setScrollBarPolicy(GesturePane.ScrollBarPolicy.NEVER);
     gesturePane.setMinScale(1);
 
-
     // map image to switch between
     mapPane.setContent(mapImage);
     mapPane.setFitMode(GesturePane.FitMode.COVER);
@@ -387,24 +386,46 @@ public class TowerSideViewController {
   }
 
   // sets the icon sizes to 1.5 times their current
+
+  /**
+   * sets the icons to 0.65 their size
+   * @param image the icon
+   */
   private void setIcon(ImageView image) {
     image.setScaleX(.65);
     image.setScaleY(.65);
   }
 
   // hides icons
+
+  /**
+   * turns off visibility for an icon
+   * @param image the icon
+   */
   private void hideIcon(ImageView image) {
     image.setScaleX(0);
     image.setScaleY(0);
   }
 
   // sets the floor number icons tp 0.35 their size
+
+  /**
+   * sets a floor icon to .3 their size
+   * @param image the floor icon
+   */
   private void setFloorIcon(ImageView image) {
     image.setScaleX(.30);
     image.setScaleY(.30);
   }
 
   // sets the location of the icons
+
+  /**
+   * sets the location of an icon
+   * @param image icon to be set
+   * @param x x corrdinate
+   * @param y y coordinate
+   */
   private void setLocation(ImageView image, int x, int y) {
     image.setLayoutX(x);
     image.setLayoutY(y);
@@ -425,40 +446,5 @@ public class TowerSideViewController {
       setIcon(image);
     }
     setLocation(image, x, y);
-  }
-
-  public TowerSideViewController() {}
-
-  /**
-   * gets all the numbers of the equipment for floor 3
-   *
-   * @return
-   */
-  public int[] getFloor3Numbers() {
-    return new int[] {
-      dirtyBed3, cleanBed3, dirtyRecliner3, cleanRecliner3, dirtyPump3, cleanPump3, xray3
-    };
-  }
-
-  /**
-   * gets all the numbers of the equipment for floor 1
-   *
-   * @return
-   */
-  public int[] getFloor1Numbers() {
-    return new int[] {
-      dirtyBed1, cleanBed1, dirtyRecliner1, cleanRecliner1, dirtyPump1, cleanPump1, xray1
-    };
-  }
-
-  /**
-   * gets all the numbers of the equipment for lower floor 1
-   *
-   * @return
-   */
-  public int[] getFloorL1Numbers() {
-    return new int[] {
-      dirtyBedL1, cleanBedL1, dirtyReclinerL1, cleanReclinerL1, dirtyPumpL1, cleanPumpL1, xrayL1
-    };
   }
 }
