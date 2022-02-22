@@ -187,9 +187,29 @@ public class mainController {
   }
 
   // goes to the Map viewer
-  public void switchMapView(ActionEvent actionEvent) throws IOException {
-    nodeSwitch("views/mapViewer.fxml");
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 110));
+  public void switchMapView() throws IOException {
+    FXMLLoader subControllerLoader = new FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
+
+    try {
+
+      BorderPane subPane = subControllerLoader.load();
+      MapController master = subControllerLoader.getController();
+      master.setMainController(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   public void switchAllRequests() {
@@ -289,8 +309,29 @@ public class mainController {
   }
 
   public void switchSideView() {
-    nodeSwitch("views/towerSideView.fxml");
-    nodeDataPane.setPadding(new Insets(0, 200, 0, 90));
+    FXMLLoader subControllerLoader =
+        new FXMLLoader(App.class.getResource("views/towerSideView.fxml"));
+
+    try {
+
+      BorderPane subPane = subControllerLoader.load();
+      TowerSideViewController master = subControllerLoader.getController();
+      master.setMainController(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
   @FXML
@@ -405,7 +446,7 @@ public class mainController {
     }
   }
 
-  // Method for closing slider when mouse leaves. TODO Button text must be set to empty in here
+  // Method for closing slider when mouse leaves.
   public void slideClose() {
     if (drawer.isOpened()) {
       drawer.close();

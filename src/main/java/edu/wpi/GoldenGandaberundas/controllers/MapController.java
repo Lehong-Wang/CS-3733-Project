@@ -26,12 +26,14 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import net.kurobako.gesturefx.GesturePane;
 import org.controlsfx.control.SearchableComboBox;
@@ -47,12 +49,15 @@ public class MapController {
   @FXML public JFXButton btn;
 
   @FXML private StackPane imagePane;
-  @FXML private GesturePane gesturePane = new GesturePane(imagePane);
+  @FXML private GesturePane gesturePane = new GesturePane();
+  @FXML private GesturePane towerPane = new GesturePane();
 
   @FXML private Pane nodeDataPane;
+  @FXML private Pane sideViewPane;
 
   public TableController<Location, String> locations = null;
   private ImageView mapImage = null;
+  private ImageView sideTower = null;
   private Group imageGroup = null;
   private Pane locNodePane = null;
   private Pane pathNodePane = null;
@@ -64,6 +69,33 @@ public class MapController {
   private String startTemp = null;
   private String endTemp = null;
 
+
+  // side view gridPane setup
+  @FXML GridPane gridPane = new GridPane();
+  @FXML private Label cleanLabel = new Label();
+  @FXML private Label dirtyLabel = new Label();
+  @FXML private Label bedLabel = new Label();
+  @FXML private Label reclinerLabel = new Label();
+  @FXML private Label pumpsLabel = new Label();
+  @FXML private Label xrayLabel = new Label();
+  @FXML private Label cleanBedLabel = new Label();
+  @FXML private Label dirtyBedLabel = new Label();
+  @FXML private Label cleanReclinerLabel = new Label();
+  @FXML private Label dirtyReclinerLabel = new Label();
+  @FXML private Label cleanPumpsLabel = new Label();
+  @FXML private Label dirtyPumpsLabel = new Label();
+  @FXML private Label xrayLabel2 = new Label();
+  @FXML private Label floorLabel = new Label();
+
+  private Rectangle rect;
+
+  mainController main = null;
+
+  @FXML
+  public void setMainController(mainController realMain) {
+    this.main = realMain;
+  }
+
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
   private static final String HOVERED_BUTTON_STYLE =
@@ -71,6 +103,9 @@ public class MapController {
 
   FXMLLoader subControllerLoader =
       new FXMLLoader(Main.class.getResource("views/mapViewDataEntry.fxml"));
+
+  FXMLLoader equipmentTableControllerLoader =
+      new FXMLLoader(Main.class.getResource("views/equipTableView"));
 
   private final Image LL2 = floorMaps.lower2Floor;
   private final Image LL1 = floorMaps.lower1Floor;
@@ -82,10 +117,10 @@ public class MapController {
 
   private PathTbl path = PathTbl.getInstance();
   private TableController locationTableController = LocationTbl.getInstance();
+  private TableController menuTableController = MedEquipmentTbl.getInstance();
 
   @FXML
   public void initialize() {
-
     locations = LocationTbl.getInstance();
 
     // initializes the map views
@@ -123,6 +158,72 @@ public class MapController {
 
     pathNodePane = new Pane();
     imageGroup.getChildren().add(pathNodePane);
+
+    // Sets the side image
+    sideViewPane = new Pane();
+    sideTower = new ImageView(floorMaps.towerSideviewCropped);
+    sideTower.setScaleX(.75);
+    sideTower.setScaleY(.75);
+    towerPane.setContent(sideTower);
+    sideViewPane.getChildren().add(towerPane);
+    sideViewPane.setMaxSize(0, 0);
+    sideViewPane.setTranslateX(350);
+    sideViewPane.setTranslateY(-420);
+    rect = new Rectangle(310, 38);
+    rect.setFill(Color.LIGHTGREEN);
+    sideViewPane.getChildren().add(rect);
+    rect.setX(50);
+    rect.setY(282);
+
+    // set up for side view gridpane
+    gridPane.setStyle("-fx-background-color: #f1f1f1");
+    gridPane.setMaxSize(200, 100);
+    gridPane.add(floorLabel, 1, 1);
+    gridPane.add(cleanLabel, 2, 1);
+    gridPane.add(dirtyLabel, 3, 1);
+    gridPane.add(bedLabel, 1, 2);
+    gridPane.add(cleanBedLabel, 2, 2);
+    gridPane.add(dirtyBedLabel, 3, 2);
+    gridPane.add(reclinerLabel, 1, 3);
+    gridPane.add(cleanReclinerLabel, 2, 3);
+    gridPane.add(dirtyReclinerLabel, 3, 3);
+    gridPane.add(pumpsLabel, 1, 4);
+    gridPane.add(cleanPumpsLabel, 2, 4);
+    gridPane.add(dirtyPumpsLabel, 3, 4);
+    gridPane.add(xrayLabel, 1, 5);
+    gridPane.add(xrayLabel2, 2, 5);
+    floorLabel.setText("Floor 1: \n");
+    cleanLabel.setText("Clean       \n");
+    dirtyLabel.setText("Dirty\n");
+    bedLabel.setText("Beds:\n");
+    reclinerLabel.setText("Recliners:\n");
+    pumpsLabel.setText("Infusion Pumps:  \n");
+    xrayLabel.setText("X-Rays:\n");
+
+    sideTower.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            main.switchSideView();
+          }
+        });
+
+    // Sorts equipments into their floors for display later
+    ArrayList<MedEquipment> equipments = menuTableController.readTable();
+    for (int i = 0; i < equipments.size(); i++) {
+      String nodeID = equipments.get(i).getCurrLoc();
+      int nodeLength = nodeID.length();
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("03"))
+        filteredEquipments3.add(equipments.get(i));
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("01"))
+        filteredEquipments1.add(equipments.get(i));
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("L1"))
+        filteredEquipmentsL1.add(equipments.get(i));
+    }
+
+    imagePane.getChildren().add(gridPane);
+    imagePane.getChildren().add(sideViewPane);
+    gridPane.setTranslateX(600);
+    setFloorView(getEquipNum(filteredEquipments1));
 
     // creates button to select visible floor
     HBox floorSelect = createFloorSelector();
@@ -502,33 +603,106 @@ public class MapController {
           mapImage.setImage(LL2);
           currentFloor = "L2";
           refreshMap();
+          rect.setY(322);
+          gridPane.setVisible(false);
         });
     floorL1.setOnAction(
         e -> {
           mapImage.setImage(LL1);
           currentFloor = "L1";
           refreshMap();
+          rect.setY(282);
+          gridPane.setVisible(true);
+          setFloorView(getEquipNum(filteredEquipmentsL1));
         });
     floor01.setOnAction(
         e -> {
           mapImage.setImage(L1);
           currentFloor = "1";
           refreshMap();
+          rect.setY(242);
+          gridPane.setVisible(true);
+          setFloorView(getEquipNum(filteredEquipments1));
         });
     floor02.setOnAction(
         e -> {
           mapImage.setImage(L2);
           currentFloor = "2";
           refreshMap();
+          rect.setY(204);
+          gridPane.setVisible(false);
         });
     floor03.setOnAction(
         e -> {
           mapImage.setImage(L3);
           currentFloor = "3";
           refreshMap();
+          rect.setY(166);
+          gridPane.setVisible(true);
+          setFloorView(getEquipNum(filteredEquipments3));
         });
 
     return floorSelect;
+  }
+
+  ArrayList<MedEquipment> filteredEquipments3 = new ArrayList<>();
+  ArrayList<MedEquipment> filteredEquipments1 = new ArrayList<>();
+  ArrayList<MedEquipment> filteredEquipmentsL1 = new ArrayList<>();
+
+  /**
+   * sets the side table of equipment
+   *
+   * @param num the int array of numbers
+   */
+  public void setFloorView(int[] num) {
+    dirtyBedLabel.setText("  " + num[0]);
+    cleanBedLabel.setText("  " + num[1]);
+    dirtyReclinerLabel.setText("  " + num[2]);
+    cleanReclinerLabel.setText("  " + num[3]);
+    dirtyPumpsLabel.setText("  " + num[4]);
+    cleanPumpsLabel.setText("  " + num[5]);
+    xrayLabel2.setText("  " + num[6]);
+  }
+
+    /**
+     * gets an array of the number of each equipment
+     * @param filteredEquipments a list of equipment to sort
+     * @return int array of the equipment amounts
+     */
+  public int[] getEquipNum(ArrayList<MedEquipment> filteredEquipments) {
+    int cleanBed = 0;
+    int dirtyBed = 0;
+    int cleanRecliner = 0;
+    int dirtyRecliner = 0;
+    int cleanPump = 0;
+    int dirtyPump = 0;
+    int xray = 0;
+    for (int i = 0; i < filteredEquipments.size(); i++) {
+      String type = filteredEquipments.get(i).getMedEquipmentType().trim();
+      String status = filteredEquipments.get(i).getStatus().trim();
+      if (type.equals("Bed")) {
+        if (status.equals("Stored")) {
+          cleanBed++;
+        } else {
+          dirtyBed++;
+        }
+      } else if (type.equals("Recliner")) {
+        if (status.equals("Stored")) {
+          cleanRecliner++;
+        } else {
+          dirtyRecliner++;
+        }
+      } else if (type.equals("Infusion Pump")) {
+        if (status.equals("Stored")) {
+          cleanPump++;
+        } else {
+          dirtyPump++;
+        }
+      } else if (type.equals("X-ray")) {
+        xray++;
+      }
+    }
+    return new int[] {cleanBed, dirtyBed, cleanRecliner, dirtyRecliner, cleanPump, dirtyPump, xray};
   }
 
   public void setLocations(String floor) {

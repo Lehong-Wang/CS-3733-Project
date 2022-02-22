@@ -13,12 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.TowerSideViewController">
-    <right>
-        <AnchorPane prefHeight="634.0" prefWidth="957.0" BorderPane.alignment="CENTER" />
-    </right>
     <top>
         <HBox prefHeight="846.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
             <children>
@@ -31,13 +28,14 @@
                         </StackPane>
                     </children>
                 </VBox>
-                <VBox prefHeight="800.0" prefWidth="578.0">
+                <VBox prefHeight="800.0" prefWidth="395.0">
                     <children>
+                  <GesturePane fx:id="mapPane" />
                         <GridPane fx:id="floorSummaryLabel">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.7999267578125" minWidth="10.0" prefWidth="139.4667236328125" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.7332763671875" minWidth="10.0" prefWidth="153.33327636718747" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.1334228515625" minWidth="10.0" prefWidth="103.533447265625" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,53 +46,6 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equipment Summary" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                    <font>
-                                        <Font name="SansSerif Regular" size="29.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Clean" textAlignment="CENTER" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dirty" textAlignment="CENTER" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bed:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets right="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recliner:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets right="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Infusion Pumps:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets right="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="X-Ray:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets right="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
                                 <Label fx:id="cleanBedLabel" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                     <font>
                                         <Font size="16.0" />
@@ -130,14 +81,49 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="floorLabel" text="Building Summary" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                <Label fx:id="floorLabel" text="Building Summary:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
+                        <Label alignment="CENTER" text="Beds:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="SansSerif Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Recliners:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="SansSerif Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Infusion Pumps:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="SansSerif Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="X-Ray:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="SansSerif Regular" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Clean" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Dirty" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Equipment Summary" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
                             </children>
                         </GridPane>
-                        <TableView fx:id="medEquipmentTable" prefHeight="400.0" prefWidth="344.0">
+                        <TableView fx:id="medEquipmentTable" prefHeight="217.0" prefWidth="361.0">
                             <columns>
                                 <TableColumn fx:id="type" prefWidth="83.86658000946045" text="Type" />
                                 <TableColumn fx:id="equipmentID" prefWidth="93.199951171875" text="Equipment ID" />

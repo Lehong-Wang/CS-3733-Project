@@ -10,8 +10,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -22,7 +22,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class Main {
     System.out.println(PathTbl.getInstance().objList);
     // Initializes the database tables in memory
 
-    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
+    EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     PatientTbl.getInstance();
     LaundryTbl.getInstance();
@@ -74,6 +73,8 @@ public class Main {
 
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
+
+    //    EmployeePermissionTbl.getInstance();
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
     //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
