@@ -20,9 +20,28 @@ public class RequestValidator {
     private String dosage;
     private String quantity;
 
+    //normal
     public RequestValidator(
             String notes) {
         this.notes = notes;
+        this.amount = "0";
+        this.quantity = "0";
+    }
+
+    //medicine
+    public RequestValidator(
+            String notes, String amount, String quantity) {
+        this.notes = notes;
+        this.amount = amount;
+        this.quantity = quantity;
+    }
+
+    //gift
+    public RequestValidator(
+            String notes, String amount) {
+        this.notes = notes;
+        this.amount = amount;
+        this.quantity = "0";
     }
 
 
@@ -68,12 +87,30 @@ public class RequestValidator {
     }
 
     /**
-     * Run all the individual validation functions
+     * Run all the individual validation functions in a normal request
      *
      * @return bool validation status
      */
-    public boolean validateTextFields() {
-        return validateDosage();
+    public boolean validateNormalRequestTextFields() {
+        return validateNotes();
+    }
+
+    /**
+     * Run all the individual validation functions in a medicine request
+     *
+     * @return bool validation status
+     */
+    public boolean validateMedicineRequestTextFields() {
+        return validateDosage() && validateQuantity() && validateDosage();
+    }
+
+    /**
+     * Run all the individual validation functions in a request with a quantity
+     *
+     * @return bool validation status
+     */
+    public boolean validateQuantityRequestTextFields() {
+        return validateNotes() && validateQuantity();
     }
 
     /**
