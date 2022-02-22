@@ -90,7 +90,7 @@ public class Simulation {
       addIterationToSimLists(tempFullList);
       sortLists(tempFullList);
     }
-    printSimList();
+    //    printSimList();
   }
 
   /**

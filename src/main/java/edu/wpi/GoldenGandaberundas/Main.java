@@ -78,26 +78,29 @@ public class Main {
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
-
+    
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
 
+
     PathTbl.createStatsMap();
-    //    System.out.println(
-    //        "PATH: "
-    //            + PathTbl.getInstance().createAStarPathwStats("gPATI00103", "HBATH00203")
-    //            + '\n'
-    //            + "PATH: "
-    //            + PathTbl.getInstance().createAStarPathwStats("HRETL00302", "FSERV00301")
-    //            + '\n'
-    //            + "PATH: "
-    //            + PathTbl.getInstance().createAStarPathwStats("FDEPT00301", "HBATH00201")
-    //            + '\n'
-    //            + "PATH: "
-    //            + PathTbl.getInstance().createAStarPathwStats("GPATI00603", "HSTAI00103"));
+    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
+    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
+    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
+    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
+    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
+    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
+    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
+    System.out.println(PathTbl.getInstance().createAStarPathwStats("gSTOR00103", "gSTOR00103"));
+
     PathTbl.printStatsMap();
 
     //    EmployeePermissionTbl.getInstance();
