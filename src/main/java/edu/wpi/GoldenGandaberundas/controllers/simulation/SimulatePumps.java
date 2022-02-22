@@ -137,7 +137,7 @@ public class SimulatePumps {
     for (MedEquipmentSimulation pump : Pumps_Dirty) {
       pump.setCleaningEndTime(PUMP_CLEANING_TIME);
       pump.setStatus("Cleaning");
-      pump.setCurrLoc("GSTOR002L1");
+      pump.setCurrLoc("GSTOR00201");
       if (DEUBUG_PUMP_SIM) {
         System.out.println("Pump # " + pump.getMedID() + " is now in cleaning");
       }

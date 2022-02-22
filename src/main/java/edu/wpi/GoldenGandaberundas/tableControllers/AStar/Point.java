@@ -89,10 +89,10 @@ public class Point implements Comparable<Point> {
     locs.add(n.loc);
     Collections.reverse(locs);
 
-    for (String loc : locs) {
-      System.out.print(loc + " ");
-    }
-    System.out.println("");
+    //    for (String loc : locs) {
+    //      System.out.print(loc + " ");
+    //    }
+    //    System.out.println("");
     return locs;
   }
 

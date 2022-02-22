@@ -141,7 +141,8 @@ public class SimulationController {
       e.printStackTrace();
     }
     // subController.setText(locations.getEntry("FDEPT00101"));
-    //creates the toggle start simulation button
+
+    // creates the toggle start simulation button
     JFXButton toggleStart = new JFXButton();
     toggleStart.setText("Start Simulation");
     toggleStart.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -154,7 +155,7 @@ public class SimulationController {
           toggleStart.setText("Rerun Simulation");
           setEquipment();
         });
-    //creates the next hour button
+    // creates the next hour button
     JFXButton nextHour = new JFXButton();
     nextHour.setText("Next Hour");
     nextHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -166,7 +167,7 @@ public class SimulationController {
           createPath(currentHour);
           setEquipment();
         });
-    //previous hour button
+    // previous hour button
     JFXButton prevHour = new JFXButton();
     prevHour.setText("Previous Hour");
     prevHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -554,6 +555,7 @@ public class SimulationController {
     setEquipment();
     setRequest();
     refreshPath();
+    refreshCircles();
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -582,7 +584,7 @@ public class SimulationController {
       Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
       PathBar path = new PathBar(loc, loc1);
       pathNodePane.getChildren().add(path);
-      if (!path.floor.equals(currentFloor)) {
+      if (!path.getFloor().equals(currentFloor)) {
         path.setVisible(false);
       }
     }
@@ -592,7 +594,7 @@ public class SimulationController {
   public void refreshPath() {
     for (Node p : pathNodePane.getChildren()) {
       PathBar pb = (PathBar) p;
-      if (!pb.floor.equals(currentFloor)) {
+      if (!pb.getFloor().equals(currentFloor)) {
         pb.setVisible(false);
       } else {
         pb.setVisible(true);
@@ -600,15 +602,29 @@ public class SimulationController {
     }
   }
 
+  public void refreshCircles() {
+    for (Node cir : pathNodePane.getChildren()) {
+      EquipmentCircle c = (EquipmentCircle) cir;
+      if (!c.getFloor().equals(currentFloor)) {
+        c.setVisible(false);
+      } else {
+        c.setVisible(true);
+      }
+    }
+  }
+
   /**
-   * checks to see if the previous path was already use
+   * generated that path based on the input hour
    *
-   * @param start the initial starting location
-   * @param end the initial ending location
-   * @return returns a bool if the locations match
+   * @param hour given hour for the simulation
    */
-  public boolean previouslyUsed(String start, String end) {
-    return start.equals(startTemp) && end.equals(endTemp);
+  public void createPath(int hour) {
+    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+      List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
+      astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
+      buildPath(astar);
+    }
+    pathNodePane.setVisible(true);
   }
 
   private class MedEqpImageView extends ImageView {
@@ -685,17 +701,18 @@ public class SimulationController {
     }
   }
 
-  /**
-   * generated that path based on the input hour
-   *
-   * @param hour given hour for the simulation
-   */
-  public void createPath(int hour) {
-    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
-      List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
-      astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
-      buildPath(astar);
+  private class EquipmentCircle extends Circle {
+    private String floor = "00";
+
+    public EquipmentCircle(Location startLoc, Location endLoc) {
+      super();
+      if (startLoc.getFloor().equals(endLoc.getFloor())) {
+        floor = startLoc.getFloor();
+      }
     }
-    pathNodePane.setVisible(true);
+
+    public String getFloor() {
+      return floor;
+    }
   }
 }

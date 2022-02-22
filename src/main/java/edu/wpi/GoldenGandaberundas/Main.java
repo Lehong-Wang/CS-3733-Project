@@ -91,7 +91,6 @@ public class Main {
     floorMaps.load();
 
     //    Simulation.update();
-
     PathTbl.createStatsMap();
     //    List<String> points1 = PathTbl.getPathPoints(1, 2);
     //    List<String> points2 = PathTbl.getPathPoints(15, 37);
