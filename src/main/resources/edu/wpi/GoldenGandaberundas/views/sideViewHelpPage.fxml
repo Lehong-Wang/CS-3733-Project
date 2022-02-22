@@ -57,12 +57,12 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Click on a specific floor to see the equipment summary" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Click on a specific floor to see the equipment" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="The red columns in the middle are the elevator shafts" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -73,28 +73,28 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Click on a table column to change how the equipment" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label text="Click on a table column to change how the" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="and equipment table for that floor" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="summary and equipment table for that floor" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="45.0" />
+                              <Insets left="100.0" top="45.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="is sorted" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="equipment is sorted" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on this page: " GridPane.columnIndex="1" GridPane.halignment="CENTER">
