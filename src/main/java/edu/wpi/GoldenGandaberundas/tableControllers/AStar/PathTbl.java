@@ -4,6 +4,7 @@ import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -301,9 +302,7 @@ public class PathTbl extends TableController<Path, String> {
   public List<String> createAStarPath(String start, String end) {
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     if (points.size() != 0) {
-
       points = PathTbl.getInstance().createBranchedLocations(points);
-
       int startID = 0;
       int endID = 0;
       for (Point o : points) {
@@ -316,6 +315,7 @@ public class PathTbl extends TableController<Path, String> {
       }
       points.get(startID).g = 0;
       Point test = points.get(startID).aStar(points.get(endID));
+      System.out.println(test);
       return points.get(startID).locationsPath(test);
     }
     return null;
@@ -368,7 +368,7 @@ public class PathTbl extends TableController<Path, String> {
     retVal.add(0, Simulation.pathList[medID][hour]);
     retVal.add(1, Simulation.pathList[medID][hour + 1]);
     System.out.println("Eqp #" + medID + ": Starts: " + retVal.get(0) + " Ends: " + retVal.get(1));
-
+    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
 }

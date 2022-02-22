@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
@@ -31,7 +32,7 @@ public class Main {
   public static void main(String[] args) throws SQLException {
 
     System.out.println(PathTbl.getInstance().objList);
-    // Initializes the database tables in memory
+
       
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
@@ -64,6 +65,7 @@ public class Main {
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
+
     //    CredentialsTbl.getInstance().addEntry(new Credential(456, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(666, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(123, "p"));
@@ -78,6 +80,7 @@ public class Main {
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+
     MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
@@ -87,8 +90,6 @@ public class Main {
     System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
-
-
 
     //    Simulation.update();
 
@@ -107,13 +108,6 @@ public class Main {
     //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
     System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103", "GSTOR00103"));
 
-    //    PathTbl.printStatsMap();
-
-    Simulation sim = new Simulation();
-    sim.update();
-
-
-
     Simulation.update();
     PathTbl.createStatsMap();
     //    List<String> points1 = PathTbl.getPathPoints(1, 2);
@@ -128,10 +122,12 @@ public class Main {
     //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    System.out.println(PathTbl.getInstance().createAStarPathwStats("gSTOR00103", "gSTOR00103"));
+    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103", "GSTOR00103"));
 
     PathTbl.printStatsMap();
 
+    Simulation.update();
+    System.out.println(PathTbl.getPathPoints(3, 9));
 
     //    EmployeePermissionTbl.getInstance();
       
@@ -139,8 +135,8 @@ public class Main {
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
     //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
     //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
-    //    floorMaps.load();
-    //    App.launch(App.class, args);
+    floorMaps.load();
+    App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();

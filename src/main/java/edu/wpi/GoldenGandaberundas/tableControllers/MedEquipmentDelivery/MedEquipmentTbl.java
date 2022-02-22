@@ -39,7 +39,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
   }
 
   @Override
-  public ArrayList readTable() {
+  public ArrayList<MedEquipment> readTable() {
     ArrayList medEquipments = new ArrayList<MedEquipment>();
     try { // if code works, do this:
       PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");

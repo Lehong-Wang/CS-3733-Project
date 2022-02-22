@@ -56,7 +56,6 @@ public class Simulation {
     corrLoc.put("GPATI02003", "HHALL01503");
   }
 
-
   private static ArrayList<MedEquipmentSimulation> Beds_List = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Recliners_List = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();

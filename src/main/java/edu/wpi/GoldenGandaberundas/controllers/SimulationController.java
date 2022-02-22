@@ -1,7 +1,6 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -18,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -35,7 +32,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import net.kurobako.gesturefx.GesturePane;
-import org.controlsfx.control.SearchableComboBox;
 
 /** Controller class for template file. Template FXML file is templatetemplate.fxml */
 
@@ -64,6 +60,7 @@ public class SimulationController {
   private List<String> astar = null;
   private String startTemp = null;
   private String endTemp = null;
+  private Integer currentHour = 0;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -145,100 +142,51 @@ public class SimulationController {
     }
     // subController.setText(locations.getEntry("FDEPT00101"));
 
-    JFXButton toggleEquip = new JFXButton();
-    toggleEquip.setText("Equipment");
-    toggleEquip.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
-    toggleEquip.setPrefWidth(110);
-    toggleEquip.setOnMouseReleased(
+    JFXButton toggleStart = new JFXButton();
+    toggleStart.setText("Start Simulation");
+    toggleStart.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleStart.setPrefWidth(110);
+    toggleStart.setOnMouseReleased(
         e -> {
-          equipGroup.setVisible(!equipGroup.isVisible());
+          Simulation.update();
+          currentHour = 0;
+          createPath(currentHour);
+          toggleStart.setText("Rerun Simulation");
+          setEquipment();
         });
-    // imagePane.getChildren().add(toggleEquip);
-    // imagePane.setAlignment(toggleEquip, Pos.TOP_LEFT);
-    JFXButton toggleNodes = new JFXButton();
-    toggleNodes.setText("Locations");
-    toggleNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
-    toggleNodes.setPrefWidth(110);
-    toggleNodes.setOnMouseReleased(
+
+    JFXButton nextHour = new JFXButton();
+    nextHour.setText("Next Hour");
+    nextHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    nextHour.setPrefWidth(110);
+    nextHour.setOnMouseReleased(
         e -> {
-          locNodePane.setVisible(!locNodePane.isVisible());
-        });
-    JFXButton toggleRequests = new JFXButton();
-    toggleRequests.setText("Requests");
-    toggleRequests.setPrefWidth(110);
-    toggleRequests.setOnMouseReleased(
-        e -> {
-          requestGroup.setVisible(!requestGroup.isVisible());
-        });
-    // add path planning open button
-    JFXButton openNodes = new JFXButton();
-    openNodes.setText("Path Planning");
-    openNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
-    openNodes.setPrefWidth(110);
-    openNodes.setMaxWidth(110);
-
-    // add searchable combo box for location
-    SearchableComboBox<String> startLoc = new SearchableComboBox<>();
-    SearchableComboBox<String> endLoc = new SearchableComboBox<>();
-    startLoc.setValue("Start Location");
-    endLoc.setValue("End Location");
-    startLoc.setMaxWidth(110);
-    endLoc.setMaxWidth(110);
-
-    // Populating location choice box
-    ArrayList<String> searchList = locList();
-    ObservableList<String> oList = FXCollections.observableArrayList(searchList);
-    startLoc.setItems(oList);
-    endLoc.setItems(oList);
-
-    // add button to generate path
-    JFXButton enterPath = new JFXButton();
-    enterPath.setText("Find Path");
-    enterPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
-    enterPath.setMaxWidth(110);
-
-    // clear path button
-    JFXButton clearPath = new JFXButton();
-    clearPath.setText("Clear Path");
-    clearPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
-    clearPath.setMaxWidth(110);
-
-    clearPath.setOnMouseReleased(
-        (event) -> {
           pathNodePane.getChildren().clear();
-          startTemp = null;
-          endTemp = null;
+          currentHour++;
+          createPath(currentHour);
+          setEquipment();
         });
 
-    // creates the nodes list
-    JFXNodesList togglePathInputs = new JFXNodesList();
-    togglePathInputs.setRotate(270);
-    togglePathInputs.spacingProperty().setValue(90);
-    togglePathInputs.setMaxWidth(115);
-    togglePathInputs.addAnimatedNode(openNodes);
-    togglePathInputs.addAnimatedNode(startLoc);
-    togglePathInputs.addAnimatedNode(endLoc);
-    togglePathInputs.addAnimatedNode(enterPath);
-    togglePathInputs.addAnimatedNode(clearPath);
-
-    enterPath.setOnMouseReleased(
-        (event) -> {
-          String start = (String) startLoc.getSelectionModel().getSelectedItem();
-          String end = (String) endLoc.getSelectionModel().getSelectedItem();
-          System.out.println(previouslyUsed(start, end));
-          if (!previouslyUsed(start, end)) {
-            astar = PathTbl.getInstance().createAStarPath(start, end);
-            buildPath(astar);
-            pathNodePane.setVisible(true);
-          }
+    JFXButton prevHour = new JFXButton();
+    prevHour.setText("Previous Hour");
+    prevHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    prevHour.setPrefWidth(110);
+    prevHour.setOnMouseReleased(
+        e -> {
+          pathNodePane.getChildren().clear();
+          currentHour--;
+          createPath(currentHour);
+          setEquipment();
         });
 
-    HBox buttonHolder = new HBox(toggleNodes, toggleEquip, togglePathInputs);
+    HBox buttonHolder = new HBox(toggleStart, nextHour, prevHour);
+    buttonHolder.setMargin(buttonHolder, new Insets(0, 0, 0, 0));
     buttonHolder.setAlignment(Pos.TOP_LEFT);
     buttonHolder.setSpacing(6);
     Group buttonGroup = new Group();
     buttonGroup.getChildren().add(buttonHolder);
     imagePane.getChildren().add(buttonGroup);
+    buttonGroup.setTranslateY(10);
     imagePane.setAlignment(buttonGroup, Pos.TOP_LEFT);
 
     currentFloor = "1";
@@ -249,11 +197,6 @@ public class SimulationController {
 
     nodeDataPane.setManaged(false);
     nodeDataPane.setVisible(false);
-
-    Simulation sim = new Simulation();
-    sim.update();
-    //    System.out.println(Simulation.pathList);
-
   }
 
   public void createIcon(Location loc) {
@@ -633,7 +576,7 @@ public class SimulationController {
    * @param locs the list of String location node ids
    */
   public void buildPath(List<String> locs) {
-    pathNodePane.getChildren().clear();
+    // pathNodePane.getChildren().clear();
     for (int i = 0; i < locs.size() - 1; i++) {
       Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
       Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
@@ -643,8 +586,6 @@ public class SimulationController {
         path.setVisible(false);
       }
     }
-    startTemp = locs.get(0);
-    endTemp = locs.get(locs.size() - 1);
   }
 
   /** refreshes the map to load the path to the appropriate floor (inspired by Will) */
@@ -743,4 +684,19 @@ public class SimulationController {
       return floor;
     }
   }
+
+  /**
+   * generated that path based on the input hour
+   *
+   * @param hour given hour for the simulation
+   */
+  public void createPath(int hour) {
+    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+      List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
+      astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
+      buildPath(astar);
+    }
+    pathNodePane.setVisible(true);
+  }
+
 }
