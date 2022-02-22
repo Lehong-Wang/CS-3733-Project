@@ -16,6 +16,9 @@ public class RequestValidator {
     //taken from location dropdown
     private String notes;
     //changed based on other factors
+    private String amount;
+    private String dosage;
+    private String quantity;
 
     public RequestValidator(
             String notes) {
@@ -32,8 +35,32 @@ public class RequestValidator {
         return this.notes.trim().toUpperCase(Locale.ROOT).matches("[\\w\\s]*");
     }
 
+
+    /**
+     * Perform regex validation on dosage
+     *
+     * @return bool validation status
+     */
+    private boolean validateDosage() {
+        return this.dosage.trim().matches("[0-9]+");
+    }
+
+    /**
+     * Perform regex validation on dosage
+     *
+     * @return bool validation status
+     */
+    private boolean validateQuantity() {
+        return this.quantity.trim().matches("[0-9]+");
+    }
+
+    /**
+     * Run all the individual validation functions
+     *
+     * @return bool validation status
+     */
     public boolean validateTextFields() {
-        return validateNotes();
+        return validateDosage();
     }
 
     /**
