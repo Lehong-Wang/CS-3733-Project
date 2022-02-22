@@ -2,6 +2,10 @@ package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationClientServer;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationEmbedded;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -14,7 +18,7 @@ import java.util.stream.Collectors;
 
 // first parameter is object giftType, second is pkid giftType
 // change the giftTypes accordingly in the methods
-public class GiftTbl implements TableController<Gift, String> {
+public class GiftTbl implements TableController<Gift, Integer> {
 
   private static GiftTbl instance = null;
   /** name of table */
@@ -26,6 +30,10 @@ public class GiftTbl implements TableController<Gift, String> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Gift> objList;
   /** relative path to the database file */
+  TableController<Gift, Integer> embeddedTable = null;
+
+  TableController<Gift, Integer> clientServerTable = null;
+
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
@@ -36,9 +44,13 @@ public class GiftTbl implements TableController<Gift, String> {
     pkCols = "giftID";
     colNames = Arrays.asList(cols);
 
-    createTable();
-
     objList = new ArrayList<Gift>();
+
+    embeddedTable = new GiftEmbedded(tbName, cols, pkCols, objList);
+    clientServerTable = new GiftClientServer(tbName, cols, pkCols, objList);
+    connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
+    connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    createTable();
     objList = readTable();
   }
 
@@ -58,219 +70,52 @@ public class GiftTbl implements TableController<Gift, String> {
     return instance;
   }
 
+  private TableController<Gift, Integer> getCurrentTable() {
+    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
+    switch (connectionHandler.getCurrentConnectionType()) {
+      case embedded:
+        return embeddedTable;
+      case clientServer:
+        return clientServerTable;
+      case cloud:
+        return null;
+    }
+    System.out.println(connectionHandler.getCurrentConnectionType());
+    return null;
+  }
+
   @Override
   public ArrayList<Gift> readTable() {
-
-    ArrayList<Gift> tableInfo = new ArrayList<>();
-    try {
-      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
-      ResultSet r = s.executeQuery();
-
-      while (r.next()) {
-        tableInfo.add(
-            new Gift(r.getInt(1), r.getString(2), r.getString(3), r.getDouble(4), r.getBoolean(5)));
-      }
-      return tableInfo;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return null;
-    }
+    return this.getCurrentTable().readTable();
   }
 
   @Override
   public boolean addEntry(Gift obj) {
-    Gift gift = (Gift) obj;
-    PreparedStatement s = null;
-    try {
-      s =
-          connection.prepareStatement(
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?);");
-
-      s.setInt(1, gift.getGiftID());
-      s.setString(2, gift.getGiftType());
-      s.setString(3, gift.getDescription());
-      s.setDouble(4, gift.getPrice());
-      s.setBoolean(5, gift.getInStock());
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  private boolean addEntryOnline(Gift gift) {
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?, ?)"
-                  + "end");
-
-      s.setInt(1, gift.getGiftID());
-      s.setInt(2, gift.getGiftID());
-      s.setString(3, gift.getGiftType());
-      s.setString(4, gift.getDescription());
-      s.setDouble(5, gift.getPrice());
-      s.setBoolean(6, gift.getInStock());
-      s.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-    return true;
+   return this.getCurrentTable().addEntry(obj);
   }
 
   @Override
   public ArrayList<Gift> readBackup(String fileName) {
-    ArrayList<Gift> gifts = new ArrayList<>();
-
-    try {
-      File csvFile = new File(fileName);
-      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
-      String currentLine = buffer.readLine(); // reads a line from the csv file
-
-      if (!currentLine
-          .toLowerCase(Locale.ROOT)
-          .trim()
-          .equals(new String("giftID,description,price,inStock"))) {
-        System.err.println("gift backup format not recognized");
-      }
-      currentLine = buffer.readLine();
-
-      while (currentLine != null) { // cycles in the while loop until it reaches the end
-        String[] element = currentLine.split(","); // separates each element based on a comma
-        Gift gift =
-            new Gift(
-                Integer.parseInt(element[0]),
-                element[1],
-                element[2],
-                Double.parseDouble(element[3]),
-                Boolean.parseBoolean(element[4]));
-        gifts.add(gift); // adds the location to the list
-        currentLine = buffer.readLine();
-      }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return gifts;
+    return this.getCurrentTable().readBackup(fileName);
   }
 
   @Override
   public void createTable() {
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
-      s.setString(1, tbName);
-      ResultSet r = s.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return;
-    }
-
-    try {
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
-      e.printStackTrace();
-      return;
-    }
-
-    System.out.println("SQLite driver registered!");
-
-    Statement s = null;
-    try {
-      s = connection.createStatement();
-      s.execute("PRAGMA foreign_keys = ON");
-      s.execute(
-          "CREATE TABLE IF NOT EXISTS  Gifts("
-              + "giftID INTEGER NOT NULL ,"
-              + "giftType TEXT NOT NULL, "
-              + "description TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
-              + "PRIMARY KEY ('giftID'));");
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void createTableOnline() {
-    try {
-      PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
-      s1.setString(1, tbName);
-      ResultSet r = s1.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-      Statement s = connection.createStatement();
-      s.execute(
-          "CREATE TABLE  Gifts("
-              + "giftID INTEGER NOT NULL ,"
-              + "giftType TEXT NOT NULL, "
-              + "description TEXT, "
-              + "price FLOAT NOT NULL, "
-              + "inStock BIT NOT NULL, "
-              + "PRIMARY KEY (giftID));");
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    this.getCurrentTable().createTable();
   }
 
   @Override
-  public Gift getEntry(String pkID) {
-    Gift gift = new Gift();
-    if (this.entryExists(pkID)) {
-      try {
-        PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setString(1, pkID);
-        ResultSet r = s.executeQuery();
-        r.next();
-        gift.setGiftID(r.getInt(1));
-        gift.setGiftType(r.getString(2));
-        gift.setDescription(r.getString(3));
-        gift.setPrice(r.getDouble(4));
-        gift.setInStock(r.getBoolean(5));
-        return gift;
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-    return gift;
+  public Gift getEntry(Integer pkID) {
+    return this.getCurrentTable().getEntry(pkID);
   }
 
   @Override
   public boolean loadFromArrayList(ArrayList<Gift> objList) {
-    return false;
+    return this.getCurrentTable().loadFromArrayList(objList);
   }
 
   public void writeTable() {
-
-    for (Gift obj : objList) {
-
-      this.addEntry(obj);
-    }
+    this.getCurrentTable().writeTable();
   }
 
   /**
@@ -283,29 +128,8 @@ public class GiftTbl implements TableController<Gift, String> {
    * @return true if successful, false otherwise
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
-  public boolean editEntry(String pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
-    try {
-
-      PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
-      s.setObject(1, value);
-      s.setObject(2, pkid);
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
+  public boolean editEntry(Integer pkid, String colName, Object value) {
+    return this.getCurrentTable().editEntry(pkid, colName, value);
   }
 
   /**
@@ -314,21 +138,8 @@ public class GiftTbl implements TableController<Gift, String> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(String pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-      s.setObject(1, pkid);
-      s.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return false;
+  public boolean deleteEntry(Integer pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
   }
 
   /**
@@ -337,94 +148,17 @@ public class GiftTbl implements TableController<Gift, String> {
    * @param f filename of the to be created CSV
    */
   public void createBackup(File f) {
-    if (objList.isEmpty()) {
-      return;
-    }
-    /* Instantiate the writer */
-    PrintWriter writer = null;
-    try {
-      writer = new PrintWriter(f);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-
-    /* Get the class type of the objects in the array */
-    final Class<?> type = objList.get(0).getClass();
-
-    /* Get the name of all the attributes */
-    final ArrayList<Field> classAttributes = new ArrayList<>(List.of(type.getDeclaredFields()));
-
-    boolean doesExtend = Request.class.isAssignableFrom(type);
-    if (doesExtend) {
-      final Class<?> superType = objList.get(0).getClass().getSuperclass();
-      classAttributes.addAll(0, (List.of(superType.getDeclaredFields())));
-    }
-
-    /* Write the parsed attributes to the file */
-    writer.println(classAttributes.stream().map(Field::getName).collect(Collectors.joining(",")));
-
-    /* For each object, read each attribute and append it to the file with a comma separating */
-    PrintWriter finalWriter = writer;
-    objList.forEach(
-        obj -> {
-          finalWriter.println(
-              classAttributes.stream()
-                  .map(
-                      attribute -> {
-                        attribute.setAccessible(true);
-                        String output = "";
-                        try {
-                          output = attribute.get(obj).toString();
-                        } catch (IllegalAccessException | ClassCastException e) {
-                          System.err.println("[CSVUtil] Object attribute access error.");
-                        }
-                        return output;
-                      })
-                  .collect(Collectors.joining(",")));
-          finalWriter.flush();
-        });
-    writer.close();
+   this.getCurrentTable().createBackup(f);
   }
 
   // drop current table and enter data from CSV
   public ArrayList<Gift> loadBackup(String fileName) {
-    createTable();
-    ArrayList<Gift> listObjs = readBackup(fileName);
-
-    try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
-      s.executeUpdate();
-      this.objList = listObjs;
-      this.writeTable();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return listObjs;
+    return this.getCurrentTable().loadBackup(fileName);
   }
 
   // checks if an entry exists
-  public boolean entryExists(String pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
-    boolean exists = false;
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
-
-      ResultSet r = s.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        exists = true;
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return exists;
+  public boolean entryExists(Integer pkID) {
+    return this.getCurrentTable().entryExists(pkID);
   }
 
   public String getTableName() {

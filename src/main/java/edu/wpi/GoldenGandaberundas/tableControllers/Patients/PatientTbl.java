@@ -3,16 +3,11 @@ package edu.wpi.GoldenGandaberundas.tableControllers.Patients;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class PatientTbl implements TableController<Patient, Integer> {
 
@@ -76,22 +71,34 @@ public class PatientTbl implements TableController<Patient, Integer> {
     return null;
   }
 
-  public ArrayList<Patient> readTable() {return this.getCurrentTable().readTable();}
+  public ArrayList<Patient> readTable() {
+    return this.getCurrentTable().readTable();
+  }
 
-  public boolean addEntry(Patient obj) {return this.getCurrentTable().addEntry(obj);}
+  public boolean addEntry(Patient obj) {
+    return this.getCurrentTable().addEntry(obj);
+  }
 
-  public ArrayList<Patient> readBackup(String fileName) {return this.getCurrentTable().readBackup(fileName);}
+  public ArrayList<Patient> readBackup(String fileName) {
+    return this.getCurrentTable().readBackup(fileName);
+  }
 
-  public void createTable() {this.getCurrentTable().createTable();}
+  public void createTable() {
+    this.getCurrentTable().createTable();
+  }
 
-  public Patient getEntry(Integer pkID) {return this.getCurrentTable().getEntry(pkID);}
+  public Patient getEntry(Integer pkID) {
+    return this.getCurrentTable().getEntry(pkID);
+  }
 
   @Override
   public boolean loadFromArrayList(ArrayList<Patient> objList) {
     return this.getCurrentTable().loadFromArrayList(objList);
   }
 
-  public void writeTable() {this.getCurrentTable().writeTable();}
+  public void writeTable() {
+    this.getCurrentTable().writeTable();
+  }
 
   /**
    * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
@@ -103,7 +110,9 @@ public class PatientTbl implements TableController<Patient, Integer> {
    * @return true if successful, false otherwise
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
-  public boolean editEntry(Integer pkid, String colName, Object value) {return this.getCurrentTable().editEntry(pkid, colName, value);}
+  public boolean editEntry(Integer pkid, String colName, Object value) {
+    return this.getCurrentTable().editEntry(pkid, colName, value);
+  }
 
   /**
    * removes a row from the database
@@ -111,20 +120,28 @@ public class PatientTbl implements TableController<Patient, Integer> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(Integer pkid) {return this.getCurrentTable().deleteEntry(pkid);}
+  public boolean deleteEntry(Integer pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
 
   /**
    * creates CSV file representing the objects stored in the table
    *
    * @param f filename of the to be created CSV
    */
-  public void createBackup(File f) {this.getCurrentTable().createBackup(f);}
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
 
   // drop current table and enter data from CSV
-  public ArrayList<Patient> loadBackup(String fileName) {return this.getCurrentTable().loadBackup(fileName);}
+  public ArrayList<Patient> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
 
   // checks if an entry exists
-  public boolean entryExists(Integer pkID) {return this.getCurrentTable().entryExists(pkID);}
+  public boolean entryExists(Integer pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
 
   public String getTableName() {
     return tbName;
