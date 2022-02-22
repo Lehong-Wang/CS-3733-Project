@@ -6,17 +6,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Permission;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class PermissionTbl extends TableController<Permission, Integer> {
+public class PermissionTbl implements TableController<Permission, Integer> {
 
   // creates the instance for the table
   private static PermissionTbl instance = null;
@@ -29,13 +26,15 @@ public class PermissionTbl extends TableController<Permission, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Permission> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private PermissionTbl() throws SQLException {
-    super("Permissions", Arrays.asList(new String[] {"permID", "type", "permDescription"}));
-    String[] cols = {"permID", "type", "permDescription"};
+    tbName = "Permissions";
+    colNames = Arrays.asList(new String[] {"permID", "type", "permDescription"});
+    pkCols = "permID";
+
     createTable();
 
     objList = new ArrayList<Permission>();
@@ -227,6 +226,11 @@ public class PermissionTbl extends TableController<Permission, Integer> {
     return perm; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<Permission> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (Permission obj : objList) {
@@ -391,5 +395,9 @@ public class PermissionTbl extends TableController<Permission, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Permission> getObjList() {
+    return objList;
   }
 }

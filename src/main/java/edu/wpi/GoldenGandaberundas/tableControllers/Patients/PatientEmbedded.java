@@ -1,4 +1,4 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService;
+package edu.wpi.GoldenGandaberundas.tableControllers.Patients;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
@@ -12,79 +12,57 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
-
-  private static AudioVisualTbl instance = null; // **
+public class PatientEmbedded implements TableController<Patient, Integer> {
   /** name of table */
-  protected String tbName;
+  private String tbName;
   /** name of columns in database table the first entry is the primary key */
-  protected List<String> colNames;
+  private List<String> colNames;
   /** list of keys that make a composite primary key */
-  protected String pkCols = null;
+  private String pkCols = null;
   /** list that contains the objects stored in the database */
-  protected ArrayList<AudioVisual> objList;
+  private ArrayList<Patient> objList;
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
 
-  private AudioVisualTbl() throws SQLException { // **
-    tbName = "AudioVisual";
-    colNames = Arrays.asList(new String[] {"avID", "deviceType", "locID", "description"});
-    pkCols = "avID";
-    createTable();
-    objList = new ArrayList<AudioVisual>();
-    objList = readTable();
-  }
-
-  // created getInstance method for singleton implementation
-  public static AudioVisualTbl getInstance() { // **
-    if (instance == null) {
-      synchronized (TableController.class) {
-        if (instance == null) {
-          try {
-            instance = new AudioVisualTbl();
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-        }
-      }
-    }
-    return instance;
+  public PatientEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Patient> objList)
+      throws SQLException {
+    // create a new table with column names if none table of same name exist
+    // if there is one, do nothing
+    this.tbName = tbName;
+    this.pkCols = pkCols;
+    colNames = Arrays.asList(cols);
+    this.objList = objList;
   }
 
   @Override
-  public ArrayList<AudioVisual> readTable() { // **
-    ArrayList tableInfo = new ArrayList<AudioVisual>(); // **
-    try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+  public ArrayList<Patient> readTable() {
+    ArrayList patients = new ArrayList<Patient>();
+    try { // if code works, do this:
+      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        tableInfo.add(
-            new AudioVisual( // **
-                r.getInt(1), r.getString(2), r.getString(3), r.getString(4)));
+        patients.add(new Patient(r.getInt(1), r.getString(2), r.getString(3), r.getString(4)));
       }
-    } catch (SQLException se) {
-      se.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
-    return tableInfo;
+
+    return patients;
   }
 
   @Override
-  public boolean addEntry(AudioVisual obj) {
-    AudioVisual med = (AudioVisual) obj; // **
+  public boolean addEntry(Patient obj) {
+    Patient pat = obj;
     PreparedStatement s = null;
     try {
-      s =
-          connection.prepareStatement( // **
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?);");
-
-      // **
-      s.setInt(1, med.getAvID());
-      s.setString(2, med.getDeviceType());
-      s.setString(3, med.getLocID());
-      s.setString(4, med.getDescription());
+      s = connection.prepareStatement("INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?);");
+      s.setInt(1, pat.getPatientID());
+      s.setString(2, pat.getLocation());
+      s.setString(3, pat.getfName());
+      s.setString(4, pat.getlName());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -94,37 +72,39 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
   }
 
   @Override
-  public ArrayList<AudioVisual> readBackup(String fileName) {
-    ArrayList<AudioVisual> medList = new ArrayList<AudioVisual>(); // **
-
+  public ArrayList<Patient> readBackup(String fileName) {
+    ArrayList<Patient> patients = new ArrayList<>(); // creates a list for the location objects
+    File csvFile = new File(fileName);
     try {
-      File csvFile = new File(fileName);
       BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
       String currentLine = buffer.readLine(); // reads a line from the csv file
       System.out.println(currentLine);
+
       if (!currentLine
           .toLowerCase(Locale.ROOT)
           .trim()
-          .equals(new String("avID,deviceType,locID,description"))) { // **
-        System.err.println("AudioVisual backup format not recognized"); // **
+          .equals(new String("patientID,fName,lName"))) {
+        System.err.println("patient backup format not recognized");
       }
       currentLine = buffer.readLine();
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
-        AudioVisual med = // **
-            new AudioVisual(Integer.parseInt(element[0]), element[1], element[2], element[3]); // **
-        medList.add(med); // adds the location to the list
+        Patient currentPat =
+            new Patient(
+                Integer.parseInt(element[0]),
+                element[1],
+                element[2],
+                element[3]); // creates a Location
+        patients.add(currentPat); // adds the location to the list
         currentLine = buffer.readLine();
       }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    return medList; // **
+    return patients;
   }
 
   @Override
@@ -159,15 +139,15 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  AudioVisual("
-              + "avID INTEGER NOT NULL ,"
-              + "deviceType TEXT NOT NULL, "
-              + "locID TEXT NOT NULL, "
-              + "description TEXT, "
-              + "PRIMARY KEY ('avID')"
-              + "CONSTRAINT nodeID FOREIGN KEY (locID) REFERENCES Locations (nodeID) "
+          "CREATE TABLE IF NOT EXISTS  Patients("
+              + "patientID TEXT NOT NULL ,"
+              + "location TEXT, "
+              + "fName TEXT NOT NULL, "
+              + "lName TEXT NOT NULL, "
+              + "PRIMARY KEY ('patientID')"
+              + "CONSTRAINT nodeID FOREIGN KEY (location) REFERENCES Locations (nodeID) "
               + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE"
+              + " ON DELETE SET NULL"
               + ");");
 
     } catch (SQLException e) {
@@ -176,38 +156,52 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
   }
 
   @Override
-  public AudioVisual getEntry(Integer pkID) { // **
-    AudioVisual med = new AudioVisual(); // **
+  public Patient getEntry(Integer pkID) {
+    Patient pat = new Patient();
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
             connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setInt(1, pkID); // **
+                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+        s.setInt(1, pkID);
         ResultSet r = s.executeQuery();
         r.next();
-        med.setAvID(r.getInt(1));
-        med.setDeviceType(r.getString(2));
-        med.setLocID(r.getString(3));
-        med.setDescription(r.getString(4));
-        return med;
+        pat.setPatientID(r.getInt(1));
+        pat.setLocation(r.getString(2));
+        pat.setfName(r.getString(3));
+        pat.setlName(r.getString(4));
+        return pat;
       } catch (SQLException e) {
         e.printStackTrace();
       }
     }
-    return med; // **
+    return pat;
   }
 
   @Override
-  public boolean loadFromArrayList(ArrayList<AudioVisual> objList) {
-    return false;
+  public boolean loadFromArrayList(ArrayList<Patient> objList) {
+    this.createTable();
+    deleteTableData();
+    for (Patient pat : objList) {
+      if (!this.addEntry(pat)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void writeTable() {
-
-    for (AudioVisual obj : objList) {
-
+    for (Patient obj : objList) {
       this.addEntry(obj);
     }
   }
@@ -253,6 +247,7 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
+  @Override
   public boolean deleteEntry(Integer pkid) {
     //    if (pkid instanceof ArrayList) {
     //      return deleteEntryComposite((ArrayList<Integer>) pkid);
@@ -326,9 +321,9 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
   }
 
   // drop current table and enter data from CSV
-  public ArrayList<AudioVisual> loadBackup(String fileName) {
+  public ArrayList<Patient> loadBackup(String fileName) {
     createTable();
-    ArrayList<AudioVisual> listObjs = readBackup(fileName);
+    ArrayList<Patient> listObjs = readBackup(fileName);
 
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
@@ -366,11 +361,7 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
     return exists;
   }
 
-  public String getTableName() {
-    return tbName;
-  }
-
-  public ArrayList<AudioVisual> getObjList() {
+  public ArrayList<Patient> getObjList() {
     return objList;
   }
 }

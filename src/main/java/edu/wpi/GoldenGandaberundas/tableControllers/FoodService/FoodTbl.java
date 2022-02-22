@@ -5,19 +5,15 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class FoodTbl extends TableController<Food, Integer> {
+public class FoodTbl implements TableController<Food, Integer> {
 
-  private static FoodTbl instance = null; // **
+  private static FoodTbl instance = null; // DAO
   /** name of table */
   protected String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -27,27 +23,15 @@ public class FoodTbl extends TableController<Food, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Food> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private FoodTbl() throws SQLException { // **
-    super(
-        "Food",
-        Arrays.asList(
-            new String[] {
-              "foodID",
-              "foodName",
-              "ingredients",
-              "calories",
-              "allergens",
-              "price",
-              "inStock",
-              "foodType"
-            }));
     String[] cols = {
       "foodID", "foodName", "ingredients", "calories", "allergens", "price", "inStock", "foodType"
     };
+    pkCols = "foodID";
     createTable();
     objList = new ArrayList<Food>();
     objList = readTable();
@@ -239,6 +223,11 @@ public class FoodTbl extends TableController<Food, Integer> {
     return med; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<Food> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (Food obj : objList) {
@@ -403,5 +392,9 @@ public class FoodTbl extends TableController<Food, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Food> getObjList() {
+    return objList;
   }
 }

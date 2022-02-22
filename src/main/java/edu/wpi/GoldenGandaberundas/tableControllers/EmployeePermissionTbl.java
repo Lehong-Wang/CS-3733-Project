@@ -6,17 +6,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeePerm
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class EmployeePermissionTbl extends TableController<EmployeePermission, ArrayList<Integer>> {
+public class EmployeePermissionTbl
+    implements TableController<EmployeePermission, ArrayList<Integer>> {
   // creates the instance for the table
   private static EmployeePermissionTbl instance = null;
   /** name of table */
@@ -28,13 +25,13 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
   /** list that contains the objects stored in the database */
   protected ArrayList<EmployeePermission> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private EmployeePermissionTbl() throws SQLException {
-    super("EmployeePermissions", Arrays.asList(new String[] {"empID", "permID"}), "empID,permID");
     String[] cols = {"empID", "permID"};
+    pkCols = "empID, permID";
     createTable();
 
     objList = new ArrayList<EmployeePermission>();
@@ -232,6 +229,11 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
     return empPerm; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<EmployeePermission> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (EmployeePermission obj : objList) {
@@ -422,5 +424,9 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<EmployeePermission> getObjList() {
+    return objList;
   }
 }

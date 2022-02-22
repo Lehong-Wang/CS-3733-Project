@@ -5,6 +5,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CredentialsTbl extends TableController<Credential, Integer> {
+public class CredentialsTbl implements TableController<Credential, Integer> {
   /** single instance of class allowed */
   private static CredentialsTbl instance = null;
   /** name of table */
@@ -25,14 +26,14 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Credential> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private CredentialsTbl() throws SQLException {
-    super("Credentials", Arrays.asList(new String[] {"empID", "password", "salt"}));
+  private CredentialsTbl() throws SQLException {
     tbName = "Credentials";
     colNames = Arrays.asList(new String[] {"empID", "password", "salt"});
+    pkCols = "empID";
     createTable();
 
     objList = readTable();
@@ -208,6 +209,11 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
     return null;
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<Credential> objList) {
+    return false;
+  }
+
   public void writeTable() {
     for (Credential obj : objList) {
       this.addEntry(obj);
@@ -370,5 +376,9 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Credential> getObjList() {
+    return objList;
   }
 }

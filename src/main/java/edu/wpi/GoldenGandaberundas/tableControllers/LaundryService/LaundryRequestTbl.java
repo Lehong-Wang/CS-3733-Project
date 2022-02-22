@@ -6,16 +6,13 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList<Integer>> {
+public class LaundryRequestTbl implements TableController<LaundryRequest, ArrayList<Integer>> {
 
   private static LaundryRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null;
@@ -28,13 +25,15 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
   /** list that contains the objects stored in the database */
   protected ArrayList<LaundryRequest> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private LaundryRequestTbl() throws SQLException {
-    super("LaundryRequests", Arrays.asList("reqID", "laundryID"), "reqID, laundryID");
+  private LaundryRequestTbl() throws SQLException {
+    tbName = "LaundryRequests";
+    pkCols = "reqID, laundryID";
     String[] cols = {"reqID", "laundryID"};
+    colNames = Arrays.asList(cols);
     masterTable = RequestTable.getInstance();
     createTable();
     objList = new ArrayList<LaundryRequest>();
@@ -80,9 +79,6 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
   public boolean addEntry(LaundryRequest obj) {
     if (!RequestTable.getInstance().entryExists(obj.getRequestID())) {
       RequestTable.getInstance().addEntry(obj);
-    }
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
     }
     LaundryRequest launReq = (LaundryRequest) obj; // **
     PreparedStatement s = null;
@@ -173,10 +169,6 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -280,6 +272,11 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
     return launReq; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<LaundryRequest> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (LaundryRequest obj : objList) {
@@ -299,11 +296,12 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(ArrayList<Integer> pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
     try {
-
       PreparedStatement s =
           connection.prepareStatement(
               "UPDATE "
@@ -311,10 +309,11 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
                   + " SET "
                   + colName
                   + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+                  + pkCols
+                  + ") = ("
+                  + pkString
+                  + ");");
       s.setObject(1, value);
-      s.setObject(2, pkid);
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -330,19 +329,20 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
    * @return true if successful, false otherwise
    */
   public boolean deleteEntry(ArrayList<Integer> pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-      s.setObject(1, pkid);
+              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
       s.executeUpdate();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return false;
   }
 
@@ -419,30 +419,40 @@ public class LaundryRequestTbl extends TableController<LaundryRequest, ArrayList
 
   // checks if an entry exists
   public boolean entryExists(ArrayList<Integer> pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
     boolean exists = false;
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkID.size() - 1; i++) {
+      pkString.append(pkID.get(i)).append(",");
+    }
+    pkString.append(pkID.get(pkID.size() - 1));
+
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
-
+              "SELECT count(*) FROM "
+                  + tbName
+                  + " WHERE ("
+                  + pkCols
+                  + ") = ("
+                  + pkString.toString()
+                  + ");");
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         exists = true;
       }
-
+      return exists;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
-    return exists;
   }
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<LaundryRequest> getObjList() {
+    return objList;
   }
 }

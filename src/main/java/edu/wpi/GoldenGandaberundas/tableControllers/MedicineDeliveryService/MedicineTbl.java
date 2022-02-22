@@ -5,17 +5,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class MedicineTbl extends TableController<Medicine, String> {
+public class MedicineTbl implements TableController<Medicine, String> {
 
   private static MedicineTbl instance = null;
   /** name of table */
@@ -27,15 +24,16 @@ public class MedicineTbl extends TableController<Medicine, String> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Medicine> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private MedicineTbl() throws SQLException {
-    super(
-        "Medicine",
-        Arrays.asList(new String[] {"medicineID", "medName", "description", "price", "inStock"}));
+    tbName = "Medicine";
     String[] cols = {"medicineID", "medName", "description", "price", "inStock"};
+    colNames =
+        Arrays.asList(new String[] {"medicineID", "medName", "description", "price", "inStock"});
+    pkCols = "medicineID";
     createTable();
     objList = new ArrayList<Medicine>();
     objList = readTable();
@@ -77,9 +75,6 @@ public class MedicineTbl extends TableController<Medicine, String> {
 
   @Override
   public boolean addEntry(Medicine obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
     Medicine med = (Medicine) obj; // **
     PreparedStatement s = null;
     try {
@@ -170,10 +165,6 @@ public class MedicineTbl extends TableController<Medicine, String> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -251,6 +242,11 @@ public class MedicineTbl extends TableController<Medicine, String> {
       }
     }
     return med; // **
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<Medicine> objList) {
+    return false;
   }
 
   public void writeTable() {
@@ -417,5 +413,9 @@ public class MedicineTbl extends TableController<Medicine, String> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Medicine> getObjList() {
+    return objList;
   }
 }

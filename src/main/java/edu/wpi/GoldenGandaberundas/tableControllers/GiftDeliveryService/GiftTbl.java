@@ -5,10 +5,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 
 // first parameter is object giftType, second is pkid giftType
 // change the giftTypes accordingly in the methods
-public class GiftTbl extends TableController<Gift, String> {
+public class GiftTbl implements TableController<Gift, String> {
 
   private static GiftTbl instance = null;
   /** name of table */
@@ -29,15 +26,16 @@ public class GiftTbl extends TableController<Gift, String> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Gift> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private GiftTbl() throws SQLException {
-    super(
-        "Gifts",
-        Arrays.asList(new String[] {"giftID", "giftType", "description", "price", "inStock"}));
+  private GiftTbl() throws SQLException {
     String[] cols = {"giftID", "giftType", "description", "price", "inStock"};
+    tbName = "Gifts";
+    pkCols = "giftID";
+    colNames = Arrays.asList(cols);
+
     createTable();
 
     objList = new ArrayList<Gift>();
@@ -81,9 +79,6 @@ public class GiftTbl extends TableController<Gift, String> {
 
   @Override
   public boolean addEntry(Gift obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
     Gift gift = (Gift) obj;
     PreparedStatement s = null;
     try {
@@ -174,10 +169,6 @@ public class GiftTbl extends TableController<Gift, String> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -223,7 +214,6 @@ public class GiftTbl extends TableController<Gift, String> {
 
   private void createTableOnline() {
     try {
-
       PreparedStatement s1 =
           connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
@@ -268,6 +258,11 @@ public class GiftTbl extends TableController<Gift, String> {
       }
     }
     return gift;
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<Gift> objList) {
+    return false;
   }
 
   public void writeTable() {
@@ -434,5 +429,9 @@ public class GiftTbl extends TableController<Gift, String> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Gift> getObjList() {
+    return objList;
   }
 }

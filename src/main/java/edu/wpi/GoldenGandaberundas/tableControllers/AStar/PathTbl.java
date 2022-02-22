@@ -9,10 +9,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.*;
 
-public class PathTbl extends TableController<Path, String> {
+public class PathTbl implements TableController<Path, String> {
 
   private static PathTbl instance = null;
   /** name of table */
@@ -33,13 +30,17 @@ public class PathTbl extends TableController<Path, String> {
   protected ArrayList<Path> objList;
   /** relative path to the database file */
   private static HashMap<String, Integer> statsMap = new HashMap<>();
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
+  private PathTbl() throws SQLException {
+    tbName = "Paths";
+    pkCols = "edgeID";
 
-    private PathTbl() throws SQLException {
-    super("Paths", Arrays.asList(new String[] {"edgeID", "startNode", "endNode"}));
     String[] cols = {"edgeID", "startNode", "endNode"};
+    colNames = Arrays.asList(cols);
+
     createTable();
 
     objList = new ArrayList<Path>();
@@ -83,9 +84,7 @@ public class PathTbl extends TableController<Path, String> {
 
   @Override
   public boolean addEntry(Path obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
+
     Path path = (Path) obj;
     PreparedStatement s = null;
     try {
@@ -163,10 +162,7 @@ public class PathTbl extends TableController<Path, String> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
+
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -263,6 +259,11 @@ public class PathTbl extends TableController<Path, String> {
       }
     }
     return path;
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<Path> objList) {
+    return false;
   }
 
   /**
@@ -382,6 +383,11 @@ public class PathTbl extends TableController<Path, String> {
 
       this.addEntry(obj);
     }
+  }
+
+  @Override
+  public ArrayList<Path> getObjList() {
+    return objList;
   }
 
   /**

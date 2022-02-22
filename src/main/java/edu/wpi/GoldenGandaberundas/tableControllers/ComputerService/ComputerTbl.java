@@ -5,17 +5,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class ComputerTbl extends TableController<Computer, Integer> {
+public class ComputerTbl implements TableController<Computer, Integer> {
 
   private static ComputerTbl instance = null; // **
   /** name of table */
@@ -27,24 +24,11 @@ public class ComputerTbl extends TableController<Computer, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Computer> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private ComputerTbl() throws SQLException { // **
-    super(
-        "Computer",
-        Arrays.asList(
-            new String[] {
-              "computerID",
-              "computerType",
-              "os",
-              "processor",
-              "hostName",
-              "model",
-              "manufacturer",
-              "serialNumber"
-            }));
+  private ComputerTbl() throws SQLException { // **
     String[] cols = {
       "computerID",
       "computerType",
@@ -55,6 +39,9 @@ public class ComputerTbl extends TableController<Computer, Integer> {
       "manufacturer",
       "serialNumber"
     };
+    tbName = "Computer";
+    colNames = Arrays.asList(cols);
+    pkCols = "computerID";
     createTable();
     objList = new ArrayList<Computer>();
     objList = readTable();
@@ -246,6 +233,11 @@ public class ComputerTbl extends TableController<Computer, Integer> {
     return med; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<Computer> objList) {
+    return false;
+  }
+
   public void writeTable() {
     for (Computer obj : objList) {
 
@@ -409,5 +401,9 @@ public class ComputerTbl extends TableController<Computer, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Computer> getObjList() {
+    return objList;
   }
 }

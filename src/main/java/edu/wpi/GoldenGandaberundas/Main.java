@@ -1,5 +1,8 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
@@ -23,7 +26,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.Medi
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -118,50 +120,10 @@ public class Main {
 
     //    Simulation.update();
     PathTbl.createStatsMap();
-    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
-    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
-    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
-    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
-    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
-    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
-    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
-    // "GSTOR00103"));
 
-    //    Simulation.update();
-    //    PathTbl.createStatsMap();
-    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
-    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
-    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
-    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
-    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
-    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
-    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
-    // "GSTOR00103"));
 
-    //    PathTbl.printStatsMap();
-
-    //    Simulation.update();
-    //    System.out.println(PathTbl.getPathPoints(3, 9));
-
-    //    EmployeePermissionTbl.getInstance();
-
-    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
-    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
-    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
-    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
-    App.launch(App.class, args);
+    //    floorMaps.load();
+    //    App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integer>> {
+public class FoodRequestTbl implements TableController<FoodRequest, ArrayList<Integer>> {
 
   // **
   // created instance for singleton
@@ -28,18 +28,17 @@ public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integ
   /** list that contains the objects stored in the database */
   protected ArrayList<FoodRequest> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    // **
   // created constructor fo the table
   private FoodRequestTbl() throws SQLException {
-    super(
-        "FoodRequests",
-        Arrays.asList(new String[] {"reqID", "foodID", "quantity"}),
-        "reqID,foodID");
+
     String[] cols = {"reqID", "foodID", "quantity"};
+    colNames = Arrays.asList(cols);
+    tbName = "FoodRequests";
+    pkCols = "reqID,foodID";
     masterTable = RequestTable.getInstance();
     createTable();
 
@@ -226,6 +225,11 @@ public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integ
     return foodReq; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<FoodRequest> objList) {
+    return false;
+  }
+
   public void writeTable() {
     for (FoodRequest obj : objList) {
       this.addEntry(obj);
@@ -388,5 +392,9 @@ public class FoodRequestTbl extends TableController<FoodRequest, ArrayList<Integ
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<FoodRequest> getObjList() {
+    return objList;
   }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
+public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
 
   private static MedEquipmentTbl instance = null;
   /** name of table */
@@ -24,15 +24,14 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<MedEquipment> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private MedEquipmentTbl() throws SQLException {
-    super(
-        "MedEquipment",
-        Arrays.asList(new String[] {"medID", "medEquipmentType", "status", "currLoc"}),
-        "reqID,medID");
+  private MedEquipmentTbl() throws SQLException {
+    tbName = "MedEquipment";
+    pkCols = "reqID,medID";
+    colNames = Arrays.asList(new String[] {"medID", "medEquipmentType", "status", "currLoc"});
     createTable();
 
     objList = new ArrayList<MedEquipment>();
@@ -89,9 +88,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
   @Override
   public boolean addEntry(MedEquipment obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
+
     MedEquipment med = (MedEquipment) obj;
     PreparedStatement s = null;
 
@@ -163,10 +160,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
+
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -263,6 +257,11 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       e.printStackTrace();
       return null;
     }
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<MedEquipment> objList) {
+    return false;
   }
 
   public MedEquipment createMedEquipment(String[] ele) {
@@ -411,5 +410,9 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<MedEquipment> getObjList() {
+    return objList;
   }
 }

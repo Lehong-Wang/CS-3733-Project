@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class RequestTable extends TableController<Request, Integer> {
+public class RequestTable implements TableController<Request, Integer> {
   private static RequestTable instance = null;
   /** name of table */
   protected String tbName;
@@ -29,9 +29,9 @@ public class RequestTable extends TableController<Request, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Request> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   /**
    * creates an instance of the master request table this table holds common and meta data across
@@ -40,20 +40,15 @@ public class RequestTable extends TableController<Request, Integer> {
    * @throws SQLException
    */
   private RequestTable() throws SQLException {
-    super(
-        "Requests",
-        Arrays.asList(
-            new String[] {
-              "requestID", "locationID", "empInitiated", "empCompleter",
-              "timeStart", "timeEnd", "patientID", "requestType",
-              "requestStatus", "notes"
-            }),
-        "requestID");
+
     String[] cols = {
       "requestID", "locationID", "empInitiated", "empCompleter",
       "timeStart", "timeEnd", "patientID", "requestType",
       "requestStatus", "notes"
     };
+    tbName = "Requests";
+    colNames = Arrays.asList(cols);
+    pkCols = "requestID";
     createTable();
     objList = new ArrayList<Request>();
     objList = readTable();
@@ -245,10 +240,6 @@ public class RequestTable extends TableController<Request, Integer> {
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -383,6 +374,11 @@ public class RequestTable extends TableController<Request, Integer> {
     return null;
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<Request> objList) {
+    return false;
+  }
+
   /**
    * Internal method to get the specifc service table controller given a request object
    *
@@ -477,6 +473,10 @@ public class RequestTable extends TableController<Request, Integer> {
 
       this.addEntry(obj);
     }
+  }
+
+  public ArrayList<Request> getObjList() {
+    return objList;
   }
 
   /**

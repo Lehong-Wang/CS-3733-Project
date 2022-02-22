@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayList<Integer>> {
+public class MedEquipRequestTbl implements TableController<MedEquipRequest, ArrayList<Integer>> {
   private static MedEquipRequestTbl instance = null;
   private static TableController<Request, Integer> masterTable = null; // **
   /** name of table */
@@ -24,20 +24,17 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
   /** list that contains the objects stored in the database */
   protected ArrayList<MedEquipRequest> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-
-  ConnectionHandler connection = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   // first entry in column name is primary key
   private MedEquipRequestTbl() throws SQLException { // creates the table
-    super(
-        "MedEquipRequests",
-        Arrays.asList(new String[] {"reqID", "medEquipID"}),
-        "reqID, medEquipID"); // **
-
+    tbName = "MedEquipRequests";
+    pkCols = "reqID, medEquipID";
+    colNames = Arrays.asList(new String[] {"reqID", "medEquipID"});
     createTable();
     objList = new ArrayList<MedEquipRequest>(); // object list
-    //    createTable(); // makes a table with the following values
     masterTable = RequestTable.getInstance(); // **
     objList = readTable(); // reads table
   }
@@ -91,10 +88,6 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
   public boolean addEntry(MedEquipRequest obj) {
     if (!RequestTable.getInstance().entryExists(obj.getRequestID())) {
       RequestTable.getInstance().addEntry(obj);
-    }
-
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
     }
 
     if (!entryExists(obj.getPK())) { // does reqID already exist in the table?
@@ -182,12 +175,6 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
 
   @Override
   public void createTable() {
-
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
-
     try { // if code works, do this:
       System.out.println("SELECT count(*) FROM sqlite_master WHERE tbl_name = " + tbName + ";");
       PreparedStatement s =
@@ -295,6 +282,11 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
     return req; // returns object
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<MedEquipRequest> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (MedEquipRequest obj : objList) {
@@ -314,24 +306,29 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(ArrayList<Integer> pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
-    try {
+    boolean exists = false;
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
 
+    try {
       PreparedStatement s =
           connection.prepareStatement(
-              "UPDATE "
+              "SELECT count(*) FROM "
                   + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
-      s.setObject(1, value);
-      s.setObject(2, pkid);
-      s.executeUpdate();
-      return true;
+                  + " WHERE ("
+                  + pkCols
+                  + ") = ("
+                  + pkString.toString()
+                  + ");");
+      ResultSet r = s.executeQuery();
+      r.next();
+      if (r.getInt(1) != 0) {
+        exists = true;
+      }
+      return exists;
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
@@ -345,19 +342,20 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
    * @return true if successful, false otherwise
    */
   public boolean deleteEntry(ArrayList<Integer> pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-      s.setObject(1, pkid);
+              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
       s.executeUpdate();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return false;
   }
 
@@ -434,30 +432,40 @@ public class MedEquipRequestTbl extends TableController<MedEquipRequest, ArrayLi
 
   // checks if an entry exists
   public boolean entryExists(ArrayList<Integer> pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
     boolean exists = false;
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkID.size() - 1; i++) {
+      pkString.append(pkID.get(i)).append(",");
+    }
+    pkString.append(pkID.get(pkID.size() - 1));
+
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
-
+              "SELECT count(*) FROM "
+                  + tbName
+                  + " WHERE ("
+                  + pkCols
+                  + ") = ("
+                  + pkString.toString()
+                  + ");");
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         exists = true;
       }
-
+      return exists;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
-    return exists;
   }
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<MedEquipRequest> getObjList() {
+    return objList;
   }
 }

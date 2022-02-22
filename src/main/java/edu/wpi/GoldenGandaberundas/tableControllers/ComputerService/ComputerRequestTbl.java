@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayList<Integer>> {
+public class ComputerRequestTbl implements TableController<ComputerRequest, ArrayList<Integer>> {
 
   // **
   // created instance for singleton
@@ -28,18 +28,16 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
   /** list that contains the objects stored in the database */
   protected ArrayList<ComputerRequest> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    // **
-  // created constructor fo the table
+  // created constructor for the table
   private ComputerRequestTbl() throws SQLException {
-    super(
-        "ComputerRequests",
-        Arrays.asList(new String[] {"reqID", "computerID", "problemType", "priority"}),
-        "reqID, computerID");
     String[] cols = {"reqID", "computerID", "problemType", "priority"};
+    tbName = "ComputerRequests";
+    pkCols = "reqID, computerID";
+    colNames = Arrays.asList(cols);
     masterTable = RequestTable.getInstance();
     createTable();
 
@@ -231,6 +229,11 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
     return comReq; // **
   }
 
+  @Override
+  public boolean loadFromArrayList(ArrayList<ComputerRequest> objList) {
+    return false;
+  }
+
   public void writeTable() {
 
     for (ComputerRequest obj : objList) {
@@ -250,9 +253,11 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(ArrayList<Integer> pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
     try {
 
       PreparedStatement s =
@@ -262,10 +267,11 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
                   + " SET "
                   + colName
                   + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+                  + pkCols
+                  + ") = ("
+                  + pkString
+                  + ");");
       s.setObject(1, value);
-      s.setObject(2, pkid);
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -281,19 +287,20 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
    * @return true if successful, false otherwise
    */
   public boolean deleteEntry(ArrayList<Integer> pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkid.size() - 1; i++) {
+      pkString.append(pkid.get(i)).append(",");
+    }
+    pkString.append(pkid.get(pkid.size() - 1));
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-      s.setObject(1, pkid);
+              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
       s.executeUpdate();
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return false;
   }
 
@@ -370,30 +377,40 @@ public class ComputerRequestTbl extends TableController<ComputerRequest, ArrayLi
 
   // checks if an entry exists
   public boolean entryExists(ArrayList<Integer> pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
     boolean exists = false;
+    StringBuilder pkString = new StringBuilder();
+    for (int i = 0; i < pkID.size() - 1; i++) {
+      pkString.append(pkID.get(i)).append(",");
+    }
+    pkString.append(pkID.get(pkID.size() - 1));
+
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
-
+              "SELECT count(*) FROM "
+                  + tbName
+                  + " WHERE ("
+                  + pkCols
+                  + ") = ("
+                  + pkString.toString()
+                  + ");");
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         exists = true;
       }
-
+      return exists;
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
-    return exists;
   }
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<ComputerRequest> getObjList() {
+    return objList;
   }
 }

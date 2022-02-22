@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class LocationEmbedded implements TableController<Location, String> {
+public class LocationClientServer implements TableController<Location, String> {
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -26,17 +26,19 @@ public class LocationEmbedded implements TableController<Location, String> {
 
   Connection connection = connectionHandler.getConnection();
 
-  public LocationEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Location> objList)
+  public LocationClientServer(
+      String tbName, String[] cols, String pkCols, ArrayList<Location> objList)
       throws SQLException {
     // create a new table with column names if none table of same name exist
     // if there is one, do nothing
+
+    // createTable();
     this.tbName = tbName;
     this.pkCols = pkCols;
     colNames = Arrays.asList(cols);
     this.objList = objList;
   }
 
-  // reads the DB table and returns the information as a ArrayList<Location>
   @Override
   public ArrayList<Location> readTable() {
     ArrayList tableInfo = new ArrayList<Location>();
@@ -65,6 +67,7 @@ public class LocationEmbedded implements TableController<Location, String> {
   @Override
   public void writeTable() {
     for (Location obj : objList) {
+
       this.addEntry(obj);
     }
   }
@@ -85,32 +88,34 @@ public class LocationEmbedded implements TableController<Location, String> {
 
   @Override
   public boolean addEntry(Location loc) {
-    if (entryExists(loc.getNodeID())) {
-      System.out.println("loc ID exists: " + loc.getNodeID());
+    try {
 
-    } else {
-      PreparedStatement s = null;
-      try {
-        // check if exists and add to DB
-        s =
-            connection.prepareStatement(
-                "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-
-        s.setString(1, loc.getNodeID());
-        s.setInt(2, loc.getXcoord());
-        s.setInt(3, loc.getYcoord());
-        s.setString(4, loc.getFloor());
-        s.setString(5, loc.getBuilding());
-        s.setString(6, loc.getNodeType());
-        s.setString(7, loc.getLongName());
-        s.setString(8, loc.getShortName());
-        s.executeUpdate();
-        return true;
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      PreparedStatement s =
+          connection.prepareStatement(
+              " IF NOT EXISTS (SELECT 1 FROM "
+                  + tbName
+                  + " WHERE "
+                  + colNames.get(0)
+                  + " = ?)"
+                  + "BEGIN"
+                  + "    INSERT INTO "
+                  + tbName
+                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                  + "end");
+      s.setString(1, loc.getNodeID());
+      s.setString(2, loc.getNodeID());
+      s.setInt(3, loc.getXcoord());
+      s.setInt(4, loc.getYcoord());
+      s.setString(5, loc.getFloor());
+      s.setString(6, loc.getBuilding());
+      s.setString(7, loc.getNodeType());
+      s.setString(8, loc.getLongName());
+      s.setString(9, loc.getShortName());
+      s.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-
     return false;
   }
 
@@ -200,6 +205,8 @@ public class LocationEmbedded implements TableController<Location, String> {
         }
         currentLine = buffer.readLine();
       }
+      // creates a Location
+
     } catch (FileNotFoundException ex) {
       ex.printStackTrace();
     } catch (IOException ex) {
@@ -227,6 +234,7 @@ public class LocationEmbedded implements TableController<Location, String> {
   @Override
   public boolean editEntry(String pkid, String colName, Object value) {
     try {
+
       PreparedStatement s =
           connection.prepareStatement(
               "UPDATE "
@@ -249,42 +257,18 @@ public class LocationEmbedded implements TableController<Location, String> {
   @Override
   public void createTable() {
     try {
-      // check if there is table with same name
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
-      s.setString(1, tbName);
-      ResultSet r = s.executeQuery();
+      PreparedStatement s1 =
+          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+      s1.setString(1, tbName);
+      ResultSet r = s1.executeQuery();
       r.next();
-      // if there is already table, exit
       if (r.getInt(1) != 0) {
-        System.out.println("Locations Table Already Exists");
         return;
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return;
-    }
-
-    try {
-      // check for SQL driver
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
-      e.printStackTrace();
-      return;
-    }
-
-    System.out.println("SQLite driver registered!");
-
-    // create new SQL table
-    Statement s = null;
-    try {
-      s = connection.createStatement();
-      s.execute("PRAGMA foreign_keys = ON");
+      Statement s = connection.createStatement();
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Locations("
-              + "nodeID TEXT NOT NULL ,"
+          "CREATE TABLE Locations("
+              + "nodeID VARCHAR(50) NOT NULL ,"
               + "xcoord INTEGER NOT NULL, "
               + "ycoord INTEGER NOT NULL, "
               + "floor TEXT NOT NULL, "
@@ -292,8 +276,7 @@ public class LocationEmbedded implements TableController<Location, String> {
               + "nodeType TEXT NOT NULL,"
               + "longName TEXT NOT NULL,"
               + "shortName TEXT NOT NULL, "
-              + "PRIMARY KEY ('nodeID'));");
-
+              + "PRIMARY KEY (nodeID));");
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -328,6 +311,7 @@ public class LocationEmbedded implements TableController<Location, String> {
       if (!this.entryExists(pkID)) {
         return null;
       }
+      // System.out.println(pkID);
       PreparedStatement s =
           connection.prepareStatement("SELECT * FROM " + tbName + " WHERE nodeID = ?");
       // s.setString(1, tbName);
@@ -354,6 +338,7 @@ public class LocationEmbedded implements TableController<Location, String> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Location> objList) {
+    connection = ConnectionHandler.getInstance().getConnection();
     this.createTable();
     deleteTableData();
     for (Location loc : objList) {

@@ -5,17 +5,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandl
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class LaundryTbl extends TableController<Laundry, Integer> {
+public class LaundryTbl implements TableController<Laundry, Integer> {
 
   private static LaundryTbl instance = null;
   /** name of table */
@@ -27,15 +24,14 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<Laundry> objList;
   /** relative path to the database file */
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
+  Connection connection = connectionHandler.getConnection();
 
-    ConnectionHandler connection = ConnectionHandler.getInstance();
-
-    private LaundryTbl() throws SQLException {
-    super(
-        "Laundry",
-        Arrays.asList(new String[] {"laundryID", "laundryType", "description", "inStock"}));
-    String[] cols = {"laundryID", "laundryType", "description", "inStock"};
+  private LaundryTbl() throws SQLException {
+    tbName = "Laundry";
+    pkCols = "laundryID";
+    colNames = Arrays.asList(new String[] {"laundryID", "laundryType", "description", "inStock"});
 
     createTable();
 
@@ -79,9 +75,6 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
 
   @Override
   public boolean addEntry(Laundry obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
     Laundry laundry = (Laundry) obj; // **
     PreparedStatement s = null;
     try {
@@ -165,15 +158,11 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
-    return laundryList; // **
+    return laundryList;
   }
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -251,6 +240,11 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
       }
     }
     return laundry; // **
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<Laundry> objList) {
+    return false;
   }
 
   public void writeTable() {
@@ -417,5 +411,9 @@ public class LaundryTbl extends TableController<Laundry, Integer> {
 
   public String getTableName() {
     return tbName;
+  }
+
+  public ArrayList<Laundry> getObjList() {
+    return objList;
   }
 }

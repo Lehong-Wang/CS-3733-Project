@@ -3,14 +3,13 @@ package edu.wpi.GoldenGandaberundas;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface TableController<T, T1> {
   //  protected TableController(String tableName, List<String> colNames) throws SQLException {
-//  }
-//
-//  protected TableController(String tableName, List<String> colNames, String pkCols){
-//  }
+  //  }
+  //
+  //  protected TableController(String tableName, List<String> colNames, String pkCols){
+  //  }
 
   /**
    * Generates ArrayList of objects that are stored in the table tbName
@@ -21,36 +20,38 @@ public interface TableController<T, T1> {
 
   // method to write objList to table
   public abstract void writeTable();
-/*
-  private boolean editEntryComposite(ArrayList<Integer> pkid, String colName, Object value) {
-    StringBuilder pkString = new StringBuilder();
-    for (int i = 0; i < pkid.size() - 1; i++) {
-      pkString.append(pkid.get(i)).append(",");
-    }
-    pkString.append(pkid.get(pkid.size() - 1));
-    try {
 
-      PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + pkCols
-                  + ") = ("
-                  + pkString
-                  + ");");
-      s.setObject(1, value);
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
+  public ArrayList<T> getObjList();
+  /*
+   private boolean editEntryComposite(ArrayList<Integer> pkid, String colName, Object value) {
+     StringBuilder pkString = new StringBuilder();
+     for (int i = 0; i < pkid.size() - 1; i++) {
+       pkString.append(pkid.get(i)).append(",");
+     }
+     pkString.append(pkid.get(pkid.size() - 1));
+     try {
 
- */
+       PreparedStatement s =
+           connection.prepareStatement(
+               "UPDATE "
+                   + tbName
+                   + " SET "
+                   + colName
+                   + " = ? WHERE ("
+                   + pkCols
+                   + ") = ("
+                   + pkString
+                   + ");");
+       s.setObject(1, value);
+       s.executeUpdate();
+       return true;
+     } catch (SQLException e) {
+       e.printStackTrace();
+       return false;
+     }
+   }
+
+  */
 
   public boolean deleteEntry(T1 pkid);
 
@@ -61,27 +62,25 @@ public interface TableController<T, T1> {
    * @return true if completed
    */
   /*
-  private boolean deleteEntryComposite(ArrayList<Integer> pkid) {
-    StringBuilder pkString = new StringBuilder();
-    for (int i = 0; i < pkid.size() - 1; i++) {
-      pkString.append(pkid.get(i)).append(",");
+    private boolean deleteEntryComposite(ArrayList<Integer> pkid) {
+      StringBuilder pkString = new StringBuilder();
+      for (int i = 0; i < pkid.size() - 1; i++) {
+        pkString.append(pkid.get(i)).append(",");
+      }
+      pkString.append(pkid.get(pkid.size() - 1));
+      try {
+        PreparedStatement s =
+            connection.prepareStatement(
+                "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
+        s.executeUpdate();
+        return true;
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      return false;
     }
-    pkString.append(pkid.get(pkid.size() - 1));
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
-  }
 
-*/
-
-
+  */
 
   /**
    * Add object to the table
@@ -161,28 +160,27 @@ public interface TableController<T, T1> {
   //    return objList;
   //  }
 
-//  public void backUpAllTables() {
-//    File backupDir = new File("Backups");
-//    if (!backupDir.exists()) {
-//      backupDir.mkdir();
-//    }
-//    for (TableController table : allActiveTables) {
-//      table.createBackup(
-//          new File(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv"));
-//    }
-//  }
+  //  public void backUpAllTables() {
+  //    File backupDir = new File("Backups");
+  //    if (!backupDir.exists()) {
+  //      backupDir.mkdir();
+  //    }
+  //    for (TableController table : allActiveTables) {
+  //      table.createBackup(
+  //          new File(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv"));
+  //    }
+  //  }
 
-//  public void loadAllTables() {
-//    File backupDir = new File("Backups");
-//    if (!backupDir.exists()) {
-//      System.err.println("load dir fails");
-//      return;
-//    }
-//    for (TableController table : allActiveTables) {
-//      table.loadBackup(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv");
-//    }
-//  }
-
+  //  public void loadAllTables() {
+  //    File backupDir = new File("Backups");
+  //    if (!backupDir.exists()) {
+  //      System.err.println("load dir fails");
+  //      return;
+  //    }
+  //    for (TableController table : allActiveTables) {
+  //      table.loadBackup(backupDir.getAbsoluteFile().toString() + "/" + table.tbName + ".csv");
+  //    }
+  //  }
 
   public boolean loadFromArrayList(ArrayList<T> objList);
 }
