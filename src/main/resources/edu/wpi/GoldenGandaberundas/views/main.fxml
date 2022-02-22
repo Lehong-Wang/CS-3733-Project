@@ -103,6 +103,14 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
+                  <JFXButton fx:id="allRequestsButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchAllRequests" prefHeight="45.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="All Requests View" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <graphic>
+                        <SVGPath content="M13 21v2.5l-3-2-3 2V21h-.5A3.5 3.5 0 0 1 3 17.5V5a3 3 0 0 1 3-3h14a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1h-7zm-6-2v-2h6v2h6v-3H6.5a1.5 1.5 0 0 0 0 3H7zM7 5v2h2V5H7zm0 3v2h2V8H7zm0 3v2h2v-2H7z" fill="WHITE" />
+                     </graphic>
+                  </JFXButton>
                   <JFXButton fx:id="MedicalEquipmentButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMedicalEquipment" prefHeight="45.0" prefWidth="314.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Medical Equipment" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
@@ -224,7 +232,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="45.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Map Viewer" textFill="WHITE">
+                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="36.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Map Viewer" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -235,7 +243,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="45.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Side Viewer" textFill="WHITE">
+                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="34.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Side Viewer" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>

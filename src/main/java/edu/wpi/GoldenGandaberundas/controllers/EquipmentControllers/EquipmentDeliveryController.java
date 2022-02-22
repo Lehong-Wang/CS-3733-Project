@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -166,16 +165,20 @@ public class EquipmentDeliveryController {
     }
   }
 
-  private void refreshTable() {
-    // if (medEquipRequestTbl.readTable() != null) {
-    medEqTable.getItems().setAll(medEquipRequestTbl.readTable());
-    equipmentTable.getItems().setAll(medEquipmentTable.readTable());
-    // }
-  }
-
   @FXML
-  public void refreshTable(ActionEvent actionEvent) throws IOException {
-    medEqTable.getItems().setAll(medEquipRequestTbl.readTable());
+  private void refreshTable() {
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<MedEquipRequest> mer = new ArrayList<>();
+      for (MedEquipRequest mr : MedEquipRequestTbl.getInstance().readTable()) {
+        if (mr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          mer.add(mr);
+        }
+      }
+      medEqTable.getItems().setAll(mer);
+    } else {
+      medEqTable.getItems().setAll(medEquipRequestTbl.readTable());
+    }
+    equipmentTable.getItems().setAll(medEquipmentTable.readTable());
   }
 
   @FXML

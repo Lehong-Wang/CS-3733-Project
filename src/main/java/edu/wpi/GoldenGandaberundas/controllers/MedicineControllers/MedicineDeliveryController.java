@@ -335,11 +335,18 @@ public class MedicineDeliveryController {
   @FXML
   public void refresh() {
     requestTable = MedicineRequestTbl.getInstance();
-
-    RequestTable test = RequestTable.getInstance();
     medicineTableController = MedicineTbl.getInstance();
-    medicineTbl.getItems().setAll(requestTable.readTable());
-
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<MedicineRequest> mrs = new ArrayList<>();
+      for (MedicineRequest mr : MedicineRequestTbl.getInstance().readTable()) {
+        if (mr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          mrs.add(mr);
+        }
+      }
+      medicineTbl.getItems().setAll(mrs);
+    } else {
+      medicineTbl.getItems().setAll(requestTable.readTable());
+    }
     medicineMenuTable.getItems().setAll(medicineTableController.readTable());
   }
 

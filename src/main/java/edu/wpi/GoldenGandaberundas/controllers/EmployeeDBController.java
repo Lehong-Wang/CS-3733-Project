@@ -78,7 +78,7 @@ public class EmployeeDBController implements Initializable {
   @FXML
   public void loadDB() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select Back Up File");
+    fileChooser.setTitle("Select Employee  Back Up File");
     fileChooser
         .getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));

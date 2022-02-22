@@ -193,8 +193,19 @@ public class GiftFloralController implements Initializable {
   }
 
   public void refresh() {
+
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<GiftRequest> grs = new ArrayList<>();
+      for (GiftRequest gr : GiftRequestTbl.getInstance().readTable()) {
+        if (gr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          grs.add(gr);
+        }
+      }
+      GiftOrderRequestTable.getItems().setAll(grs);
+    } else {
+      GiftOrderRequestTable.getItems().setAll(reqs.readTable());
+    }
     giftMenuTable.getItems().setAll(menuTableController.readTable());
-    GiftOrderRequestTable.getItems().setAll(reqs.readTable());
   }
 
   public void load() {

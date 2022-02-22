@@ -119,8 +119,19 @@ public class AudioVisualController implements Initializable {
   public void refresh() {
     menuTableController = AudioVisualTbl.getInstance();
     requestAVController = AudioVisualRequestTbl.getInstance();
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<AudioVisualRequest> avrs = new ArrayList<>();
+      for (AudioVisualRequest avr : AudioVisualRequestTbl.getInstance().readTable()) {
+        if (avr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          avrs.add(avr);
+        }
+      }
+      avRequests.getItems().setAll(avrs);
+    } else {
+      avRequests.getItems().setAll(requestAVController.readTable());
+    }
+
     deviceMenu.getItems().setAll(menuTableController.readTable());
-    avRequests.getItems().setAll(requestAVController.readTable());
   }
 
   void onEdit() {

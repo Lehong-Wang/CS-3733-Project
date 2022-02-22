@@ -2,6 +2,7 @@ package edu.wpi.GoldenGandaberundas.controllers.LaundryControllers;
 
 import com.jfoenix.controls.JFXCheckBox;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
@@ -234,10 +235,18 @@ public class LaundryServiceController implements Initializable {
   }
 
   public void refresh() {
-    menuTableController = LaundryTbl.getInstance();
-    requestTableController = RequestTable.getInstance();
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<LaundryRequest> lrs = new ArrayList<>();
+      for (LaundryRequest lr : LaundryRequestTbl.getInstance().readTable()) {
+        if (lr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          lrs.add(lr);
+        }
+      }
+      laundryTable.getItems().setAll(lrs);
+    } else {
+      laundryTable.getItems().setAll(requestLaundryController.readTable());
+    }
     laundryStockTable.getItems().setAll(menuTableController.readTable());
-    laundryTable.getItems().setAll(requestLaundryController.readTable());
   }
 
   @FXML

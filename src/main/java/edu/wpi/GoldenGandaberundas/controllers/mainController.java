@@ -41,6 +41,7 @@ public class mainController {
   @FXML JFXButton MapViewButton;
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
+  @FXML JFXButton allRequestsButton;
 
   @FXML Group medGroup;
 
@@ -80,6 +81,7 @@ public class mainController {
     buttonStyle(MapViewButton);
     buttonStyle(HomeButton);
     buttonStyle(SideViewButton);
+    buttonStyle(allRequestsButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -94,6 +96,7 @@ public class mainController {
     MapViewButton.setText("");
     HomeButton.setText("");
     SideViewButton.setText("");
+    allRequestsButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -160,6 +163,31 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 110));
   }
 
+  public void switchAllRequests() {
+    FXMLLoader subControllerLoader =
+        new FXMLLoader(App.class.getResource("views/masterRequestTable.fxml"));
+
+    try {
+
+      BorderPane subPane = subControllerLoader.load();
+      masterRequestTableController master = subControllerLoader.getController();
+      master.setMainControler(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+  }
   // goes to the Computer Services page
   public void switchCompService(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/computerServiceRequest.fxml");
@@ -169,6 +197,7 @@ public class mainController {
   // goes to the Employee Database page
   public void switchEmployeeDB(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/employeeDB.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   // goes to the Food Delivery page
@@ -272,6 +301,7 @@ public class mainController {
         MapViewButton.setText("Map Viewer");
         HomeButton.setText("Home");
         SideViewButton.setText("Side View");
+        allRequestsButton.setText("All Requests View");
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -287,6 +317,7 @@ public class mainController {
         MapViewButton.setText("Michael O'Connor");
         HomeButton.setText("Neena Xiang");
         SideViewButton.setText("Neena Xiang");
+        allRequestsButton.setText("Paul Godinez");
       }
     }
   }
@@ -313,6 +344,7 @@ public class mainController {
       MapViewButton.setText("");
       HomeButton.setText("");
       SideViewButton.setText("");
+      allRequestsButton.setText("");
     }
   }
 

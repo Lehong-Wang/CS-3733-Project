@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.masterRequestTableController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="masterRequestsTable" prefHeight="309.0" prefWidth="1006.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="requestID" prefWidth="75.0" text="requestID" />
+                  <TableColumn fx:id="locationID" prefWidth="75.0" text="locationID" />
+                  <TableColumn fx:id="timeStart" prefWidth="75.0" text="submitTime" />
+                  <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="completeTime" />
+                  <TableColumn fx:id="empInitiated" prefWidth="72.4000244140625" text="empInitiated" />
+                  <TableColumn fx:id="patientID" prefWidth="84.79998779296875" text="patientID" />
+                  <TableColumn fx:id="empCompleter" prefWidth="110.40011596679688" text="empCompleter" />
+                  <TableColumn fx:id="requestStatus" prefWidth="92.7999267578125" text="requestStatus" />
+                  <TableColumn fx:id="notes" prefWidth="80.79998779296875" text="notes" />
+                  <TableColumn fx:id="requestType" prefWidth="80.79998779296875" text="requestType" />
+               </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

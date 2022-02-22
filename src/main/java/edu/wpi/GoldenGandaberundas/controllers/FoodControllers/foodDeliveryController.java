@@ -169,10 +169,19 @@ public class foodDeliveryController {
 
   /** Refreshes the tables */
   public void refresh() {
-    ArrayList<Food> filteredFoods = FoodTbl.getInstance().readTable();
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<FoodRequest> frs = new ArrayList<>();
+      for (FoodRequest fr : FoodRequestTbl.getInstance().readTable()) {
+        if (fr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          frs.add(fr);
+        }
+      }
+      foodRequestsTable.getItems().setAll(frs);
+    } else {
+      foodRequestsTable.getItems().setAll(FoodRequestTbl.getInstance().readTable());
+    }
 
-    foodMenuTable.getItems().setAll(filteredFoods);
-    foodRequestsTable.getItems().setAll(FoodRequestTbl.getInstance().readTable());
+    foodMenuTable.getItems().setAll(FoodTbl.getInstance().readTable());
     menuTable.getItems().setAll(currentMenu);
   }
 

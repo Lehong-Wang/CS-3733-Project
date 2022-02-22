@@ -183,8 +183,18 @@ public class computerServiceController implements Initializable {
    * to those values.
    */
   public void refresh() {
+    if (CurrentUser.getUser().getEmpID() != 0) {
+      ArrayList<ComputerRequest> crs = new ArrayList<>();
+      for (ComputerRequest cr : ComputerRequestTbl.getInstance().readTable()) {
+        if (cr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          crs.add(cr);
+        }
+      }
+      computerRequestsTbl.getItems().setAll(crs);
+    } else {
+      computerRequestsTbl.getItems().setAll(computerRequests.readTable());
+    }
     computersTable.getItems().setAll(computers.readTable());
-    computerRequestsTbl.getItems().setAll(computerRequests.readTable());
   }
 
   @FXML
