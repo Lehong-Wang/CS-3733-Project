@@ -9,7 +9,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
@@ -129,7 +128,7 @@ public class AudioVisualController implements Initializable {
           }
         });
 
-    //Setting up user permissionsR
+    // Setting up user permissionsR
     checkPerms();
 
     refresh();
