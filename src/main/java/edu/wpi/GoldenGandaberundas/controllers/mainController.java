@@ -360,6 +360,31 @@ public class mainController {
   }
 
   @FXML
+  public void switchAVHelpPage() {
+    nodeSwitch("views/aVHelpPage.fxml");
+  }
+
+  @FXML
+  public void switchComputerServiceHelpPage() {
+    nodeSwitch("views/computerServiceHelpPage.fxml");
+  }
+
+  @FXML
+  public void switchemployeeDatabaseAndRequestsViewHelpPage() {
+    nodeSwitch("views/employeeDatabaseAndRequestsViewHelpPage.fxml");
+  }
+
+  @FXML
+  public void switchequipmentDeliveryHelpPage() {
+    nodeSwitch("views/equipmentDeliveryHelpPage.fxml");
+  }
+
+  @FXML
+  public void switchfoodDeliveryHelpPage() {
+    nodeSwitch("views/foodDeliveryHelpPage.fxml");
+  }
+
+  @FXML
   public void switchgiftFloralHelpPage() {
     nodeSwitch("views/giftFloralHelpPage.fxml");
   }
