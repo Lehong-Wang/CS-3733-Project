@@ -50,10 +50,9 @@
 .label{
     -fx-text-fill: lawnGreen;
 }
-.text{
-    -fx-fill: darkcyan;
-
-}
+/*.text{*/
+/*    -fx-fill: darkcyan;*/
+/*}*/
 
 .backupButton{
     -fx-border-color: green;
@@ -120,9 +119,9 @@
 
 }
 
-.textbox-base{
-    -fx-background-color: grey;
-}
+/*.textbox-base{*/
+/*    -fx-background-color: maroon;*/
+/*}*/
 
 
 

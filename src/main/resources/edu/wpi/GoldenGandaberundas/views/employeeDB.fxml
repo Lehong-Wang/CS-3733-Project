@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -8,15 +15,15 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="607.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EmployeeDBController">
    <center>
-      <TableView fx:id="empTable" prefHeight="537.0" prefWidth="632.0" style="-fx-padding: 5;" BorderPane.alignment="CENTER">
+      <TableView fx:id="empTable" prefHeight="537.0" prefWidth="675.0" style="-fx-padding: 5;" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="empID" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="firstName" prefWidth="75.0" text="FName" />
           <TableColumn fx:id="lastName" prefWidth="75.0" text="LName" />
             <TableColumn fx:id="role" prefWidth="75.0" text="Role" />
-            <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
-            <TableColumn fx:id="phoneNumber" prefWidth="75.0" text="Phone Number" />
-            <TableColumn fx:id="address" prefWidth="75.0" text="Address" />
+            <TableColumn fx:id="email" prefWidth="102.9053955078125" text="Email" />
+            <TableColumn fx:id="phoneNumber" prefWidth="110.5946044921875" text="Phone Number" />
+            <TableColumn fx:id="address" prefWidth="99.049560546875" text="Address" />
         </columns>
       </TableView>
    </center>
@@ -25,6 +32,7 @@
          <children>
             <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" />
             <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" />
+            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="54.0" styleClass="editButton" text="Button" />
          </children></VBox>
    </right>
 </BorderPane>
