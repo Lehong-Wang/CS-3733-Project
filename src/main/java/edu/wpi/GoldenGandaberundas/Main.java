@@ -1,6 +1,5 @@
 package edu.wpi.GoldenGandaberundas;
 
-import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
@@ -88,6 +87,7 @@ public class Main {
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
 
+
     //    Simulation.update();
 
     PathTbl.createStatsMap();
@@ -108,14 +108,30 @@ public class Main {
     //    PathTbl.printStatsMap();
 
 
+    PathTbl.createStatsMap();
+    System.out.println(
+        "PATH: "
+            + PathTbl.getInstance().createAStarPathwStats("gPATI00103", "HBATH00203")
+            + '\n'
+            + "PATH: "
+            + PathTbl.getInstance().createAStarPathwStats("HRETL00302", "FSERV00301")
+            + '\n'
+            + "PATH: "
+            + PathTbl.getInstance().createAStarPathwStats("FDEPT00301", "HBATH00201")
+            + '\n'
+            + "PATH: "
+            + PathTbl.getInstance().createAStarPathwStats("GPATI00603", "HSTAI00103"));
+    PathTbl.printStatsMap();
+
+
     //    EmployeePermissionTbl.getInstance();
       
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
     //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
     //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
-    floorMaps.load();
-    App.launch(App.class, args);
+    //    floorMaps.load();
+    //    App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();
