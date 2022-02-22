@@ -230,7 +230,7 @@ public class AudioVisualController implements Initializable {
     refresh();
   }
 
-  /** creates backups of the Audio Visual table in the users file system*/
+  /** creates backups of the Audio Visual table in the users file system */
   @FXML
   public void backupAV() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -248,9 +248,7 @@ public class AudioVisualController implements Initializable {
     popUpDialog.close();
   }
 
-  /**
-   * Creates a backup in the users file system of the AudioVisualRequestTbl
-   */
+  /** Creates a backup in the users file system of the AudioVisualRequestTbl */
   public void backupRequests() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
     directoryChooser.setTitle("Select Back Up Audio Visual File");
@@ -267,9 +265,7 @@ public class AudioVisualController implements Initializable {
     popUpDialog.close();
   }
 
-  /**
-   * Method that loads a csv file to replace the AudioVisualTbl
-   */
+  /** Method that loads a csv file to replace the AudioVisualTbl */
   @FXML
   public void loadAV() {
     FileChooser fileChooser = new FileChooser();
@@ -290,9 +286,7 @@ public class AudioVisualController implements Initializable {
     refresh();
   }
 
-  /**
-   * Method that loads a csv file to replace the AudioVisualRequestTbl
-   */
+  /** Method that loads a csv file to replace the AudioVisualRequestTbl */
   @FXML
   public void loadRequests() {
     FileChooser fileChooser = new FileChooser();
@@ -367,84 +361,29 @@ public class AudioVisualController implements Initializable {
     //
     ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
     System.out.println(perms);
+    boolean hideShit = true;
     for (int i = 0; i < perms.size(); i++) {
-      setPerms(perms.get(i));
-      // For type and perm description
-      // PermissionTbl.getInstance().getEntry(perms.get(i));
+      if (perms.get(i) == 111) {
+        hideShit = false;
+        break;
+      }
+    }
+    if (hideShit == true) {
+      hideAdmin();
     }
   }
 
-  /**
-   * Helper method for checking perms which uses a switch case to hide elements
-   *
-   * @param permID
-   */
-  public void setPerms(int permID) {
-    switch (permID) {
-      case (111):
-        break;
-      case (222):
-        break;
-      case (333):
-        backupMenuButton.setVisible(false);
-        backupMenuButton.setManaged(false);
-        backupRequestsButton.setVisible(false);
-        backupRequestsButton.setManaged(false);
-        loadMenuButton.setVisible(false);
-        loadMenuButton.setManaged(false);
-        loadRequestButton.setVisible(false);
-        loadRequestButton.setManaged(false);
-        refreshButton.setVisible(false);
-        refreshButton.setManaged(false);
-        break;
-      case (444):
-        backupMenuButton.setVisible(false);
-        backupMenuButton.setManaged(false);
-        backupRequestsButton.setVisible(false);
-        backupRequestsButton.setManaged(false);
-        loadMenuButton.setVisible(false);
-        loadMenuButton.setManaged(false);
-        loadRequestButton.setVisible(false);
-        loadRequestButton.setManaged(false);
-        refreshButton.setVisible(false);
-        refreshButton.setManaged(false);
-        break;
-      case (555):
-        backupMenuButton.setVisible(false);
-        backupMenuButton.setManaged(false);
-        backupRequestsButton.setVisible(false);
-        backupRequestsButton.setManaged(false);
-        loadMenuButton.setVisible(false);
-        loadMenuButton.setManaged(false);
-        loadRequestButton.setVisible(false);
-        loadRequestButton.setManaged(false);
-        refreshButton.setVisible(false);
-        refreshButton.setManaged(false);
-        break;
-      case (666):
-        backupMenuButton.setVisible(false);
-        backupMenuButton.setManaged(false);
-        backupRequestsButton.setVisible(false);
-        backupRequestsButton.setManaged(false);
-        loadMenuButton.setVisible(false);
-        loadMenuButton.setManaged(false);
-        loadRequestButton.setVisible(false);
-        loadRequestButton.setManaged(false);
-        refreshButton.setVisible(false);
-        refreshButton.setManaged(false);
-        break;
-      default:
-        backupMenuButton.setVisible(false);
-        backupMenuButton.setManaged(false);
-        backupRequestsButton.setVisible(false);
-        backupRequestsButton.setManaged(false);
-        loadMenuButton.setVisible(false);
-        loadMenuButton.setManaged(false);
-        loadRequestButton.setVisible(false);
-        loadRequestButton.setManaged(false);
-        refreshButton.setVisible(false);
-        refreshButton.setManaged(false);
-        break;
-    }
+  /** Helper method for checking perms which uses a switch case to hide elements */
+  public void hideAdmin() {
+    backupMenuButton.setVisible(false);
+    backupMenuButton.setManaged(false);
+    backupRequestsButton.setVisible(false);
+    backupRequestsButton.setManaged(false);
+    loadMenuButton.setVisible(false);
+    loadMenuButton.setManaged(false);
+    loadRequestButton.setVisible(false);
+    loadRequestButton.setManaged(false);
+    refreshButton.setVisible(false);
+    refreshButton.setManaged(false);
   }
 }

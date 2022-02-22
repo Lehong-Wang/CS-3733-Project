@@ -164,45 +164,22 @@ public class mainController {
     //
     ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
     System.out.println(perms);
+    boolean hideShit = true;
     for (int i = 0; i < perms.size(); i++) {
-      setPerms(perms.get(i));
-      // For type and perm description
-      // PermissionTbl.getInstance().getEntry(perms.get(i));
+      if (perms.get(i) == 111) {
+        hideShit = false;
+        break;
+      }
+    }
+    if (hideShit == true) {
+      hideAdmin();
     }
   }
 
-  /**
-   * Helper method for checking perms which uses a switch case to hide elements
-   *
-   * @param permID
-   */
-  public void setPerms(int permID) {
-    switch (permID) {
-      case (111):
-        break;
-      case (222):
-        EmployeeDBButton.setVisible(false);
-        EmployeeDBButton.setManaged(false);
-        break;
-      case (333):
-        EmployeeDBButton.setVisible(false);
-        EmployeeDBButton.setManaged(false);
-        break;
-      case (444):
-        EmployeeDBButton.setVisible(false);
-        EmployeeDBButton.setManaged(false);
-        break;
-      case (555):
-        EmployeeDBButton.setVisible(false);
-        EmployeeDBButton.setManaged(false);
-        break;
-      case (666):
-        EmployeeDBButton.setVisible(false);
-        EmployeeDBButton.setManaged(false);
-        break;
-      default:
-        break;
-    }
+  /** Helper method for checking perms which uses a switch case to hide elements */
+  public void hideAdmin() {
+    EmployeeDBButton.setVisible(false);
+    EmployeeDBButton.setManaged(false);
   }
 
   public void goHome(ActionEvent actionEvent) {

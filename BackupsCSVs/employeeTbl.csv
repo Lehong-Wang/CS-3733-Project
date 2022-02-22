@@ -6,3 +6,7 @@ empID,FName,LName,role,email,phoneNum,address
 777,Lehong,Wang,database,lwang11@wpi.edu,1234567890,1 main street
 888,Ben,Bob,sergain,123@wpi.edu,987654321,10 main street
 999,Alice,Mary,CEO,000@wpi.edu,9999999999,999 main street
+70, Michael, O'Connor, Janitor, login@wpi.edu, 9999999999, 10 Faraday St
+420, Jason, Martino, ER, jm@wpi.edu, 6174444444, 100 institute Road
+69, Mason, Figster, Manure Inspector, mf@wpi.edu, 617666666, 92 Main Street
+96, Eli, Hoffberg, administrator, eh@wpi.edu, 8888888888, 100 Institute Road

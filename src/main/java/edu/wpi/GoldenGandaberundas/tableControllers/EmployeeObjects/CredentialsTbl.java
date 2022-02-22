@@ -51,6 +51,8 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
       while (r.next()) {
         tableInfo.add(new Credential(r.getInt(1), r.getString(2), r.getString(3)));
       }
+      // objList = tableInfo;
+      System.out.println("CREDENTIALS : " + tableInfo);
       return tableInfo;
     } catch (SQLException se) {
       se.printStackTrace();
@@ -96,12 +98,12 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
         credList.add(cred); // adds the location to the list
         currentLine = buffer.readLine();
       }
-      ; // creates a Location
-
     } catch (FileNotFoundException ex) {
       ex.printStackTrace();
     } catch (IOException ex) {
       ex.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return credList;
   }

@@ -235,6 +235,7 @@ public abstract class TableController<T, T1> {
    */
   public void createBackup(File f) {
     if (objList.isEmpty()) {
+      System.out.println("file empty");
       return;
     }
     /* Instantiate the writer */
