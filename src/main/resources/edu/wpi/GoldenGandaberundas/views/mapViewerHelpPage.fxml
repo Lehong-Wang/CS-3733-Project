@@ -41,12 +41,12 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Adjust the floor using the floor selector on the bottom left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Floor selector is on the bottom left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Toggle locations and equipment icons in the top left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -54,7 +54,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Path planning will work between floors" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -62,7 +62,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Use path planning to find the quickest path from place to place" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -70,7 +70,7 @@
                               <Font size="24.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="The top left buttons toggle location and equipment icons" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -86,7 +86,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Click and hold to pan around the map" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
@@ -94,7 +94,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
+                              <Insets left="100.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on this page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
