@@ -141,7 +141,7 @@ public class SimulationController {
       e.printStackTrace();
     }
     // subController.setText(locations.getEntry("FDEPT00101"));
-
+    //creates the toggle start simulation button
     JFXButton toggleStart = new JFXButton();
     toggleStart.setText("Start Simulation");
     toggleStart.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -154,7 +154,7 @@ public class SimulationController {
           toggleStart.setText("Rerun Simulation");
           setEquipment();
         });
-
+    //creates the next hour button
     JFXButton nextHour = new JFXButton();
     nextHour.setText("Next Hour");
     nextHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -166,7 +166,7 @@ public class SimulationController {
           createPath(currentHour);
           setEquipment();
         });
-
+    //previous hour button
     JFXButton prevHour = new JFXButton();
     prevHour.setText("Previous Hour");
     prevHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
@@ -698,5 +698,4 @@ public class SimulationController {
     }
     pathNodePane.setVisible(true);
   }
-
 }

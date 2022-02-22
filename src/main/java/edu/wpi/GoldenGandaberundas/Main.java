@@ -1,7 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
@@ -106,10 +105,11 @@ public class Main {
     //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103", "GSTOR00103"));
+    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
+    // "GSTOR00103"));
 
-    Simulation.update();
-    PathTbl.createStatsMap();
+    //    Simulation.update();
+    //    PathTbl.createStatsMap();
     //    List<String> points1 = PathTbl.getPathPoints(1, 2);
     //    List<String> points2 = PathTbl.getPathPoints(15, 37);
     //    List<String> points3 = PathTbl.getPathPoints(37, 25);
@@ -122,12 +122,13 @@ public class Main {
     //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
     //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103", "GSTOR00103"));
+    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
+    // "GSTOR00103"));
 
-    PathTbl.printStatsMap();
+    //    PathTbl.printStatsMap();
 
-    Simulation.update();
-    System.out.println(PathTbl.getPathPoints(3, 9));
+    //    Simulation.update();
+    //    System.out.println(PathTbl.getPathPoints(3, 9));
 
     //    EmployeePermissionTbl.getInstance();
       
