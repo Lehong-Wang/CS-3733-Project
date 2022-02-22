@@ -93,27 +93,6 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="What is on the page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                           <font>
-                              <Font size="48.0" />
-                           </font>
-                        </Label>
-                        <Label text="The top table has the gift/floral inventory" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="The far right has buttons for creating and loading backup CSVs" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
                         <Label text="for the gift/floral inventory and the request table (bottom)" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <font>
                               <Font size="24.0" />
