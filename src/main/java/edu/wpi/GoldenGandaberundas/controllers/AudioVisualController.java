@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
@@ -7,7 +8,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
@@ -26,6 +27,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
@@ -55,6 +57,13 @@ public class AudioVisualController implements Initializable {
   @FXML private TableColumn<AudioVisualRequest, String> status;
   @FXML private TableColumn<AudioVisualRequest, Integer> device;
   @FXML private TableColumn<AudioVisualRequest, String> notes;
+
+  // Admin Buttons
+  @FXML private JFXButton backupMenuButton;
+  @FXML private JFXButton backupRequestsButton;
+  @FXML private JFXButton loadMenuButton;
+  @FXML private JFXButton loadRequestButton;
+  @FXML private JFXButton refreshButton;
 
   private RequestTable requestTableController = RequestTable.getInstance();
   private TableController menuTableController = AudioVisualTbl.getInstance();
@@ -111,6 +120,9 @@ public class AudioVisualController implements Initializable {
             onEdit();
           }
         });
+
+    // Setting up user permissionsR
+    checkPerms();
 
     refresh();
   }
@@ -218,7 +230,7 @@ public class AudioVisualController implements Initializable {
     refresh();
   }
 
-  /** creates backups of the request table */
+  /** creates backups of the Audio Visual table in the users file system*/
   @FXML
   public void backupAV() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -228,12 +240,77 @@ public class AudioVisualController implements Initializable {
     popUpDialog.show();
 
     if (selectedFile != null) {
-      LaundryTbl.getInstance()
-          .createBackup(new File(selectedFile.toString() + "\\audioVisualBackUp.csv"));
+      AudioVisualTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "/audioVisualBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
+  }
+
+  /**
+   * Creates a backup in the users file system of the AudioVisualRequestTbl
+   */
+  public void backupRequests() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    directoryChooser.setTitle("Select Back Up Audio Visual File");
+    Stage popUpDialog = new Stage();
+    File selectedFile = directoryChooser.showDialog(popUpDialog);
+    popUpDialog.show();
+
+    if (selectedFile != null) {
+      AudioVisualRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "/audioVisualRequestsBackUp.csv"));
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+  }
+
+  /**
+   * Method that loads a csv file to replace the AudioVisualTbl
+   */
+  @FXML
+  public void loadAV() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Laundry File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      AudioVisualTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
+  }
+
+  /**
+   * Method that loads a csv file to replace the AudioVisualRequestTbl
+   */
+  @FXML
+  public void loadRequests() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select Back Up Laundry Requests File To Load");
+    fileChooser
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
+    Stage popUpDialog = new Stage();
+    File selectedFile = fileChooser.showOpenDialog(popUpDialog);
+    popUpDialog.show();
+    if (selectedFile != null) {
+      System.out.println(selectedFile.toString());
+      AudioVisualRequestTbl.getInstance().loadBackup(selectedFile.toString());
+    } else {
+      System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
+    }
+    popUpDialog.close();
+    refresh();
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -280,5 +357,94 @@ public class AudioVisualController implements Initializable {
       AvArray.add(i, av.getDeviceType());
     }
     return AvArray;
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        break;
+      case (333):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (444):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (555):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (666):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      default:
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+    }
   }
 }

@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
@@ -7,6 +8,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.Computer;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
@@ -61,6 +63,13 @@ public class computerServiceController implements Initializable {
   @FXML TableColumn<ComputerRequest, String> priority;
 
   @FXML private SearchableComboBox<String> locationSearchBox; // Location drop box
+
+  // Admin Buttons
+  @FXML private JFXButton backupMenuButton;
+  @FXML private JFXButton backupRequestsButton;
+  @FXML private JFXButton loadMenuButton;
+  @FXML private JFXButton loadRequestButton;
+  @FXML private JFXButton refreshButton;
 
   TableController locationTableController = LocationTbl.getInstance();
   ComputerTbl computers = ComputerTbl.getInstance();
@@ -156,6 +165,9 @@ public class computerServiceController implements Initializable {
     ObservableList<String> oproblemsList = FXCollections.observableArrayList(problemsList);
 
     problemTypeBox.setItems(oproblemsList);
+
+    // Setting up user permissions
+    checkPerms();
 
     refresh();
   }
@@ -323,5 +335,94 @@ public class computerServiceController implements Initializable {
     }
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        break;
+      case (333):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (444):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (555):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (666):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      default:
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+    }
   }
 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,12 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Medicine" textAlignment="CENTER" wrapText="true" />
-            <JFXButton onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
-            <JFXButton onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Medicine Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
-            <JFXButton onAction="#editEntry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Edit Entry" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Medicine" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Medicine Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" textAlignment="CENTER" />
          </children>
       </VBox>
    </right>
@@ -41,13 +41,15 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <GridPane prefHeight="105.0" prefWidth="1100.0" VBox.vgrow="ALWAYS">
+                        <GridPane prefHeight="352.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="554.9083557128906" minWidth="10.0" prefWidth="398.7723083496094" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="364.14947509765625" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="292.07794189453125" minWidth="0.0" prefWidth="108.35052490234375" />
                            </columnConstraints>
                            <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -72,12 +74,24 @@
                               <SearchableComboBox fx:id="locationSearchBox" maxHeight="30.0" prefHeight="68.0" prefWidth="452.0" GridPane.columnIndex="1" />
                               <SearchableComboBox fx:id="medicineSearchBox" maxHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <SearchableComboBox fx:id="patientSearchBox" maxHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Notes" GridPane.rowIndex="3">
+                              <Label text="Notes" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextArea fx:id="notesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Dosage" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Quantity" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="dosageField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                         <HBox prefHeight="25.0" prefWidth="1433.0" VBox.vgrow="ALWAYS">

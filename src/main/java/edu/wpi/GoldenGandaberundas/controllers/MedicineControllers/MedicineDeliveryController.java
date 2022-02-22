@@ -1,8 +1,10 @@
 package edu.wpi.GoldenGandaberundas.controllers.MedicineControllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.*;
@@ -35,6 +37,8 @@ public class MedicineDeliveryController {
   private int currentMedicineID;
   @FXML private SearchableComboBox<Integer> medicineSearchBox;
   @FXML private SearchableComboBox<Integer> patientSearchBox;
+  @FXML private TextField dosageField;
+  @FXML private TextField quantityField;
   @FXML private TextArea notesField;
 
   @FXML TableView medicineTbl; // Service Table
@@ -59,6 +63,12 @@ public class MedicineDeliveryController {
   @FXML TableColumn<Medicine, String> description;
   @FXML TableColumn<Medicine, Double> price;
   @FXML TableColumn<Medicine, Boolean> inStock;
+
+  @FXML private JFXButton backupMenuButton;
+  @FXML private JFXButton backupRequestsButton;
+  @FXML private JFXButton loadMenuButton;
+  @FXML private JFXButton loadRequestButton;
+  @FXML private JFXButton refreshButton;
 
   private PatientTbl patients;
   private MedicineTbl medicine;
@@ -126,6 +136,9 @@ public class MedicineDeliveryController {
             onEdit();
           }
         });
+
+    // Setting up the user permissions
+    checkPerms();
   }
 
   /** Method that populates the location combo box from the locationTbl Called in initialize */
@@ -219,22 +232,33 @@ public class MedicineDeliveryController {
     int patientID = currentPatientID;
     int requesterID = CurrentUser.getUser().getEmpID();
     int medicineID = currentMedicineID;
+    //    int dosage = 0;
+    //    int quantity = 0;
+    try {
+      int dosage = Integer.parseInt(dosageField.getText());
+      int quantity = Integer.parseInt(quantityField.getText());
+      MedicineRequest medicineRequest2 =
+          new MedicineRequest(
+              requestID,
+              nodeID,
+              requesterID,
+              123,
+              000,
+              000,
+              patientID,
+              "Submitted",
+              notes,
+              medicineID,
+              dosage,
+              quantity);
+      RequestTable.getInstance().addEntry(medicineRequest2);
+    } catch (NumberFormatException e) {
+      dosageField.setText("Invalid Input");
+      quantityField.setText("Invalid Input");
+      System.out.println("Invalid input, dosage and quantity must be integers");
+      e.printStackTrace();
+    }
 
-    MedicineRequest medicineRequest2 =
-        new MedicineRequest(
-            requestID,
-            nodeID,
-            requesterID,
-            123,
-            000,
-            000,
-            patientID,
-            "Submitted",
-            notes,
-            medicineID,
-            000,
-            000);
-    RequestTable.getInstance().addEntry(medicineRequest2);
     refresh();
   }
 
@@ -360,5 +384,94 @@ public class MedicineDeliveryController {
     Scene scene = new Scene(FXMLLoader.load(App.class.getResource("views/editMedReqForm.fxml")));
     stage.setScene(scene);
     stage.show();
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        break;
+      case (333):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (444):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (555):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (666):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      default:
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+    }
   }
 }

@@ -1,9 +1,12 @@
 package edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers;
 
+import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.controllers.validators.AddEquipmentRequestValidator;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
@@ -57,19 +60,23 @@ public class EquipmentDeliveryController {
   @FXML TableColumn<MedEquipment, String> equipStatus;
   @FXML TableColumn<MedEquipment, String> loc;
 
-  @FXML TextField reqField;
-  @FXML TextField itemField;
-  @FXML TextField destinationField;
-  @FXML TextField notesField;
-
-  @FXML SearchableComboBox<String> locationSearchBox;
   @FXML SearchableComboBox<Integer> equipmentSearchBox;
+  private int selectedEquipment;
+  @FXML SearchableComboBox<String> locationSearchBox;
+  private String selectedLocation;
+  @FXML TextField notesField;
 
   @FXML private StackPane mapStackPane;
   private GesturePane mapGesture = null;
   private ImageView mapView = null;
   private Pane iconPane = null;
   private String currentFloor = null;
+
+  @FXML private JFXButton backupMenuButton;
+  @FXML private JFXButton backupRequestsButton;
+  @FXML private JFXButton loadMenuButton;
+  @FXML private JFXButton loadRequestButton;
+  @FXML private JFXButton refreshButton;
 
   private final Image LL2 = floorMaps.lower2Floor;
   private final Image LL1 = floorMaps.lower1Floor;
@@ -80,6 +87,7 @@ public class EquipmentDeliveryController {
   private TableController medEquipRequestTbl = MedEquipRequestTbl.getInstance();
   private RequestTable reqTable = RequestTable.getInstance();
   private MedEquipmentTbl medEquipmentTable = MedEquipmentTbl.getInstance();
+  private TableController locationTableController = LocationTbl.getInstance();
 
   //  private TableController employees = EmployeeTbl.getInstance();
   //  private TableController equipment = MedEquipmentTbl.getInstance();
@@ -110,11 +118,12 @@ public class EquipmentDeliveryController {
     type.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("medEquipmentType"));
     equipStatus.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("status"));
     loc.setCellValueFactory(new PropertyValueFactory<MedEquipment, String>("currLoc"));
-
-    locList();
-    equipList();
-
     refreshTable();
+
+    // Calling methods to set up search boxes
+    equipmentList();
+    locList();
+    setupComboListeners();
 
     mapGesture = new GesturePane();
 
@@ -144,6 +153,47 @@ public class EquipmentDeliveryController {
           if (e.getClickCount() > 1) {
             onEdit();
           }
+        });
+
+    // Setting up user permissions
+    checkPerms();
+  }
+
+  /** Methods that populates the equipment search box with equipment from Equipment Table */
+  public void equipmentList() {
+    ArrayList<MedEquipment> equipmentArray = new ArrayList<MedEquipment>();
+    equipmentArray = medEquipmentTable.readTable();
+    ArrayList<Integer> equipIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < equipmentArray.size(); i++) {
+      equipIDAr.add(i, equipmentArray.get(i).getMedID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(equipIDAr);
+    equipmentSearchBox.setItems(oList);
+  }
+
+  public void locList() {
+    ArrayList<Location> locArray = new ArrayList<Location>();
+    locArray = locationTableController.readTable();
+    ArrayList<String> locNodeAr = new ArrayList<String>();
+    for (int i = 0; i < locArray.size(); i++) {
+      locNodeAr.add(i, locArray.get(i).getNodeID());
+    }
+    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
+    locationSearchBox.setItems(oList);
+  }
+
+  /** Method that sets up the event listeners for the searchable combo boxes Called in initialize */
+  public void setupComboListeners() {
+    equipmentSearchBox.setOnAction(
+        (event) -> {
+          int selectedItem = (Integer) equipmentSearchBox.getSelectionModel().getSelectedItem();
+          selectedEquipment = selectedItem;
+        });
+
+    locationSearchBox.setOnAction(
+        (event) -> {
+          String selectedItem = (String) locationSearchBox.getSelectionModel().getSelectedItem();
+          selectedLocation = selectedItem;
         });
   }
 
@@ -183,48 +233,36 @@ public class EquipmentDeliveryController {
 
   @FXML
   public void submit() {
+    AddEquipmentRequestValidator valid =
+        new AddEquipmentRequestValidator(
+            Integer.toString(CurrentUser.getUser().getEmpID()),
+            Integer.toString(selectedEquipment),
+            selectedLocation,
+            notesField.getText(),
+            "yes");
+    if (valid.validateTextFields()) {
 
-    int requestNum =
-        RequestTable.getInstance().readTable().size() - 1 < 0
-            ? 0
-            : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
-    int requesterID = CurrentUser.getUser().getEmpID();
-    int itemID = equipmentSearchBox.getValue();
-    String node = locationSearchBox.getValue();
-    String notes = notesField.getText();
-    String requestStatus = "not done";
+      int requestNum =
+          RequestTable.getInstance().readTable().size() - 1 < 0
+              ? 0
+              : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
+      int requesterID = CurrentUser.getUser().getEmpID();
+      int itemID = selectedEquipment;
+      String node = selectedLocation;
+      String notes = notesField.getText();
+      String requestStatus = "not done";
 
-    MedEquipRequest request =
-        new MedEquipRequest(
-            requestNum, node, requesterID, 123, 0, 0, 111, "Submitted", notes, itemID);
-    reqTable.addEntry(request);
-    refreshTable();
-
-    refreshTable();
-  }
-
-  /** Method that populates the equipment combo box from the EquipmentTbl Called */
-  public void equipList() {
-    ArrayList<MedEquipment> medArray = new ArrayList<MedEquipment>();
-    medArray = MedEquipmentTbl.getInstance().readTable();
-    ArrayList<Integer> medIDAr = new ArrayList<Integer>();
-    for (int i = 0; i < medArray.size(); i++) {
-      medIDAr.add(i, medArray.get(i).getMedID());
+      MedEquipRequest request =
+          new MedEquipRequest(
+              requestNum, node, requesterID, 123, 0, 0, 111, "Submitted", notes, itemID);
+      reqTable.addEntry(request);
+      refreshTable();
+    } else {
+      // equipmentSearchBox
+      // locationSearchBox
+      notesField.setText("Invalid Data");
     }
-    ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
-    equipmentSearchBox.setItems(oList);
-  }
-
-  /** Method that populates the location combo box from the locationTbl Called */
-  public void locList() {
-    ArrayList<Location> locArray = new ArrayList<Location>();
-    locArray = LocationTbl.getInstance().readTable();
-    ArrayList<String> locNodeAr = new ArrayList<String>();
-    for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
-    }
-    ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
-    locationSearchBox.setItems(oList);
+    refreshTable();
   }
 
   @FXML
@@ -340,6 +378,95 @@ public class EquipmentDeliveryController {
     }
     popUpDialog.close();
     refreshTable();
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        break;
+      case (333):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (444):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (555):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (666):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      default:
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+    }
   }
 
   public MenuButton createFloorSelector(ImageView mapImage) {

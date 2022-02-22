@@ -7,8 +7,10 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
@@ -55,6 +57,11 @@ public class Main {
     AudioVisualRequestTbl.getInstance();
 
     PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+
+    EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
+    CredentialsTbl.getInstance().addEntry(new Credential(456, "password"));
+    CredentialsTbl.getInstance().addEntry(new Credential(666, "666"));
+
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
 

@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
@@ -62,6 +63,14 @@ public class GiftFloralController implements Initializable {
   @FXML TableColumn<GiftRequest, String> notes;
   @FXML TableColumn<GiftRequest, Integer> reqGiftID;
   @FXML TableColumn<GiftRequest, Integer> quantity;
+
+  // Admin Buttons
+  @FXML private JFXButton backupMenuButton;
+  @FXML private JFXButton backupRequestsButton;
+  @FXML private JFXButton loadMenuButton;
+  @FXML private JFXButton loadRequestButton;
+  @FXML private JFXButton refreshButton;
+
   private GiftRequestTbl reqs = GiftRequestTbl.getInstance();
 
   private RequestTable requestTableController = RequestTable.getInstance();
@@ -126,6 +135,98 @@ public class GiftFloralController implements Initializable {
             onEdit();
           }
         });
+
+    // Setting up user permissions
+    checkPerms();
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        break;
+      case (333):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (444):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (555):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      case (666):
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+      default:
+        backupMenuButton.setVisible(false);
+        backupMenuButton.setManaged(false);
+        backupRequestsButton.setVisible(false);
+        backupRequestsButton.setManaged(false);
+        loadMenuButton.setVisible(false);
+        loadMenuButton.setManaged(false);
+        loadRequestButton.setVisible(false);
+        loadRequestButton.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
+        break;
+    }
   }
 
   void onEdit() {

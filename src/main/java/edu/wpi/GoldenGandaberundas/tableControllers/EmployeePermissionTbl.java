@@ -16,7 +16,7 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
   private static EmployeePermissionTbl instance = null;
 
   private EmployeePermissionTbl() throws SQLException {
-    super("EmployeePermissions", Arrays.asList(new String[] {"empID", "permID"}));
+    super("EmployeePermissions", Arrays.asList(new String[] {"empID", "permID"}), "empID,permID");
     String[] cols = {"empID", "permID"};
     createTable();
 
@@ -197,7 +197,7 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
         // returns the selected object that matches the pkid
         PreparedStatement s =
             connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?,?);");
+                "SELECT * FROM " + tbName + " WHERE " + pkCols + " =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -213,5 +213,32 @@ public class EmployeePermissionTbl extends TableController<EmployeePermission, A
       }
     }
     return empPerm; // **
+  }
+
+  /**
+   * Method that when given an employee ID returns a list of permissions associated with that
+   * employee
+   *
+   * @param empID
+   * @return
+   */
+  public ArrayList<Integer> getPermID(int empID) {
+    ArrayList<Integer> permAr = new ArrayList<Integer>();
+    try {
+      // returns the selected object that matches the pkid
+      PreparedStatement s =
+          connection.prepareStatement(
+              "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?);");
+      s.setInt(1, empID);
+      ResultSet r = s.executeQuery();
+      while (r.next()) {
+        permAr.add(r.getInt(2));
+      }
+      return permAr; // **
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return permAr; // **
   }
 }

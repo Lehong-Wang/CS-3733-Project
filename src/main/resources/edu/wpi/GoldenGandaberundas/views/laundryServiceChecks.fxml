@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -18,13 +17,13 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.LaundryControllers.LaundryServiceController">
    <right>
-      <VBox prefHeight="800.0" prefWidth="105.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_RIGHT" prefHeight="800.0" prefWidth="103.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXButton onAction="#backupLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Laundry" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-            <JFXButton onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-            <JFXButton onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Laundry Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-            <JFXButton onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="backupMenuButton" maxWidth="100.0" onAction="#backupLaundry" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Backup Laundry" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="backupRequestsButton" maxWidth="100.0" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="loadMenuButton" maxWidth="100.0" onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Laundry Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="loadRequestButton" maxWidth="100.0" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="refreshButton" maxWidth="100.0" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>
@@ -40,12 +39,12 @@
                 <RowConstraints />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="726.0" text="Laundry Menu" underline="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="726.0" text="Laundry Menu" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="572.0" text="Request Laundry Service" underline="true" GridPane.hgrow="ALWAYS">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="572.0" text="Request Laundry Service" GridPane.hgrow="ALWAYS">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -106,16 +105,6 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="264.0" text="Employee ID:" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="idField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </GridPane.margin>
-                              </TextField>
                               <SearchableComboBox fx:id="locationSearchBox" prefHeight="35.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />

@@ -19,7 +19,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.AudioVisualController">
    <center>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1067.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
             <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Audio/Visual Device Request">
                <font>
@@ -160,10 +160,13 @@
       </VBox>
    </center>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_RIGHT">
          <children>
-            <JFXButton style="-fx-background-color: #0067B1;" text="Load" textFill="WHITE" />
-            <JFXButton alignment="CENTER" onAction="#backupAV" style="-fx-background-color: #0067B1;" text="Backup" textFill="WHITE" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupAV" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Backup Device List" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadAV" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Load Device Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadRequests" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black;" text="Refresh" textAlignment="CENTER" wrapText="true" />
          </children>
          <BorderPane.margin>
             <Insets left="10.0" />

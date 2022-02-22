@@ -7,7 +7,9 @@ import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -100,8 +102,6 @@ public class mainController {
 
     // Hiding buttons until service is fully implemented
 
-    // ComputerServiceButton.setManaged(false);
-    // ComputerServiceButton.setVisible(false);
     LanguageButton.setManaged(false);
     LanguageButton.setVisible(false);
     ReligiousButton.setManaged(false);
@@ -109,11 +109,19 @@ public class mainController {
     PatientTransportButton.setManaged(false);
     PatientTransportButton.setVisible(false);
 
+    // Checking current users permissions
+    checkPerms();
+
     mainView.setFitHeight(1080);
     mainView.setFitWidth(1920);
     mainView.setImage(floorMaps.hospital);
   }
 
+  /**
+   * Method that applies CSS styling to button's in and Idle and Hovered states
+   *
+   * @param buttonO
+   */
   public void buttonStyle(JFXButton buttonO) {
     buttonO.setStyle(IDLE_BUTTON_STYLE);
     buttonO.setOnMouseEntered(
@@ -125,11 +133,6 @@ public class mainController {
           buttonO.setStyle(IDLE_BUTTON_STYLE);
         });
   }
-
-  /*
-  Center node switching works for:
-
-   */
 
   public void nodeSwitch(String fxmlFile) {
     FXMLLoader subControllerLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
@@ -150,6 +153,55 @@ public class mainController {
 
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  /**
+   * Method that iterates through a users permissions and hides elements they dont have access too
+   */
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    //
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    System.out.println(perms);
+    for (int i = 0; i < perms.size(); i++) {
+      setPerms(perms.get(i));
+      // For type and perm description
+      // PermissionTbl.getInstance().getEntry(perms.get(i));
+    }
+  }
+
+  /**
+   * Helper method for checking perms which uses a switch case to hide elements
+   *
+   * @param permID
+   */
+  public void setPerms(int permID) {
+    switch (permID) {
+      case (111):
+        break;
+      case (222):
+        EmployeeDBButton.setVisible(false);
+        EmployeeDBButton.setManaged(false);
+        break;
+      case (333):
+        EmployeeDBButton.setVisible(false);
+        EmployeeDBButton.setManaged(false);
+        break;
+      case (444):
+        EmployeeDBButton.setVisible(false);
+        EmployeeDBButton.setManaged(false);
+        break;
+      case (555):
+        EmployeeDBButton.setVisible(false);
+        EmployeeDBButton.setManaged(false);
+        break;
+      case (666):
+        EmployeeDBButton.setVisible(false);
+        EmployeeDBButton.setManaged(false);
+        break;
+      default:
+        break;
     }
   }
 
@@ -256,7 +308,7 @@ public class mainController {
 
   public void switchAudioVisual(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/audioVisual.fxml");
-    nodeDataPane.setPadding(new Insets(0, 50, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   public void switchSideView() {
