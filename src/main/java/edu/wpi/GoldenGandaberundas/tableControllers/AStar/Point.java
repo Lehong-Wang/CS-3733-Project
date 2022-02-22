@@ -26,16 +26,30 @@ public class Point implements Comparable<Point> {
     this.neighbors = new ArrayList<Edge>();
   }
 
+  /**
+   * Takes in a point and adds its branches with the right weight
+   * @param point the point to add branches for
+   */
   public void addBranch(Point point) {
     double weight = Math.sqrt(Math.pow((this.x - point.x), 2) + Math.pow((this.y - point.y), 2));
     Edge newEdge = new Edge(weight, point);
     neighbors.add(newEdge);
   }
 
+  /**
+   * finds the heuristic for the path planning
+   * @param target
+   * @return
+   */
   public double calculateHeuristic(Point target) {
     return Math.sqrt(Math.pow((this.x - target.x), 2) + Math.pow((this.y - target.y), 2));
   }
 
+  /**
+   * Calculates astart from one point to another
+   * @param target the end point
+   * @return the start point
+   */
   public Point aStar(Point target) {
     PriorityQueue<Point> closedList = new PriorityQueue<>();
     PriorityQueue<Point> openList = new PriorityQueue<>();
@@ -76,6 +90,11 @@ public class Point implements Comparable<Point> {
     return null;
   }
 
+  /**
+   * find the path bases on the parents
+   * @param target the end point
+   * @return the start point
+   */
   public List<String> locationsPath(Point target) {
     Point n = target;
     List<String> locs = new ArrayList<>();
@@ -108,6 +127,11 @@ public class Point implements Comparable<Point> {
     return stringBuilder.toString();
   }
 
+  /**
+   * used for the priority queue
+   * @param o
+   * @return
+   */
   @Override
   public int compareTo(Point o) {
     return Double.compare(this.f, o.f);

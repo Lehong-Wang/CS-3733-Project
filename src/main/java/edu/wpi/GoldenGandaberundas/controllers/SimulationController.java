@@ -602,6 +602,9 @@ public class SimulationController {
     }
   }
 
+    /**
+     * refreshs the map to include the circlees for the paths
+     */
   public void refreshCircles() {
     for (Node cir : pathNodePane.getChildren()) {
       EquipmentCircle c = (EquipmentCircle) cir;
@@ -701,6 +704,9 @@ public class SimulationController {
     }
   }
 
+    /**
+     * Class to show the equipment with circles
+     */
   private class EquipmentCircle extends Circle {
     private String floor = "00";
 
