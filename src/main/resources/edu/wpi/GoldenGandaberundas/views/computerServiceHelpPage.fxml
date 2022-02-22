@@ -45,7 +45,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="100.0" />
+                              <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Describe the problem in the second text box" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -53,7 +53,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="100.0" />
+                              <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Select the problem type" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -61,7 +61,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="100.0" top="15.0" />
+                              <Insets left="20.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Enter the location where the device is" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
@@ -69,7 +69,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="100.0" />
+                              <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="Indicate the priority of the request" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -77,7 +77,7 @@
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="100.0" top="15.0" />
+                              <Insets left="20.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                         <Label text="What is on the page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
