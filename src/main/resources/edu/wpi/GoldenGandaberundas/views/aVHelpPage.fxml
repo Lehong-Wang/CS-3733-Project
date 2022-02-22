@@ -14,7 +14,7 @@
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Help: Language Interpreter Request">
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Help: Audio/Visual Request">
                <font>
                   <Font size="48.0" />
                </font>
@@ -29,6 +29,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label text="How to use the form:" GridPane.halignment="CENTER">
@@ -39,22 +40,30 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Select the language you need an interpreter for from the drop down" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Use the drop down to select device type" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="Enter patient ID in the second text box" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label text="Enter the patient ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="Add a description to the request as needed" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label text="Select/enter the device ID" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Indicate the priority of the request" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="The table on the right is for loading and creating backup CSVs for the computer service table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="The table on the bottom shows the requests of this type" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -62,13 +71,26 @@
                               <Insets top="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="The table on the bottom shows the requests of this type" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <Label text="Select the location that the device should be sent to" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="The table on the right is for loading and creating backup CSVs for the AV table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <font>
                               <Font size="24.0" />
                            </font>
                            <GridPane.margin>
                               <Insets top="15.0" />
                            </GridPane.margin>
+                        </Label>
+                        <Label text="Add a description as needed" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
                         </Label>
                      </children>
                      <HBox.margin>

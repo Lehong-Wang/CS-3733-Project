@@ -14,7 +14,7 @@
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Help: Language Interpreter Request">
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Help: Side View">
                <font>
                   <Font size="48.0" />
                </font>
@@ -29,9 +29,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="How to use the form:" GridPane.halignment="CENTER">
+                        <Label text="How to use the side view:" GridPane.halignment="CENTER">
                            <font>
                               <Font size="48.0" />
                            </font>
@@ -39,32 +40,32 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Select the language you need an interpreter for from the drop down" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="The equipment summary and table of equipment can be seen on the right" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="Enter patient ID in the second text box" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label text="The icons indicate where equipment is" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label text="Add a description to the request as needed" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label text="Click on a specific floor to see the equipment summary and table for the specific floor" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label text="The table on the right is for loading and creating backup CSVs for the computer service table and does not need to be used to make requests" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="24.0" />
                            </font>
                            <GridPane.margin>
                               <Insets top="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="The table on the bottom shows the requests of this type" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <Label text="The red columns in the middle are the elevator shafts" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label text="Click on a table column to change how the equipment is sorted" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
                            </font>
                            <GridPane.margin>
                               <Insets top="15.0" />
