@@ -53,6 +53,18 @@
                               <MenuItem mnemonicParsing="false" onAction="#disableAuthor" text="Disable Authors" />
                               <MenuItem mnemonicParsing="false" onAction="#enableClientServer" text="Enable Client/Server" />
                               <MenuItem mnemonicParsing="false" onAction="#enableEmbedded" text="Enable Embedded" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchAVHelpPage" text="Audio/Visual Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchComputerServiceHelpPage" text="IT Service Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchemployeeDatabaseAndRequestsViewHelpPage" text="Employee Database/Request View Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchequipmentDeliveryHelpPage" text="Equipment Delivery Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Unspecified Action" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Unspecified Action" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchgiftFloralHelpPage" text="Gift/Floral Delivery Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchLanguageRequestHelpPage" text="Language Service Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchlaundryHelpPage" text="Laundry Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchmapViewerHelpPage" text="Map Viewer Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchmedicineDeliveryHelpPage" text="Medicine Delivery Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchsideViewHelpPage" text="Side View Help Page" />
                            </items>
                            <graphic>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" wrappingWidth="55.87416076660156">
