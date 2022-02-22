@@ -33,6 +33,7 @@
          <children>
             <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" />
             <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" />
+            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="54.0" styleClass="editButton" text="Button" />
          </children></VBox>
    </right>
 </BorderPane>
