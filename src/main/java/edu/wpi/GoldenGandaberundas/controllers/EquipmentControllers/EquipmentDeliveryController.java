@@ -5,7 +5,6 @@ import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.validators.AddEquipmentRequestValidator;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
@@ -231,38 +230,77 @@ public class EquipmentDeliveryController {
     equipmentTable.getItems().setAll(medEquipmentTable.readTable());
   }
 
+  /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (notesField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return notesField.getText().matches("[\\w\\d\\s\\d.]+")
+        && locationSearchBox.getValue() != null
+        && equipmentSearchBox.getValue() != null;
+  }
+
   @FXML
   public void submit() {
-    AddEquipmentRequestValidator valid =
-        new AddEquipmentRequestValidator(
-            Integer.toString(CurrentUser.getUser().getEmpID()),
-            Integer.toString(selectedEquipment),
-            selectedLocation,
-            notesField.getText(),
-            "yes");
-    if (valid.validateTextFields()) {
 
+    if (validateDataSafe()) {
       int requestNum =
           RequestTable.getInstance().readTable().size() - 1 < 0
               ? 0
               : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
       int requesterID = CurrentUser.getUser().getEmpID();
-      int itemID = selectedEquipment;
-      String node = selectedLocation;
+      int itemID = equipmentSearchBox.getValue();
+      String node = locationSearchBox.getValue();
       String notes = notesField.getText();
       String requestStatus = "not done";
 
       MedEquipRequest request =
           new MedEquipRequest(
-              requestNum, node, requesterID, 123, 0, 0, 111, "Submitted", notes, itemID);
+              requestNum, node, requesterID, null, 0, 0, null, "Submitted", notes, itemID);
       reqTable.addEntry(request);
       refreshTable();
+
+      refreshTable();
     } else {
-      // equipmentSearchBox
-      // locationSearchBox
-      notesField.setText("Invalid Data");
+      notesField.setText("Invalid Input");
     }
-    refreshTable();
+  }
+
+  /** Method that populates the equipment combo box from the EquipmentTbl Called */
+  public void equipList() {
+    ArrayList<MedEquipment> medArray = new ArrayList<MedEquipment>();
+    medArray = MedEquipmentTbl.getInstance().readTable();
+    ArrayList<Integer> medIDAr = new ArrayList<Integer>();
+    for (int i = 0; i < medArray.size(); i++) {
+      medIDAr.add(i, medArray.get(i).getMedID());
+    }
+    ObservableList<Integer> oList = FXCollections.observableArrayList(medIDAr);
+    equipmentSearchBox.setItems(oList);
   }
 
   @FXML

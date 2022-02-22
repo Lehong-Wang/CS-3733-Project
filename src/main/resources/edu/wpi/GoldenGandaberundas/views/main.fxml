@@ -57,8 +57,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#switchComputerServiceHelpPage" text="IT Service Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchemployeeDatabaseAndRequestsViewHelpPage" text="Employee Database/Request View Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchequipmentDeliveryHelpPage" text="Equipment Delivery Help Page" />
-                              <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Unspecified Action" />
-                              <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Unspecified Action" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Food Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchgiftFloralHelpPage" text="Gift/Floral Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchLanguageRequestHelpPage" text="Language Service Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchlaundryHelpPage" text="Laundry Help Page" />

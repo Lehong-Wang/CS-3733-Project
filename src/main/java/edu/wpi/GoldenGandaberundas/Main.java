@@ -72,6 +72,7 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(69, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
+    AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
 

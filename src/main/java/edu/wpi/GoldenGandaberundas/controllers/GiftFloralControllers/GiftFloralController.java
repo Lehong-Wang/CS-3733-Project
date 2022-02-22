@@ -108,6 +108,7 @@ public class GiftFloralController implements Initializable {
     status.setCellValueFactory(new PropertyValueFactory<GiftRequest, String>("requestStatus"));
     reqGiftID.setCellValueFactory(new PropertyValueFactory<GiftRequest, Integer>("giftID"));
     quantity.setCellValueFactory(new PropertyValueFactory<GiftRequest, Integer>("quantity"));
+    notes.setCellValueFactory(new PropertyValueFactory<GiftRequest, String>("notes"));
 
     ArrayList<String> locs = new ArrayList<>();
     for (Object l : LocationTbl.getInstance().readTable()) {
@@ -194,46 +195,89 @@ public class GiftFloralController implements Initializable {
     }
   }
 
+  /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (notesField.getText().toUpperCase().contains(s)
+          || quantityField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return notesField.getText().matches("[\\w\\d\\s\\d.]+")
+        && locationSearchBox.getValue() != null
+        && patientSearchBox.getValue() != null
+        && patientSearchBox.getValue() != null
+        && quantityField.getText().matches("[\\d]+");
+  }
+
   public void submit() {
-    int idCounter =
-        RequestTable.getInstance().readTable().size() - 1 < 0
-            ? 0
-            : requestTableController
-                    .readTable()
-                    .get(requestTableController.readTable().size() - 1)
-                    .getRequestID()
-                + 1;
-    String nodeID = locationSearchBox.getValue();
-    int submittedTime;
-    int completedTime;
-    int patientID = patientSearchBox.getValue();
-    int requesterID = CurrentUser.getUser().getEmpID();
-    int completerID;
+    if (validateDataSafe()) {
+      int idCounter =
+          RequestTable.getInstance().readTable().size() - 1 < 0
+              ? 0
+              : requestTableController
+                      .readTable()
+                      .get(requestTableController.readTable().size() - 1)
+                      .getRequestID()
+                  + 1;
+      String nodeID = locationSearchBox.getValue();
+      int submittedTime;
+      int completedTime;
+      int patientID = patientSearchBox.getValue();
+      int requesterID = CurrentUser.getUser().getEmpID();
+      int completerID;
+      String notes = notesField.getText();
+      String rowID; // placeholder for now = giftID + reqID
+      int giftID = giftSearchBox.getValue();
+      // String reqID;
+      int quantity = Integer.parseInt(quantityField.getText());
 
-    String rowID; // placeholder for now = giftID + reqID
-    int giftID = giftSearchBox.getValue();
-    // String reqID;
-    int quantity = Integer.parseInt(quantityField.getText());
-
-    System.out.println(nodeID);
-    GiftRequest giftRequest =
-        new GiftRequest(
-            idCounter,
-            nodeID,
-            requesterID,
-            123,
-            0,
-            0,
-            patientID,
-            "Submitted",
-            "",
-            giftID,
-            quantity);
-    GiftRequestTbl.getInstance().addEntry(giftRequest);
-    //    OrderedGift orderedGIft = new OrderedGift(giftID, reqID, quantity);
-    //    requestTableController.addEntry(giftRequest);
-    //    orderTableController.addEntry((orderedGIft));
-    refresh();
+      System.out.println(nodeID);
+      GiftRequest giftRequest =
+          new GiftRequest(
+              idCounter,
+              nodeID,
+              requesterID,
+              null,
+              0,
+              0,
+              patientID,
+              "Submitted",
+              notes,
+              giftID,
+              quantity);
+      GiftRequestTbl.getInstance().addEntry(giftRequest);
+      //    OrderedGift orderedGIft = new OrderedGift(giftID, reqID, quantity);
+      //    requestTableController.addEntry(giftRequest);
+      //    orderTableController.addEntry((orderedGIft));
+      refresh();
+    } else {
+      notesField.setText("Invalid Input");
+      quantityField.setText("Invalid Input");
+    }
 
     giftMenuTable.getItems().setAll(menuTableController.readTable());
   }

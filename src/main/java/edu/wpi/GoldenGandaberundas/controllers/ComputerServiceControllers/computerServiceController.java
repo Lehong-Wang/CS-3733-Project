@@ -172,6 +172,44 @@ public class computerServiceController implements Initializable {
     refresh();
   }
 
+  /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (problemField.getText().toUpperCase().contains(s)
+          || priorityField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return problemField.getText().matches("[\\w\\d\\s\\d.]+")
+        && locationSearchBox.getValue() != null
+        && problemTypeBox.getValue() != null
+        && deviceSearchBox.getValue() != null
+        && priorityField.getText().matches("[\\w\\d\\s\\d.]+");
+  }
+
   void onEdit() {
     if (computerRequestsTbl.getSelectionModel().getSelectedItem() != null) {
       try {
@@ -285,42 +323,47 @@ public class computerServiceController implements Initializable {
 
   public void submit() {
 
-    int requestID =
-        RequestTable.getInstance().readTable().size() - 1 < 0
-            ? 0
-            : RequestTable.getInstance()
-                    .readTable()
-                    .get(RequestTable.getInstance().readTable().size() - 1)
-                    .getRequestID()
-                + 1;
-    String locationID = locationSearchBox.getValue();
-    int submitTime = 0;
-    int completeTime = 0;
-    // Patient ID = null
-    int empInitiated = CurrentUser.getUser().getEmpID();
-    // Emp Completer = null
-    String requestStatus = "Submitted";
-    String notes = problemField.getText();
-    int compID = deviceSearchBox.getValue();
-    String problemType = problemTypeBox.getValue();
-    String priority = priorityField.getText();
+    if (validateDataSafe()) {
+      int requestID =
+          RequestTable.getInstance().readTable().size() - 1 < 0
+              ? 0
+              : RequestTable.getInstance()
+                      .readTable()
+                      .get(RequestTable.getInstance().readTable().size() - 1)
+                      .getRequestID()
+                  + 1;
+      String locationID = locationSearchBox.getValue();
+      int submitTime = 0;
+      int completeTime = 0;
+      // Patient ID = null
+      int empInitiated = CurrentUser.getUser().getEmpID();
+      // Emp Completer = null
+      String requestStatus = "Submitted";
+      String notes = problemField.getText();
+      int compID = deviceSearchBox.getValue();
+      String problemType = problemTypeBox.getValue();
+      String priority = priorityField.getText();
 
-    ComputerRequest request =
-        new ComputerRequest(
-            requestID,
-            locationID,
-            empInitiated,
-            null,
-            submitTime,
-            completeTime,
-            null,
-            requestStatus,
-            notes,
-            compID,
-            problemType,
-            priority);
-    ComputerRequestTbl.getInstance().addEntry(request);
-    refresh();
+      ComputerRequest request =
+          new ComputerRequest(
+              requestID,
+              locationID,
+              empInitiated,
+              null,
+              submitTime,
+              completeTime,
+              null,
+              requestStatus,
+              notes,
+              compID,
+              problemType,
+              priority);
+      ComputerRequestTbl.getInstance().addEntry(request);
+      refresh();
+    } else {
+      problemField.setText("Invalid Input");
+      priorityField.setText("Invalid Input");
+    }
   }
 
   public void clear() {}

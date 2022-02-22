@@ -24,6 +24,7 @@
                   <GridPane prefHeight="786.0" prefWidth="1602.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -40,48 +41,89 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Adjust the floor using the floor selector on the bottom left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label text="Toggle locations and equipment icons in the top left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label text="Path planning will work between floors" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="Floor selector is on the bottom left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets top="15.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Use path planning to find the quickest path from one location to another" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label text="The quickest path will be displayed on the map and can be cleared with the clear path button" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <Label text="Toggle locations and equipment icons in the top left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets top="15.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Scroll or pinch to zoom in and out of the map" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Label text="Click and hold to pan around the map" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                        <Label text="Path planning will work between floors" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets top="15.0" />
+                              <Insets left="100.0" top="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Use path planning to find the quickest path from place to place" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="100.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="The top left buttons toggle location and equipment icons" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Scroll or pinch to zoom in and out of the map" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="100.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Click and hold to pan around the map" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="100.0" top="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="What is on this page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Label>
+                        <Label text="The bottom left buttons change what floor is shown" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="If path is planned it will be displayed" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Icons on map show locations and services" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" top="15.0" />
                            </GridPane.margin>
                         </Label>
                      </children>
