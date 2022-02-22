@@ -288,7 +288,7 @@ public class AudioVisualController implements Initializable {
     refresh();
   }
 
-  /** creates backups of the Audio Visual table in the users file system*/
+  /** creates backups of the Audio Visual table in the users file system */
   @FXML
   public void backupAV() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -306,9 +306,7 @@ public class AudioVisualController implements Initializable {
     popUpDialog.close();
   }
 
-  /**
-   * Creates a backup in the users file system of the AudioVisualRequestTbl
-   */
+  /** Creates a backup in the users file system of the AudioVisualRequestTbl */
   public void backupRequests() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
     directoryChooser.setTitle("Select Back Up Audio Visual File");
@@ -325,9 +323,7 @@ public class AudioVisualController implements Initializable {
     popUpDialog.close();
   }
 
-  /**
-   * Method that loads a csv file to replace the AudioVisualTbl
-   */
+  /** Method that loads a csv file to replace the AudioVisualTbl */
   @FXML
   public void loadAV() {
     FileChooser fileChooser = new FileChooser();
@@ -348,9 +344,7 @@ public class AudioVisualController implements Initializable {
     refresh();
   }
 
-  /**
-   * Method that loads a csv file to replace the AudioVisualRequestTbl
-   */
+  /** Method that loads a csv file to replace the AudioVisualRequestTbl */
   @FXML
   public void loadRequests() {
     FileChooser fileChooser = new FileChooser();
