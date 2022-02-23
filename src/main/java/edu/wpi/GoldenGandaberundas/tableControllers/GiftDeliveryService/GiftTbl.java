@@ -3,18 +3,11 @@ package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationClientServer;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationEmbedded;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 // first parameter is object giftType, second is pkid giftType
 // change the giftTypes accordingly in the methods
@@ -91,7 +84,7 @@ public class GiftTbl implements TableController<Gift, Integer> {
 
   @Override
   public boolean addEntry(Gift obj) {
-   return this.getCurrentTable().addEntry(obj);
+    return this.getCurrentTable().addEntry(obj);
   }
 
   @Override
@@ -148,7 +141,7 @@ public class GiftTbl implements TableController<Gift, Integer> {
    * @param f filename of the to be created CSV
    */
   public void createBackup(File f) {
-   this.getCurrentTable().createBackup(f);
+    this.getCurrentTable().createBackup(f);
   }
 
   // drop current table and enter data from CSV

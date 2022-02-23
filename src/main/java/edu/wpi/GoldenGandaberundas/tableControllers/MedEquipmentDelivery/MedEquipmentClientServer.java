@@ -29,13 +29,14 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
   public MedEquipmentClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<MedEquipment> objList)
       throws SQLException {
+    // create a new table with column names if none table of same name exist
+    // if there is one, do nothing
+
+    // createTable();
     this.tbName = tbName;
     this.pkCols = pkCols;
-    colNames = Arrays.asList(new String[] {"medID", "medEquipmentType", "status", "currLoc"});
-    // createTable();
-
-    this.objList = new ArrayList<MedEquipment>();
-    this.objList = readTable();
+    colNames = Arrays.asList(cols);
+    this.objList = objList;
   }
 
   @Override
@@ -57,6 +58,7 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
     return medEquipments;
   }
 
+  @Override
   public boolean deleteEntry(Integer pkid) {
     try {
       PreparedStatement s =
@@ -152,6 +154,7 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
     }
   }
 
+  @Override
   public MedEquipment getEntry(Integer pkid) {
     MedEquipment med = new MedEquipment();
     try {
@@ -177,7 +180,24 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
 
   @Override
   public boolean loadFromArrayList(ArrayList<MedEquipment> objList) {
-    return false;
+    connection = ConnectionHandler.getInstance().getConnection();
+    this.createTable();
+    deleteTableData();
+    for (MedEquipment med : objList) {
+      if (!this.addEntry(med)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public MedEquipment createMedEquipment(String[] ele) {
@@ -322,10 +342,6 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
       e.printStackTrace();
     }
     return exists;
-  }
-
-  public String getTableName() {
-    return tbName;
   }
 
   public ArrayList<MedEquipment> getObjList() {

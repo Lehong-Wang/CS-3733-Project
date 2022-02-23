@@ -21,16 +21,16 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
   /** list that contains the objects stored in the database */
   protected ArrayList<MedEquipment> objList;
   /** relative path to the database file */
-  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
-
-  Connection connection = connectionHandler.getConnection();
-
   TableController<MedEquipment, Integer> embeddedTable = null;
+
   TableController<MedEquipment, Integer> clientServerTable = null;
+
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
+  Connection connection = connectionHandler.getConnection();
 
   private MedEquipmentTbl() throws SQLException {
     tbName = "MedEquipment";
-    pkCols = "reqID,medID";
+    pkCols = "medID";
     colNames = Arrays.asList(new String[] {"medID", "medEquipmentType", "status", "currLoc"});
 
     objList = new ArrayList<MedEquipment>();
