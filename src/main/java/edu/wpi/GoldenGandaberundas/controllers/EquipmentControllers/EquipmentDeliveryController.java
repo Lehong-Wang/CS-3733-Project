@@ -188,11 +188,15 @@ public class EquipmentDeliveryController {
 
   /** Method that sets up the event listeners for the searchable combo boxes Called in initialize */
   public void setupComboListeners() {
-    equipmentSearchBox.setOnAction(
-        (event) -> {
-          int selectedItem = (Integer) equipmentSearchBox.getSelectionModel().getSelectedItem();
-          selectedEquipment = selectedItem;
-        });
+    //    equipmentSearchBox.setOnAction(
+    //        (event) -> {
+    //          System.out.println("Error here!!!!!!!!!!!!!!");
+    //          System.out.println((Integer)
+    // equipmentSearchBox.getSelectionModel().getSelectedItem());
+    //          int selectedItem = (Integer)
+    // equipmentSearchBox.getSelectionModel().getSelectedItem();
+    //          selectedEquipment = selectedItem;
+    //        });
 
     locationSearchBox.setOnAction(
         (event) -> {
@@ -280,7 +284,11 @@ public class EquipmentDeliveryController {
               ? 0
               : reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
       int requesterID = CurrentUser.getUser().getEmpID();
-      int itemID = equipmentSearchBox.getValue();
+      int itemID =
+          (Integer)
+              equipmentSearchBox
+                  .getSelectionModel()
+                  .getSelectedItem(); // equipmentSearchBox.getValue();
       String node = locationSearchBox.getValue();
       String notes = notesField.getText();
       String requestStatus = "not done";
