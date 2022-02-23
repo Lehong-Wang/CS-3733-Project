@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
@@ -12,6 +13,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +26,15 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.Popup;
+import javafx.scene.text.Font;
 import net.kurobako.gesturefx.GesturePane;
 
 /** Controller class for template file. Template FXML file is templatetemplate.fxml */
@@ -58,9 +62,8 @@ public class SimulationController {
   private Group equipGroup = null;
   private Group requestGroup = null;
   private List<String> astar = null;
-  private String startTemp = null;
-  private String endTemp = null;
   private Integer currentHour = 0;
+  private Integer fasterHour = 0;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -141,53 +144,190 @@ public class SimulationController {
       e.printStackTrace();
     }
     // subController.setText(locations.getEntry("FDEPT00101"));
+    // creates the hour label for the slider
+    Label hourLabel = new Label();
+    hourLabel.setFont(Font.font(24));
+    hourLabel.setText("Hour : ");
+    hourLabel.setStyle("-fx-text-fill: white");
+    hourLabel.setPadding(new Insets(0, 0, 0, 10));
+
+    // creates the time label to display the value of the slider
+    Label timeLabel = new Label();
+    timeLabel.setFont(Font.font(24));
+    timeLabel.setStyle("-fx-text-fill: white");
+
+    // creates the slider for the hour simulation
+    final Slider timeSlider = new Slider(0.0, 100.0, 48.0);
+    timeLabel.textProperty().bind(timeSlider.valueProperty().asString("%.2f"));
+    timeSlider.centerShapeProperty().set(true);
+    timeSlider.centerShapeProperty().set(true);
+    timeSlider.setMajorTickUnit(0.25);
+    timeSlider.setMinorTickCount(0);
+    timeSlider.setSnapToTicks(true);
+
+    // creates the label for the current hour
+    Label currentHourLabel = new Label();
+    currentHourLabel.setFont(Font.font(16));
+    currentHourLabel.setStyle("-fx-text-fill: white");
+    currentHourLabel.setText("Current Hour: 0.0");
+    currentHourLabel.setPadding(new Insets(0, 10, 0, 0));
 
     // creates the toggle start simulation button
     JFXButton toggleStart = new JFXButton();
     toggleStart.setText("Start Simulation");
-    toggleStart.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleStart.setStyle("-fx-text-fill: white");
     toggleStart.setPrefWidth(110);
     toggleStart.setOnMouseReleased(
         e -> {
-          Simulation.update();
+          Simulation sim = new Simulation();
+          sim.update((int) (timeSlider.getValue() * 4));
+          pathNodePane.getChildren().clear();
           currentHour = 0;
           createPath(currentHour);
           toggleStart.setText("Rerun Simulation");
+          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
           setEquipment();
         });
     // creates the next hour button
     JFXButton nextHour = new JFXButton();
-    nextHour.setText("Next Hour");
-    nextHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    nextHour.setText("Next Interval");
+    nextHour.setStyle("-fx-text-fill: white");
     nextHour.setPrefWidth(110);
+    currentHourLabel.setFont(nextHour.getFont());
     nextHour.setOnMouseReleased(
         e -> {
           pathNodePane.getChildren().clear();
           currentHour++;
           createPath(currentHour);
           setEquipment();
+          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
         });
     // previous hour button
     JFXButton prevHour = new JFXButton();
-    prevHour.setText("Previous Hour");
-    prevHour.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    prevHour.setText("Previous Interval");
+    prevHour.setStyle("-fx-text-fill: white");
     prevHour.setPrefWidth(110);
     prevHour.setOnMouseReleased(
         e -> {
           pathNodePane.getChildren().clear();
-          currentHour--;
+          if (currentHour != 0) {
+            currentHour--;
+          }
           createPath(currentHour);
           setEquipment();
+          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
         });
 
-    HBox buttonHolder = new HBox(toggleStart, nextHour, prevHour);
-    buttonHolder.setMargin(buttonHolder, new Insets(0, 0, 0, 0));
-    buttonHolder.setAlignment(Pos.TOP_LEFT);
+    // uses the image for the more operations
+    ImageView settings = new ImageView(floorMaps.equlaizer);
+    settings.setFitHeight(20);
+    settings.setFitWidth(20);
+
+    // creates the more settings button
+    JFXButton moreOperations = new JFXButton("More", settings);
+    moreOperations.setStyle("-fx-text-fill: white");
+
+    // creates dots to open the lower nodes list
+    JFXButton dotsForMore = new JFXButton();
+    dotsForMore.setText("...");
+    dotsForMore.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px");
+    dotsForMore.setDefaultButton(true);
+    dotsForMore.setPrefWidth(75);
+    dotsForMore.setPrefHeight(25);
+
+    // creates the more time label to display the value of the slider
+    Label moreHourLabel = new Label();
+    moreHourLabel.setFont(Font.font(18));
+    moreHourLabel.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
+            + "\n"
+            + "   -fx-border-radius: 5px;\n");
+    moreHourLabel.setPrefWidth(75);
+    moreHourLabel.setPrefHeight(25);
+    moreHourLabel.setPadding(new Insets(0, 5, 0, 5));
+
+    // creates the hour label for the slider
+    Label moreHourText = new Label();
+    moreHourText.setFont(Font.font(18));
+    moreHourText.setText("Hour : ");
+    moreHourText.setStyle("-fx-text-fill: white");
+    moreHourText.setPadding(new Insets(0, 0, 0, 10));
+    moreHourText.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
+            + "\n"
+            + "    -fx-border-radius: 5px;\n");
+    moreHourText.setPrefWidth(75);
+    moreHourText.setPrefHeight(25);
+
+    // creates the slider for more hour simulation
+    final Slider moreHourSlider = new Slider(0.0, 2.0, 0.25);
+    moreHourLabel.textProperty().bind(moreHourSlider.valueProperty().asString("%.2f"));
+    moreHourSlider.centerShapeProperty().set(true);
+    moreHourSlider.setMajorTickUnit(0.25);
+    moreHourSlider.setMinorTickCount(0);
+    moreHourSlider.setSnapToTicks(true);
+    moreHourSlider.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
+            + "\n"
+            + "    -fx-border-radius: 5px;\n");
+    moreHourSlider.setPrefWidth(75);
+    moreHourSlider.setPrefHeight(25);
+    moreHourSlider.setPadding(new Insets(5, 7, 5, 5));
+
+    JFXButton simulateLonger = new JFXButton();
+    simulateLonger.setText("Simulate");
+    simulateLonger.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
+            + "\n"
+            + "    -fx-border-radius: 5px;\n");
+    simulateLonger.setFont(Font.font(14));
+    simulateLonger.setPrefWidth(75);
+    simulateLonger.setPrefHeight(25);
+    simulateLonger.setPadding(new Insets(0, 0, 0, 0));
+
+    simulateLonger.setOnMouseReleased(
+        e -> {
+          pathNodePane.getChildren().clear();
+          fasterHour = (int) (moreHourSlider.getValue() * 4);
+          createPathLonger(currentHour, fasterHour);
+          currentHour = currentHour + fasterHour;
+          setEquipment();
+          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+        });
+
+    JFXNodesList evenMore = new JFXNodesList();
+    evenMore.setRotate(270);
+    evenMore.spacingProperty().setValue(50);
+    evenMore.addAnimatedNode(dotsForMore);
+    evenMore.addAnimatedNode(moreHourText);
+    evenMore.addAnimatedNode(moreHourLabel);
+    evenMore.addAnimatedNode(moreHourSlider);
+    evenMore.addAnimatedNode(simulateLonger);
+
+    JFXNodesList moreSim = new JFXNodesList();
+    moreSim.spacingProperty().setValue(10);
+    moreSim.addAnimatedNode(moreOperations);
+    moreSim.addAnimatedNode(evenMore);
+
+    HBox buttonHolder =
+        new HBox(
+            moreSim,
+            hourLabel,
+            timeLabel,
+            timeSlider,
+            toggleStart,
+            nextHour,
+            prevHour,
+            currentHourLabel);
+    buttonHolder.setStyle("-fx-background-color: #002D59");
+    buttonHolder.centerShapeProperty().set(true);
+    buttonHolder.setAlignment(Pos.CENTER);
     buttonHolder.setSpacing(6);
     Group buttonGroup = new Group();
     buttonGroup.getChildren().add(buttonHolder);
-    imagePane.getChildren().add(buttonGroup);
     buttonGroup.setTranslateY(10);
+    imagePane.getChildren().add(buttonGroup);
     imagePane.setAlignment(buttonGroup, Pos.TOP_LEFT);
 
     currentFloor = "1";
@@ -207,7 +347,6 @@ public class SimulationController {
 
     LocationCircle placeHolder = new LocationCircle(loc);
     placeHolder.setRadius(10);
-
     locNodePane.getChildren().add(placeHolder);
 
     placeHolder.setLayoutX(loc.getXcoord());
@@ -317,10 +456,9 @@ public class SimulationController {
 
     equipGroup.getChildren().add(medIcon);
 
-    medIcon.setLayoutX(loc.getXcoord() - 5);
-    medIcon.setLayoutY(loc.getYcoord() - 5);
-
     if (medIcon.medEquipment.getMedEquipmentType().trim().toUpperCase(Locale.ROOT).equals("BED")) {
+      medIcon.setLayoutX(loc.getXcoord() - 22);
+      medIcon.setLayoutY(loc.getYcoord() - 22);
       medIcon.setImage(floorMaps.bedIcon);
     } else if (medIcon
         .medEquipment
@@ -328,6 +466,8 @@ public class SimulationController {
         .trim()
         .toUpperCase(Locale.ROOT)
         .equals("X-RAY")) {
+      medIcon.setLayoutX(loc.getXcoord() + 5);
+      medIcon.setLayoutY(loc.getYcoord() + 5);
       medIcon.setImage(floorMaps.xRayIcon);
     } else if (medIcon
         .medEquipment
@@ -336,90 +476,20 @@ public class SimulationController {
         .toUpperCase(Locale.ROOT)
         .equals("INFUSION PUMP")) {
       medIcon.setImage(floorMaps.infusionPumpIcon);
+      medIcon.setLayoutX(loc.getXcoord() - 10);
+      medIcon.setLayoutY(loc.getYcoord() + 10);
     } else if (medIcon
         .medEquipment
         .getMedEquipmentType()
         .trim()
         .toUpperCase(Locale.ROOT)
         .equals("RECLINER")) {
+      medIcon.setLayoutX(loc.getXcoord() + 10);
+      medIcon.setLayoutY(loc.getYcoord() - 10);
       medIcon.setImage(floorMaps.reclinerIcon);
     } else {
       medIcon.setImage(floorMaps.bedIcon);
     }
-
-    medIcon.setOnMouseEntered(
-        e -> {
-          medIcon.setStyle("-fx-background-color: green");
-        });
-    medIcon.setOnMouseExited(
-        e -> {
-          medIcon.setStyle("-fx-background-color: cyan");
-        });
-
-    medIcon.setOnContextMenuRequested(
-        e -> {
-          Popup popup = new Popup();
-
-          popup.setAnchorX(e.getSceneX());
-          popup.setAnchorY(e.getSceneY());
-          var popUpLoader = new FXMLLoader(Main.class.getResource("views/mapViewMedEquipLoc.fxml"));
-          try {
-            AnchorPane popupAnchor = popUpLoader.load();
-            popup.getContent().add(popupAnchor);
-            popup.show(imagePane.getScene().getWindow());
-          } catch (IOException ex) {
-            ex.printStackTrace();
-          }
-          EquipLocEditor popupController = popUpLoader.getController();
-          //                    popupController.setMedEquipment(med, this);
-          subController.setText(medIcon.location);
-        });
-    medIcon.setOnMouseDragged(
-        e -> {
-          gesturePane.setGestureEnabled(false);
-          medIcon.setLayoutX(medIcon.getLayoutX() + e.getX());
-          medIcon.setLayoutY(medIcon.getLayoutY() + e.getY());
-        });
-    //
-    medIcon.setOnMouseReleased(
-        e -> {
-          System.out.println("DRAG RELEASE");
-          gesturePane.setGestureEnabled(true);
-          double mouseX = medIcon.getLayoutX();
-          double mouseY = medIcon.getLayoutY();
-          double minDist = 100;
-          Location snapTo = loc;
-          for (Location location : currentLocations) {
-            double temp =
-                java.awt.geom.Point2D.distance(
-                    mouseX, mouseY, location.getXcoord(), location.getYcoord());
-            if (temp < minDist) {
-              minDist = temp;
-              snapTo = location;
-            }
-          }
-          if (!snapTo.getNodeID().equals(loc.getNodeID())) {
-            FXMLLoader popupLoader =
-                new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
-            Popup reqQuestion = new Popup();
-            try {
-              System.out.println("SNAP TO: " + snapTo);
-              reqQuestion.getContent().add(popupLoader.load());
-              reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
-              MapViewConfirmationButtons subController = popupLoader.getController();
-              //                            subController.setMainController(this, med, snapTo);
-              medIcon.setLayoutX(snapTo.getXcoord() - 5);
-              medIcon.setLayoutY(snapTo.getYcoord() - 5);
-
-            } catch (IOException ioException) {
-              ioException.printStackTrace();
-            }
-          } else {
-            System.out.println(loc);
-            System.out.println(snapTo);
-            System.out.println(minDist);
-          }
-        });
   }
 
   public HBox createFloorSelector() {
@@ -555,7 +625,7 @@ public class SimulationController {
     setEquipment();
     setRequest();
     refreshPath();
-    refreshCircles();
+    //    refreshCircles();
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -566,8 +636,6 @@ public class SimulationController {
 
     for (int i = 0; i < locArray.size(); i++) {
       locNodeAr.add(i, locArray.get(i).getNodeID());
-      // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
-      // System.out.println(locNodeAr.get(i));
     }
     return locNodeAr;
   }
@@ -602,19 +670,17 @@ public class SimulationController {
     }
   }
 
-    /**
-     * refreshs the map to include the circlees for the paths
-     */
-  public void refreshCircles() {
-    for (Node cir : pathNodePane.getChildren()) {
-      EquipmentCircle c = (EquipmentCircle) cir;
-      if (!c.getFloor().equals(currentFloor)) {
-        c.setVisible(false);
-      } else {
-        c.setVisible(true);
-      }
-    }
-  }
+  /** refreshs the map to include the circlees for the paths */
+  //  public void refreshCircles() {
+  //    for (Node cir : pathNodePane.getChildren()) {
+  //      EquipmentCircle c = (EquipmentCircle) cir;
+  //      if (!c.getFloor().equals(currentFloor)) {
+  //        c.setVisible(false);
+  //      } else {
+  //        c.setVisible(true);
+  //      }
+  //    }
+  //  }
 
   /**
    * generated that path based on the input hour
@@ -624,6 +690,27 @@ public class SimulationController {
   public void createPath(int hour) {
     for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
+      if (current.get(0).equals(current.get(1))) {
+        continue;
+      }
+      astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
+      buildPath(astar);
+    }
+    pathNodePane.setVisible(true);
+  }
+
+  /**
+   * Creates the path for a longer period of time
+   *
+   * @param currentHour the initial time interval
+   * @param fasterHour the end time interval
+   */
+  public void createPathLonger(int currentHour, int fasterHour) {
+    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+      List<String> current = PathTbl.getPathPointsFaster(med.getMedID(), currentHour, fasterHour);
+      if (current.get(0).equals(current.get(1))) {
+        continue;
+      }
       astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
       buildPath(astar);
     }
@@ -704,9 +791,7 @@ public class SimulationController {
     }
   }
 
-    /**
-     * Class to show the equipment with circles
-     */
+  /** Class to show the equipment with circles */
   private class EquipmentCircle extends Circle {
     private String floor = "00";
 

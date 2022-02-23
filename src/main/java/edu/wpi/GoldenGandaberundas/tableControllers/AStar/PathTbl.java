@@ -371,4 +371,21 @@ public class PathTbl extends TableController<Path, String> {
     MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
+
+  /**
+   * Returns the starting and ending points of a MedEquip in the SimulationList for a longer
+   * duration
+   *
+   * @param medID - Piece of Equipment
+   * @param hour - Beginning time of path
+   * @param fasterHour - End of lonnher duration time
+   * @return List<String> where index 0 = starting point, index 1 = ending point
+   */
+  public static List<String> getPathPointsFaster(int medID, int hour, int fasterHour) {
+    List<String> retVal = new ArrayList<>();
+    retVal.add(0, Simulation.pathList[medID][hour]);
+    retVal.add(1, Simulation.pathList[medID][fasterHour]);
+    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
+    return retVal;
+  }
 }

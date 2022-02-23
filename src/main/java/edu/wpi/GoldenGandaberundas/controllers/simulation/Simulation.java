@@ -68,10 +68,12 @@ public class Simulation {
   private static final String eqpCSV = "TestCSVs/medEquipSimulation.csv";
 
   private int numPumpsToSend, numReclinersToSend;
-  private static final int endTime = 40;
+  private int endTime = 160;
   private static int hours = 0;
 
-  public static void update() {
+  public void update(int end) {
+    endTime = end;
+    System.out.println(endTime);
     takeSnapshot();
     sortLists(fullMedList);
     makeSimulationLists(fullMedList);
@@ -99,7 +101,7 @@ public class Simulation {
    *
    * @param eqpList
    */
-  private static void makeSimulationLists(ArrayList<MedEquipmentSimulation> eqpList) {
+  private void makeSimulationLists(ArrayList<MedEquipmentSimulation> eqpList) {
     pathList = new String[eqpList.size() + 1][endTime];
   }
 

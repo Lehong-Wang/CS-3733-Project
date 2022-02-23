@@ -267,7 +267,7 @@ public class SimulateBedsRecs {
     double peakTimeMod = 0, inStorageMod = 0;
 
     // If the time is between 10am and 3pm
-    if ((hours % 24) > 10 && (hours & 24) < 15) {
+    if ((hours % 24) > 10 && (hours % 24) < 15) {
       peakTimeMod = basis * 0.1;
     } else {
       peakTimeMod = basis * -0.1;
@@ -325,7 +325,7 @@ public class SimulateBedsRecs {
   private static void updateAwaitingTransportBeds() {
     for (MedEquipmentSimulation bed : Beds_AwaitingTransport) {
       bed.setStatus("In-Use");
-      int timeToDie = ThreadLocalRandom.current().nextInt(1, 4);
+      int timeToDie = ThreadLocalRandom.current().nextInt(1, 16);
       bed.setInRoomEndTime(hours + timeToDie);
       //      int rnd = new Random().nextInt(Beds_List.size());
       bed.setCurrLoc("FDEPT00101");
@@ -346,7 +346,7 @@ public class SimulateBedsRecs {
           //          System.out.println("Bed # " + bed.getMedID() + " is now dirty");
         }
         newBedList.add(bed);
-      } else if (ThreadLocalRandom.current().nextInt(50) == 7) {
+      } else if (ThreadLocalRandom.current().nextInt(100) == 7) {
         bed.setStatus("Awaiting Transport");
         bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
@@ -410,7 +410,7 @@ public class SimulateBedsRecs {
       tempBed.setCurrLoc(rndLoc);
       tempBed.setStatus("In-Use");
       // TODO change hours to be more realistic
-      int rndTTD = ThreadLocalRandom.current().nextInt(12, 48);
+      int rndTTD = ThreadLocalRandom.current().nextInt(12, 192);
       tempBed.setInRoomEndTime(hours + rndTTD);
       if (DEUBUG_BED_SIM) {
         //        System.out.println(
@@ -486,7 +486,7 @@ public class SimulateBedsRecs {
     } else {
       for (int i = 0; i < numReclinersToSend; i++) {
         int rnd = ThreadLocalRandom.current().nextInt(Beds_StillActive.size());
-        int rndTTD = ThreadLocalRandom.current().nextInt(2, 5);
+        int rndTTD = ThreadLocalRandom.current().nextInt(2, 20);
         MedEquipmentSimulation tempRec = Recliners_Stored.get(0);
         Recliners_Stored.remove(0);
         MedEquipmentSimulation tempBed = Beds_StillActive.get(rnd);

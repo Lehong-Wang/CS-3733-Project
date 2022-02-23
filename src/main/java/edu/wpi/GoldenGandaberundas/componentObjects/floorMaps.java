@@ -30,6 +30,7 @@ public class floorMaps {
   public static Image firstFloorIcon;
   public static Image thirdFloorIcon;
   public static Image lowerFirstFloorIcon;
+  public static Image equlaizer;
 
   public static void load() {
     System.out.println("IMAGES LOADED");
@@ -63,5 +64,6 @@ public class floorMaps {
     firstFloorIcon = new Image(App.class.getResourceAsStream("images/floor1Icon.png"));
     thirdFloorIcon = new Image(App.class.getResourceAsStream("images/floor3Icon.png"));
     lowerFirstFloorIcon = new Image(App.class.getResourceAsStream("images/lower1Icon.png"));
+    equlaizer = new Image(App.class.getResourceAsStream("images/Simulation-equalizer-line .png"));
   }
 }

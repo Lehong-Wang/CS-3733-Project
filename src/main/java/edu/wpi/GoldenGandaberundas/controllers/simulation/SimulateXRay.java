@@ -32,7 +32,7 @@ public class SimulateXRay {
       XRay.setStatus("In-Use");
       int rnd = new Random().nextInt(Simulation.validLocations.size());
       String rndLoc = Simulation.validLocations.get(rnd);
-      int rndTTD = ThreadLocalRandom.current().nextInt(1, 5);
+      int rndTTD = ThreadLocalRandom.current().nextInt(1, 10);
       XRay.setInRoomEndTime(hours + rndTTD);
       XRay.setCurrLoc(rndLoc);
 

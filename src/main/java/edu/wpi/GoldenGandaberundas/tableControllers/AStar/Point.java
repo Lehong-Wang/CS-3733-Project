@@ -28,6 +28,7 @@ public class Point implements Comparable<Point> {
 
   /**
    * Takes in a point and adds its branches with the right weight
+   *
    * @param point the point to add branches for
    */
   public void addBranch(Point point) {
@@ -38,6 +39,7 @@ public class Point implements Comparable<Point> {
 
   /**
    * finds the heuristic for the path planning
+   *
    * @param target
    * @return
    */
@@ -47,6 +49,7 @@ public class Point implements Comparable<Point> {
 
   /**
    * Calculates astart from one point to another
+   *
    * @param target the end point
    * @return the start point
    */
@@ -92,6 +95,7 @@ public class Point implements Comparable<Point> {
 
   /**
    * find the path bases on the parents
+   *
    * @param target the end point
    * @return the start point
    */
@@ -129,6 +133,7 @@ public class Point implements Comparable<Point> {
 
   /**
    * used for the priority queue
+   *
    * @param o
    * @return
    */
