@@ -15,11 +15,17 @@ public class App extends Application {
   public void init() {
     log.info("Starting Up");
   }
+  /*
+  public void run(int xCoord, int yCoord, int windowWidth, int windowLength, String cssPath,
+                         String destLocationID, String originLocationID) throws ServiceException {
 
+    }
+   */
   @Override
   public void start(Stage primaryStage) throws IOException {
 
-    Parent root = FXMLLoader.load(getClass().getResource("views/loginScreen.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
+    Parameters args = this.getParameters();
 
     // Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
     Scene scene = new Scene(root, 1280, 800);
@@ -30,8 +36,6 @@ public class App extends Application {
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();
-    // primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("views/main.fxml"))));
-    // primaryStage.show();
   }
 
   @Override
