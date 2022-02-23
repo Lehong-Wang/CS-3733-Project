@@ -94,7 +94,7 @@ public class CredentialsTbl extends TableController<Credential, Integer> {
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
-        Credential cred = new Credential(Integer.parseInt(element[0]), element[1], element[2]);
+        Credential cred = new Credential(Integer.parseInt(element[2]), element[1], element[0]);
         credList.add(cred); // adds the location to the list
         currentLine = buffer.readLine();
       }

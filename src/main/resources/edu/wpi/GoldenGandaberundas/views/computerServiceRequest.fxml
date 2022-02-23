@@ -105,20 +105,7 @@
                   </VBox>
                   <VBox prefHeight="492.0" prefWidth="1149.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <JFXButton alignment="CENTER" onAction="#backupDB" styleClass="backupButton" text="Backup">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                              <JFXButton onAction="#load" styleClass="backupButton" text="Load">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="85.0" prefWidth="878.0" VBox.vgrow="ALWAYS" />
                         <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
@@ -156,11 +143,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Computers" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton"text="Backup Computers" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton"text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton"text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton"text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton"text="Refresh" />
          </children>
       </VBox>
    </right>

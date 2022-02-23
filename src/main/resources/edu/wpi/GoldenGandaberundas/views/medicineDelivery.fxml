@@ -21,11 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0"  text="Backup Medicine"  />
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests"  />
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0"  text="Load Medicine Backup"  />
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup"  />
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" textAlignment="CENTER" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0"  text="Backup Medicine" styleClass="backupButton" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests" styleClass="backupButton" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0"  text="Load Medicine Backup" styleClass="backupButton" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup" styleClass="backupButton" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" textAlignment="CENTER" styleClass="backupButton" />
          </children>
       </VBox>
    </right>
