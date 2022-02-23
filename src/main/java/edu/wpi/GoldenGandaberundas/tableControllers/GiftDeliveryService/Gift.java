@@ -2,7 +2,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
 public class Gift {
 
-  private int giftID;
+  private Integer giftID;
   private String giftType;
   private String description;
   private double price;

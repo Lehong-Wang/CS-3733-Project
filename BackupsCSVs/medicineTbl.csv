@@ -1,2 +1,11 @@
 medicineID,medName,description,price,inStock
-123,Tylenol,Headaches go bye bye,1.01,true
+111,Tylenol,Pain relief,1.01,true
+222,Vicodin,Pain relief,2.02,true
+333,Aspirin,Pain relief,3.03,true
+444,Albuterol,Migraine relief,4.04,true
+555,Lisinopril,Dizziness,5.05,true
+666,Levothyroxine,Thyroid,6.06,true
+777,Gabapentin,Anti-Seizure,7.07,true
+888,Lipitor,Cholesterol,8.08,true
+999,Metformin,Diabetes,9.09,true
+1000,Amlodipine,Blood Pressure,10.10,true

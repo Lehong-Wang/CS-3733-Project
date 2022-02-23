@@ -98,6 +98,7 @@ public class AudioVisualTbl extends TableController<AudioVisual, Integer> {
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
+        System.out.println("HELP: " + currentLine);
         AudioVisual med = // **
             new AudioVisual(Integer.parseInt(element[0]), element[1], element[2], element[3]); // **
         medList.add(med); // adds the location to the list

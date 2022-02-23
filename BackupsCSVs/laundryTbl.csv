@@ -1,7 +1,11 @@
 laundryID,laundryType,description,inStock
-111,towels,this is the first gift,true
-222,napkins,this is the second gift,false
-333,pillows,this is the third gift,true
-444,sheets,this is the fourth gift,false
-555,comforter,this is the fifth gift,true
-666,blankets,this is the sixth gift,false
+111,towels,this is the first item,true
+222,napkins,this is the second item,true
+333,pillows,this is the third item,true
+444,sheets,this is the fourth item,true
+555,comforter,this is the fifth item,true
+666,blankets,this is the sixth item,true
+777,covers,this is the seventh item,true
+888,shirts,this is the eighth item,true
+999,pants,this is the ninth item,true
+1000,underwear,this is the tenth item,true
