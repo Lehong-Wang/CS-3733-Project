@@ -68,7 +68,6 @@ public class editAudioVisualReqFormController {
           long timeEnd = Integer.parseInt(finishTimeField.getText());
           Integer patientID = Integer.parseInt(patientIDField.getText());
           String requestStatus = statusField.getText();
-          String notes = notesField.getText();
 
           requests.editEntry(pkID, "locationID", locationID);
           requests.editEntry(pkID, "empInitiated", empInitiated);
@@ -77,7 +76,7 @@ public class editAudioVisualReqFormController {
           requests.editEntry(pkID, "timeEnd", timeEnd);
           requests.editEntry(pkID, "patientID", patientID);
           requests.editEntry(pkID, "requestStatus", requestStatus);
-          requests.editEntry(pkID, "notes", notes);
+          // requests.editEntry(pkID, "notes", "");
           Stage stage = (Stage) editButton.getScene().getWindow();
           stage.close();
           // TODO Need refresh table here
@@ -91,7 +90,6 @@ public class editAudioVisualReqFormController {
           finishTimeField.setText("Invalid input");
           patientIDField.setText("Invalid input");
           statusField.setText("Invalid input");
-          notesField.setText("Invalid input");
         }
       }
     } catch (Exception e) {
