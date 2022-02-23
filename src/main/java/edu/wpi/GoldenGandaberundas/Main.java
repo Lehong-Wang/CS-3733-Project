@@ -31,10 +31,11 @@ public class Main {
   public static void main(String[] args) throws SQLException {
 
     System.out.println(PathTbl.getInstance().objList);
-    // Initializes the database tables in memory
 
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
+    EmployeeTbl.getInstance();
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
     PatientTbl.getInstance();
     LaundryTbl.getInstance();
     MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
@@ -61,6 +62,7 @@ public class Main {
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
+
     //    CredentialsTbl.getInstance().addEntry(new Credential(456, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(666, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(123, "p"));
@@ -73,18 +75,63 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
+    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+
+    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
-    //    EmployeePermissionTbl.getInstance();
-    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
-    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
-    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
-    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
 
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
+    floorMaps.load();
+
+    //    Simulation.update();
+    PathTbl.createStatsMap();
+    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
+    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
+    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
+    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
+    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
+    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
+    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
+    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
+    // "GSTOR00103"));
+
+    //    Simulation.update();
+    //    PathTbl.createStatsMap();
+    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
+    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
+    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
+    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
+    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
+    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
+    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
+    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
+    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
+    // "GSTOR00103"));
+
+    //    PathTbl.printStatsMap();
+
+    //    Simulation.update();
+    //    System.out.println(PathTbl.getPathPoints(3, 9));
+
+    //    EmployeePermissionTbl.getInstance();
+
+    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
+    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
+    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
+    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
     floorMaps.load();
     App.launch(App.class, args);
 

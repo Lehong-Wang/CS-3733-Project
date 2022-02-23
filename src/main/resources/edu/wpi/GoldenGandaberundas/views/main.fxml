@@ -265,6 +265,17 @@
                         <SVGPath content="M21 20h2v2H1v-2h2V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v17zm-2 0V4H5v16h14zM8 11h3v2H8v-2zm0-4h3v2H8V7zm0 8h3v2H8v-2zm5 0h3v2h-3v-2zm0-4h3v2h-3v-2zm0-4h3v2h-3V7zM21 20h2v2H1v-2h2V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v17zm-2 0V4H5v16h14zM8 11h3v2H8v-2zm0-4h3v2H8V7zm0 8h3v2H8v-2zm5 0h3v2h-3v-2zm0-4h3v2h-3v-2zm0-4h3v2h-3V7z" fill="WHITE" />
                      </graphic>
                   </JFXButton>
+                  <JFXButton fx:id="SimulationButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSimulationView" prefHeight="46.0" prefWidth="254.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Simulation" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <graphic>
+                        <SVGPath content="M16.394 12L10 7.737v8.526L16.394 12zm2.982.416L8.777 19.482A.5.5 0 0 1 8 19.066V4.934a.5.5 0 0 1 .777-.416l10.599 7.066a.5.5 0 0 1 0 .832z" fill="WHITE" scaleX="1.5" scaleY="1.5" scaleZ="1.5" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </JFXButton>
                </children>
                <padding>
                   <Insets left="20.0" right="20.0" top="30.0" />

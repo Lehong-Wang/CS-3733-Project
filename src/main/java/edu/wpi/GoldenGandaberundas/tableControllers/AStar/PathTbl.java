@@ -1,20 +1,21 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class PathTbl extends TableController<Path, String> {
 
   private static PathTbl instance = null;
+  private static HashMap<String, Integer> statsMap = new HashMap<>();
 
   private PathTbl() throws SQLException {
     super("Paths", Arrays.asList(new String[] {"edgeID", "startNode", "endNode"}));
@@ -301,9 +302,7 @@ public class PathTbl extends TableController<Path, String> {
   public List<String> createAStarPath(String start, String end) {
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     if (points.size() != 0) {
-
       points = PathTbl.getInstance().createBranchedLocations(points);
-
       int startID = 0;
       int endID = 0;
       for (Point o : points) {
@@ -319,5 +318,74 @@ public class PathTbl extends TableController<Path, String> {
       return points.get(startID).locationsPath(test);
     }
     return null;
+  }
+
+  /**
+   * Takes in the name for the start and ending nodes and creates the appropriate a star path Keeps
+   * Statistics using HashMap statsMap on Nodes visited
+   *
+   * @param start string of the starting node
+   * @param end string of the ending node
+   * @return list of Strings created from the a star path
+   */
+  public List<String> createAStarPathwStats(String start, String end) {
+    List<String> path = createAStarPath(start, end);
+    if (path != null) {
+      for (String node : path) {
+        statsMap.put(node, statsMap.get(node) + 1);
+      }
+      return path;
+    } else {
+      return null;
+    }
+  }
+
+  /** Creates a HashMap to use for keeping node traversal statistics */
+  public static void createStatsMap() {
+    ArrayList<Location> allLocs = LocationTbl.getInstance().readTable();
+    for (int i = 0; i < allLocs.size(); i++) {
+      String loc = allLocs.get(i).getNodeID();
+      statsMap.put(loc, 0);
+    }
+  }
+
+  public static void printStatsMap() {
+    for (String key : statsMap.keySet()) {
+      System.out.println(key + " = " + statsMap.get(key));
+    }
+  }
+
+  /**
+   * Returns the starting and ending points of a MedEquip in the SimulationList
+   *
+   * @param medID - Piece of Equipment
+   * @param hour - Beginning hour of path
+   * @return List<String> where index 0 = starting point, index 1 = ending point
+   */
+  public static List<String> getPathPoints(int medID, int hour) {
+    List<String> retVal = new ArrayList<>();
+    retVal.add(0, Simulation.pathList[medID][hour]);
+    retVal.add(1, Simulation.pathList[medID][hour + 1]);
+    //    System.out.println("Eqp #" + medID + ": Starts: " + retVal.get(0) + " Ends: " +
+    // retVal.get(1));
+    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
+    return retVal;
+  }
+
+  /**
+   * Returns the starting and ending points of a MedEquip in the SimulationList for a longer
+   * duration
+   *
+   * @param medID - Piece of Equipment
+   * @param hour - Beginning time of path
+   * @param fasterHour - End of lonnher duration time
+   * @return List<String> where index 0 = starting point, index 1 = ending point
+   */
+  public static List<String> getPathPointsFaster(int medID, int hour, int fasterHour) {
+    List<String> retVal = new ArrayList<>();
+    retVal.add(0, Simulation.pathList[medID][hour]);
+    retVal.add(1, Simulation.pathList[medID][fasterHour]);
+    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
+    return retVal;
   }
 }
