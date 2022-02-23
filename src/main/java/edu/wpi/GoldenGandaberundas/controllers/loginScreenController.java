@@ -63,10 +63,12 @@ public class loginScreenController {
     try {
       userID = Integer.parseInt(userField.getText());
     } catch (NumberFormatException n) {
-      if (!userField.getText().trim().toLowerCase(Locale.ROOT).equals("admin")) {
+      if (!userField.getText().trim().toLowerCase(Locale.ROOT).equals("admin")
+          && !userField.getText().trim().toLowerCase(Locale.ROOT).equals("staff")) {
         loginBtn.setText("Please Enter Valid ID");
       } else {
-        userID = 000;
+        if (userField.getText().trim().toLowerCase(Locale.ROOT).equals("admin")) userID = 000;
+        else userID = 1;
       }
     }
     String password = passField.getText();

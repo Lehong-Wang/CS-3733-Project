@@ -59,7 +59,7 @@ public class Main {
     AudioVisualRequestTbl.getInstance();
 
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
-
+    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
     //    CredentialsTbl.getInstance().addEntry(new Credential(456, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(666, "p"));
@@ -75,7 +75,6 @@ public class Main {
     AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
-
     //    EmployeePermissionTbl.getInstance();
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
@@ -84,6 +83,7 @@ public class Main {
 
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
     App.launch(App.class, args);
 
