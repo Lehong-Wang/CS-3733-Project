@@ -269,6 +269,16 @@ public class MapController {
         e -> {
           requestGroup.setVisible(!requestGroup.isVisible());
         });
+    toggleRequests.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+
+    //      JFXButton toggleRequests = new JFXButton();
+    //      toggleEquip.setText("Requests");
+    //      toggleEquip.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    //      toggleEquip.setPrefWidth(110);
+    //      toggleEquip.setOnMouseReleased(
+    //              e -> {
+    //                  equipGroup.setVisible(!equipGroup.isVisible());
+    //              });
     // add path planning open button
     JFXButton openNodes = new JFXButton();
     openNodes.setText("Path Planning");
@@ -332,7 +342,7 @@ public class MapController {
           }
         });
 
-    HBox buttonHolder = new HBox(toggleNodes, toggleEquip, togglePathInputs);
+    HBox buttonHolder = new HBox(toggleNodes, toggleEquip, toggleRequests, togglePathInputs);
     buttonHolder.setAlignment(Pos.TOP_LEFT);
     buttonHolder.setSpacing(6);
     Group buttonGroup = new Group();
