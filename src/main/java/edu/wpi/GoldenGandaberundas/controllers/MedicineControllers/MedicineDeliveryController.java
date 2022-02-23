@@ -210,6 +210,7 @@ public class MedicineDeliveryController {
         Stage stage = new Stage();
         stage.setScene(new Scene(editForm));
         stage.show();
+        stage.setOnCloseRequest(e -> refresh());
 
       } catch (IOException e) {
         e.printStackTrace();

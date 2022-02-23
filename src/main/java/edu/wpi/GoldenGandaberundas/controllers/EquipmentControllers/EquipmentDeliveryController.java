@@ -124,6 +124,11 @@ public class EquipmentDeliveryController {
     locList();
     setupComboListeners();
 
+    // Calling methods to set up search boxes
+    equipmentList();
+    locList();
+    setupComboListeners();
+
     mapGesture = new GesturePane();
 
     mapView = new ImageView(floorMaps.firstFloor);
@@ -208,6 +213,7 @@ public class EquipmentDeliveryController {
         Stage stage = new Stage();
         stage.setScene(new Scene(editForm));
         stage.show();
+        stage.setOnCloseRequest(e -> refreshTable());
       } catch (IOException e) {
         e.printStackTrace();
       }

@@ -7,6 +7,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -47,24 +49,41 @@ public class editComputerReqFormController {
 
   @FXML
   public void editRequest() {
-    if (computerRequestExists()) {
-      String locationID = locField.getText();
-      Integer pkID = Integer.parseInt(computerRequestIDField.getText());
-      Integer empInitiated = Integer.parseInt(requesterIDField.getText());
-      Integer empCompleter = Integer.parseInt(completerIDField.getText());
-      long timeStart = Integer.parseInt(subTimeField.getText());
-      long timeEnd = Integer.parseInt(finishTimeField.getText());
-      String requestStatus = statusField.getText();
+    try {
+      if (computerRequestExists()) {
+        try {
+          String locationID = locField.getText();
+          Integer pkID = Integer.parseInt(computerRequestIDField.getText());
+          Integer empInitiated = Integer.parseInt(requesterIDField.getText());
+          Integer empCompleter = Integer.parseInt(completerIDField.getText());
+          long timeStart = Integer.parseInt(subTimeField.getText());
+          long timeEnd = Integer.parseInt(finishTimeField.getText());
+          String requestStatus = statusField.getText();
 
-      requests.editEntry(pkID, "locationID", locationID);
-      requests.editEntry(pkID, "empInitiated", empInitiated);
-      requests.editEntry(pkID, "empCompleter", empCompleter);
-      requests.editEntry(pkID, "timeStart", timeStart);
-      requests.editEntry(pkID, "timeEnd", timeEnd);
-      requests.editEntry(pkID, "requestStatus", requestStatus);
+          requests.editEntry(pkID, "locationID", locationID);
+          requests.editEntry(pkID, "empInitiated", empInitiated);
+          requests.editEntry(pkID, "empCompleter", empCompleter);
+          requests.editEntry(pkID, "timeStart", timeStart);
+          requests.editEntry(pkID, "timeEnd", timeEnd);
+          requests.editEntry(pkID, "requestStatus", requestStatus);
+          Stage stage = (Stage) editButton.getScene().getWindow();
+          stage.close();
+          // TODO Need refresh table here
+        } catch (Exception e) {
+          e.printStackTrace();
+          locField.setText("Invalid input");
+          completerIDField.setText("Invalid input");
+          computerRequestIDField.setText("Invalid input");
+          requesterIDField.setText("Invalid input");
+          subTimeField.setText("Invalid input");
+          finishTimeField.setText("Invalid input");
+          statusField.setText("Invalid input");
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      completerIDField.setText("Invalid input");
     }
-    Stage stage = (Stage) editButton.getScene().getWindow();
-    stage.close();
   }
 
   /**
@@ -74,15 +93,39 @@ public class editComputerReqFormController {
   @FXML
   public void deleteRequest() {
     ArrayList<Integer> pkIDs = new ArrayList<Integer>();
-    pkIDs.add(Integer.parseInt(computerRequestIDField.getText()));
-    pkIDs.add(Integer.parseInt(computerField.getText()));
+    if (computerRequestIDField.getText() == null
+        || computerField.getText() == null
+        || computerField.getText().isEmpty()
+        || computerRequestIDField.getText().isEmpty()) {
+      computerRequestIDField.setText("Invalid input");
+      computerField.setText("Invalid input");
+      return;
+    }
+    try {
+      pkIDs.add(Integer.parseInt(computerRequestIDField.getText()));
+      pkIDs.add(Integer.parseInt(computerField.getText()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      computerRequestIDField.setText("Invalid input");
+      computerField.setText("Invalid input");
+    }
     if (compRequests.entryExists(pkIDs)) {
-      compRequests.deleteEntry(pkIDs);
-      computerRequestIDField.setText("Request Deleted!");
-      computerField.setText("Request Deleted!");
+      Alert alert =
+          new Alert(
+              Alert.AlertType.CONFIRMATION,
+              "Delete Request: " + computerRequestIDField.getText() + " ?",
+              ButtonType.YES,
+              ButtonType.NO);
+      alert.showAndWait();
+      if (alert.getResult() == ButtonType.YES) {
+        compRequests.deleteEntry(pkIDs);
+        computerRequestIDField.setText("Request Deleted!");
+        computerField.setText("Request Deleted!");
+      }
     } else {
       computerRequestIDField.setText("Invalid Request!");
       computerField.setText("Invalid Request!");
     }
+    // TODO Need refresh table here
   }
 }

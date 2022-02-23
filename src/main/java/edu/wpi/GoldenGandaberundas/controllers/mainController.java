@@ -70,6 +70,7 @@ public class mainController {
     // Add in drawer lines
     drawer.setSidePane(drawerBox);
     drawer.setMiniDrawerSize(36);
+    drawer.setResizableOnDrag(true);
     buttonStyle(ComputerServiceButton);
     buttonStyle(EmployeeDBButton);
     buttonStyle(AudioVisualButton);

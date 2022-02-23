@@ -170,7 +170,7 @@ public class LaundryServiceController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(new Scene(editForm));
         stage.show();
-
+        stage.setOnCloseRequest(e -> refresh());
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -187,7 +187,6 @@ public class LaundryServiceController implements Initializable {
     for (int i = 0; i < locArray.size(); i++) {
       locNodeAr.add(i, locArray.get(i).getNodeID());
       // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
-      System.out.println(locNodeAr.get(i));
     }
     return locNodeAr;
   }

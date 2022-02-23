@@ -12,6 +12,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsT
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
@@ -43,9 +44,10 @@ public class Main {
     GiftTbl.getInstance();
     PermissionTbl.getInstance().loadBackup("BackupsCSVs/PermissionsForTesting.csv");
     CredentialsTbl.getInstance(); // .loadBackup("BackupsCSVs/CredentialsTbl.csv");
-    AudioVisualTbl.getInstance();
+    AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/audioVisualTbl.csv");
     ComputerTbl.getInstance();
-    //    FoodTbl.getInstance();
+    FoodTbl.getInstance(); // .loadBackup("BackupsCSVs/foodTbl.csv");
+
     PathTbl.getInstance();
 
     LocationTbl.getInstance();
@@ -58,6 +60,10 @@ public class Main {
     FoodRequestTbl.getInstance();
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
+
+    //    Food yummyFood = new Food(1, "Chicken", "Chicken and Rice", 300, "Meat", 10.99, true,
+    // "Dinner");
+    //    FoodTbl.getInstance().addEntry(yummyFood);
 
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
