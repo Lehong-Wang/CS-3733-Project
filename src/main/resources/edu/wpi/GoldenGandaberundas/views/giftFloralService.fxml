@@ -144,11 +144,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" text="Backup Gifts" styleClass="backupButton"/>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests" styleClass="backupButton"/>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0"  text="Load GiftBackup" styleClass="backupButton"/>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup" styleClass="backupButton"/>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" styleClass="backupButton"/>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Gifts" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load GiftBackup" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
          </children>
       </VBox>
    </right>
