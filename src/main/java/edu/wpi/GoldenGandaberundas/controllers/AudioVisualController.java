@@ -174,6 +174,46 @@ public class AudioVisualController implements Initializable {
     }
   }
 
+  /**
+   * Checks if the data all has values and makes sure there are no semicolons or the such that check
+   * code
+   *
+   * @return Boolean (If Data is Safe Returns True, Else false)
+   */
+  public boolean validateDataSafe() {
+    String[] sqlComs = {
+      "ALTER",
+      "CREATE",
+      "DELETE",
+      "DROP",
+      "DROP TABLE",
+      "EXEC",
+      "EXECUTE",
+      "INSERT",
+      "INSERT INTO",
+      "INTO",
+      "MERGE",
+      "SELECT",
+      "UPDATE",
+      "UNION",
+      "UNION ALL",
+      "ALL"
+    };
+    for (String s : sqlComs) {
+      if (descriptionBox.getText().toUpperCase().contains(s)
+          || priorityField.getText().toUpperCase().contains(s)) {
+        return false;
+      }
+    }
+    return (descriptionBox.getText().matches("[\\w\\d\\s\\d.]+")
+            || descriptionBox.getText().isBlank())
+        && locationBox.getValue() != null
+        && patientComboBox.getValue() != null
+        && deviceIDBox.getValue() != null
+        && (priorityField.getText().matches("[\\w\\d\\s\\d.]+")
+            || priorityField.getText().isBlank());
+  }
+
   public void submit() {
     int idCounter =
         RequestTable.getInstance().readTable().size() - 1 < 0

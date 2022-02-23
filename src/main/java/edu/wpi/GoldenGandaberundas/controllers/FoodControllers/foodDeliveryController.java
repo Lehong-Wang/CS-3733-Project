@@ -272,7 +272,7 @@ public class foodDeliveryController {
         return false;
       }
     }
-    return noteField.getText().matches("[\\w\\d\\s\\d.]+")
+    return (noteField.getText().matches("[\\w\\d\\s\\d.]+") || noteField.getText().isBlank())
         && locationComboBox.getValue() != null
         && patientComboBox.getValue() != null
         && !currentMenu.isEmpty();

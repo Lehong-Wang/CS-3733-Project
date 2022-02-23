@@ -207,7 +207,8 @@ public class computerServiceController implements Initializable {
         && locationSearchBox.getValue() != null
         && problemTypeBox.getValue() != null
         && deviceSearchBox.getValue() != null
-        && priorityField.getText().matches("[\\w\\d\\s\\d.]+");
+        && (priorityField.getText().matches("[\\w\\d\\s\\d.]+")
+            || priorityField.getText().isBlank());
   }
 
   void onEdit() {

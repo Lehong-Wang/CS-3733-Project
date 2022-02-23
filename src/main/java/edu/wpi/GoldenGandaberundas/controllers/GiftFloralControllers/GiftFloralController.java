@@ -226,7 +226,7 @@ public class GiftFloralController implements Initializable {
         return false;
       }
     }
-    return notesField.getText().matches("[\\w\\d\\s\\d.]+")
+    return (notesField.getText().matches("[\\w\\d\\s\\d.]+") || notesField.getText().isBlank())
         && locationSearchBox.getValue() != null
         && patientSearchBox.getValue() != null
         && patientSearchBox.getValue() != null

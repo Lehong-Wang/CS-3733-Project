@@ -260,7 +260,7 @@ public class EquipmentDeliveryController {
         return false;
       }
     }
-    return notesField.getText().matches("[\\w\\d\\s\\d.]+")
+    return (notesField.getText().matches("[\\w\\d\\s\\d.]+") || notesField.getText().isBlank())
         && locationSearchBox.getValue() != null
         && equipmentSearchBox.getValue() != null;
   }
