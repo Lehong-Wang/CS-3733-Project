@@ -184,18 +184,6 @@ public class MedicineDeliveryController {
           String selectedItem = (String) locationSearchBox.getSelectionModel().getSelectedItem();
           locations = selectedItem;
         });
-
-    medicineSearchBox.setOnAction(
-        (event) -> {
-          Integer selectedItem = (Integer) medicineSearchBox.getSelectionModel().getSelectedItem();
-          currentMedicineID = selectedItem;
-        });
-
-    patientSearchBox.setOnAction(
-        (event) -> {
-          Integer selectedItem = (Integer) patientSearchBox.getSelectionModel().getSelectedItem();
-          currentPatientID = selectedItem;
-        });
   }
 
   void onEdit() {
@@ -269,9 +257,9 @@ public class MedicineDeliveryController {
         requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
       }
       String nodeID = locations;
-      int patientID = currentPatientID;
+      int patientID = (Integer) patientSearchBox.getSelectionModel().getSelectedItem();
       int requesterID = CurrentUser.getUser().getEmpID();
-      int medicineID = currentMedicineID;
+      int medicineID = (Integer) medicineSearchBox.getSelectionModel().getSelectedItem();
       //    int dosage = 0;
       //    int quantity = 0;
       try {

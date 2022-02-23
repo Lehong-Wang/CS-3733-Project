@@ -215,38 +215,47 @@ public class AudioVisualController implements Initializable {
   }
 
   public void submit() {
-    int idCounter =
-        RequestTable.getInstance().readTable().size() - 1 < 0
-            ? 0
-            : requestTableController
-                    .readTable()
-                    .get(requestTableController.readTable().size() - 1)
-                    .getRequestID()
-                + 1;
-    int requesterID = CurrentUser.getUser().getEmpID();
-    String location = locationBox.getValue();
-    int deviceID = Integer.parseInt(deviceIDBox.getValue());
-    int patientID = patientComboBox.getValue();
-    String note = descriptionBox.getText();
-    String priority = priorityField.getText();
-
-    AudioVisualRequest AVrequest =
-        new AudioVisualRequest(
-            idCounter,
-            location,
-            requesterID,
-            123,
-            0,
-            0,
-            patientID,
-            "Submitted",
-            note,
-            deviceID,
-            priority);
-    System.out.println(AVrequest);
-    AudioVisualRequestTbl.getInstance().addEntry(AVrequest);
-    clear();
-    refresh();
+    try {
+      int idCounter =
+          RequestTable.getInstance().readTable().size() - 1 < 0
+              ? 0
+              : requestTableController
+                      .readTable()
+                      .get(requestTableController.readTable().size() - 1)
+                      .getRequestID()
+                  + 1;
+      int requesterID = CurrentUser.getUser().getEmpID();
+      String location = locationBox.getValue();
+      int deviceID = Integer.parseInt(deviceIDBox.getValue());
+      int patientID = patientComboBox.getValue();
+      String note = "";
+      if (descriptionBox.getText() != null || !descriptionBox.getText().isEmpty()) {
+        note = descriptionBox.getText();
+      }
+      String priority = "";
+      if (!priorityField.getText().isEmpty() || priorityField.getText() != null) {
+        priority = priorityField.getText();
+      }
+      AudioVisualRequest AVrequest =
+          new AudioVisualRequest(
+              idCounter,
+              location,
+              requesterID,
+              123,
+              0,
+              0,
+              patientID,
+              "Submitted",
+              note,
+              deviceID,
+              priority);
+      System.out.println(AVrequest);
+      AudioVisualRequestTbl.getInstance().addEntry(AVrequest);
+      clear();
+      refresh();
+    } catch (Exception e) {
+      // Do nothing
+    }
   }
 
   /*
@@ -254,7 +263,9 @@ public class AudioVisualController implements Initializable {
    */
   public void clear() {
     descriptionBox.setText("");
-    locationBox.getItems().clear();
+    if (locationBox.getSelectionModel().getSelectedItem() != null) {
+      locationBox.setValue(null);
+    }
 
     // Populating location choice box
     ArrayList<String> searchList = locList();
@@ -262,7 +273,9 @@ public class AudioVisualController implements Initializable {
     locationBox.setItems(oList);
 
     // Populating device ID choice box
-    deviceIDBox.getItems().clear();
+    if (deviceIDBox.getSelectionModel().getSelectedItem() != null) {
+      deviceIDBox.setValue(null);
+    }
     ArrayList<String> findList = deviceIDList();
     ObservableList<String> dList = FXCollections.observableArrayList(findList);
     deviceIDBox.setItems(dList);
