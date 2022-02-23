@@ -111,7 +111,7 @@
                            </font>
                         </Label>
                         <TextArea fx:id="noteField" prefHeight="75.0" prefWidth="130.0" />
-                        <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE">
+                        <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" text="Submit" styleClass="actionButton">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -141,26 +141,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupFood" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Food Menu" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBFood" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Food Menu Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupFood" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Food Menu" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBFood" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Food Menu Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
          </children>
       </VBox>
    </right>

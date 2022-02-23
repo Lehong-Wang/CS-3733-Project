@@ -34,7 +34,7 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textFill="WHITE" />
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
          </children>
       </VBox>
    </right>
