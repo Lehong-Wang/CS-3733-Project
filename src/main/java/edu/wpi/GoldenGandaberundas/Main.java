@@ -37,7 +37,7 @@ public class Main {
     LocationTbl.getInstance();
     PatientTbl.getInstance();
     LaundryTbl.getInstance();
-    MedEquipmentTbl.getInstance();
+    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
     MedicineTbl.getInstance();
     GiftTbl.getInstance();
     PermissionTbl.getInstance().loadBackup("BackupsCSVs/PermissionsForTesting.csv");
@@ -72,7 +72,7 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(69, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
-    AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
+    AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
     //    EmployeePermissionTbl.getInstance();
@@ -83,6 +83,7 @@ public class Main {
 
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     floorMaps.load();
     App.launch(App.class, args);

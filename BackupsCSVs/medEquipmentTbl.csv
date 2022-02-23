@@ -1,43 +1,88 @@
-medID,medEquipmentType,status,currLoc
-123,Bed,In-Use,FDEPT00101
-436,Infusion Pump,Stored,FDEPT00101
-607,Recliner,In-Use,FDEPT00101
-890,Infusion Pump,Dirty,FDEPT00101
-402,Bed,Dirty,FDEPT00101
-540,X-ray,In-Use,FDEPT00101
-34,Bed,Stored,FDEPT00101
-543,Infusion Pump,In-Use,FDEPT00101
-306,Bed,In-Use,FDEPT00101
-879,Recliner,Stored,FDEPT00101
-645,Bed,Stored,GPATI01003
-345,Infusion Pump,Stored,GPATI01003
-907,Recliner,Dirty,GPATI01003
-231,Infusion Pump,Dirty,GPATI01003
-724,Bed,Stored,GPATI01003
-853,Recliner,In-Use,GPATI01003
-135,Recliner,Stored,GPATI01003
-183,Infusion Pump,Dirty,GPATI01003
-843,Bed,Stored,GPATI01003
-777,Recliner,In-Use,GPATI01003
-778,Bed,In-Use,GPATI00103
-779,Bed,In-Use,GPATI00103
-780,Bed,Stored,GPATI00103
-781,Bed,Dirty,GPATI00103
-782,Bed,In-Use,GPATI00103
-783,Bed,Stored,GPATI00103
-784,Bed,Dirty,GPATI00103
-785,Bed,In-Use,GPATI00103
-786,Bed,Stored,GPATI00103
-787,Bed,Stored,GPATI00103
-788,Bed,Dirty,GPATI00103
-789,Bed,In-Use,GPATI00103
-790,Bed,In-Use,GPATI00103
-791,Bed,Dirty,GPATI00103
-792,Bed,Stored,GPATI00103
-793,Infusion Pump,Dirty,GPATI00103
-794,X-ray,In-Use,GPATI00103
-795,Recliner,Dirty,GPATI00103
-796,Recliner,Dirty,GPATI00103
-797,Recliner,In-Use,GPATI00103
-798,Infusion Pump,In-Use,GPATI00103
-799,Infusion Pump,In-Use,GPATI00103
+medID,type,status,currLoc
+1,Bed,In-Use,gPATI00103
+2,Bed,In-Use,gPATI00203
+3,Bed,In-Use,gPATI00303
+4,Bed,In-Use,gPATI01303
+5,Bed,In-Use,gPATI00703
+6,Bed,In-Use,gPATI00803
+7,Bed,In-Use,gPATI01903
+8,Bed,In-Use,gPATI02003
+9,Bed,Dirty,HHALL00103
+10,Bed,Dirty,HHALL00303
+11,Bed,Dirty,HHALL00503
+12,Bed,Dirty,HHALL00703
+13,Bed,Dirty,HHALL00903
+14,Bed,Dirty,HHALL01003
+15,Bed,Awaiting Transport,HHALL01203
+16,Bed,Temporarily Outside,HHALL01103
+17,Bed,Stored,gSTOR00103
+18,Bed,Stored,gSTOR00103
+19,Bed,Stored,gSTOR00103
+20,Bed,Stored,gSTOR00103
+21,Bed,Stored,gSTOR00103
+22,Bed,Stored,gSTOR00103
+23,Bed,Stored,gSTOR00103
+24,Bed,Stored,gSTOR00103
+25,Bed,Stored,gSTOR00103
+26,Bed,Stored,gSTOR00103
+27,Bed,Stored,gSTOR00103
+28,Bed,Stored,gSTOR00103
+29,Bed,Stored,gSTOR00103
+30,Bed,Stored,gSTOR00103
+31,Recliner,Dirty,gSTOR00103
+32,Recliner,In-Use,gPATI00103
+33,Recliner,Stored,gSTOR00103
+34,Recliner,Stored,gSTOR00103
+35,Recliner,Stored,gSTOR00103
+36,Recliner,Stored,gSTOR00103
+37,X-ray,Stored,gSTOR00103
+38,Infusion Pump,In-Use,gPATI00103
+39,Infusion Pump,In-Use,gPATI00203
+40,Infusion Pump,In-Use,gPATI00303
+41,Infusion Pump,In-Use,gPATI00403
+42,Infusion Pump,In-Use,gPATI00503
+43,Infusion Pump,In-Use,gPATI00603
+44,Infusion Pump,In-Use,gPATI00703
+45,Infusion Pump,In-Use,gPATI00803
+46,Infusion Pump,In-Use,gPATI00903
+47,Infusion Pump,In-Use,gPATI01003
+48,Infusion Pump,In-Use,gPATI01103
+49,Infusion Pump,In-Use,gPATI01203
+50,Infusion Pump,In-Use,gPATI01303
+51,Infusion Pump,In-Use,gPATI01403
+52,Infusion Pump,In-Use,gPATI01503
+53,Infusion Pump,In-Use,gPATI01603
+54,Infusion Pump,Stored,gSTOR00103
+55,Infusion Pump,Stored,gSTOR00103
+56,Infusion Pump,Stored,gSTOR00103
+57,Infusion Pump,Stored,gSTOR00103
+58,Infusion Pump,Stored,gSTOR00103
+59,Infusion Pump,Stored,gSTOR00103
+60,Infusion Pump,Stored,gSTOR00103
+61,Infusion Pump,Stored,gSTOR00103
+62,Infusion Pump,Stored,gSTOR00103
+63,Infusion Pump,Stored,gSTOR00103
+64,Infusion Pump,Stored,gSTOR00103
+65,Infusion Pump,Stored,gSTOR00103
+66,Infusion Pump,Stored,gSTOR00103
+67,Infusion Pump,Stored,gSTOR00103
+68,Infusion Pump,Stored,gSTOR00103
+69,Infusion Pump,Stored,gSTOR00103
+70,Infusion Pump,Stored,gSTOR00103
+71,Infusion Pump,Stored,gSTOR00103
+72,Infusion Pump,Stored,gSTOR00103
+73,Infusion Pump,Stored,gSTOR00103
+74,Infusion Pump,Stored,gSTOR00103
+75,Infusion Pump,Stored,gSTOR00103
+76,Infusion Pump,Stored,gSTOR00103
+77,Infusion Pump,Stored,gSTOR00103
+78,Infusion Pump,Stored,gSTOR00103
+79,Infusion Pump,Stored,gSTOR00103
+80,Infusion Pump,Stored,gSTOR00103
+81,Infusion Pump,Stored,gSTOR00103
+82,Infusion Pump,Stored,gSTOR00103
+83,Infusion Pump,Stored,gSTOR00103
+84,Infusion Pump,Dirty,gDIRT00103
+85,Infusion Pump,Dirty,gDIRT00103
+86,Infusion Pump,Dirty,gDIRT00103
+87,Infusion Pump,Dirty,gDIRT00103

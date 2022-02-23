@@ -85,7 +85,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       s.setInt(1, med.getMedID());
       s.setString(2, med.getMedEquipmentType());
       s.setString(3, med.getStatus());
-      s.setString(4, med.getCurrLoc());
+      s.setString(4, med.getCurrLoc().trim().toUpperCase(Locale.ROOT));
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
