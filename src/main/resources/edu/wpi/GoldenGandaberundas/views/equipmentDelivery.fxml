@@ -21,11 +21,26 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Equipment" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Equipment Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Refresh" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Equipment" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Equipment Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
          </children>
       </VBox>
    </right>
