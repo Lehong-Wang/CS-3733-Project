@@ -4,12 +4,15 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -143,7 +147,37 @@ public class EmployeeDBController implements Initializable {
     phoneNumber.setCellValueFactory(new PropertyValueFactory<Employee, String>("phoneNum"));
     address.setCellValueFactory(new PropertyValueFactory<Employee, String>("address"));
 
+    empTable.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            int currID = CurrentUser.getUser().getEmpID();
+            ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+            for (int i = 0; i < perms.size(); i++) {
+              if (perms.get(i) == 111) {
+                editEmployeePerm();
+              }
+            }
+          }
+        });
+
     refreshTable();
+  }
+
+  private void editEmployeePerm() {
+    if (empTable.getSelectionModel().getSelectedItem() != null) {
+      try {
+        Employee emp = (Employee) empTable.getSelectionModel().getSelectedItem();
+        FXMLLoader load = new FXMLLoader(App.class.getResource("views/editEmployeePerms.fxml"));
+        AnchorPane editForm = load.load();
+        editEmployeePermsController edit = load.getController();
+        edit.editEmployee(emp);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(editForm));
+        stage.show();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   private void refreshTable() {
