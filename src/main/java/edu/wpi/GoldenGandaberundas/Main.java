@@ -7,6 +7,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
@@ -31,7 +32,6 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
 
-      
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     EmployeeTbl.getInstance();
@@ -59,7 +59,6 @@ public class Main {
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
 
-
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
@@ -75,14 +74,13 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(69, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
-
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
-    PathTbl.getInstance().loadBackup("backups/AllLocationEdges.csv");
+    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
 
     MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     points = PathTbl.getInstance().createBranchedLocations(points);
-    
+
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
@@ -129,7 +127,7 @@ public class Main {
     //    System.out.println(PathTbl.getPathPoints(3, 9));
 
     //    EmployeePermissionTbl.getInstance();
-      
+
     //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
     //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);

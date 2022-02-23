@@ -711,6 +711,7 @@ public class SimulationController {
       if (current.get(0).equals(current.get(1))) {
         continue;
       }
+      System.out.println(current);
       astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
       buildPath(astar);
     }

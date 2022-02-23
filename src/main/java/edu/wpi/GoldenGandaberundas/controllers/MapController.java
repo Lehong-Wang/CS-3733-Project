@@ -158,7 +158,6 @@ public class MapController {
     requestGroup = new Group();
     imageGroup.getChildren().add(requestGroup);
 
-
     pathNodePane = new Pane();
     imageGroup.getChildren().add(pathNodePane);
 
