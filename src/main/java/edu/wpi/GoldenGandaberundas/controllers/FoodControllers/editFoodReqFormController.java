@@ -161,5 +161,6 @@ public class editFoodReqFormController {
       foodField.setText("Invalid Request!");
       foodRequestIDField.setText("Invalid Request!");
     }
+    // TODO Need refresh table here
   }
 }

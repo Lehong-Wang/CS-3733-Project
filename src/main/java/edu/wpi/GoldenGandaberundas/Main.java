@@ -9,6 +9,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequ
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.Food;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
