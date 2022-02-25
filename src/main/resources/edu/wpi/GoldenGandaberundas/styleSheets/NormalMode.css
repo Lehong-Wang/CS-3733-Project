@@ -11,18 +11,22 @@
     box-color: white;
     /*table-head-color: #499cc9;*/
     table-head-color: linear-gradient(to right, #2a8edb, #80c2e8);
-    table-color1: #93f9b911;
-    table-color2: #1dbbdd11;
+    table-color1: #f0f0f0;
+    table-color2: #ffffff;
 }
 
 .background {
     -fx-background: background-color;
 }
 
+.text {
+    -fx-font-family: "Open Sans", "Helvetica Neue";
+}
 
 .serviceButton{
     -fx-background-color: default-blue;
     -fx-background-radius: 10px;
+    -fx-font-size: 21px;
     /*-fx-text-color: white !important;*/
     -fx-fill: text-color !important;
     /*-fx-wrap-text: white;*/
@@ -216,7 +220,7 @@
 }
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-font-size: 16pt;
+    -fx-font-size: 14pt;
     -fx-font-weight: bold;
     /*-fx-font-family: "Times New Roman";*/
 }
