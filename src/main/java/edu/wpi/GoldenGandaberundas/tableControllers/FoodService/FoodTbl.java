@@ -90,7 +90,7 @@ public class FoodTbl implements TableController<Food, Integer> {
 
   @Override
   public boolean addEntry(Food obj) {
-    this.getCurrentTable().addEntry(obj);
+    return this.getCurrentTable().addEntry(obj);
   }
 
   @Override
@@ -114,11 +114,7 @@ public class FoodTbl implements TableController<Food, Integer> {
   }
 
   public void writeTable() {
-
-    for (Food obj : objList) {
-
-      this.addEntry(obj);
-    }
+    this.getCurrentTable().writeTable();
   }
 
   /**
@@ -132,28 +128,7 @@ public class FoodTbl implements TableController<Food, Integer> {
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(Integer pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
-    try {
-
-      PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
-      s.setObject(1, value);
-      s.setObject(2, pkid);
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
+    return this.getCurrentTable().editEntry(pkid, colName, value);
   }
 
   /**
@@ -163,20 +138,7 @@ public class FoodTbl implements TableController<Food, Integer> {
    * @return true if successful, false otherwise
    */
   public boolean deleteEntry(Integer pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-      s.setObject(1, pkid);
-      s.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return false;
+    return this.getCurrentTable().deleteEntry(pkid);
   }
 
   /**
@@ -185,94 +147,17 @@ public class FoodTbl implements TableController<Food, Integer> {
    * @param f filename of the to be created CSV
    */
   public void createBackup(File f) {
-    if (objList.isEmpty()) {
-      return;
-    }
-    /* Instantiate the writer */
-    PrintWriter writer = null;
-    try {
-      writer = new PrintWriter(f);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-
-    /* Get the class type of the objects in the array */
-    final Class<?> type = objList.get(0).getClass();
-
-    /* Get the name of all the attributes */
-    final ArrayList<Field> classAttributes = new ArrayList<>(List.of(type.getDeclaredFields()));
-
-    boolean doesExtend = Request.class.isAssignableFrom(type);
-    if (doesExtend) {
-      final Class<?> superType = objList.get(0).getClass().getSuperclass();
-      classAttributes.addAll(0, (List.of(superType.getDeclaredFields())));
-    }
-
-    /* Write the parsed attributes to the file */
-    writer.println(classAttributes.stream().map(Field::getName).collect(Collectors.joining(",")));
-
-    /* For each object, read each attribute and append it to the file with a comma separating */
-    PrintWriter finalWriter = writer;
-    objList.forEach(
-        obj -> {
-          finalWriter.println(
-              classAttributes.stream()
-                  .map(
-                      attribute -> {
-                        attribute.setAccessible(true);
-                        String output = "";
-                        try {
-                          output = attribute.get(obj).toString();
-                        } catch (IllegalAccessException | ClassCastException e) {
-                          System.err.println("[CSVUtil] Object attribute access error.");
-                        }
-                        return output;
-                      })
-                  .collect(Collectors.joining(",")));
-          finalWriter.flush();
-        });
-    writer.close();
+    this.getCurrentTable().createBackup(f);
   }
 
   // drop current table and enter data from CSV
   public ArrayList<Food> loadBackup(String fileName) {
-    createTable();
-    ArrayList<Food> listObjs = readBackup(fileName);
-
-    try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
-      s.executeUpdate();
-      this.objList = listObjs;
-      this.writeTable();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return listObjs;
+    return this.getCurrentTable().loadBackup(fileName);
   }
 
   // checks if an entry exists
   public boolean entryExists(Integer pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
-    boolean exists = false;
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
-
-      ResultSet r = s.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        exists = true;
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return exists;
+    return this.getCurrentTable().entryExists(pkID);
   }
 
   public String getTableName() {

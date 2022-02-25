@@ -221,11 +221,12 @@ public class FoodEmbedded implements TableController<Food, Integer> {
         try {
             PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
             s.executeUpdate();
-            ArrayList<Food> 
-            this.objList = listObjs;
+            this.objList = objList;
             this.writeTable();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
 
