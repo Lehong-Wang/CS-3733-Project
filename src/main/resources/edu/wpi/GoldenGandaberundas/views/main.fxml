@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -104,6 +103,18 @@
          <children>
             <VBox fx:id="drawerBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" styleClass="leftDrawer">
                <children>
+                  <JFXButton fx:id="SettingsButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSettings" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Settings" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <graphic>
+                        <SVGPath content="M 22.111 11.216 L 19.876 10.547 C 19.722 10.007 19.509 9.485 19.243 8.991 L 20.337 6.941 C 20.421 6.783 20.391 6.587 20.263 6.461 L 18.669 4.857 C 18.542 4.729 18.347 4.699 18.189 4.785 L 16.154 5.873 C 15.655 5.593 15.127 5.369 14.579 5.205 L 13.913 2.995 C 13.854 2.828 13.695 2.717 13.519 2.721 L 11.264 2.721 C 11.086 2.722 10.929 2.837 10.877 3.008 L 10.21 5.212 C 9.657 5.376 9.125 5.599 8.623 5.879 L 6.621 4.798 C 6.462 4.713 6.267 4.743 6.141 4.871 L 4.52 6.454 C 4.392 6.58 4.361 6.776 4.446 6.934 L 5.527 8.938 C 5.247 9.439 5.023 9.97 4.86 10.52 L 2.652 11.188 C 2.482 11.241 2.366 11.398 2.365 11.575 L 2.365 13.832 C 2.366 14.011 2.482 14.167 2.652 14.22 L 4.873 14.887 C 5.038 15.429 5.261 15.951 5.541 16.444 L 4.446 18.541 C 4.361 18.7 4.392 18.894 4.52 19.021 L 6.114 20.618 C 6.24 20.745 6.436 20.775 6.594 20.691 L 8.656 19.589 C 9.143 19.853 9.657 20.062 10.19 20.217 L 10.857 22.468 C 10.909 22.637 11.066 22.753 11.244 22.754 L 13.499 22.754 C 13.676 22.753 13.833 22.637 13.885 22.468 L 14.553 20.21 C 15.08 20.055 15.591 19.845 16.074 19.582 L 18.149 20.691 C 18.307 20.775 18.502 20.745 18.629 20.618 L 20.223 19.021 C 20.351 18.894 20.38 18.7 20.296 18.541 L 19.189 16.47 C 19.454 15.984 19.666 15.473 19.823 14.942 L 22.071 14.273 C 22.241 14.221 22.356 14.064 22.358 13.887 L 22.358 11.61 C 22.366 11.439 22.267 11.281 22.111 11.216 Z M 12.391 16.41 C 9.567 16.41 7.801 13.349 9.214 10.902 C 10.626 8.453 14.157 8.453 15.569 10.902 C 15.891 11.46 16.061 12.093 16.061 12.738 C 16.061 14.766 14.417 16.41 12.391 16.41 Z" fill="WHITE" />
+
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
                   <JFXButton fx:id="HomeButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#goHome" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Home" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
@@ -280,8 +291,6 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <Button fx:id="switchBtn2" mnemonicParsing="false" onAction="#switchOrigin" text="switch" />
-                  <JFXButton fx:id="SwitchSceneButton" onAction="#switchScene" text="Switch Scene" textFill="Yellow" />
                </children>
                <padding>
                   <Insets left="20.0" right="20.0" top="30.0" />

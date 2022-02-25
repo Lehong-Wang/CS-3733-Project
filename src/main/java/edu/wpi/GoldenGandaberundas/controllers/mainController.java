@@ -48,6 +48,7 @@ public class mainController {
   @FXML JFXButton SimulationButton;
   @FXML JFXButton SwitchSceneButton;
   @FXML Button switchBtn2;
+  @FXML JFXButton SettingsButton;
 
   @FXML Group medGroup;
 
@@ -107,6 +108,7 @@ public class mainController {
     SideViewButton.setText("");
     allRequestsButton.setText("");
     SimulationButton.setText("");
+    SettingsButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -409,6 +411,11 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
+  public void switchSettings() {
+    nodeSwitch("views/settingsPage.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+  }
+
   // Goes to the location table
   //  public void switchLocationTable(ActionEvent actionEvent) throws IOException {
   //    //    Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
@@ -448,6 +455,7 @@ public class mainController {
         SideViewButton.setText("Side View");
         allRequestsButton.setText("All Requests View");
         SimulationButton.setText("Simulation");
+        SettingsButton.setText("Settings");
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -465,6 +473,7 @@ public class mainController {
         SideViewButton.setText("Neena Xiang");
         allRequestsButton.setText("Paul Godinez");
         SimulationButton.setText("Mason Figler");
+        SettingsButton.setText("Lehong Wang");
       }
     }
   }
@@ -493,6 +502,7 @@ public class mainController {
       SideViewButton.setText("");
       allRequestsButton.setText("");
       SimulationButton.setText("");
+      SettingsButton.setText("");
     }
   }
 
