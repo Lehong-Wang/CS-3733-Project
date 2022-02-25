@@ -520,23 +520,29 @@ public class mainController {
   }
 
   public void switchScene(ActionEvent actionEvent) throws IOException {
-    //    String css =
-    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
-    //    Stage.getScene().getStylesheets().clear();
-    //    scene.getStylesheets().add(css);
-    //    File f = new File("/styleSheets/WaterMelon.css");
 
     SwitchSceneButton.getScene().getStylesheets().clear();
-    //    SwitchSceneButton.getScene().getStylesheets().add(f.getAbsolutePath());
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
 
+    //    //    String css =
+    //    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
+    //    //    Stage.getScene().getStylesheets().clear();
+    //    //    scene.getStylesheets().add(css);
+    //    //    File f = new File("/styleSheets/WaterMelon.css");
+    //
+    //    SwitchSceneButton.getScene().getStylesheets().clear();
+    //    //    SwitchSceneButton.getScene().getStylesheets().add(f.getAbsolutePath());
+    //
     //    SwitchSceneButton.getScene()
     //        .getStylesheets()
-    //        .add(Main.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
+    //        .add(Main.class.getResource("@../styleSheets/WaterMelon.css").toExternalForm());
     //
-
+    //    //
     // com.sun.javafx.css.StyleManager.getInstance().reloadStylesheets(SwitchSceneButton.getScene());
-
-    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
-    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
+    //
+    //    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
+    //    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
   }
 }
