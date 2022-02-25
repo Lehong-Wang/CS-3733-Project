@@ -166,13 +166,23 @@ public class GiftClientServer implements TableController<Gift, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Gift> objList) {
-    return false;
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+      this.objList = new ArrayList<Gift>();
+      for(Gift g : objList){
+        this.objList.add(new Gift(g.getGiftID(), g.getGiftType(), g.getDescription(), g.getPrice(), g.getInStock()));
+      }
+      this.writeTable();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
   public void writeTable() {
-
     for (Gift obj : objList) {
-
       this.addEntry(obj);
     }
   }
@@ -188,9 +198,6 @@ public class GiftClientServer implements TableController<Gift, Integer> {
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(Integer pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
     try {
 
       PreparedStatement s =
@@ -294,15 +301,7 @@ public class GiftClientServer implements TableController<Gift, Integer> {
   public ArrayList<Gift> loadBackup(String fileName) {
     createTable();
     ArrayList<Gift> listObjs = readBackup(fileName);
-
-    try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
-      s.executeUpdate();
-      this.objList = listObjs;
-      this.writeTable();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    loadFromArrayList(listObjs);
     return listObjs;
   }
 
