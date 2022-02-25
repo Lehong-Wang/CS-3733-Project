@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.masterRequestTableController">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
