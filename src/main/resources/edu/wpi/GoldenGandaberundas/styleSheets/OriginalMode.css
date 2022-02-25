@@ -73,8 +73,8 @@
     -fx-background-color: purple;
     -fx-text-fill: seashell;
 
-    -fx-background-radius: 30px;
-    -fx-effect: dropshadow(three-pass-box ,blue , 50, 0, 0, 3);
+    -fx-background-radius: 50px;
+    -fx-effect: dropshadow(three-pass-box ,blue , 5, 0, 0, 3);
 
 }
 
