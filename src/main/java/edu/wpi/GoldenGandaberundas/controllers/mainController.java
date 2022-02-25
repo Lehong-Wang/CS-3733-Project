@@ -666,6 +666,16 @@ public class mainController {
 
   public void switchOrigin() {
 
+    System.out.println("before switch");
+    SwitchSceneButton.getScene().getStylesheets().clear();
+
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
+  }
+
+  public void switchOrigin() {
+
     SwitchSceneButton.getScene().getStylesheets().clear();
 
     SwitchSceneButton.getScene()
