@@ -37,23 +37,19 @@ public class LaundryClientServer implements TableController<Laundry, Integer> {
     this.objList = objList;
   }
 
-  // reads the DB table and returns the information as a ArrayList<Location>
+  // reads the DB table and returns the information as a ArrayList<Laundry>
   public ArrayList<Laundry> readTable() {
-    ArrayList tableInfo = new ArrayList<Location>();
+    ArrayList tableInfo = new ArrayList<Laundry>();
     try {
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
-            new Location(
-                r.getString(1),
-                r.getInt(2),
-                r.getInt(3),
-                r.getString(4),
-                r.getString(5),
-                r.getString(6),
-                r.getString(7),
-                r.getString(8)));
+            new Laundry(
+                r.getInt(1),
+                r.getString(2),
+                r.getString(3),
+                r.getBoolean(4)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
