@@ -36,15 +36,15 @@ public class Main {
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     EmployeeTbl.getInstance();
-    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
+    LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
     PatientTbl.getInstance();
     LaundryTbl.getInstance();
-    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
+    MedEquipmentTbl.getInstance(); // .loadBackup("BackupsCSVs/medEquipmentTbl.csv");
     MedicineTbl.getInstance();
     GiftTbl.getInstance();
-    PermissionTbl.getInstance().loadBackup("BackupsCSVs/PermissionsForTesting.csv");
+    PermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/PermissionsForTesting.csv");
     CredentialsTbl.getInstance(); // .loadBackup("BackupsCSVs/CredentialsTbl.csv");
-    AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/audioVisualTbl.csv");
+    AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/audioVisualTbl.csv");
     ComputerTbl.getInstance();
     FoodTbl.getInstance(); // .loadBackup("BackupsCSVs/foodTbl.csv");
 
@@ -66,10 +66,10 @@ public class Main {
     //    FoodTbl.getInstance().addEntry(yummyFood);
 
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
-    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
-    EmployeePermissionTbl.getInstance().loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
+    EmployeeTbl.getInstance(); // .loadBackup("BackupsCSVs/employeeTbl.csv");
+    EmployeePermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
 
-    //    CredentialsTbl.getInstance().addEntry(new Credential(456, "p"));
+    //    CredentialsTbl.getadminInstance().addEntry(new Credential(456, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(666, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(123, "p"));
     //    CredentialsTbl.getInstance().addEntry(new Credential(777, "p"));
@@ -81,7 +81,7 @@ public class Main {
     //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
-    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+    PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
     MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
