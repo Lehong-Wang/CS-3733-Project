@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +47,7 @@ public class mainController {
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
   @FXML JFXButton SwitchSceneButton;
+  @FXML Button switchBtn2;
 
   @FXML Group medGroup;
 
@@ -521,10 +523,13 @@ public class mainController {
 
   public void switchScene(ActionEvent actionEvent) throws IOException {
 
+    System.out.println("before switch");
     SwitchSceneButton.getScene().getStylesheets().clear();
+    //    SwitchSceneButton.getScene().getStylesheets().removeAll("styleSheets/DarkMode.css");
     SwitchSceneButton.getScene()
         .getStylesheets()
         .add(App.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
+    System.out.println("after switch");
 
     //    //    String css =
     //    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
@@ -544,5 +549,14 @@ public class mainController {
     //
     //    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
     //    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
+  }
+
+  public void switchOrigin() {
+
+    SwitchSceneButton.getScene().getStylesheets().clear();
+
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
   }
 }
