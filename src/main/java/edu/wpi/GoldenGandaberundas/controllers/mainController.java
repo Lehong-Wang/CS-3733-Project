@@ -658,4 +658,13 @@ public class mainController {
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
   }
+
+  public void switchOrigin() {
+
+    SwitchSceneButton.getScene().getStylesheets().clear();
+
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
+  }
 }
