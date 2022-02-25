@@ -84,14 +84,14 @@ public class Main {
     PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
     MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
-    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    points = PathTbl.getInstance().createBranchedLocations(points);
+//    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+//    points = PathTbl.getInstance().createBranchedLocations(points);
 
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
-    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
+//    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
-    floorMaps.load();
+//    floorMaps.load();
 
     //    Simulation.update();
     PathTbl.createStatsMap();
