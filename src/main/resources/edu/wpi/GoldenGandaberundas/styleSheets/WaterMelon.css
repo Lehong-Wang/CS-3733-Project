@@ -25,7 +25,7 @@
     /*-fx-text-color: white !important;*/
     -fx-fill: text-color !important;
     /*-fx-wrap-text: white;*/
-    -fx-alignment: LEFT;
+    -fx-alignment: center-left;
     /*-fx-font-family: "Times New Roman";*/
     /*-fx-font-color: white;*/
 }

@@ -13,6 +13,7 @@ import java.util.Locale;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -106,8 +107,25 @@ public class loginScreenController {
             event -> {
               Stage stage = (Stage) loginBtn.getScene().getWindow();
               try {
-                stage.setScene(
-                    new Scene(FXMLLoader.load(App.class.getResource("views/main.fxml"))));
+                Parent root = FXMLLoader.load(App.class.getResource("views/main.fxml"));
+                //
+                // root.getStylesheets().add(App.class.getResource("styleSheets/DarkMode.css").toExternalForm());
+                Scene bruh = new Scene(root, 1920, 1080);
+                bruh.getStylesheets()
+                    .add(App.class.getResource("styleSheets/DarkMode.css").toExternalForm());
+                stage.setScene(bruh);
+
+                //                Scene changeScene =
+                //                    new
+                // Scene(FXMLLoader.load(getClass().getResource("views/main.fxml")));
+                //                changeScene
+                //                    .getStylesheets()
+                //                    .add(
+                //                        getClass()
+                //                            .getClassLoader()
+                //                            .getResource("styleSheets/DarkMode.css")
+                //                            .toExternalForm());
+                //                stage.setScene(changeScene);
 
                 // Jank resizing fix but it works, definitely a better way to do it but none will
                 // take

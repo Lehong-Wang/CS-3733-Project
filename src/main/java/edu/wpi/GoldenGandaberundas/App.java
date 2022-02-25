@@ -28,7 +28,8 @@ public class App extends Application {
     // stylesheet is added in fxml file
     // scene.getStylesheets().add(getClass().getResource("styleSheets/cssTest.css").toExternalForm());
 
-    scene.getStylesheets().add(getClass().getResource("styleSheets/DarkMode.css").toExternalForm());
+    //
+    // scene.getStylesheets().add(getClass().getResource("styleSheets/DarkMode.css").toExternalForm());
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();
