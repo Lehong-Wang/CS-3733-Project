@@ -96,8 +96,8 @@ public class LocationTbl extends TableController<Location, String> {
               "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
       s.setString(1, loc.getNodeID());
-      s.setInt(2, loc.getXcoord());
-      s.setInt(3, loc.getYcoord());
+      s.setLong(2, loc.getXcoord());
+      s.setLong(3, loc.getYcoord());
       s.setString(4, loc.getFloor());
       s.setString(5, loc.getBuilding());
       s.setString(6, loc.getNodeType());
@@ -129,8 +129,8 @@ public class LocationTbl extends TableController<Location, String> {
                   + "end");
       s.setString(1, loc.getNodeID());
       s.setString(2, loc.getNodeID());
-      s.setInt(3, loc.getXcoord());
-      s.setInt(4, loc.getYcoord());
+      s.setLong(3, loc.getXcoord());
+      s.setLong(4, loc.getYcoord());
       s.setString(5, loc.getFloor());
       s.setString(6, loc.getBuilding());
       s.setString(7, loc.getNodeType());

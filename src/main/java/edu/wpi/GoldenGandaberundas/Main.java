@@ -1,14 +1,13 @@
 package edu.wpi.GoldenGandaberundas;
 
-import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeCloud;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
@@ -17,6 +16,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequ
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationCloud;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
@@ -25,7 +25,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.Medi
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -33,7 +32,6 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
 
-    EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     EmployeeTbl.getInstance();
     LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
@@ -68,78 +66,40 @@ public class Main {
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
     EmployeeTbl.getInstance(); // .loadBackup("BackupsCSVs/employeeTbl.csv");
     EmployeePermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/employeePermissionsTbl.csv");
+    LocationCloud locationCloud = new LocationCloud(LocationTbl.getInstance().readTable());
+    // locationCloud.writeTable();
+    // System.out.println("LOCATION: " + locationCloud.getLocation("FDEPT00101").toString());
+    // System.out.println(locationCloud.editEntry("FDEPT00101", "xCoord", 200));
 
-    //    CredentialsTbl.getadminInstance().addEntry(new Credential(456, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(666, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(123, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(777, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(888, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(999, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(70, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(420, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(69, "p"));
-    //    CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
+    EmployeeCloud employeeCloud = new EmployeeCloud(EmployeeTbl.getInstance().readTable());
+    // employeeCloud.writeTable();
+    employeeCloud.editEntry("123", "LName", "E10");
+    employeeCloud.readTable();
+    Employee steve =
+        new Employee(
+            4455, "Steve", "Hang", "Doctor", "shang@bwh.com", "74123695478", "100 Institute Road");
+    employeeCloud.addEntry(steve);
 
-    AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
-    PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
-    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
-    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    points = PathTbl.getInstance().createBranchedLocations(points);
 
-    CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
-    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
-    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
-    CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
-    floorMaps.load();
+
+    //    AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
+    //    PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
+    //
+    //    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
+    //    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    //    points = PathTbl.getInstance().createBranchedLocations(points);
+    //
+    //    CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
+    //    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    //    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
+    //    CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
 
     //    Simulation.update();
     PathTbl.createStatsMap();
-    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
-    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
-    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
-    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
-    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
-    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
-    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
-    // "GSTOR00103"));
 
-    //    Simulation.update();
-    //    PathTbl.createStatsMap();
-    //    List<String> points1 = PathTbl.getPathPoints(1, 2);
-    //    List<String> points2 = PathTbl.getPathPoints(15, 37);
-    //    List<String> points3 = PathTbl.getPathPoints(37, 25);
-    //    List<String> points4 = PathTbl.getPathPoints(25, 15);
-    //    List<String> points5 = PathTbl.getPathPoints(62, 7);
-    //    List<String> points6 = PathTbl.getPathPoints(78, 18);
-    //    PathTbl.getInstance().createAStarPathwStats(points1.get(0), points1.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points2.get(0), points2.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points3.get(0), points3.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points4.get(0), points4.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points5.get(0), points5.get(1));
-    //    PathTbl.getInstance().createAStarPathwStats(points6.get(0), points6.get(1));
-    //    System.out.println(PathTbl.getInstance().createAStarPathwStats("GSTOR00103",
-    // "GSTOR00103"));
-
-    //    PathTbl.printStatsMap();
-
-    //    Simulation.update();
-    //    System.out.println(PathTbl.getPathPoints(3, 9));
-
-    //    EmployeePermissionTbl.getInstance();
-
-    //    EmployeePermission adminPerm = new EmployeePermission(123, 111);
-    //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
-    //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
-    //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
-    floorMaps.load();
-    App.launch(App.class, args);
+    //    floorMaps.load();
+    //    App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();
     //    sim.update();

@@ -282,27 +282,6 @@ public abstract class TableController<T, T1> {
           finalWriter.flush();
         });
     writer.close();
-    //    objList = readTable();
-    //
-    //    try {
-    //      PrintWriter print = new PrintWriter(f);
-    //
-    //      for (int i = 0; i < colNames.size() - 1; i++) {
-    //        String s = colNames.get(i);
-    //        print.write(s + ",");
-    //      }
-    //      print.write(colNames.get(colNames.size() - 1));
-    //      print.write("\n");
-    //
-    //      for (Object c : objList) {
-    //        print.println(c.toString());
-    //        print.flush();
-    //      }
-    //      print.close();
-    //
-    //    } catch (Exception e) {
-    //      e.printStackTrace(); // prints error messages in reverse time order
-    //    }
   }
 
   /**
