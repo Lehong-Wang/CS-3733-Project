@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas;
 
 import java.io.IOException;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,9 +26,7 @@ public class App extends Application {
   public void start(Stage primaryStage) throws IOException {
 
     Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
-    Parameters args = this.getParameters();
 
-    // Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
     Scene scene = new Scene(root, 1280, 800);
     // Below line is to set styleSheet, does not maintain styleSheet when switching scenes unless
     // stylesheet is added in fxml file
@@ -36,6 +35,13 @@ public class App extends Application {
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();
+
+    Parameters params = getParameters();
+    List<String> list = params.getRaw();
+    System.out.println(list.size());
+    for (String each : list) {
+      System.out.println(each);
+    }
   }
 
   @Override

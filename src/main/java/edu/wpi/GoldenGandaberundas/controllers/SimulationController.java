@@ -12,8 +12,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -219,7 +217,7 @@ public class SimulationController {
         });
 
     // uses the image for the more operations
-    ImageView settings = new ImageView(floorMaps.equlaizer);
+    ImageView settings = new ImageView(floorMaps.equalizer);
     settings.setFitHeight(20);
     settings.setFitWidth(20);
 
@@ -333,7 +331,6 @@ public class SimulationController {
     currentFloor = "1";
     setLocations(currentFloor);
     setEquipment();
-    setRequest();
     mapImage.setImage(L1);
 
     nodeDataPane.setManaged(false);
@@ -402,50 +399,6 @@ public class SimulationController {
             exc.printStackTrace();
           }
           System.out.println("alt click");
-        });
-  }
-
-  public void createRequestIcon(Request req, Location loc) {
-    ReqImageView reqIcon = new ReqImageView(loc, req);
-    switch (req.getRequestType()) {
-      case "MedEquipDelivery":
-        reqIcon.setImage(floorMaps.medicalEquipmentGreen);
-        break;
-      case "MedicineDelivery":
-        reqIcon.setImage(floorMaps.medicineGreen);
-        break;
-      case "GiftFloral":
-        reqIcon.setImage(floorMaps.gift);
-        break;
-      case "LaundryService":
-        reqIcon.setImage(floorMaps.laundry);
-        break;
-      case "CompServ":
-        reqIcon.setImage(floorMaps.computer);
-        break;
-    }
-    reqIcon.setFitHeight(20);
-    reqIcon.setFitWidth(20);
-    requestGroup.getChildren().add(reqIcon);
-    reqIcon.setLayoutX(loc.getXcoord());
-    reqIcon.setLayoutY(loc.getYcoord());
-    reqIcon.setOnContextMenuRequested(
-        e -> {
-          nodeDataPane.getChildren().clear();
-          FXMLLoader controllerLoader =
-              new FXMLLoader(Main.class.getResource("views/mapViewRequestEntry.fxml"));
-          nodeDataPane.setManaged(true);
-          nodeDataPane.setVisible(true);
-          try {
-            Node subPane = (Node) controllerLoader.load();
-            nodeDataPane.getChildren().add(subPane);
-            MapSubReqController subController = controllerLoader.getController();
-            //                        subController.setMapController(this);
-
-            subController.setText(reqIcon.request);
-          } catch (IOException exc) {
-            exc.printStackTrace();
-          }
         });
   }
 
@@ -589,33 +542,6 @@ public class SimulationController {
     }
   }
 
-  public void setRequest() {
-    requestGroup.getChildren().clear();
-
-    TableController<Location, String> locations = LocationTbl.getInstance();
-    TableController<Request, Integer> reqTable = RequestTable.getInstance();
-    ArrayList<Request> reqList = reqTable.readTable();
-    if (reqList == null || reqList.isEmpty()) {
-      return;
-    }
-    reqList =
-        (ArrayList)
-            reqList.stream()
-                .filter(
-                    l -> {
-                      if (locations.getEntry(l.getLocationID().trim()) != null) {
-                        return (locations.getEntry(l.getLocationID().trim()))
-                            .getFloor()
-                            .equals(currentFloor);
-                      }
-                      return false;
-                    })
-                .collect(Collectors.toList());
-    for (Request mer : reqList) {
-      createRequestIcon(mer, locations.getEntry(mer.getLocationID().trim()));
-    }
-  }
-
   public String getCurrentFloor() {
     return currentFloor;
   }
@@ -623,7 +549,6 @@ public class SimulationController {
   public void refreshMap() {
     setLocations(currentFloor);
     setEquipment();
-    setRequest();
     refreshPath();
     //    refreshCircles();
   }

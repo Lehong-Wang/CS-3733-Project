@@ -1,13 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.Requests;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -378,18 +372,6 @@ public class RequestTable extends TableController<Request, Integer> {
     switch (specific.getRequestType()) {
       case "MedEquipDelivery":
         return MedEquipRequestTbl.getInstance();
-      case "MedicineDelivery":
-        return MedicineRequestTbl.getInstance();
-      case "LaundryService":
-        return LaundryRequestTbl.getInstance();
-      case "GiftFloral":
-        return GiftRequestTbl.getInstance();
-      case "Food":
-        return FoodRequestTbl.getInstance();
-      case "Computer":
-        return ComputerRequestTbl.getInstance();
-      case "AudioVisual":
-        return AudioVisualRequestTbl.getInstance();
       default:
         return null;
     }
@@ -409,41 +391,6 @@ public class RequestTable extends TableController<Request, Integer> {
     } else {
       return this.getSpecificServiceTable(req).editEntry(req.getPK(), colName, value);
     }
-  }
-
-  public boolean backupAllRequests(File directory) {
-    if (!directory.exists()) {
-      directory.mkdir();
-    }
-    MedicineRequestTbl.getInstance()
-        .createBackup(new File(directory.toString() + "/medicineRequests.csv"));
-    MedEquipRequestTbl.getInstance()
-        .createBackup(new File(directory.toString() + "/medicalEquipRequests.csv"));
-    LaundryRequestTbl.getInstance()
-        .createBackup(new File(directory.toString() + "/laundryRequests.csv"));
-    GiftRequestTbl.getInstance().createBackup(new File(directory.toString() + "/giftRequest.csv"));
-    FoodRequestTbl.getInstance().createBackup(new File(directory.toString() + "/foodRequest.csv"));
-    ComputerRequestTbl.getInstance()
-        .createBackup(new File(directory.toString() + "/computerRequest.csv"));
-    AudioVisualRequestTbl.getInstance()
-        .createBackup(new File(directory.toString() + "/audioVisualRequest.csv"));
-
-    this.createBackup(new File(directory.toString() + "/requests.csv"));
-    return true;
-  }
-
-  public boolean loadAllRequests(File directory) {
-    // this.loadBackup(directory.toString() + "/requests.csv");
-    MedicineRequestTbl.getInstance().readBackup(directory.toString() + "/medicineRequests.csv");
-    MedEquipRequestTbl.getInstance().readBackup(directory.toString() + "/medicalEquipRequests.csv");
-    LaundryRequestTbl.getInstance().readBackup(directory.toString() + "/laundryRequests.csv");
-    GiftRequestTbl.getInstance().readBackup(directory.toString() + "/giftRequest.csv");
-    FoodRequestTbl.getInstance().readBackup(directory.toString() + "/foodRequest.csv");
-    ComputerRequestTbl.getInstance().readBackup(directory.toString() + "/computerRequest.csv");
-    AudioVisualRequestTbl.getInstance()
-        .readBackup(directory.toString() + "/audioVisualRequest.csv");
-
-    return true;
   }
 
   private void deleteEntries() {

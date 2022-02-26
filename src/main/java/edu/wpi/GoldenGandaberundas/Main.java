@@ -20,15 +20,17 @@ public class Main {
     PathTbl.getInstance();
     PathTbl.getInstance(); // .loadBackup("backups/AllLocationEdges.csv");
 
-    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+    PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
     MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    points = PathTbl.getInstance().createBranchedLocations(points);
-    PathTbl.getInstance().loadBackup("backupsCSVs/pathTbl.csv");
-    floorMaps.load();
+    PathTbl.getInstance().createBranchedLocations(points);
+    PathTbl.getInstance(); // .loadBackup("backupsCSVs/pathTbl.csv");
     PathTbl.createStatsMap();
+
+
     floorMaps.load();
+
     Main.run(
         0,
         0,

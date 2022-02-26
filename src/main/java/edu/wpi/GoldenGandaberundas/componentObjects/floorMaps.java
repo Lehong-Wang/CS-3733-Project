@@ -30,16 +30,16 @@ public class floorMaps {
   public static Image firstFloorIcon;
   public static Image thirdFloorIcon;
   public static Image lowerFirstFloorIcon;
-  public static Image equlaizer;
+  public static Image equalizer;
 
   public static void load() {
     System.out.println("IMAGES LOADED");
-    thirdFloor = new Image(App.class.getResourceAsStream("images/thirdFloorCropped.png"));
-    secondFloor = new Image(App.class.getResourceAsStream("images/secondFloorCropped.png"));
-    firstFloor = new Image(App.class.getResourceAsStream("images/firstFloorCropped.png"));
+    thirdFloor = new Image(App.class.getResourceAsStream("images/ThirdFloorCropped.jpg"));
+    secondFloor = new Image(App.class.getResourceAsStream("images/SecondFloorCropped.jpg"));
+    firstFloor = new Image(App.class.getResourceAsStream("images/FirstFloorCropped.jpg"));
     // groundFloor = new Image(App.class.getResourceAsStream("images/groundFloorCropped.png"));
-    lower1Floor = new Image(App.class.getResourceAsStream("images/Lower1Cropped.png"));
-    lower2Floor = new Image(App.class.getResourceAsStream("images/Lower2Cropped.png"));
+    lower1Floor = new Image(App.class.getResourceAsStream("images/Lower1Cropped.jpg"));
+    lower2Floor = new Image(App.class.getResourceAsStream("images/Lower2Cropped.jpg"));
     bedIcon = new Image(App.class.getResourceAsStream("images/bed.png"));
     reclinerIcon = new Image(App.class.getResourceAsStream("images/recliner.png"));
     xRayIcon = new Image(App.class.getResourceAsStream("images/xray.png"));
@@ -64,6 +64,6 @@ public class floorMaps {
     firstFloorIcon = new Image(App.class.getResourceAsStream("images/floor1Icon.png"));
     thirdFloorIcon = new Image(App.class.getResourceAsStream("images/floor3Icon.png"));
     lowerFirstFloorIcon = new Image(App.class.getResourceAsStream("images/lower1Icon.png"));
-    equlaizer = new Image(App.class.getResourceAsStream("images/Simulation-equalizer-line .png"));
+    equalizer = new Image(App.class.getResourceAsStream("images/Simulation-equalizer-line .png"));
   }
 }
