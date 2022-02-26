@@ -30,6 +30,8 @@ public class MapViewConfirmationButtons {
           selection = false;
           MedEquipmentTbl.getInstance().editEntry(med.getMedID(), "currLoc", location.getNodeID());
           map.setEquipment();
+          map.refreshMap();
+          selection = false;
         });
     yesBtn.setOnMouseReleased(
         e -> {
