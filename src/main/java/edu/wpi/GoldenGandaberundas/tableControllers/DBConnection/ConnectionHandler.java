@@ -83,7 +83,6 @@ public class ConnectionHandler {
    */
   public void setConnection(ConnectionType connectionType) {
     if (this.connectionType != connectionType) {
-
       try {
         if (connectionType == ConnectionType.embedded) {
           SQLiteConfig config = new SQLiteConfig();

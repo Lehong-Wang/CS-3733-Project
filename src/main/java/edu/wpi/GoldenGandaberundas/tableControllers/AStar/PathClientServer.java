@@ -25,8 +25,6 @@ public class PathClientServer implements TableController<Path, String> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public PathClientServer(String tbName, String[] cols, String pkCols, ArrayList<Path> objList)
       throws SQLException {
     // create a new table with column names if none table of same name exist
@@ -41,7 +39,8 @@ public class PathClientServer implements TableController<Path, String> {
   public ArrayList<Path> readTable() {
     ArrayList tableInfo = new ArrayList<Path>();
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(new Path(r.getString(1), r.getString(2), r.getString(3)));
@@ -62,21 +61,24 @@ public class PathClientServer implements TableController<Path, String> {
   public boolean addEntry(Path path) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?)"
-                  + "end");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?)"
+                      + "end");
 
       s.setString(1, path.getEdgeID());
-      s.setString(2, path.getStartNode());
-      s.setString(3, path.getEndNode());
+      s.setString(2, path.getEdgeID());
+      s.setString(3, path.getStartNode());
+      s.setString(4, path.getEndNode());
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -122,14 +124,16 @@ public class PathClientServer implements TableController<Path, String> {
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = connectionHandler.getConnection().createStatement();
       s.execute(
           "CREATE TABLE  Paths("
               + "edgeID varchar(101) NOT NULL ,"
@@ -150,8 +154,9 @@ public class PathClientServer implements TableController<Path, String> {
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
+            connectionHandler
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
         s.setString(1, pkID);
         ResultSet r = s.executeQuery();
         r.next(); // **
@@ -187,8 +192,9 @@ public class PathClientServer implements TableController<Path, String> {
     ArrayList<String> connect = new ArrayList<>();
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT * FROM " + tbName + " WHERE " + colNames.get(1) + " =?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(1) + " =?;");
       s.setString(1, startNode);
       ResultSet r = s.executeQuery();
       while (r.next()) {
@@ -256,7 +262,8 @@ public class PathClientServer implements TableController<Path, String> {
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -277,14 +284,16 @@ public class PathClientServer implements TableController<Path, String> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -304,8 +313,9 @@ public class PathClientServer implements TableController<Path, String> {
   public boolean deleteEntry(String pkid) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -376,7 +386,8 @@ public class PathClientServer implements TableController<Path, String> {
     ArrayList<Path> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -394,8 +405,10 @@ public class PathClientServer implements TableController<Path, String> {
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

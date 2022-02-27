@@ -23,8 +23,6 @@ public class GiftClientServer implements TableController<Gift, Integer> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   GiftClientServer(String tbName, String[] cols, String pkCols, ArrayList<Gift> objList) {
     this.tbName = tbName;
     this.pkCols = pkCols;
@@ -36,7 +34,8 @@ public class GiftClientServer implements TableController<Gift, Integer> {
 
     ArrayList<Gift> tableInfo = new ArrayList<>();
     try {
-      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("SELECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
 
       while (r.next()) {
@@ -53,17 +52,19 @@ public class GiftClientServer implements TableController<Gift, Integer> {
   public boolean addEntry(Gift gift) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?, ?)"
-                  + "end");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?, ?, ?)"
+                      + "end");
 
       s.setInt(1, gift.getGiftID());
       s.setInt(2, gift.getGiftID());
@@ -120,14 +121,16 @@ public class GiftClientServer implements TableController<Gift, Integer> {
   public void createTable() {
     try {
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = connectionHandler.getConnection().createStatement();
       s.execute(
           "CREATE TABLE  Gifts("
               + "giftID INTEGER NOT NULL ,"
@@ -146,8 +149,9 @@ public class GiftClientServer implements TableController<Gift, Integer> {
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
+            connectionHandler
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
         s.setInt(1, pkID);
         ResultSet r = s.executeQuery();
         r.next();
@@ -167,7 +171,8 @@ public class GiftClientServer implements TableController<Gift, Integer> {
   @Override
   public boolean loadFromArrayList(ArrayList<Gift> objList) {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = new ArrayList<Gift>();
       for (Gift g : objList) {
@@ -203,14 +208,16 @@ public class GiftClientServer implements TableController<Gift, Integer> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -233,8 +240,9 @@ public class GiftClientServer implements TableController<Gift, Integer> {
     //    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -315,8 +323,10 @@ public class GiftClientServer implements TableController<Gift, Integer> {
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

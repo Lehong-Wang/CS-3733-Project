@@ -25,8 +25,6 @@ public class FoodClientServer implements TableController<Food, Integer> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public FoodClientServer(String tbName, String[] cols, String pkCols, ArrayList<Food> objList) {
     this.tbName = tbName;
     this.pkCols = pkCols;
@@ -38,7 +36,8 @@ public class FoodClientServer implements TableController<Food, Integer> {
   public ArrayList<Food> readTable() { // **
     ArrayList tableInfo = new ArrayList<Food>(); // **
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
@@ -63,17 +62,19 @@ public class FoodClientServer implements TableController<Food, Integer> {
   public boolean addEntry(Food obj) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-                  + "end");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                      + "end");
       // **
       s.setInt(1, obj.getFoodID());
       s.setInt(2, obj.getFoodID());
@@ -138,14 +139,16 @@ public class FoodClientServer implements TableController<Food, Integer> {
   public void createTable() {
     try {
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = connectionHandler.getConnection().createStatement();
       s.execute(
           "CREATE TABLE "
               + tbName
@@ -172,8 +175,9 @@ public class FoodClientServer implements TableController<Food, Integer> {
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
+            connectionHandler
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
         s.setInt(1, pkID); // **
         ResultSet r = s.executeQuery();
         r.next();
@@ -215,7 +219,8 @@ public class FoodClientServer implements TableController<Food, Integer> {
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -239,14 +244,16 @@ public class FoodClientServer implements TableController<Food, Integer> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -269,8 +276,9 @@ public class FoodClientServer implements TableController<Food, Integer> {
     //    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -341,7 +349,8 @@ public class FoodClientServer implements TableController<Food, Integer> {
     ArrayList<Food> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -359,8 +368,10 @@ public class FoodClientServer implements TableController<Food, Integer> {
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          connectionHandler
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

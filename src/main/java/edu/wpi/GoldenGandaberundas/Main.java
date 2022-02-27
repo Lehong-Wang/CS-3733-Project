@@ -6,6 +6,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
@@ -40,29 +41,18 @@ import java.sql.SQLException;
 public class Main {
 
   public static void main(String[] args) throws SQLException {
-
-    System.out.println(PathTbl.getInstance().objList);
-
-    floorMaps.load();
-    EmployeeTbl.getInstance();
-    LocationTbl.getInstance();
-    EmployeeTbl.getInstance();
-    LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
-    PatientTbl.getInstance();
-    LaundryTbl.getInstance();
-    MedEquipmentTbl.getInstance(); // .loadBackup("BackupsCSVs/medEquipmentTbl.csv");
-    MedicineTbl.getInstance();
-    GiftTbl.getInstance();
-    PermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/PermissionsForTesting.csv");
-    CredentialsTbl.getInstance(); // .loadBackup("BackupsCSVs/CredentialsTbl.csv");
-    AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/audioVisualTbl.csv");
-    ComputerTbl.getInstance();
-    FoodTbl.getInstance(); // .loadBackup("BackupsCSVs/foodTbl.csv");
-
-    PathTbl.getInstance();
-    FoodTbl.getInstance();
-    LocationTbl.getInstance();
-    PathTbl.getInstance();
+    LocationTbl.getInstance().loadBackup("BackupsCSVs\\locationTbl.csv");
+    EmployeeTbl.getInstance().loadBackup("BackupsCSVs\\employeeTbl.csv");
+    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
+    LaundryTbl.getInstance().loadBackup("BackupsCSVs/laundryTbl.csv");
+    MedEquipmentTbl.getInstance().loadBackup("BackupsCSVs/medEquipmentTbl.csv");
+    MedicineTbl.getInstance().loadBackup("BackupsCSVs/medicineTbl.csv");
+    GiftTbl.getInstance().loadBackup("BackupsCSVs/giftTbl.csv");
+    CredentialsTbl.getInstance().loadBackup("BackupsCSVs/credentialsTbl.csv");
+    AudioVisualTbl.getInstance().loadBackup("BackupsCSVs/audioVisualTbl.csv");
+    ComputerTbl.getInstance().loadBackup("BackupsCSVs/computerTbl.csv");
+    FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
+    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
 
     //    EmployeeTbl.getInstance().loadBackup("BackupsCSVs/employeeTbl.csv");
     //    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
