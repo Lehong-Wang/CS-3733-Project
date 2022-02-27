@@ -4,7 +4,7 @@ import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -368,7 +368,7 @@ public class PathTbl extends TableController<Path, String> {
     retVal.add(1, Simulation.pathList[medID][hour + 1]);
     //    System.out.println("Eqp #" + medID + ": Starts: " + retVal.get(0) + " Ends: " +
     // retVal.get(1));
-    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
+    SimMedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
 
@@ -385,7 +385,7 @@ public class PathTbl extends TableController<Path, String> {
     List<String> retVal = new ArrayList<>();
     retVal.add(0, Simulation.pathList[medID][hour]);
     retVal.add(1, Simulation.pathList[medID][fasterHour]);
-    MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
+    SimMedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
 }

@@ -1,19 +1,20 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery;
+package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
+public class SimMedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
-  private static MedEquipmentTbl instance = null;
+  private static SimMedEquipmentTbl instance = null;
 
-  private MedEquipmentTbl() throws SQLException {
+  private SimMedEquipmentTbl() throws SQLException {
     super(
-        "MedEquipment",
+        "SimMedEquipment",
         Arrays.asList(new String[] {"medID", "medEquipmentType", "status", "currLoc"}),
         "reqID,medID");
     createTable();
@@ -22,12 +23,12 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
     objList = readTable();
   }
 
-  public static MedEquipmentTbl getInstance() {
+  public static SimMedEquipmentTbl getInstance() {
     if (instance == null) {
       synchronized (TableController.class) {
         if (instance == null) {
           try {
-            instance = new MedEquipmentTbl();
+            instance = new SimMedEquipmentTbl();
 
           } catch (SQLException e) {
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
         }
       }
     }
-    return (MedEquipmentTbl) instance;
+    return (SimMedEquipmentTbl) instance;
   }
 
   @Override
@@ -73,10 +74,7 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
   @Override
   public boolean addEntry(MedEquipment obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
-    MedEquipment med = (MedEquipment) obj;
+    final MedEquipment med = (MedEquipment) obj;
     PreparedStatement s = null;
 
     try {
@@ -89,34 +87,6 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  private boolean addEntryOnline(MedEquipment med) {
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?)"
-                  + "end");
-      s.setInt(1, med.getMedID());
-      s.setInt(2, med.getMedID());
-      s.setString(3, med.getMedEquipmentType());
-      s.setString(4, med.getStatus());
-      s.setString(5, med.getCurrLoc().trim().toUpperCase(Locale.ROOT));
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      System.out.println(med.getCurrLoc());
       e.printStackTrace();
       return false;
     }
@@ -181,7 +151,9 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  MedEquipment("
+          "CREATE TABLE IF NOT EXISTS  "
+              + tbName
+              + "("
               + "medID TEXT NOT NULL, "
               + "medEquipmentType TEXT NOT NULL, "
               + "status TEXT NOT NULL, "
@@ -210,7 +182,9 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
 
       Statement s = connection.createStatement();
       s.execute(
-          "CREATE TABLE  MedEquipment("
+          "CREATE TABLE  "
+              + tbName
+              + "("
               + "medID INTEGER NOT NULL, "
               + "medEquipmentType TEXT NOT NULL, "
               + "status TEXT NOT NULL, "
@@ -252,5 +226,18 @@ public class MedEquipmentTbl extends TableController<MedEquipment, Integer> {
   public MedEquipment createMedEquipment(String[] ele) {
     MedEquipment med = new MedEquipment(Integer.parseInt(ele[0]), ele[1], ele[2], ele[3]);
     return med;
+  }
+
+  public void loadFromArrayList(ArrayList<MedEquipment> list) {
+    try {
+      final ArrayList<MedEquipment> finalList = list;
+      System.out.println(finalList);
+      this.objList = finalList;
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+      this.writeTable();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

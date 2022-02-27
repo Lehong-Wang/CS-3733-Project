@@ -1,36 +1,37 @@
 package edu.wpi.GoldenGandaberundas.controllers.simulation;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
 import java.util.*;
 
 public class Simulation {
   static ArrayList<String> validLocations = new ArrayList<>();
   static Map<String, String> corrLoc;
+  static String teamLetter = "G";
 
   static {
-    validLocations.add("GPATI00103");
-    validLocations.add("GPATI00203");
-    validLocations.add("GPATI00303");
-    validLocations.add("GPATI00403");
-    validLocations.add("GPATI00503");
-    validLocations.add("GPATI00603");
-    validLocations.add("GPATI00703");
-    validLocations.add("GPATI00803");
-    validLocations.add("GPATI00903");
-    validLocations.add("GPATI01003");
-    validLocations.add("GPATI01103");
-    validLocations.add("GPATI01203");
-    validLocations.add("GPATI01303");
-    validLocations.add("GPATI01403");
-    validLocations.add("GPATI01503");
-    validLocations.add("GPATI01603");
-    validLocations.add("GPATI01703");
-    validLocations.add("GPATI01803");
-    validLocations.add("GPATI01903");
-    validLocations.add("GPATI02003");
-    validLocations.add("GSTOR001L1"); // TODO add new location
+    validLocations.add(teamLetter + "PATI00103");
+    validLocations.add(teamLetter + "PATI00203");
+    validLocations.add(teamLetter + "PATI00303");
+    validLocations.add(teamLetter + "PATI00403");
+    validLocations.add(teamLetter + "PATI00503");
+    validLocations.add(teamLetter + "PATI00603");
+    validLocations.add(teamLetter + "PATI00703");
+    validLocations.add(teamLetter + "PATI00803");
+    validLocations.add(teamLetter + "PATI00903");
+    validLocations.add(teamLetter + "PATI01003");
+    validLocations.add(teamLetter + "PATI01103");
+    validLocations.add(teamLetter + "PATI01203");
+    validLocations.add(teamLetter + "PATI01303");
+    validLocations.add(teamLetter + "PATI01403");
+    validLocations.add(teamLetter + "PATI01503");
+    validLocations.add(teamLetter + "PATI01603");
+    validLocations.add(teamLetter + "PATI01703");
+    validLocations.add(teamLetter + "PATI01803");
+    validLocations.add(teamLetter + "PATI01903");
+    validLocations.add(teamLetter + "PATI02003");
+    validLocations.add(teamLetter + "STOR001L1"); // TODO add new location
 
     corrLoc = new HashMap<>();
     // TODO change the corresponding locations so they are not all the same
@@ -125,7 +126,7 @@ public class Simulation {
 
   /** Intended to take Snapshot from DB Currently loading CSV */
   public static void takeSnapshot() {
-    medTable = MedEquipmentTbl.getInstance();
+    medTable = SimMedEquipmentTbl.getInstance();
     //    ArrayList<MedEquipment> MedDBList = medTable.readTable();
     //    ArrayList<MedEquipment> MedDBList = medTable.readBackup(eqpCSV);
     ArrayList<MedEquipment> MedDBList = medTable.readTable();
@@ -186,5 +187,9 @@ public class Simulation {
       // TODO error handle here, maybe send to storage if the bed is in a weird spot?
       return "GSTOR001L1";
     }
+  }
+
+  public static void setTeamLetter(Character letter) {
+    teamLetter = letter.toString().toUpperCase(Locale.ROOT);
   }
 }

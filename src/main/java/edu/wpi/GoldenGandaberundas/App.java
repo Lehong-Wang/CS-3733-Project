@@ -24,24 +24,54 @@ public class App extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws IOException {
-
-    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
-
-    Scene scene = new Scene(root, 1280, 800);
-    // Below line is to set styleSheet, does not maintain styleSheet when switching scenes unless
-    // stylesheet is added in fxml file
-    // scene.getStylesheets().add(getClass().getResource("styleSheets/cssTest.css").toExternalForm());
-
-    primaryStage.setScene(scene);
-    primaryStage.setMaximized(true);
-    primaryStage.show();
-
     Parameters params = getParameters();
     List<String> list = params.getRaw();
     System.out.println(list.size());
     for (String each : list) {
       System.out.println(each);
     }
+    /*
+    * int xCoord,
+      int yCoord,
+      int windowWidth,
+      int windowLength,
+      String cssPath,
+      SimMedEquipmentTbl medEquipmentTbl,
+      PathTbl pathTbl,
+      LocationTbl locationTbl
+    *
+    *
+     */
+    int xCoord = 0;
+    int yCoord = 0;
+    int windowWidth = 0;
+    int windowHeight = 0;
+    try {
+      xCoord = Integer.parseInt(list.get(0));
+      yCoord = Integer.parseInt(list.get(1));
+      windowWidth = Integer.parseInt(list.get(2));
+      windowHeight = Integer.parseInt(list.get(3));
+    } catch (NumberFormatException num) {
+      num.printStackTrace();
+      System.err.println(
+          "[APP START] numeric parameters invalid \n check that the parameters are valid integers");
+      return;
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println(e.getMessage());
+    }
+    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
+    Scene scene = new Scene(root, windowWidth, windowHeight);
+    // Below line is to set styleSheet, does not maintain styleSheet when switching scenes unless
+    // stylesheet is added in fxml file
+    scene.getStylesheets().add(getClass().getResource(list.get(4)).toExternalForm());
+    primaryStage.setScene(scene);
+    // primaryStage.setMaximized(false);
+    primaryStage.setX(xCoord);
+    primaryStage.setY(yCoord);
+    primaryStage.setWidth(windowWidth);
+    primaryStage.setHeight(windowHeight);
+    primaryStage.show();
   }
 
   @Override

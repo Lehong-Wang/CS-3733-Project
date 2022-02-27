@@ -9,8 +9,8 @@ import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -409,12 +409,17 @@ public class SimulationController {
 
     equipGroup.getChildren().add(medIcon);
 
-    if (medIcon.medEquipment.getMedEquipmentType().trim().toUpperCase(Locale.ROOT).equals("BED")) {
+    if (medIcon
+        .simMedEquipment
+        .getMedEquipmentType()
+        .trim()
+        .toUpperCase(Locale.ROOT)
+        .equals("BED")) {
       medIcon.setLayoutX(loc.getXcoord() - 22);
       medIcon.setLayoutY(loc.getYcoord() - 22);
       medIcon.setImage(floorMaps.bedIcon);
     } else if (medIcon
-        .medEquipment
+        .simMedEquipment
         .getMedEquipmentType()
         .trim()
         .toUpperCase(Locale.ROOT)
@@ -423,7 +428,7 @@ public class SimulationController {
       medIcon.setLayoutY(loc.getYcoord() + 5);
       medIcon.setImage(floorMaps.xRayIcon);
     } else if (medIcon
-        .medEquipment
+        .simMedEquipment
         .getMedEquipmentType()
         .trim()
         .toUpperCase(Locale.ROOT)
@@ -432,7 +437,7 @@ public class SimulationController {
       medIcon.setLayoutX(loc.getXcoord() - 10);
       medIcon.setLayoutY(loc.getYcoord() + 10);
     } else if (medIcon
-        .medEquipment
+        .simMedEquipment
         .getMedEquipmentType()
         .trim()
         .toUpperCase(Locale.ROOT)
@@ -522,7 +527,7 @@ public class SimulationController {
     equipGroup.getChildren().clear();
 
     TableController<Location, String> locations = LocationTbl.getInstance();
-    TableController<MedEquipment, Integer> reqTable = MedEquipmentTbl.getInstance();
+    TableController<MedEquipment, Integer> reqTable = SimMedEquipmentTbl.getInstance();
     ArrayList<MedEquipment> reqList = reqTable.readTable();
     reqList =
         (ArrayList)
@@ -613,7 +618,7 @@ public class SimulationController {
    * @param hour given hour for the simulation
    */
   public void createPath(int hour) {
-    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+    for (MedEquipment med : SimMedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
       if (current.get(0).equals(current.get(1))) {
         continue;
@@ -631,7 +636,7 @@ public class SimulationController {
    * @param fasterHour the end time interval
    */
   public void createPathLonger(int currentHour, int fasterHour) {
-    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+    for (MedEquipment med : SimMedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPointsFaster(med.getMedID(), currentHour, fasterHour);
       if (current.get(0).equals(current.get(1))) {
         continue;
@@ -645,12 +650,12 @@ public class SimulationController {
 
   private class MedEqpImageView extends ImageView {
     public Location location = null;
-    public MedEquipment medEquipment = null;
+    public MedEquipment simMedEquipment = null;
 
     public MedEqpImageView(Location loc, MedEquipment med) {
       super();
       location = loc;
-      medEquipment = med;
+      simMedEquipment = med;
     }
   }
 
@@ -667,7 +672,7 @@ public class SimulationController {
 
   private class LocationPane extends Pane {
     public Location location = null;
-    public MedEquipment medEquipment = null;
+    public MedEquipment simMedEquipment = null;
 
     public LocationPane(Location loc) {
       super();
@@ -677,7 +682,7 @@ public class SimulationController {
     public LocationPane(Location loc, MedEquipment med) {
       super();
       location = loc;
-      medEquipment = med;
+      simMedEquipment = med;
     }
 
     void setLocation(Location loc) {
@@ -687,7 +692,7 @@ public class SimulationController {
 
   private class LocationCircle extends Circle {
     public Location location = null;
-    public MedEquipment medEquipment = null;
+    public MedEquipment simMedEquipment = null;
 
     public LocationCircle(Location loc) {
       super();

@@ -325,4 +325,15 @@ public class LocationTbl extends TableController<Location, String> {
     }
     return points;
   }
+
+  public void loadFromArrayList(ArrayList<Location> list) {
+    try {
+      this.objList = list;
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+      this.writeTable();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }

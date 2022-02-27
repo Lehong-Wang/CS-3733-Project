@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.Food;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipment;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,21 +10,21 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class testFoodTbl {
+public class testSimSimMedEquipmentTbl {
 
-  String tbName = "Food"; // **
+  String tbName = "MedEquipment"; // **
   String dbPath = new String("jdbc:sqlite:hospitalData.db");
 
   /**
-   * initialize a tableController as a FoodTblController call this function before each test //**
-   * setup TableController
+   * initialize a tableController as a MedEquipmentController call this function before each test
+   * //** setup TableController
    *
    * @return a single instance of TableController
    */
-  public TableController setupFoodTbl() {
+  public TableController setupMedEquipment() {
     TableController tbControl = null;
-    tbControl = FoodTbl.getInstance(); // **
-    tbControl.loadBackup("TestCSVs/FoodForTesting.csv"); // **
+    tbControl = SimMedEquipmentTbl.getInstance(); // **
+    tbControl.loadBackup("TestCSVs/MedEquipmentForTesting.csv"); // **
     return tbControl;
   }
 
@@ -33,15 +33,15 @@ public class testFoodTbl {
    *
    * @return the expected array of objects in objList
    */
-  public ArrayList<Food> getRefList() { // **
-    ArrayList<Food> refObjList = new ArrayList<Food>();
+  public ArrayList<SimMedEquipment> getRefList() { // **
+    ArrayList<SimMedEquipment> refObjList = new ArrayList<SimMedEquipment>();
     // NEED ALL ENTRIES IN CSV
-    Food L1 = new Food(111, "Burger", "Bread/Meat/Cheese", 500, "Dairy/Meat", 1.11, true, "Entree");
-    Food L2 = new Food(222, "Coke", "Water/Coke", 200, "None", 2.22, false, "Drink");
-    Food L3 = new Food(333, "Fries", "Potatoes/Grease", 250, "None", 3.33, true, "Side");
-    Food L4 = new Food(444, "Sundae", "Chocolate/Ice cream", 340, "Dairy", 4.44, false, "Dessert");
-    Food L5 = new Food(555, "Sandwich", "Bread/Meat/Lettuce", 600, "None", 5.55, true, "Entree");
-    Food L6 = new Food(666, "Chips", "Potatoes", 210, "None", 6.66, false, "Side");
+    SimMedEquipment L1 = new SimMedEquipment(111, "X-ray", "In-use", "FDEPT00301");
+    SimMedEquipment L2 = new SimMedEquipment(222, "Recliner", "Stored", "FDEPT00101");
+    SimMedEquipment L3 = new SimMedEquipment(333, "Infusion Pump", "Dirty", "FDEPT00201");
+    SimMedEquipment L4 = new SimMedEquipment(444, "X-ray", "Clean", "FDEPT00101");
+    SimMedEquipment L5 = new SimMedEquipment(555, "Bed", "Dirty", "FDEPT00201");
+    SimMedEquipment L6 = new SimMedEquipment(666, "Recliner", "In-use", "FDEPT00101");
     refObjList.add(L1);
     refObjList.add(L2);
     refObjList.add(L3);
@@ -56,10 +56,10 @@ public class testFoodTbl {
   @Test
   public void testAddEntry() {
     TableController tbControl;
-    tbControl = setupFoodTbl(); // **
+    tbControl = setupMedEquipment(); // **
 
     // create test Object
-    Food testObj = new Food(777, "Apple", "Apple", 100, "None", 7.77, true, "Side"); // **
+    SimMedEquipment testObj = new SimMedEquipment(777, "X-ray", "In-use", "FDEPT00301"); // **
     // add Obj to DB
     tbControl.addEntry(testObj);
 
@@ -72,12 +72,10 @@ public class testFoodTbl {
   @Test
   public void testGetEntry() {
     TableController tbControl;
-    tbControl = setupFoodTbl(); // **
+    tbControl = setupMedEquipment(); // **
     // create object from first object in csv and get that object with getEntry
-    Food refObj =
-        new Food(111, "Burger", "Bread/Meat/Cheese", 500, "Dairy/Meat", 1.11, true, "Entree"); // **
-    Food tbObj = (Food) tbControl.getEntry(111); // **
-    System.out.println(tbObj);
+    SimMedEquipment refObj = new SimMedEquipment(111, "X-ray", "In-use", "FDEPT00301"); // **
+    SimMedEquipment tbObj = (SimMedEquipment) tbControl.getEntry(111); // **
     // compare them
     Assertions.assertTrue(refObj.equals(tbObj));
   }
@@ -86,11 +84,11 @@ public class testFoodTbl {
   @Test
   public void testReadBackup() {
     TableController tbControl;
-    tbControl = setupFoodTbl(); // **
+    tbControl = setupMedEquipment(); // **
 
     // create a ArrayList of Object and compare it to what we get from csv
-    ArrayList<Food> tbObjList = new ArrayList<Food>(); // **
-    tbObjList = tbControl.readBackup("TestCSVs/FoodForTesting.csv"); // **
+    ArrayList<SimMedEquipment> tbObjList = new ArrayList<>(); // **
+    tbObjList = tbControl.readBackup("TestCSVs/MedEquipmentForTesting.csv"); // **
 
     boolean isSame = getRefList().equals(tbObjList);
     Assertions.assertTrue(isSame);
@@ -106,7 +104,7 @@ public class testFoodTbl {
     // create a new connection object to access db
     Connection testConnection = DriverManager.getConnection(dbPath);
     TableController tbControl;
-    tbControl = setupFoodTbl(); // **
+    tbControl = setupMedEquipment(); // **
 
     PreparedStatement s = testConnection.prepareStatement("PRAGMA table_info(" + tbName + ");");
     ResultSet r2 = s.executeQuery();
@@ -118,9 +116,7 @@ public class testFoodTbl {
     }
 
     // check the columns    //**
-    String[] cols = {
-      "foodID", "foodName", "ingredients", "calories", "allergens", "price", "inStock", "foodType"
-    };
+    String[] cols = {"medID", "type", "status", "currLoc"};
     ArrayList<String> refColNames = new ArrayList(Arrays.asList(cols));
 
     boolean isSame = refColNames.equals(testColNameList);
@@ -132,13 +128,11 @@ public class testFoodTbl {
   @Test
   public void testReadTable() {
     TableController tbControl;
-    tbControl = setupFoodTbl(); // **
+    tbControl = setupMedEquipment(); // **
 
     // compare the expected objList with what we got with readTable()
-    ArrayList<Food> refList = getRefList(); // **
-    System.out.println(refList);
-    ArrayList<Food> tbList = tbControl.readTable(); // **
-    System.out.println(tbList);
+    ArrayList<SimMedEquipment> refList = getRefList(); // **
+    ArrayList<SimMedEquipment> tbList = tbControl.readTable(); // **
 
     Boolean isSame = refList.equals(tbList);
     Assertions.assertTrue(isSame);
@@ -154,8 +148,8 @@ public class testFoodTbl {
 
     // create two instance with getInstance
     // see if they are same object in memory
-    FoodTbl L1 = FoodTbl.getInstance(); // **
-    FoodTbl L2 = FoodTbl.getInstance(); // **
+    SimMedEquipmentTbl L1 = SimMedEquipmentTbl.getInstance(); // **
+    SimMedEquipmentTbl L2 = SimMedEquipmentTbl.getInstance(); // **
 
     boolean isSame = L1.equals(L2);
     Assertions.assertTrue(isSame);

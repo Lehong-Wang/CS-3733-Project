@@ -1,6 +1,6 @@
 package edu.wpi.GoldenGandaberundas.controllers.simulation;
 
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
 
 public class MedEquipmentSimulation extends MedEquipment {
   private int inRoomEndTime, cleaningEndTime, outsideEndTime;

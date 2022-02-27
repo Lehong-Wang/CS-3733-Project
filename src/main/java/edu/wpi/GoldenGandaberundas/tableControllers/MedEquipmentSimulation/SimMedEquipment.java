@@ -1,19 +1,19 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery;
+package edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation;
 
-public class MedEquipment {
+public class SimMedEquipment {
   private int medID;
   private String medEquipmentType;
   private String status;
   private String currLoc;
 
-  public MedEquipment(int medID, String medEquipmentType, String status, String currLoc) {
+  public SimMedEquipment(int medID, String medEquipmentType, String status, String currLoc) {
     this.medID = medID;
     this.medEquipmentType = medEquipmentType;
     this.status = status;
     this.currLoc = currLoc;
   }
 
-  public MedEquipment() {}
+  public SimMedEquipment() {}
 
   @Override
   public String toString() {
@@ -53,7 +53,7 @@ public class MedEquipment {
   }
 
   public boolean equals(Object obj) { // this may be better
-    MedEquipment o = (MedEquipment) obj;
+    SimMedEquipment o = (SimMedEquipment) obj;
     return this.medID == o.medID
         && this.medEquipmentType.equals(o.medEquipmentType)
         && this.status.equals(o.status)
