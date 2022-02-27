@@ -330,14 +330,14 @@ public class EmployeePermissionEmbedded
     createTable();
     ArrayList<EmployeePermission> listObjs = readBackup(fileName);
 
-    try {
+     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
-    } catch (SQLException e) {
+     } catch (SQLException e) {
       e.printStackTrace();
-    }
+     }
     return listObjs;
   }
 
