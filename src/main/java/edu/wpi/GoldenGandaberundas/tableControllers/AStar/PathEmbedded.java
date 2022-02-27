@@ -1,7 +1,8 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.FoodService;
+package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -12,46 +13,39 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class FoodEmbedded implements TableController<Food, Integer> {
-  private static edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl instance =
-      null; // DAO
+public class PathEmbedded implements TableController<Path, String> {
   /** name of table */
-  protected String tbName;
+  private String tbName;
   /** name of columns in database table the first entry is the primary key */
-  protected List<String> colNames;
+  private List<String> colNames;
   /** list of keys that make a composite primary key */
-  protected String pkCols = null;
+  private String pkCols = null;
   /** list that contains the objects stored in the database */
-  protected ArrayList<Food> objList;
+  private ArrayList<Path> objList;
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
 
-  public FoodEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Food> objList) {
+  public PathEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Path> objList)
+      throws SQLException {
+    // create a new table with column names if none table of same name exist
+    // if there is one, do nothing
     this.tbName = tbName;
     this.pkCols = pkCols;
     colNames = Arrays.asList(cols);
     this.objList = objList;
   }
 
-  @Override
-  public ArrayList<Food> readTable() { // **
-    ArrayList tableInfo = new ArrayList<Food>(); // **
+  public ArrayList<Path> readTable() {
+    ArrayList tableInfo = new ArrayList<Path>(); // **
     try {
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
-            new Food( // **
-                r.getInt(1),
-                r.getString(2),
-                r.getString(3),
-                r.getInt(4),
-                r.getString(5),
-                r.getDouble(6),
-                r.getBoolean(7),
-                r.getString(8)));
+            new Path( // **
+                r.getString(1), r.getString(2), r.getString(3)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
@@ -60,24 +54,18 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     return tableInfo;
   }
 
-  @Override
-  public boolean addEntry(Food obj) {
-    Food med = (Food) obj; // **
+  public boolean addEntry(Path obj) {
+    Path path = (Path) obj; // **
     PreparedStatement s = null;
     try {
       s =
           connection.prepareStatement( // **
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?);");
 
       // **
-      s.setInt(1, med.getFoodID());
-      s.setString(2, med.getFoodName());
-      s.setString(3, med.getIngredients());
-      s.setInt(4, med.getCalories());
-      s.setString(5, med.getAllergens());
-      s.setDouble(6, med.getPrice());
-      s.setBoolean(7, med.getInStock());
-      s.setString(8, med.getFoodType());
+      s.setString(1, path.getEdgeID());
+      s.setString(2, path.getStartNode());
+      s.setString(3, path.getEndNode());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -86,49 +74,6 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     }
   }
 
-  @Override
-  public ArrayList<Food> readBackup(String fileName) {
-    ArrayList<Food> medList = new ArrayList<Food>(); // **
-
-    try {
-      File csvFile = new File(fileName);
-      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
-      String currentLine = buffer.readLine(); // reads a line from the csv file
-      System.out.println(currentLine);
-      if (!currentLine
-          .toLowerCase(Locale.ROOT)
-          .trim()
-          .equals(new String("foodID,description,price,inStock,foodType"))) { // **
-        System.err.println("Food backup format not recognized"); // **
-      }
-      currentLine = buffer.readLine();
-
-      while (currentLine != null) { // cycles in the while loop until it reaches the end
-        String[] element = currentLine.split(","); // separates each element based on a comma
-        Food med = // **
-            new Food(
-                Integer.parseInt(element[0]),
-                element[1],
-                element[2],
-                Integer.parseInt(element[3]),
-                element[4],
-                Double.parseDouble(element[5]),
-                Boolean.parseBoolean(element[6]),
-                element[7]); // **
-        medList.add(med); // adds the location to the list
-        currentLine = buffer.readLine();
-      }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return medList; // **
-  }
-
-  @Override
   public void createTable() {
     try {
       PreparedStatement s =
@@ -160,87 +105,149 @@ public class FoodEmbedded implements TableController<Food, Integer> {
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Food("
-              + "foodID INTEGER NOT NULL ,"
-              + "foodName TEXT NOT NULL, "
-              + "ingredients TEXT, "
-              + "calories INTEGER, "
-              + "allergens TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
-              + "foodType TEXT NOT NULL, "
-              + "PRIMARY KEY ('foodID'), "
-              + "CONSTRAINT foodTypeEnum CHECK(foodType in('Entree','Side','Drink','Dessert')));");
-
+          "CREATE TABLE IF NOT EXISTS  Paths("
+              + "edgeID TEXT NOT NULL ,"
+              + "startNode TEXT NOT NULL, "
+              + "endNode TEXT NOT NULL, "
+              + "CONSTRAINT PathPk PRIMARY KEY ('edgeID'), "
+              + "CONSTRAINT PathFk1 FOREIGN KEY (startNode) REFERENCES Locations (nodeID) "
+              + " ON UPDATE CASCADE "
+              + " ON DELETE CASCADE, "
+              + "CONSTRAINT PathFk2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID) "
+              + " ON UPDATE CASCADE "
+              + " ON DELETE CASCADE );");
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  @Override
-  public Food getEntry(Integer pkID) { // **
-    Food med = new Food(); // **
+  public Path getEntry(String pkID) {
+    Path path = new Path(); // **
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
             connection.prepareStatement(
                 "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setInt(1, pkID); // **
+        s.setString(1, pkID);
         ResultSet r = s.executeQuery();
-        r.next();
-        med.setFoodID(r.getInt(1));
-        med.setFoodName(r.getString(2));
-        med.setIngredients(r.getString(3));
-        med.setCalories(r.getInt(4));
-        med.setAllergens(r.getString(5));
-        med.setPrice(r.getDouble(6));
-        med.setInStock(r.getBoolean(7));
-        med.setFoodType(r.getString(8));
-        System.out.println(med);
-        return med;
+        r.next(); // **
+        path.setEdgeID(r.getString(1));
+        path.setStartNode(r.getString(2));
+        path.setEndNode(r.getString(3));
+        return path; // **
       } catch (SQLException e) {
         e.printStackTrace();
       }
     }
-    return med; // **
+    return path; // **
   }
 
-  @Override
-  public boolean loadFromArrayList(ArrayList<Food> objList) {
+  public boolean loadFromArrayList(ArrayList<Path> objList) {
+    this.createTable();
+    deleteTableData();
+    for (Path comp : objList) {
+      if (!this.addEntry(comp)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
-      this.objList = objList;
-      this.writeTable();
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
+  }
+
+  /**
+   * searched the path table and returns and creates a list of path points
+   *
+   * @param startNode finds the starting node
+   * @return update list of the string nodes
+   */
+  public ArrayList<String> getConnectedPoints(String startNode) {
+    ArrayList<String> connect = new ArrayList<>();
+    try {
+      PreparedStatement s =
+          connection.prepareStatement(
+              "SELECT * FROM " + tbName + " WHERE " + colNames.get(1) + " =?;");
+      s.setString(1, startNode);
+      ResultSet r = s.executeQuery();
+      while (r.next()) {
+        connect.add(r.getString(3));
+      }
+
+      return connect;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return connect;
+  }
+
+  /**
+   * takes in the path points and creates the proper branches for the points
+   *
+   * @param points the lsit of every point in the path list
+   * @return updates points list
+   */
+  public ArrayList<Point> createBranchedLocations(ArrayList<Point> points) {
+
+    for (Point p : points) {
+      ArrayList<String> branched = getConnectedPoints(p.loc);
+      for (String b : branched) {
+        for (Point o : points) {
+          if (b.equals(o.loc)) {
+            p.addBranch(o);
+            break;
+          }
+        }
+      }
+    }
+    return points;
+  }
+
+  /**
+   * Takes in the name for the start and ending nodes and creates the appropriate a star path
+   *
+   * @param start string of the starting node
+   * @param end string of the ending node
+   * @return list of Strings created from the a star path
+   */
+  public List<String> createAStarPath(String start, String end) {
+    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    if (points.size() != 0) {
+
+      points = PathTbl.getInstance().createBranchedLocations(points);
+
+      int startID = 0;
+      int endID = 0;
+      for (Point o : points) {
+        if (o.loc.equals(start)) {
+          startID = points.indexOf(o);
+        }
+        if (o.loc.equals(end)) {
+          endID = points.indexOf(o);
+        }
+      }
+      points.get(startID).g = 0;
+      Point test = points.get(startID).aStar(points.get(endID));
+      return points.get(startID).locationsPath(test);
+    }
+    return null;
   }
 
   public void writeTable() {
 
-    for (Food obj : objList) {
+    for (Path obj : objList) {
 
       this.addEntry(obj);
     }
   }
 
-  /**
-   * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
-   * MODIFYING
-   *
-   * @param pkid the primary key that represents the row you are modifying
-   * @param colName column to be modified
-   * @param value new value for column
-   * @return true if successful, false otherwise
-   */
-  // public boolean editEntry(T1 pkid, String colName, Object value)
-  public boolean editEntry(Integer pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
+  public boolean editEntry(String pkid, String colName, Object value) {
     try {
 
       PreparedStatement s =
@@ -268,10 +275,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(Integer pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
+  public boolean deleteEntry(String pkid) {
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -340,10 +344,49 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     writer.close();
   }
 
+  /**
+   * Loads a CSV file in to memory, parses to find the attributes of the objects stored in the table
+   *
+   * @param fileName location of the CSV file
+   * @return arraylist containing n number of T objects, null if error
+   */
+  public ArrayList<Path> readBackup(String fileName) {
+    ArrayList<Path> pathList = new ArrayList<Path>(); // **
+
+    try {
+      File csvFile = new File(fileName);
+      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
+      String currentLine = buffer.readLine(); // reads a line from the csv file
+      System.out.println(currentLine);
+      if (!currentLine
+          .toLowerCase(Locale.ROOT)
+          .trim()
+          .equals(new String("pathID,pathType,description,inStock"))) { // **
+        System.err.println("Path format not recognized"); // **
+      }
+      currentLine = buffer.readLine();
+
+      while (currentLine != null) { // cycles in the while loop until it reaches the end
+        String[] element = currentLine.split(","); // separates each element based on a comma
+        Path comp = // **
+            new Path(element[0], element[1], element[2]); // **
+        pathList.add(comp); // adds the location to the list
+        currentLine = buffer.readLine();
+      }
+      ; // creates a Location
+
+    } catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    return pathList;
+  }
+
   // drop current table and enter data from CSV
-  public ArrayList<Food> loadBackup(String fileName) {
+  public ArrayList<Path> loadBackup(String fileName) {
     createTable();
-    ArrayList<Food> listObjs = readBackup(fileName);
+    ArrayList<Path> listObjs = readBackup(fileName);
 
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
@@ -357,7 +400,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   // checks if an entry exists
-  public boolean entryExists(Integer pkID) {
+  public boolean entryExists(String pkID) {
     //    if (pkID instanceof ArrayList) {
     //      return entryExistsComposite((ArrayList<Integer>) pkID);
     //    }
@@ -385,7 +428,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     return tbName;
   }
 
-  public ArrayList<Food> getObjList() {
+  public ArrayList<Path> getObjList() {
     return objList;
   }
 }

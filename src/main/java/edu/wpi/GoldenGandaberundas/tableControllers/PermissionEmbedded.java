@@ -1,7 +1,8 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.FoodService;
+package edu.wpi.GoldenGandaberundas.tableControllers;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Permission;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -12,23 +13,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class FoodEmbedded implements TableController<Food, Integer> {
-  private static edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl instance =
-      null; // DAO
+public class PermissionEmbedded implements TableController<Permission, Integer> {
   /** name of table */
-  protected String tbName;
+  private String tbName;
   /** name of columns in database table the first entry is the primary key */
-  protected List<String> colNames;
+  private List<String> colNames;
   /** list of keys that make a composite primary key */
-  protected String pkCols = null;
+  private String pkCols = null;
   /** list that contains the objects stored in the database */
-  protected ArrayList<Food> objList;
+  private ArrayList<Permission> objList;
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
 
-  public FoodEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Food> objList) {
+  public PermissionEmbedded(
+      String tbName, String[] cols, String pkCols, ArrayList<Permission> objList)
+      throws SQLException {
+    // create a new table with column names if none table of same name exist
+    // if there is one, do nothing
     this.tbName = tbName;
     this.pkCols = pkCols;
     colNames = Arrays.asList(cols);
@@ -36,22 +39,13 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   @Override
-  public ArrayList<Food> readTable() { // **
-    ArrayList tableInfo = new ArrayList<Food>(); // **
+  public ArrayList<Permission> readTable() { // **
+    ArrayList tableInfo = new ArrayList<Permission>(); // **
     try {
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        tableInfo.add(
-            new Food( // **
-                r.getInt(1),
-                r.getString(2),
-                r.getString(3),
-                r.getInt(4),
-                r.getString(5),
-                r.getDouble(6),
-                r.getBoolean(7),
-                r.getString(8)));
+        tableInfo.add(new Permission(r.getInt(1), r.getString(2), r.getString(3)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
@@ -61,23 +55,18 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   @Override
-  public boolean addEntry(Food obj) {
-    Food med = (Food) obj; // **
+  public boolean addEntry(Permission obj) {
+    Permission perm = (Permission) obj; // **
     PreparedStatement s = null;
     try {
       s =
           connection.prepareStatement( // **
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+              "INSERT OR IGNORE INTO " + tbName + " VALUES (?,?,?);");
 
       // **
-      s.setInt(1, med.getFoodID());
-      s.setString(2, med.getFoodName());
-      s.setString(3, med.getIngredients());
-      s.setInt(4, med.getCalories());
-      s.setString(5, med.getAllergens());
-      s.setDouble(6, med.getPrice());
-      s.setBoolean(7, med.getInStock());
-      s.setString(8, med.getFoodType());
+      s.setInt(1, perm.getPermID());
+      s.setString(2, perm.getType());
+      s.setString(3, perm.getPermDescription());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -87,8 +76,8 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   @Override
-  public ArrayList<Food> readBackup(String fileName) {
-    ArrayList<Food> medList = new ArrayList<Food>(); // **
+  public ArrayList<Permission> readBackup(String fileName) {
+    ArrayList<Permission> permList = new ArrayList<>(); // **
 
     try {
       File csvFile = new File(fileName);
@@ -98,24 +87,16 @@ public class FoodEmbedded implements TableController<Food, Integer> {
       if (!currentLine
           .toLowerCase(Locale.ROOT)
           .trim()
-          .equals(new String("foodID,description,price,inStock,foodType"))) { // **
-        System.err.println("Food backup format not recognized"); // **
+          .equals(new String("permID,deviceType,locID,description"))) { // **
+        System.err.println("Permission backup format not recognized"); // **
       }
       currentLine = buffer.readLine();
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
-        Food med = // **
-            new Food(
-                Integer.parseInt(element[0]),
-                element[1],
-                element[2],
-                Integer.parseInt(element[3]),
-                element[4],
-                Double.parseDouble(element[5]),
-                Boolean.parseBoolean(element[6]),
-                element[7]); // **
-        medList.add(med); // adds the location to the list
+        Permission perm = // **
+            new Permission(Integer.parseInt(element[0]), element[1], element[2]); // **
+        permList.add(perm); // adds the location to the list
         currentLine = buffer.readLine();
       }
       ; // creates a Location
@@ -125,7 +106,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
-    return medList; // **
+    return permList; // **
   }
 
   @Override
@@ -160,17 +141,11 @@ public class FoodEmbedded implements TableController<Food, Integer> {
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Food("
-              + "foodID INTEGER NOT NULL ,"
-              + "foodName TEXT NOT NULL, "
-              + "ingredients TEXT, "
-              + "calories INTEGER, "
-              + "allergens TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
-              + "foodType TEXT NOT NULL, "
-              + "PRIMARY KEY ('foodID'), "
-              + "CONSTRAINT foodTypeEnum CHECK(foodType in('Entree','Side','Drink','Dessert')));");
+          "CREATE TABLE IF NOT EXISTS  Permissions("
+              + "permID INTEGER NOT NULL, "
+              + "type TEXT NOT NULL, "
+              + "permDescription TEXT, "
+              + "CONSTRAINT PermissionsPK PRIMARY KEY (permID));");
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -178,8 +153,8 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   @Override
-  public Food getEntry(Integer pkID) { // **
-    Food med = new Food(); // **
+  public Permission getEntry(Integer pkID) { // **
+    Permission perm = new Permission(); // **
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
@@ -188,40 +163,43 @@ public class FoodEmbedded implements TableController<Food, Integer> {
         s.setInt(1, pkID); // **
         ResultSet r = s.executeQuery();
         r.next();
-        med.setFoodID(r.getInt(1));
-        med.setFoodName(r.getString(2));
-        med.setIngredients(r.getString(3));
-        med.setCalories(r.getInt(4));
-        med.setAllergens(r.getString(5));
-        med.setPrice(r.getDouble(6));
-        med.setInStock(r.getBoolean(7));
-        med.setFoodType(r.getString(8));
-        System.out.println(med);
-        return med;
+        perm.setPermID(r.getInt(1));
+        perm.setType(r.getString(2));
+        perm.setPermDescription(r.getString(3));
+        return perm;
       } catch (SQLException e) {
         e.printStackTrace();
       }
     }
-    return med; // **
+    return perm; // **
   }
 
   @Override
-  public boolean loadFromArrayList(ArrayList<Food> objList) {
+  public boolean loadFromArrayList(ArrayList<Permission> objList) {
+
+    this.createTable();
+    deleteTableData();
+    for (Permission perm : objList) {
+      if (!this.addEntry(perm)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
-      this.objList = objList;
-      this.writeTable();
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
   }
 
+  @Override
   public void writeTable() {
 
-    for (Food obj : objList) {
+    for (Permission obj : objList) {
 
       this.addEntry(obj);
     }
@@ -341,9 +319,9 @@ public class FoodEmbedded implements TableController<Food, Integer> {
   }
 
   // drop current table and enter data from CSV
-  public ArrayList<Food> loadBackup(String fileName) {
+  public ArrayList<Permission> loadBackup(String fileName) {
     createTable();
-    ArrayList<Food> listObjs = readBackup(fileName);
+    ArrayList<Permission> listObjs = readBackup(fileName);
 
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
@@ -385,7 +363,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     return tbName;
   }
 
-  public ArrayList<Food> getObjList() {
+  public ArrayList<Permission> getObjList() {
     return objList;
   }
 }

@@ -170,8 +170,10 @@ public class GiftClientServer implements TableController<Gift, Integer> {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = new ArrayList<Gift>();
-      for(Gift g : objList){
-        this.objList.add(new Gift(g.getGiftID(), g.getGiftType(), g.getDescription(), g.getPrice(), g.getInStock()));
+      for (Gift g : objList) {
+        this.objList.add(
+            new Gift(
+                g.getGiftID(), g.getGiftType(), g.getDescription(), g.getPrice(), g.getInStock()));
       }
       this.writeTable();
       return true;

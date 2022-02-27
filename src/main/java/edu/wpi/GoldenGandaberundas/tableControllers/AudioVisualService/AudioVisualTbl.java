@@ -2,20 +2,12 @@ package edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisual;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualClientServer;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualEmbedded;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.Laundry;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
 
@@ -42,8 +34,10 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
     colNames = Arrays.asList(new String[] {"avID", "deviceType", "locID", "description"});
     pkCols = "avID";
     objList = new ArrayList<AudioVisual>();
-    embeddedTable = new AudioVisualEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
-    clientServerTable = new AudioVisualClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
+    embeddedTable =
+        new AudioVisualEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
+    clientServerTable =
+        new AudioVisualClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
     createTable();
@@ -80,22 +74,34 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
     return null;
   }
 
-  public ArrayList<AudioVisual> readTable() {return this.getCurrentTable().readTable();}
+  public ArrayList<AudioVisual> readTable() {
+    return this.getCurrentTable().readTable();
+  }
 
   @Override
-  public boolean addEntry(AudioVisual obj) {return this.getCurrentTable().addEntry(obj);}
+  public boolean addEntry(AudioVisual obj) {
+    return this.getCurrentTable().addEntry(obj);
+  }
 
-  public ArrayList<AudioVisual> readBackup(String fileName) {return this.getCurrentTable().readBackup(fileName);}
+  public ArrayList<AudioVisual> readBackup(String fileName) {
+    return this.getCurrentTable().readBackup(fileName);
+  }
 
-  public void createTable() {this.getCurrentTable().createTable();}
+  public void createTable() {
+    this.getCurrentTable().createTable();
+  }
 
-  public AudioVisual getEntry(Integer pkID) {return this.getCurrentTable().getEntry(pkID);}
+  public AudioVisual getEntry(Integer pkID) {
+    return this.getCurrentTable().getEntry(pkID);
+  }
 
   public boolean loadFromArrayList(ArrayList<AudioVisual> objList) {
     return this.getCurrentTable().loadFromArrayList(objList);
   }
 
-  public void writeTable() {this.getCurrentTable().writeTable();}
+  public void writeTable() {
+    this.getCurrentTable().writeTable();
+  }
 
   /**
    * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
@@ -107,7 +113,9 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
    * @return true if successful, false otherwise
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
-  public boolean editEntry(Integer pkid, String colName, Object value) {return this.getCurrentTable().editEntry(pkid, colName, value);}
+  public boolean editEntry(Integer pkid, String colName, Object value) {
+    return this.getCurrentTable().editEntry(pkid, colName, value);
+  }
 
   /**
    * removes a row from the database
@@ -115,20 +123,28 @@ public class AudioVisualTbl implements TableController<AudioVisual, Integer> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(Integer pkid) {return this.getCurrentTable().deleteEntry(pkid);}
+  public boolean deleteEntry(Integer pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
 
   /**
    * creates CSV file representing the objects stored in the table
    *
    * @param f filename of the to be created CSV
    */
-  public void createBackup(File f) {this.getCurrentTable().createBackup(f);}
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
 
   // drop current table and enter data from CSV
-  public ArrayList<AudioVisual> loadBackup(String fileName) {return this.getCurrentTable().loadBackup(fileName);}
+  public ArrayList<AudioVisual> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
 
   // checks if an entry exists
-  public boolean entryExists(Integer pkID) {return this.getCurrentTable().entryExists(pkID);}
+  public boolean entryExists(Integer pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
 
   public String getTableName() {
     return tbName;

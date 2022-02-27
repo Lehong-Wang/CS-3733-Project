@@ -2,7 +2,6 @@ package edu.wpi.GoldenGandaberundas.tableControllers.LaundryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -44,12 +43,7 @@ public class LaundryClientServer implements TableController<Laundry, Integer> {
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        tableInfo.add(
-            new Laundry(
-                r.getInt(1),
-                r.getString(2),
-                r.getString(3),
-                r.getBoolean(4)));
+        tableInfo.add(new Laundry(r.getInt(1), r.getString(2), r.getString(3), r.getBoolean(4)));
       }
     } catch (SQLException se) {
       se.printStackTrace();

@@ -1,4 +1,4 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.FoodService;
+package edu.wpi.GoldenGandaberundas.tableControllers.ComputerService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
@@ -12,45 +12,45 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class FoodEmbedded implements TableController<Food, Integer> {
-  private static edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl instance =
-      null; // DAO
+public class ComputerEmbedded implements TableController<Computer, Integer> {
   /** name of table */
-  protected String tbName;
+  private String tbName;
   /** name of columns in database table the first entry is the primary key */
-  protected List<String> colNames;
+  private List<String> colNames;
   /** list of keys that make a composite primary key */
-  protected String pkCols = null;
+  private String pkCols = null;
   /** list that contains the objects stored in the database */
-  protected ArrayList<Food> objList;
+  private ArrayList<Computer> objList;
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
 
-  public FoodEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Food> objList) {
+  public ComputerEmbedded(String tbName, String[] cols, String pkCols, ArrayList<Computer> objList)
+      throws SQLException {
+    // create a new table with column names if none table of same name exist
+    // if there is one, do nothing
     this.tbName = tbName;
     this.pkCols = pkCols;
     colNames = Arrays.asList(cols);
     this.objList = objList;
   }
 
-  @Override
-  public ArrayList<Food> readTable() { // **
-    ArrayList tableInfo = new ArrayList<Food>(); // **
+  public ArrayList<Computer> readTable() {
+    ArrayList tableInfo = new ArrayList<Computer>(); // **
     try {
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
-            new Food( // **
+            new Computer( // **
                 r.getInt(1),
                 r.getString(2),
                 r.getString(3),
-                r.getInt(4),
+                r.getString(4),
                 r.getString(5),
-                r.getDouble(6),
-                r.getBoolean(7),
+                r.getString(6),
+                r.getString(7),
                 r.getString(8)));
       }
     } catch (SQLException se) {
@@ -60,9 +60,8 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     return tableInfo;
   }
 
-  @Override
-  public boolean addEntry(Food obj) {
-    Food med = (Food) obj; // **
+  public boolean addEntry(Computer obj) {
+    Computer computer = (Computer) obj; // **
     PreparedStatement s = null;
     try {
       s =
@@ -70,14 +69,14 @@ public class FoodEmbedded implements TableController<Food, Integer> {
               "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
       // **
-      s.setInt(1, med.getFoodID());
-      s.setString(2, med.getFoodName());
-      s.setString(3, med.getIngredients());
-      s.setInt(4, med.getCalories());
-      s.setString(5, med.getAllergens());
-      s.setDouble(6, med.getPrice());
-      s.setBoolean(7, med.getInStock());
-      s.setString(8, med.getFoodType());
+      s.setInt(1, computer.getComputerID());
+      s.setString(2, computer.getComputerType());
+      s.setString(3, computer.getOs());
+      s.setString(4, computer.getProcessor());
+      s.setString(5, computer.getHostName());
+      s.setString(6, computer.getModel());
+      s.setString(7, computer.getManufacturer());
+      s.setString(8, computer.getSerialNumber());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -86,49 +85,6 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     }
   }
 
-  @Override
-  public ArrayList<Food> readBackup(String fileName) {
-    ArrayList<Food> medList = new ArrayList<Food>(); // **
-
-    try {
-      File csvFile = new File(fileName);
-      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
-      String currentLine = buffer.readLine(); // reads a line from the csv file
-      System.out.println(currentLine);
-      if (!currentLine
-          .toLowerCase(Locale.ROOT)
-          .trim()
-          .equals(new String("foodID,description,price,inStock,foodType"))) { // **
-        System.err.println("Food backup format not recognized"); // **
-      }
-      currentLine = buffer.readLine();
-
-      while (currentLine != null) { // cycles in the while loop until it reaches the end
-        String[] element = currentLine.split(","); // separates each element based on a comma
-        Food med = // **
-            new Food(
-                Integer.parseInt(element[0]),
-                element[1],
-                element[2],
-                Integer.parseInt(element[3]),
-                element[4],
-                Double.parseDouble(element[5]),
-                Boolean.parseBoolean(element[6]),
-                element[7]); // **
-        medList.add(med); // adds the location to the list
-        currentLine = buffer.readLine();
-      }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return medList; // **
-  }
-
-  @Override
   public void createTable() {
     try {
       PreparedStatement s =
@@ -160,87 +116,76 @@ public class FoodEmbedded implements TableController<Food, Integer> {
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Food("
-              + "foodID INTEGER NOT NULL ,"
-              + "foodName TEXT NOT NULL, "
-              + "ingredients TEXT, "
-              + "calories INTEGER, "
-              + "allergens TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
-              + "foodType TEXT NOT NULL, "
-              + "PRIMARY KEY ('foodID'), "
-              + "CONSTRAINT foodTypeEnum CHECK(foodType in('Entree','Side','Drink','Dessert')));");
-
+          "CREATE TABLE IF NOT EXISTS  Computer("
+              + "computerID INTEGER NOT NULL ,"
+              + "computerType TEXT NOT NULL , "
+              + "os TEXT NOT NULL , "
+              + "processor TEXT NOT NULL , "
+              + "hostName TEXT NOT NULL , "
+              + "model TEXT NOT NULL , "
+              + "manufacturer TEXT NOT NULL , "
+              + "serialNumber TEXT NOT NULL , "
+              + "PRIMARY KEY ('computerID'));");
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  @Override
-  public Food getEntry(Integer pkID) { // **
-    Food med = new Food(); // **
+  public Computer getEntry(Integer pkID) {
+    Computer computer = new Computer(); // **
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
             connection.prepareStatement(
                 "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setInt(1, pkID); // **
+        s.setInt(1, pkID);
         ResultSet r = s.executeQuery();
-        r.next();
-        med.setFoodID(r.getInt(1));
-        med.setFoodName(r.getString(2));
-        med.setIngredients(r.getString(3));
-        med.setCalories(r.getInt(4));
-        med.setAllergens(r.getString(5));
-        med.setPrice(r.getDouble(6));
-        med.setInStock(r.getBoolean(7));
-        med.setFoodType(r.getString(8));
-        System.out.println(med);
-        return med;
+        r.next(); // **
+        computer.setComputerID(r.getInt(1));
+        computer.setComputerType(r.getString(2));
+        computer.setOs(r.getString(3));
+        computer.setProcessor(r.getString(4));
+        computer.setHostName(r.getString(5));
+        computer.setModel(r.getString(6));
+        computer.setManufacturer(r.getString(7));
+        computer.setSerialNumber(r.getString(8));
+        return computer; // **
       } catch (SQLException e) {
         e.printStackTrace();
       }
     }
-    return med; // **
+    return computer; // **
   }
 
-  @Override
-  public boolean loadFromArrayList(ArrayList<Food> objList) {
+  public boolean loadFromArrayList(ArrayList<Computer> objList) {
+    this.createTable();
+    deleteTableData();
+    for (Computer comp : objList) {
+      if (!this.addEntry(comp)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
-      this.objList = objList;
-      this.writeTable();
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
   }
 
   public void writeTable() {
 
-    for (Food obj : objList) {
+    for (Computer obj : objList) {
 
       this.addEntry(obj);
     }
   }
 
-  /**
-   * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
-   * MODIFYING
-   *
-   * @param pkid the primary key that represents the row you are modifying
-   * @param colName column to be modified
-   * @param value new value for column
-   * @return true if successful, false otherwise
-   */
-  // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(Integer pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
     try {
 
       PreparedStatement s =
@@ -269,9 +214,6 @@ public class FoodEmbedded implements TableController<Food, Integer> {
    * @return true if successful, false otherwise
    */
   public boolean deleteEntry(Integer pkid) {
-    //    if (pkid instanceof ArrayList) {
-    //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-    //    }
     try {
       PreparedStatement s =
           connection.prepareStatement(
@@ -340,10 +282,57 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     writer.close();
   }
 
+  /**
+   * Loads a CSV file in to memory, parses to find the attributes of the objects stored in the table
+   *
+   * @param fileName location of the CSV file
+   * @return arraylist containing n number of T objects, null if error
+   */
+  public ArrayList<Computer> readBackup(String fileName) {
+    ArrayList<Computer> computerList = new ArrayList<Computer>(); // **
+
+    try {
+      File csvFile = new File(fileName);
+      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
+      String currentLine = buffer.readLine(); // reads a line from the csv file
+      System.out.println(currentLine);
+      if (!currentLine
+          .toLowerCase(Locale.ROOT)
+          .trim()
+          .equals(new String("computerID,computerType,description,inStock"))) { // **
+        System.err.println("Computer format not recognized"); // **
+      }
+      currentLine = buffer.readLine();
+
+      while (currentLine != null) { // cycles in the while loop until it reaches the end
+        String[] element = currentLine.split(","); // separates each element based on a comma
+        Computer comp = // **
+            new Computer(
+                Integer.parseInt(element[0]),
+                element[1],
+                element[2],
+                element[3],
+                element[4],
+                element[5],
+                element[6],
+                element[7]); // **
+        computerList.add(comp); // adds the location to the list
+        currentLine = buffer.readLine();
+      }
+      ; // creates a Location
+
+    } catch (FileNotFoundException ex) {
+      ex.printStackTrace();
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    return computerList;
+  }
+
   // drop current table and enter data from CSV
-  public ArrayList<Food> loadBackup(String fileName) {
+  public ArrayList<Computer> loadBackup(String fileName) {
     createTable();
-    ArrayList<Food> listObjs = readBackup(fileName);
+    ArrayList<Computer> listObjs = readBackup(fileName);
 
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
@@ -385,7 +374,7 @@ public class FoodEmbedded implements TableController<Food, Integer> {
     return tbName;
   }
 
-  public ArrayList<Food> getObjList() {
+  public ArrayList<Computer> getObjList() {
     return objList;
   }
 }

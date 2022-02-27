@@ -168,7 +168,7 @@ public class FoodClientServer implements TableController<Food, Integer> {
 
   @Override
   public Food getEntry(Integer pkID) { // **
-    Food med = new Food(); // **
+    Food f = new Food(); // **
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
@@ -177,26 +177,32 @@ public class FoodClientServer implements TableController<Food, Integer> {
         s.setInt(1, pkID); // **
         ResultSet r = s.executeQuery();
         r.next();
-        med.setFoodID(r.getInt(1));
-        med.setFoodName(r.getString(2));
-        med.setIngredients(r.getString(3));
-        med.setCalories(r.getInt(4));
-        med.setAllergens(r.getString(5));
-        med.setPrice(r.getDouble(6));
-        med.setInStock(r.getBoolean(7));
-        med.setFoodType(r.getString(8));
-        System.out.println(med);
-        return med;
+        f.setFoodID(r.getInt(1));
+        f.setFoodName(r.getString(2));
+        f.setIngredients(r.getString(3));
+        f.setCalories(r.getInt(4));
+        f.setAllergens(r.getString(5));
+        f.setPrice(r.getDouble(6));
+        f.setInStock(r.getBoolean(7));
+        f.setFoodType(r.getString(8));
+        System.out.println(f);
+        return f;
       } catch (SQLException e) {
         e.printStackTrace();
       }
     }
-    return med; // **
+    return f; // **
   }
 
-  @Override
   public boolean loadFromArrayList(ArrayList<Food> objList) {
-    return false;
+    this.createTable();
+    deleteTableData();
+    for (Food f : objList) {
+      if (!this.addEntry(f)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public void writeTable() {
@@ -204,6 +210,15 @@ public class FoodClientServer implements TableController<Food, Integer> {
     for (Food obj : objList) {
 
       this.addEntry(obj);
+    }
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 

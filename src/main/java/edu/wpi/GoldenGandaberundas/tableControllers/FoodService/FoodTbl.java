@@ -3,18 +3,11 @@ package edu.wpi.GoldenGandaberundas.tableControllers.FoodService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.Gift;
-import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftClientServer;
-import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftEmbedded;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class FoodTbl implements TableController<Food, Integer> {
 
@@ -29,6 +22,7 @@ public class FoodTbl implements TableController<Food, Integer> {
   protected ArrayList<Food> objList;
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
+
   Connection connection = connectionHandler.getConnection();
   TableController<Food, Integer> embeddedTable = null;
 
@@ -67,7 +61,6 @@ public class FoodTbl implements TableController<Food, Integer> {
     return instance;
   }
 
-
   private TableController<Food, Integer> getCurrentTable() {
     System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (connectionHandler.getCurrentConnectionType()) {
@@ -81,7 +74,6 @@ public class FoodTbl implements TableController<Food, Integer> {
     System.out.println(connectionHandler.getCurrentConnectionType());
     return null;
   }
-
 
   @Override
   public ArrayList<Food> readTable() { // **
@@ -110,7 +102,7 @@ public class FoodTbl implements TableController<Food, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Food> objList) {
-   return this.getCurrentTable().loadFromArrayList(objList);
+    return this.getCurrentTable().loadFromArrayList(objList);
   }
 
   public void writeTable() {

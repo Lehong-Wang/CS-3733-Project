@@ -2,13 +2,14 @@ package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,9 @@ public class PathTbl implements TableController<Path, String> {
   protected ArrayList<Path> objList;
   /** relative path to the database file */
   private static HashMap<String, Integer> statsMap = new HashMap<>();
+  TableController<Path, String> embeddedTable = null;
+
+  TableController<Path, String> clientServerTable = null;
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
   Connection connection = connectionHandler.getConnection();
@@ -37,13 +41,14 @@ public class PathTbl implements TableController<Path, String> {
   private PathTbl() throws SQLException {
     tbName = "Paths";
     pkCols = "edgeID";
-
-    String[] cols = {"edgeID", "startNode", "endNode"};
-    colNames = Arrays.asList(cols);
-
-    createTable();
-
+    colNames = Arrays.asList(new String[] {"edgeID", "startNode", "endNode"});
     objList = new ArrayList<Path>();
+    embeddedTable = new PathEmbedded(tbName, colNames.toArray(new String[3]), pkCols, objList);
+    clientServerTable =
+        new PathClientServer(tbName, colNames.toArray(new String[3]), pkCols, objList);
+    connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
+    connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    createTable();
     objList = readTable();
   }
 
@@ -63,207 +68,48 @@ public class PathTbl implements TableController<Path, String> {
     return instance;
   }
 
+  private TableController<Path, String> getCurrentTable() {
+    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
+    switch (connectionHandler.getCurrentConnectionType()) {
+      case embedded:
+        return embeddedTable;
+      case clientServer:
+        return clientServerTable;
+      case cloud:
+        return null;
+    }
+    System.out.println(connectionHandler.getCurrentConnectionType());
+    return null;
+  }
+
   @Override
   public ArrayList<Path> readTable() {
-
-    ArrayList<Path> tableInfo = new ArrayList<>();
-    try {
-      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
-      ResultSet r = s.executeQuery();
-
-      while (r.next()) {
-        tableInfo.add(new Path(r.getString(1), r.getString(2), r.getString(3)));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return null;
-    }
-    objList = tableInfo;
-    return tableInfo;
+    return this.getCurrentTable().readTable();
   }
 
   @Override
   public boolean addEntry(Path obj) {
-
-    Path path = (Path) obj;
-    PreparedStatement s = null;
-    try {
-      s = connection.prepareStatement("INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?);");
-
-      s.setString(1, path.getEdgeID());
-      s.setString(2, path.getStartNode());
-      s.setString(3, path.getEndNode());
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  private boolean addEntryOnline(Path path) {
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?)"
-                  + "end");
-
-      s.setString(1, path.getEdgeID());
-      s.setString(2, path.getStartNode());
-      s.setString(3, path.getEndNode());
-      s.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-    return true;
+    return this.getCurrentTable().addEntry(obj);
   }
 
   @Override
   public ArrayList<Path> readBackup(String fileName) {
-    ArrayList<Path> paths = new ArrayList<>();
-
-    try {
-      File csvFile = new File(fileName);
-      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
-      String currentLine = buffer.readLine(); // reads a line from the csv file
-
-      if (!currentLine
-          .toLowerCase(Locale.ROOT)
-          .trim()
-          .equals(new String("edgeID,startNode,endNode"))) {
-        System.err.println("path backup format not recognized");
-      }
-      currentLine = buffer.readLine();
-
-      while (currentLine != null) { // cycles in the while loop until it reaches the end
-        String[] element = currentLine.split(","); // separates each element based on a comma
-        Path path = new Path(element[0], element[1], element[2]);
-        paths.add(path); // adds the location to the list
-        currentLine = buffer.readLine();
-      }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return paths;
+    return this.getCurrentTable().readBackup(fileName);
   }
 
   @Override
   public void createTable() {
-
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
-      s.setString(1, tbName);
-      ResultSet r = s.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return;
-    }
-
-    try {
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
-      e.printStackTrace();
-      return;
-    }
-
-    System.out.println("SQLite driver registered!");
-
-    Statement s = null;
-    try {
-      s = connection.createStatement();
-      s.execute("PRAGMA foreign_keys = ON");
-      s.execute(
-          "CREATE TABLE IF NOT EXISTS  Paths("
-              + "edgeID TEXT NOT NULL ,"
-              + "startNode TEXT NOT NULL, "
-              + "endNode TEXT NOT NULL, "
-              + "CONSTRAINT PathPk PRIMARY KEY ('edgeID'), "
-              + "CONSTRAINT PathFk1 FOREIGN KEY (startNode) REFERENCES Locations (nodeID) "
-              + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE, "
-              + "CONSTRAINT PathFk2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID) "
-              + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE );");
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void createTableOnline() {
-    try {
-
-      PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
-      s1.setString(1, tbName);
-      ResultSet r = s1.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-      Statement s = connection.createStatement();
-      s.execute(
-          "CREATE TABLE  Paths("
-              + "edgeID TEXT NOT NULL ,"
-              + "startNode TEXT NOT NULL, "
-              + "endNode TEXT NOT NULL, "
-              + "CONSTRAINT PathPk PRIMARY KEY ('edgeID'), "
-              + "CONSTRAINT PathFk1 FOREIGN KEY (startNode) REFERENCES Locations (nodeID) "
-              + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE, "
-              + "CONSTRAINT PathFk2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID) "
-              + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE );");
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    this.getCurrentTable().createTable();
   }
 
   @Override
   public Path getEntry(String pkID) {
-    Path path = new Path();
-    if (this.entryExists(pkID)) {
-      try {
-        PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setString(1, pkID);
-        ResultSet r = s.executeQuery();
-        r.next();
-        path.setEdgeID(r.getString(1));
-        path.setStartNode(r.getString(2));
-        path.setEndNode(r.getString(3));
-        return path;
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-    return path;
+    return this.getCurrentTable().getEntry(pkID);
   }
 
   @Override
   public boolean loadFromArrayList(ArrayList<Path> objList) {
-    return false;
+    return this.getCurrentTable().loadFromArrayList(objList);
   }
 
   /**
@@ -273,6 +119,7 @@ public class PathTbl implements TableController<Path, String> {
    * @return update list of the string nodes
    */
   public ArrayList<String> getConnectedPoints(String startNode) {
+    // return this.getCurrentTable().getConnectedPoints(startNode);
     ArrayList<String> connect = new ArrayList<>();
     try {
       PreparedStatement s =
@@ -298,7 +145,7 @@ public class PathTbl implements TableController<Path, String> {
    * @return updates points list
    */
   public ArrayList<Point> createBranchedLocations(ArrayList<Point> points) {
-
+    // return this.getCurrentTable().createBranchedLocations(points);
     for (Point p : points) {
       ArrayList<String> branched = getConnectedPoints(p.loc);
       for (String b : branched) {
@@ -321,6 +168,7 @@ public class PathTbl implements TableController<Path, String> {
    * @return list of Strings created from the a star path
    */
   public List<String> createAStarPath(String start, String end) {
+    // return this.getCurrentTable().createAStarPath(start, end);
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     if (points.size() != 0) {
       points = PathTbl.getInstance().createBranchedLocations(points);
@@ -378,11 +226,7 @@ public class PathTbl implements TableController<Path, String> {
 
   @Override
   public void writeTable() {
-
-    for (Path obj : objList) {
-
-      this.addEntry(obj);
-    }
+    this.getCurrentTable().writeTable();
   }
 
   @Override
@@ -401,27 +245,8 @@ public class PathTbl implements TableController<Path, String> {
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(String pkid, String colName, Object value) {
-    //    if (pkid instanceof ArrayList) {
-    //      return editEntryComposite((ArrayList<Integer>) pkid, colName, value);
-    //    }
-    try {
-
-      PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
-      s.setObject(1, value);
-      s.setObject(2, pkid);
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
+    return this.getCurrentTable().editEntry(pkid, colName, value);
+  }
 
   /**
   * removes a row from the database
@@ -547,6 +372,9 @@ public class PathTbl implements TableController<Path, String> {
    * @param hour - Beginning hour of path
    * @return List<String> where index 0 = starting point, index 1 = ending point
    */
+  public boolean deleteEntry(String pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
   public static List<String> getPathPoints(int medID, int hour) {
     List<String> retVal = new ArrayList<>();
     retVal.add(0, Simulation.pathList[medID][hour]);
@@ -566,6 +394,19 @@ public class PathTbl implements TableController<Path, String> {
    * @param fasterHour - End of lonnher duration time
    * @return List<String> where index 0 = starting point, index 1 = ending point
    */
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
+
+  // drop current table and enter data from CSV
+  public ArrayList<Path> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
+
+  // checks if an entry exists
+  public boolean entryExists(String pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
   public static List<String> getPathPointsFaster(int medID, int hour, int fasterHour) {
     List<String> retVal = new ArrayList<>();
     retVal.add(0, Simulation.pathList[medID][hour]);
@@ -573,6 +414,7 @@ public class PathTbl implements TableController<Path, String> {
     MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
+
 
   public String getTableName() {
     return tbName;

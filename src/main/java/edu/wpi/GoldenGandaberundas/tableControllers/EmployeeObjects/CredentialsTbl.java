@@ -3,20 +3,12 @@ package edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
-import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientClientServer;
-import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientEmbedded;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CredentialsTbl implements TableController<Credential, Integer> {
   /** single instance of class allowed */
@@ -86,22 +78,34 @@ public class CredentialsTbl implements TableController<Credential, Integer> {
     return null;
   }
 
-  public ArrayList<Credential> readTable() {return this.getCurrentTable().readTable();}
+  public ArrayList<Credential> readTable() {
+    return this.getCurrentTable().readTable();
+  }
 
-  public boolean addEntry(Credential obj) {return this.getCurrentTable().addEntry(obj);}
+  public boolean addEntry(Credential obj) {
+    return this.getCurrentTable().addEntry(obj);
+  }
 
-  public ArrayList<Credential> readBackup(String fileName) {return this.getCurrentTable().readBackup(fileName);}
+  public ArrayList<Credential> readBackup(String fileName) {
+    return this.getCurrentTable().readBackup(fileName);
+  }
 
-  public void createTable() {this.getCurrentTable().createTable();}
+  public void createTable() {
+    this.getCurrentTable().createTable();
+  }
 
-  public Credential getEntry(Integer pkID) {return this.getCurrentTable().getEntry(pkID);}
+  public Credential getEntry(Integer pkID) {
+    return this.getCurrentTable().getEntry(pkID);
+  }
 
   @Override
   public boolean loadFromArrayList(ArrayList<Credential> objList) {
-      return this.getCurrentTable().loadFromArrayList(objList);
-    }
+    return this.getCurrentTable().loadFromArrayList(objList);
+  }
 
-  public void writeTable() {this.getCurrentTable().writeTable();}
+  public void writeTable() {
+    this.getCurrentTable().writeTable();
+  }
 
   /**
    * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
@@ -123,20 +127,28 @@ public class CredentialsTbl implements TableController<Credential, Integer> {
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(Integer pkid) {return this.getCurrentTable().deleteEntry(pkid);}
+  public boolean deleteEntry(Integer pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
 
   /**
    * creates CSV file representing the objects stored in the table
    *
    * @param f filename of the to be created CSV
    */
-  public void createBackup(File f) {this.getCurrentTable().createBackup(f);}
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
 
   // drop current table and enter data from CSV
-  public ArrayList<Credential> loadBackup(String fileName) {return this.getCurrentTable().loadBackup(fileName);}
+  public ArrayList<Credential> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
 
   // checks if an entry exists
-  public boolean entryExists(Integer pkID) {return this.getCurrentTable().entryExists(pkID);}
+  public boolean entryExists(Integer pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
 
   public String getTableName() {
     return tbName;
