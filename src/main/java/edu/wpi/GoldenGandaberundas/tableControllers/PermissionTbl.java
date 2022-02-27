@@ -37,9 +37,9 @@ public class PermissionTbl implements TableController<Permission, Integer> {
     pkCols = "permID";
     objList = new ArrayList<Permission>();
     embeddedTable =
-            new PermissionEmbedded(tbName, colNames.toArray(new String[3]), pkCols, objList);
+        new PermissionEmbedded(tbName, colNames.toArray(new String[3]), pkCols, objList);
     clientServerTable =
-            new PermissionClientServer(tbName, colNames.toArray(new String[3]), pkCols, objList);
+        new PermissionClientServer(tbName, colNames.toArray(new String[3]), pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
     createTable();

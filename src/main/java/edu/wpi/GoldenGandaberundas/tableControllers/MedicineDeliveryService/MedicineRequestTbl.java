@@ -3,19 +3,13 @@ package edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Permission;
-import edu.wpi.GoldenGandaberundas.tableControllers.PermissionClientServer;
-import edu.wpi.GoldenGandaberundas.tableControllers.PermissionEmbedded;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class MedicineRequestTbl implements TableController<MedicineRequest, ArrayList<Integer>> {
 
@@ -45,9 +39,9 @@ public class MedicineRequestTbl implements TableController<MedicineRequest, Arra
     colNames = Arrays.asList(cols);
     objList = new ArrayList<MedicineRequest>();
     embeddedTable =
-            new MedicineRequestEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
+        new MedicineRequestEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
     clientServerTable =
-            new MedicineRequestClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
+        new MedicineRequestClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
     masterTable = RequestTable.getInstance();
@@ -86,26 +80,38 @@ public class MedicineRequestTbl implements TableController<MedicineRequest, Arra
   }
 
   @Override
-  public ArrayList<MedicineRequest> readTable() {return this.getCurrentTable().readTable();}
+  public ArrayList<MedicineRequest> readTable() {
+    return this.getCurrentTable().readTable();
+  }
 
   @Override
-  public boolean addEntry(MedicineRequest obj) {return this.getCurrentTable().addEntry(obj);}
+  public boolean addEntry(MedicineRequest obj) {
+    return this.getCurrentTable().addEntry(obj);
+  }
 
   @Override
-  public ArrayList<MedicineRequest> readBackup(String fileName) {return this.getCurrentTable().readBackup(fileName);}
+  public ArrayList<MedicineRequest> readBackup(String fileName) {
+    return this.getCurrentTable().readBackup(fileName);
+  }
 
   @Override
-  public void createTable() {this.getCurrentTable().createTable();}
+  public void createTable() {
+    this.getCurrentTable().createTable();
+  }
 
   @Override
-  public MedicineRequest getEntry(ArrayList<Integer> pkID) {return this.getCurrentTable().getEntry(pkID);}
+  public MedicineRequest getEntry(ArrayList<Integer> pkID) {
+    return this.getCurrentTable().getEntry(pkID);
+  }
 
   @Override
   public boolean loadFromArrayList(ArrayList<MedicineRequest> objList) {
     return this.getCurrentTable().loadFromArrayList(objList);
   }
 
-  public void writeTable() {this.getCurrentTable().writeTable();}
+  public void writeTable() {
+    this.getCurrentTable().writeTable();
+  }
 
   /**
    * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
@@ -117,7 +123,9 @@ public class MedicineRequestTbl implements TableController<MedicineRequest, Arra
    * @return true if successful, false otherwise
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
-  public boolean editEntry(ArrayList<Integer> pkid, String colName, Object value) {return this.getCurrentTable().editEntry(pkid, colName, value);}
+  public boolean editEntry(ArrayList<Integer> pkid, String colName, Object value) {
+    return this.getCurrentTable().editEntry(pkid, colName, value);
+  }
 
   /**
    * removes a row from the database
@@ -125,20 +133,28 @@ public class MedicineRequestTbl implements TableController<MedicineRequest, Arra
    * @param pkid primary key of row to be removed
    * @return true if successful, false otherwise
    */
-  public boolean deleteEntry(ArrayList<Integer> pkid) {return this.getCurrentTable().deleteEntry(pkid);}
+  public boolean deleteEntry(ArrayList<Integer> pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
 
   /**
    * creates CSV file representing the objects stored in the table
    *
    * @param f filename of the to be created CSV
    */
-  public void createBackup(File f) {this.getCurrentTable().createBackup(f);}
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
 
   // drop current table and enter data from CSV
-  public ArrayList<MedicineRequest> loadBackup(String fileName) {return this.getCurrentTable().loadBackup(fileName);}
+  public ArrayList<MedicineRequest> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
 
   // checks if an entry exists
-  public boolean entryExists(ArrayList<Integer> pkID) {return this.getCurrentTable().entryExists(pkID);}
+  public boolean entryExists(ArrayList<Integer> pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
 
   public String getTableName() {
     return tbName;

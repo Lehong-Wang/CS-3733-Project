@@ -186,7 +186,11 @@ public class testRequestTable {
     }
 
     // check the columns    //**
-    String[] cols = {"medicineID", "medName", "description", "price", "inStock"};
+    String[] cols = {
+      "requestID", "locationID", "empInitiated", "empCompleter",
+      "timeStart", "timeEnd", "patientID", "requestType",
+      "requestStatus", "notes"
+    };
     ArrayList<String> refColNames = new ArrayList(Arrays.asList(cols));
 
     boolean isSame = refColNames.equals(testColNameList);
