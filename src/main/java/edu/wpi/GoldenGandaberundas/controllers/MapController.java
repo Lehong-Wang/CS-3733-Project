@@ -239,17 +239,177 @@ public class MapController {
         filteredEquipmentsL1.add(equipments.get(i));
     }
 
+    // Adding icons on tower
+    // floor 3 icons
+    int[] equipmentNum = getEquipNum(filteredEquipments3);
+    IconDisplay bed3 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed3.setTranslateX(102);
+    bed3.setTranslateY(160);
+    bed3.setOnMouseEntered(
+        e -> {
+          bed3.hideIcon();
+        });
+    bed3.setOnMouseExited(
+        e -> {
+          bed3.showIcon();
+        });
+
+    IconDisplay recliner3 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner3.setTranslateX(162);
+    recliner3.setTranslateY(160);
+    recliner3.setOnMouseEntered(
+        e -> {
+          recliner3.hideIcon();
+        });
+    recliner3.setOnMouseExited(
+        e -> {
+          recliner3.showIcon();
+        });
+
+    IconDisplay pump3 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump3.setTranslateX(222);
+    pump3.setTranslateY(160);
+    pump3.setOnMouseEntered(
+        e -> {
+          pump3.hideIcon();
+        });
+    pump3.setOnMouseExited(
+        e -> {
+          pump3.showIcon();
+        });
+
+    IconDisplay xray3 = new IconDisplay(4, equipmentNum[6]);
+    xray3.setTranslateX(282);
+    xray3.setTranslateY(160);
+    xray3.setOnMouseEntered(
+        e -> {
+          xray3.hideIcon();
+        });
+    xray3.setOnMouseExited(
+        e -> {
+          xray3.showIcon();
+        });
+
+    // floor 1 icons
+    equipmentNum = getEquipNum(filteredEquipments1);
+    IconDisplay bed1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed1.setTranslateX(102);
+    bed1.setTranslateY(238);
+    bed1.setOnMouseEntered(
+        e -> {
+          bed1.hideIcon();
+        });
+    bed1.setOnMouseExited(
+        e -> {
+          bed1.showIcon();
+        });
+
+    IconDisplay recliner1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner1.setTranslateX(162);
+    recliner1.setTranslateY(238);
+    recliner1.setOnMouseEntered(
+        e -> {
+          recliner1.hideIcon();
+        });
+    recliner1.setOnMouseExited(
+        e -> {
+          recliner1.showIcon();
+        });
+
+    IconDisplay pump1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump1.setTranslateX(222);
+    pump1.setTranslateY(238);
+    pump1.setOnMouseEntered(
+        e -> {
+          pump1.hideIcon();
+        });
+    pump1.setOnMouseExited(
+        e -> {
+          pump1.showIcon();
+        });
+
+    IconDisplay xray1 = new IconDisplay(4, equipmentNum[6]);
+    xray1.setTranslateX(282);
+    xray1.setTranslateY(238);
+    xray1.setOnMouseEntered(
+        e -> {
+          xray1.hideIcon();
+        });
+    xray1.setOnMouseExited(
+        e -> {
+          xray1.showIcon();
+        });
+
+    // floor L1 icons
+    equipmentNum = getEquipNum(filteredEquipmentsL1);
+    IconDisplay bedL1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bedL1.setTranslateX(102);
+    bedL1.setTranslateY(277);
+    bedL1.setOnMouseEntered(
+        e -> {
+          bedL1.hideIcon();
+        });
+    bedL1.setOnMouseExited(
+        e -> {
+          bedL1.showIcon();
+        });
+
+    IconDisplay reclinerL1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    reclinerL1.setTranslateX(162);
+    reclinerL1.setTranslateY(277);
+    reclinerL1.setOnMouseEntered(
+        e -> {
+          reclinerL1.hideIcon();
+        });
+    reclinerL1.setOnMouseExited(
+        e -> {
+          reclinerL1.showIcon();
+        });
+
+    IconDisplay pumpL1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pumpL1.setTranslateX(222);
+    pumpL1.setTranslateY(277);
+    pumpL1.setOnMouseEntered(
+        e -> {
+          pumpL1.hideIcon();
+        });
+    pumpL1.setOnMouseExited(
+        e -> {
+          pumpL1.showIcon();
+        });
+
+    IconDisplay xrayL1 = new IconDisplay(4, equipmentNum[6]);
+    xrayL1.setTranslateX(282);
+    xrayL1.setTranslateY(277);
+    xrayL1.setOnMouseEntered(
+        e -> {
+          xrayL1.hideIcon();
+        });
+    xrayL1.setOnMouseExited(
+        e -> {
+          xrayL1.showIcon();
+        });
+
+    sideViewPane
+        .getChildren()
+        .addAll(
+            bed3,
+            recliner3,
+            pump3,
+            xray3,
+            bed1,
+            recliner1,
+            pump1,
+            xray1,
+            bedL1,
+            reclinerL1,
+            pumpL1,
+            xrayL1);
+
     imagePane.getChildren().add(gridPane);
     imagePane.getChildren().add(sideViewPane);
     gridPane.setTranslateX(600);
     setFloorView(getEquipNum(filteredEquipments1));
-
-    // creates button to select visible floor
-    HBox floorSelect = createFloorSelector();
-    floorSelect.setMaxHeight(25);
-    imagePane.getChildren().add(floorSelect);
-    // aligns floor selector to the bottom left
-    imagePane.setAlignment(floorSelect, Pos.BOTTOM_LEFT);
 
     // attempts to center the pane on launch
     gesturePane.zoomBy(0.005, 0.005, new Point2D(2500, 1700));
