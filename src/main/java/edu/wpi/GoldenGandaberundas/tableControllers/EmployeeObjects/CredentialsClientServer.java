@@ -119,7 +119,7 @@ public class CredentialsClientServer implements TableController<Credential, Inte
 
     try {
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT count(*) FROM sys.tables WHERE tbl_name = ?;");
+          connection.prepareStatement("SELECT count(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
@@ -133,8 +133,8 @@ public class CredentialsClientServer implements TableController<Credential, Inte
               + "empID INTEGER NOT NULL, "
               + "password TEXT NOT NULL, "
               + "salt TEXT NOT NULL, "
-              + "PRIMARY KEY('empID'), "
-              + "CONSTRAINT CredFK FOREIGN KEY ('empID') REFERENCES Employees('empID') "
+              + "PRIMARY KEY(empID), "
+              + "CONSTRAINT CredFK FOREIGN KEY (empID) REFERENCES Employees(empID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE "
               + ");");

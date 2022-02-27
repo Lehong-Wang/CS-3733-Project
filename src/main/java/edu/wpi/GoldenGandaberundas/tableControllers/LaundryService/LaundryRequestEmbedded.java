@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LaundryRequestEmbedded implements TableController<LaundryRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -93,6 +93,7 @@ public class LaundryRequestEmbedded implements TableController<LaundryRequest, A
       currentLine = buffer.readLine();
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
+        System.out.println(currentLine);
         String[] element = currentLine.split(","); // separates each element based on a comma
         LaundryRequest req = // **
             new LaundryRequest(

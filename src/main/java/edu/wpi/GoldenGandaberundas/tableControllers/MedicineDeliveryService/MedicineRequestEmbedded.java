@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class MedicineRequestEmbedded
     implements TableController<MedicineRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -185,29 +185,26 @@ public class MedicineRequestEmbedded
 
   @Override
   public MedicineRequest getEntry(ArrayList<Integer> pkID) {
-    MedicineRequest medReq = new MedicineRequest(); // **
+    MedicineRequest medReq = null; // **
     if (this.entryExists(pkID)) {
+      System.err.println("DOES EXIST: " + pkID);
       try {
         PreparedStatement s =
             connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ")" + " =(?,?);");
+                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
         r.next(); // **
-
-        if (entryExists(pkID)) {
-          medReq.setRequestID(r.getInt(1));
-          medReq.setMedicineID(r.getInt(2));
-          medReq.setDosage(r.getInt(3));
-          medReq.setQuantity(r.getInt(4));
-        }
+        medReq =
+            new MedicineRequest(
+                masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getInt(2), r.getInt(2));
 
         return medReq; // **
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    }
+    } else System.err.println("DOES NOT EXIST: " + pkID);
     return medReq; // **
   }
 

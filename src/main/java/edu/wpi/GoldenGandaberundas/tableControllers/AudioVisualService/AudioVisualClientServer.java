@@ -133,7 +133,12 @@ public class AudioVisualClientServer implements TableController<AudioVisual, Int
       }
       Statement s = connection.createStatement();
       s.execute(
-          "CREATE TABLE  AudioVisual(avID INTEGER NOT NULL ,deviceType TEXT NOT NULL, locID TEXT NOT NULL, description TEXT, PRIMARY KEY (avID) CONSTRAINT nodeID FOREIGN KEY (locID) REFERENCES Locations (nodeID) ON UPDATE CASCADE ON DELETE CASCADE;");
+          "CREATE TABLE  AudioVisual(avID INTEGER NOT NULL ,"
+              + "deviceType TEXT NOT NULL, "
+              + "locID varchar(50) NOT NULL, "
+              + "description TEXT, "
+              + "PRIMARY KEY (avID),"
+              + " CONSTRAINT AvNodeID FOREIGN KEY (locID) REFERENCES Locations (nodeID) ON UPDATE CASCADE ON DELETE CASCADE);");
     } catch (SQLException e) {
       e.printStackTrace();
     }

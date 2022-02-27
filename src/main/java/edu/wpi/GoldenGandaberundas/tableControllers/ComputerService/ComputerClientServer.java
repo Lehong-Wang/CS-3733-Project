@@ -154,7 +154,16 @@ public class ComputerClientServer implements TableController<Computer, Integer> 
       }
       Statement s = connection.createStatement();
       s.execute(
-          "CREATE TABLE  Computer(computerID INTEGER NOT NULL , computerType TEXT NOT NULL , os TEXT NOT NULL , processor TEXT NOT NULL , hostName TEXT NOT NULL , model TEXT NOT NULL , manufacturer TEXT NOT NULL , serialNumber TEXT NOT NULL , PRIMARY KEY ('computerID'));");
+          "CREATE TABLE  Computer("
+              + "computerID INTEGER NOT NULL, "
+              + "computerType TEXT NOT NULL , "
+              + "os TEXT NOT NULL , "
+              + "processor TEXT NOT NULL , "
+              + "hostName TEXT NOT NULL , "
+              + "model TEXT NOT NULL , "
+              + "manufacturer TEXT NOT NULL , "
+              + "serialNumber TEXT NOT NULL , "
+              + "PRIMARY KEY (computerID));");
     } catch (SQLException e) {
       e.printStackTrace();
     }

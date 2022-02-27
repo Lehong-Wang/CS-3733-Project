@@ -150,15 +150,15 @@ public class FoodClientServer implements TableController<Food, Integer> {
           "CREATE TABLE "
               + tbName
               + "("
-              + "foodID INTEGER NOT NULL ,"
-              + "foodName TEXT NOT NULL, "
-              + "ingredients TEXT, "
+              + "foodID INTEGER NOT NULL, "
+              + "foodName varchar(75) NOT NULL, "
+              + "ingredients varchar(150), "
               + "calories INTEGER, "
-              + "allergens TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
+              + "allergens varchar(75), "
+              + "price DOUBLE PRECISION NOT NULL, "
+              + "inStock BIT NOT NULL, "
               + "foodType varchar(30) NOT NULL, "
-              + "PRIMARY KEY ('foodID'), "
+              + "PRIMARY KEY (foodID), "
               + "CONSTRAINT foodTypeEnum CHECK(foodType in('Entree','Side','Drink','Dessert')));");
 
     } catch (SQLException e) {

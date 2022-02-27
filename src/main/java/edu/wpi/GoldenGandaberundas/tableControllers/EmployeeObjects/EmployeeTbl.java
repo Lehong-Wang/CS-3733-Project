@@ -30,16 +30,14 @@ public class EmployeeTbl implements TableController<Employee, Integer> {
   private EmployeeTbl() throws SQLException {
     String[] cols = {"empID", "fName", "lName", "role", "email", "phone number", "address"};
     pkCols = "empID";
-    createTable();
-
     objList = new ArrayList<Employee>();
+    tbName = "Employees";
     embeddedTable = new EmployeeEmbedded(tbName, cols, pkCols, objList);
     clientServerTable = new EmployeeClientServer(tbName, cols, pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
 
     createTable();
-
     objList = readTable();
   }
 

@@ -34,7 +34,7 @@ public class FoodTbl implements TableController<Food, Integer> {
     };
     pkCols = "foodID";
     colNames = Arrays.asList(cols);
-
+    tbName = "Food";
     objList = new ArrayList<Food>();
 
     embeddedTable = new FoodEmbedded(tbName, cols, pkCols, objList);

@@ -161,12 +161,14 @@ public class EmployeePermissionEmbedded
 
   @Override
   public EmployeePermission getEntry(ArrayList<Integer> pkID) { // **
+    System.out.println(pkID);
     EmployeePermission empPerm = new EmployeePermission(); // **
     if (this.entryExists(pkID)) {
+      System.out.println("Entry does exist");
       try {
         PreparedStatement s =
             connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?,?);");
+                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -177,7 +179,7 @@ public class EmployeePermissionEmbedded
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    }
+    } else System.out.println("Entry does NOT exist");
     return empPerm; // **
   }
 
@@ -343,16 +345,14 @@ public class EmployeePermissionEmbedded
 
   // checks if an entry exists
   public boolean entryExists(ArrayList<Integer> pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
     boolean exists = false;
     try {
       PreparedStatement s =
           connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+              "SELECT count(*) FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
 
-      s.setObject(1, pkID);
+      s.setObject(1, pkID.get(0));
+      s.setObject(2, pkID.get(1));
 
       ResultSet r = s.executeQuery();
       r.next();

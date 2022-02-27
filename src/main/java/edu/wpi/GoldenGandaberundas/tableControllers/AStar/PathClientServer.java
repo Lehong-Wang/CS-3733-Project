@@ -132,16 +132,14 @@ public class PathClientServer implements TableController<Path, String> {
       Statement s = connection.createStatement();
       s.execute(
           "CREATE TABLE  Paths("
-              + "edgeID TEXT NOT NULL ,"
-              + "startNode TEXT NOT NULL, "
-              + "endNode TEXT NOT NULL, "
-              + "CONSTRAINT PathPk PRIMARY KEY ('edgeID'), "
-              + "CONSTRAINT PathFk1 FOREIGN KEY (startNode) REFERENCES Locations (nodeID) "
+              + "edgeID varchar(101) NOT NULL ,"
+              + "startNode varchar(50) NOT NULL, "
+              + "endNode varchar(50) NOT NULL, "
+              + "CONSTRAINT PathPk PRIMARY KEY (edgeID), "
+              + "CONSTRAINT PathNodeID FOREIGN KEY (startNode) REFERENCES Locations (nodeID) "
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE, "
-              + "CONSTRAINT PathFk2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID) "
-              + " ON UPDATE CASCADE "
-              + " ON DELETE CASCADE );");
+              + "CONSTRAINT PathNodeID2 FOREIGN KEY (endNode) REFERENCES Locations (nodeID));");
     } catch (SQLException e) {
       e.printStackTrace();
     }
