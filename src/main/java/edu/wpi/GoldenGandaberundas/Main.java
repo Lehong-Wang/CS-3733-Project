@@ -4,7 +4,6 @@ import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipmentTbl;
@@ -18,7 +17,7 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
 
-    LocationTbl.getInstance();
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     PathTbl.getInstance().createBranchedLocations(points);
     PathTbl.getInstance(); // .loadBackup("backupsCSVs/pathTbl.csv");
@@ -34,14 +33,7 @@ public class Main {
 
     floorMaps.load();
 
-    Main.run(
-        200,
-        200,
-        1280,
-        800,
-        "CSS/api.css",
-        medEquipments,
-        'G');
+    Main.run(200, 200, 1280, 800, "CSS/api.css", medEquipments, 'G');
   }
 
   /**
@@ -63,8 +55,8 @@ public class Main {
       ArrayList<MedEquipment> medEquipmentList,
       Character teamLetter) {
     Simulation.setTeamLetter(teamLetter);
+    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
     SimMedEquipmentTbl.getInstance().loadFromArrayList(medEquipmentList);
-
     App.launch(
         App.class,
         new String[] {
