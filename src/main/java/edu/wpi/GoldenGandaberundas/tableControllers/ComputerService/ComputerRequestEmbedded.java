@@ -1,7 +1,8 @@
-package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
+package edu.wpi.GoldenGandaberundas.tableControllers.ComputerService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 
@@ -14,8 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class GiftRequestClientServer
-        implements TableController<GiftRequest, ArrayList<Integer>> {
+public class ComputerRequestEmbedded
+        implements TableController<ComputerRequest, ArrayList<Integer>> {
     private static TableController<Request, Integer> masterTable = null;
     /** name of table */
     private String tbName;
@@ -24,14 +25,14 @@ public class GiftRequestClientServer
     /** list of keys that make a composite primary key */
     private String pkCols = null;
     /** list that contains the objects stored in the database */
-    private ArrayList<GiftRequest> objList;
+    private ArrayList<ComputerRequest> objList;
     /** relative path to the database file */
     ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
     Connection connection = connectionHandler.getConnection();
 
-    public GiftRequestClientServer(
-            String tbName, String[] cols, String pkCols, ArrayList<GiftRequest> objList)
+    public ComputerRequestEmbedded(
+            String tbName, String[] cols, String pkCols, ArrayList<ComputerRequest> objList)
             throws SQLException {
         // create a new table with column names if none table of same name exist
         // if there is one, do nothing
@@ -42,49 +43,40 @@ public class GiftRequestClientServer
     }
 
     @Override
-    public ArrayList<GiftRequest> readTable() {
-        ArrayList tableInfo = new ArrayList<GiftRequest>(); // **
+    public ArrayList<ComputerRequest> readTable() {
+        ArrayList tableInfo = new ArrayList<ComputerRequest>(); // **
         try {
             PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
             ResultSet r = s.executeQuery();
             while (r.next()) {
-                System.out.println(masterTable.getEntry(r.getInt(1)));
                 tableInfo.add(
-                        new GiftRequest( // **
-                                masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getInt(3)));
+                        new ComputerRequest(
+                                masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getString(3), r.getString(4)));
             }
         } catch (SQLException se) {
             se.printStackTrace();
             return null;
         }
+        objList = tableInfo;
         return tableInfo;
     }
 
     @Override
-    public boolean addEntry(GiftRequest gift) {
+    public boolean addEntry(ComputerRequest obj) {
+        if (!RequestTable.getInstance().entryExists(obj.getRequestID())) {
+            RequestTable.getInstance().addEntry(obj);
+        }
+        ComputerRequest computerReq = (ComputerRequest) obj; // **
+        PreparedStatement s = null;
         try {
-            PreparedStatement s =
-                    connection.prepareStatement(
-                            " IF NOT EXISTS (SELECT 1 FROM "
-                                    + tbName
-                                    + " WHERE "
-                                    + colNames.get(0)
-                                    + " = ?"
-                                    + " AND "
-                                    + colNames.get(1)
-                                    + " = ?"
-                                    + ")"
-                                    + "BEGIN"
-                                    + "    INSERT INTO "
-                                    + tbName
-                                    + " VALUES (?, ?, ?)"
-                                    + "end");
+            s =
+                    connection.prepareStatement( // **
+                            "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?);");
 
-            s.setInt(1, gift.getRequestID());
-            s.setInt(2, gift.getGiftID());
-            s.setInt(3, gift.getRequestID());
-            s.setInt(4, gift.getGiftID());
-            s.setInt(5, gift.getQuantity());
+            s.setInt(1, obj.getRequestID());
+            s.setInt(2, obj.getComputerID());
+            s.setString(3, obj.getProblemType());
+            s.setString(4, obj.getPriority());
             s.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -94,21 +86,26 @@ public class GiftRequestClientServer
     }
 
     @Override
-    public ArrayList<GiftRequest> readBackup(String fileName) {
-        ArrayList<GiftRequest> gReqList = new ArrayList<GiftRequest>(); // **
+    public ArrayList<ComputerRequest> readBackup(String fileName) {
+        ArrayList<ComputerRequest> cReqList = new ArrayList<>(); // **
 
         try {
             File csvFile = new File(fileName);
             BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
             String currentLine = buffer.readLine(); // reads a line from the csv file
             System.out.println(currentLine);
-
+            if (!currentLine
+                    .toLowerCase(Locale.ROOT)
+                    .trim()
+                    .equals(new String("reqID,computerID,problemType,priority"))) { // **
+                System.err.println("computer request backup format not recognized"); // **
+            }
             currentLine = buffer.readLine();
 
             while (currentLine != null) { // cycles in the while loop until it reaches the end
                 String[] element = currentLine.split(","); // separates each element based on a comma
-                GiftRequest req = // **
-                        new GiftRequest(
+                ComputerRequest req = // **
+                        new ComputerRequest(
                                 Integer.parseInt(element[0]),
                                 element[1],
                                 Integer.parseInt(element[2]),
@@ -119,8 +116,9 @@ public class GiftRequestClientServer
                                 element[8],
                                 element[9],
                                 Integer.parseInt(element[10]),
-                                Integer.parseInt(element[11]));
-                gReqList.add(req); // adds the location to the list
+                                element[11],
+                                element[12]);
+                cReqList.add(req); // adds the location to the list
                 currentLine = buffer.readLine();
             }
             ; // creates a Location
@@ -130,42 +128,62 @@ public class GiftRequestClientServer
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return gReqList; // **
+        return cReqList; // **
     }
 
     @Override
     public void createTable() {
         try {
-
-            PreparedStatement s1 =
-                    connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
-            s1.setString(1, tbName);
-            ResultSet r = s1.executeQuery();
+            PreparedStatement s =
+                    connection.prepareStatement(
+                            "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
+            s.setString(1, tbName);
+            ResultSet r = s.executeQuery();
             r.next();
             if (r.getInt(1) != 0) {
                 return;
             }
-            Statement s = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("SQLite driver registered!");
+
+        Statement s = null;
+        try {
+            s = connection.createStatement();
+            s.execute("PRAGMA foreign_keys = ON"); // **
             s.execute(
-                    "CREATE TABLE  GiftRequests("
+                    "CREATE TABLE IF NOT EXISTS  ComputerRequests("
                             + "reqID INTEGER NOT NULL, "
-                            + "giftID INTEGER NOT NULL, "
-                            + "quantity INTEGER, "
-                            + "CONSTRAINT GiftRequestPK PRIMARY KEY (reqID, giftID), "
+                            + "computerID INTEGER NOT NULL, "
+                            + "problemType TEXT NOT NULL,"
+                            + "priority TEXT NOT NULL, "
+                            + "CONSTRAINT ComputerRequestPK PRIMARY KEY (reqID, computerID), "
                             + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
                             + "ON UPDATE CASCADE "
                             + "ON DELETE CASCADE, "
-                            + "CONSTRAINT GiftFK FOREIGN KEY (giftID) REFERENCES Gifts (giftID) "
+                            + "CONSTRAINT ComputerFK FOREIGN KEY (computerID) REFERENCES Computer (computerID) "
                             + "ON UPDATE CASCADE "
                             + "ON DELETE CASCADE);");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public GiftRequest getEntry(ArrayList<Integer> pkID) {
-        GiftRequest gift = new GiftRequest();
+    public ComputerRequest getEntry(ArrayList<Integer> pkID) {
+        ComputerRequest comReq = new ComputerRequest();
         if (this.entryExists(pkID)) {
             try {
                 PreparedStatement s =
@@ -177,24 +195,26 @@ public class GiftRequestClientServer
                 r.next();
 
                 if (entryExists(pkID)) {
-                    gift.setRequestID(r.getInt(1));
-                    gift.setGiftID(r.getInt(2));
-                    gift.setQuantity(r.getInt(3));
+                    comReq.setRequestID(r.getInt(1));
+                    comReq.setComputerID(r.getInt(2));
+                    comReq.setProblemType(r.getString(3));
+                    comReq.setPriority(r.getString(4));
                 }
-                return gift; // **
+                return comReq; // **
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return gift; // **
+        return comReq; // **
     }
 
     @Override
-    public boolean loadFromArrayList(ArrayList<GiftRequest> objList) {
+    public boolean loadFromArrayList(ArrayList<ComputerRequest> objList) {
+
         this.createTable();
         deleteTableData();
-        for (GiftRequest giftRequest : objList) {
-            if (!this.addEntry(giftRequest)) {
+        for (ComputerRequest computerRequest : objList) {
+            if (!this.addEntry(computerRequest)) {
                 return false;
             }
         }
@@ -213,7 +233,7 @@ public class GiftRequestClientServer
     @Override
     public void writeTable() {
 
-        for (GiftRequest obj : objList) {
+        for (ComputerRequest obj : objList) {
 
             this.addEntry(obj);
         }
@@ -337,9 +357,9 @@ public class GiftRequestClientServer
     }
 
     // drop current table and enter data from CSV
-    public ArrayList<GiftRequest> loadBackup(String fileName) {
+    public ArrayList<ComputerRequest> loadBackup(String fileName) {
         createTable();
-        ArrayList<GiftRequest> listObjs = readBackup(fileName);
+        ArrayList<ComputerRequest> listObjs = readBackup(fileName);
 
         try {
             PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
@@ -387,7 +407,7 @@ public class GiftRequestClientServer
         return tbName;
     }
 
-    public ArrayList<GiftRequest> getObjList() {
+    public ArrayList<ComputerRequest> getObjList() {
         return objList;
     }
 }
