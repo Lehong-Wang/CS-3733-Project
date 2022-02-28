@@ -414,6 +414,13 @@ public class MapController {
     // attempts to center the pane on launch
     gesturePane.zoomBy(0.005, 0.005, new Point2D(2500, 1700));
 
+    // creates button to select visible floor
+    HBox floorSelect = createFloorSelector();
+    floorSelect.setMaxHeight(25);
+    imagePane.getChildren().add(floorSelect);
+    // aligns floor selector to the bottom left
+    imagePane.setAlignment(floorSelect, Pos.BOTTOM_LEFT);
+
     try {
       Node subPane = (Node) subControllerLoader.load();
       nodeDataPane.getChildren().add(subPane);
@@ -1070,17 +1077,25 @@ public class MapController {
 
     // iterates through the list of locations and adds it to the coords list of the poly line
     ArrayList<Double> coordsList = new ArrayList<>();
+    boolean secondLine = false;
+    int tempStop = 0;
     for (int i = 0; i < locs.size() - 1; i++) {
+      if (locs.get(i).substring(0, 5).equals("WELEV")
+              && locs.get(i + 1).substring(0, 5).equals("WELEV")
+          || locs.get(i + 1).substring(0, 5).equals("WELEV")
+              && locs.get(i).substring(0, 5).equals("WELEV")) {
+        secondLine = true;
+        tempStop = i + 1;
+        break;
+      }
       Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
       Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
       coordsList.add((double) (loc.getXcoord()));
       coordsList.add((double) (loc.getYcoord()));
       coordsList.add((double) (loc1.getXcoord()));
       coordsList.add((double) (loc1.getYcoord()));
-      if (!loc.getFloor().equals(currentFloor)) {
-        System.out.println(false);
-      }
     }
+
     // creates the polyline bases on the positions coordinates
     Polyline polyline = new Polyline();
     polyline.getPoints().addAll(coordsList);
@@ -1097,6 +1112,35 @@ public class MapController {
                 Duration.seconds(15), new KeyValue(polyline.strokeDashOffsetProperty(), 0)));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
+
+    if (secondLine) {
+      ArrayList<Double> coordsList2 = new ArrayList<>();
+      for (int i = tempStop; i < locs.size() - 1; i++) {
+        Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+        Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+        coordsList2.add((double) (loc.getXcoord()));
+        coordsList2.add((double) (loc.getYcoord()));
+        coordsList2.add((double) (loc1.getXcoord()));
+        coordsList2.add((double) (loc1.getYcoord()));
+      }
+
+      // creates the polyline bases on the positions coordinates
+      Polyline polyline2 = new Polyline();
+      polyline2.getPoints().addAll(coordsList2);
+      polyline2.setStroke(Color.web("#006db3"));
+      polyline2.setStrokeWidth(10);
+      polyline2.getStrokeDashArray().setAll(20.0, 20.0);
+      animatedPathNodeGroup.getChildren().addAll(polyline2);
+
+      // animates the line accordingly
+      Timeline timeline2 =
+          new Timeline(
+              new KeyFrame(Duration.ZERO, new KeyValue(polyline2.strokeDashOffsetProperty(), 1000)),
+              new KeyFrame(
+                  Duration.seconds(15), new KeyValue(polyline2.strokeDashOffsetProperty(), 0)));
+      timeline2.setCycleCount(Timeline.INDEFINITE);
+      timeline2.play();
+    }
   }
 
   private class MedEqpImageView extends ImageView {
