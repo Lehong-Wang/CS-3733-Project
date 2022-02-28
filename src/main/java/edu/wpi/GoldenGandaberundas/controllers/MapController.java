@@ -180,7 +180,7 @@ public class MapController {
 
     // Sets the side image
     sideViewPane = new Pane();
-    sideTower = new ImageView(floorMaps.towerSideviewCropped);
+    sideTower = new ImageView(floorMaps.towerSideview);
     sideTower.setScaleX(.75);
     sideTower.setScaleY(.75);
     towerPane.setContent(sideTower);
