@@ -11,15 +11,14 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-  public static void main(String[] args) throws SQLException {
+  public static void main(String[] args) {
 
-    Main.run(200, 200, 1280, 800, "CSS/api.css", 1);
+    // Main.run(200, 200, 1280, 800, "CSS/api.css", 1);
   }
 
   /**
@@ -28,11 +27,11 @@ public class Main {
    * @param xCoord
    * @param yCoord
    * @param windowWidth width of the spawned JFX window
-   * @param windowLength length of the spawned JFX window
+   * @param windowHeight Height of the spawned JFX window
    * @param cssPath path starting from the resources folder
    */
-  public static void run(
-      int xCoord, int yCoord, int windowWidth, int windowLength, String cssPath, double frequency) {
+  public void run(
+      int xCoord, int yCoord, int windowWidth, int windowHeight, String cssPath, double frequency) {
     floorMaps.load();
 
     Scanner readLocs = new Scanner(App.class.getResourceAsStream("locationTbl.csv"));
@@ -99,12 +98,31 @@ public class Main {
     SimulatePumps.setFrequency(frequency);
     SimulateXRay.setFrequency(frequency);
 
+    //    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
+    //    Scene scene = new Scene(root, windowWidth, windowHeight);
+    //    // Below line is to set styleSheet, does not maintain styleSheet when switching scenes
+    // unless
+    //    // stylesheet is added in fxml file
+    //    Stage stage2 = new Stage();
+    //    scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+    //    stage2.setScene(scene);
+    //    // primaryStage.setMaximized(false);
+    //    stage2.setX(xCoord);
+    //    stage2.setY(yCoord);
+    //    stage2.setWidth(windowWidth);
+    //    stage2.setHeight(windowHeight);
+    //    stage2.show();
+
     App.launch(
         App.class,
         String.valueOf(xCoord),
         String.valueOf(yCoord),
         String.valueOf(windowWidth),
-        String.valueOf(windowLength),
+        String.valueOf(windowHeight),
         cssPath);
+  }
+
+  public void run() {
+    run(0, 0, 1000, 1000, "", 1);
   }
 }
