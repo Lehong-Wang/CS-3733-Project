@@ -433,10 +433,6 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
-  @FXML
-  public void switchAVHelpPage() {
-    nodeSwitch("views/aVHelpPage.fxml");
-  }
 
   @FXML
   public void switchComputerServiceHelpPage() {
