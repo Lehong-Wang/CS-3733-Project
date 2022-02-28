@@ -64,14 +64,15 @@ public class App extends Application {
     Scene scene = new Scene(root, windowWidth, windowHeight);
     // Below line is to set styleSheet, does not maintain styleSheet when switching scenes unless
     // stylesheet is added in fxml file
+    Stage stage2 = new Stage();
     scene.getStylesheets().add(getClass().getResource(list.get(4)).toExternalForm());
-    primaryStage.setScene(scene);
+    stage2.setScene(scene);
     // primaryStage.setMaximized(false);
-    primaryStage.setX(xCoord);
-    primaryStage.setY(yCoord);
-    primaryStage.setWidth(windowWidth);
-    primaryStage.setHeight(windowHeight);
-    primaryStage.show();
+    stage2.setX(xCoord);
+    stage2.setY(yCoord);
+    stage2.setWidth(windowWidth);
+    stage2.setHeight(windowHeight);
+    stage2.show();
   }
 
   @Override

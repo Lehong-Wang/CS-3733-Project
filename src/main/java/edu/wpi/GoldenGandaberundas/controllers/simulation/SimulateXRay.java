@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulateXRay {
-
+  private static double frequency = 1;
   private static int hours = 0;
   private static MedEquipmentSimulation XRay;
   private static final boolean DEBUG_XRAY_SIM = false;
@@ -32,7 +32,7 @@ public class SimulateXRay {
       XRay.setStatus("In-Use");
       int rnd = new Random().nextInt(Simulation.validLocations.size());
       String rndLoc = Simulation.validLocations.get(rnd);
-      int rndTTD = ThreadLocalRandom.current().nextInt(1, 10);
+      int rndTTD = ThreadLocalRandom.current().nextInt(1, 2 + (int) (10 / frequency));
       XRay.setInRoomEndTime(hours + rndTTD);
       XRay.setCurrLoc(rndLoc);
 
@@ -49,5 +49,9 @@ public class SimulateXRay {
   private static void printXRay() {
     System.out.println('\n' + "----------XRAY---------");
     System.out.println("X-Ray: [" + XRay + "]");
+  }
+
+  public static void setFrequency(double freq) {
+    frequency = freq;
   }
 }

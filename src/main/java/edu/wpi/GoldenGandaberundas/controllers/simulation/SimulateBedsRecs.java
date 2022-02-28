@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class SimulateBedsRecs {
   // TODO make list of valid locations
   // TOOD make dict of rooms and locations outside rooms
+  private static double frequency = 1;
   public static ArrayList<String> currentValidBedLocations = new ArrayList<>();
 
   private static ArrayList<MedEquipmentSimulation> newBedList = new ArrayList<>();
@@ -325,7 +326,7 @@ public class SimulateBedsRecs {
   private static void updateAwaitingTransportBeds() {
     for (MedEquipmentSimulation bed : Beds_AwaitingTransport) {
       bed.setStatus("In-Use");
-      int timeToDie = ThreadLocalRandom.current().nextInt(1, 16);
+      int timeToDie = ThreadLocalRandom.current().nextInt(1, 2 + (int) (16 / frequency));
       bed.setInRoomEndTime(hours + timeToDie);
       //      int rnd = new Random().nextInt(Beds_List.size());
       bed.setCurrLoc("FDEPT00101");
@@ -346,7 +347,9 @@ public class SimulateBedsRecs {
           //          System.out.println("Bed # " + bed.getMedID() + " is now dirty");
         }
         newBedList.add(bed);
-      } else if (ThreadLocalRandom.current().nextInt(100) == 7) {
+      } else if (ThreadLocalRandom.current()
+              .nextInt(((int) (100 / frequency)) > 1 ? (int) (100 / frequency) : 2)
+          == 7) {
         bed.setStatus("Awaiting Transport");
         bed.setCurrLoc(Simulation.getCorrespondingLocation(bed.getCurrLoc()));
         if (DEUBUG_BED_SIM) {
@@ -410,7 +413,7 @@ public class SimulateBedsRecs {
       tempBed.setCurrLoc(rndLoc);
       tempBed.setStatus("In-Use");
       // TODO change hours to be more realistic
-      int rndTTD = ThreadLocalRandom.current().nextInt(12, 192);
+      int rndTTD = ThreadLocalRandom.current().nextInt(12, 13 + (int) (192 / frequency));
       tempBed.setInRoomEndTime(hours + rndTTD);
       if (DEUBUG_BED_SIM) {
         //        System.out.println(
@@ -486,7 +489,7 @@ public class SimulateBedsRecs {
     } else {
       for (int i = 0; i < numReclinersToSend; i++) {
         int rnd = ThreadLocalRandom.current().nextInt(Beds_StillActive.size());
-        int rndTTD = ThreadLocalRandom.current().nextInt(2, 20);
+        int rndTTD = ThreadLocalRandom.current().nextInt(2, 3 + (int) (20 / frequency));
         MedEquipmentSimulation tempRec = Recliners_Stored.get(0);
         Recliners_Stored.remove(0);
         MedEquipmentSimulation tempBed = Beds_StillActive.get(rnd);
@@ -573,5 +576,9 @@ public class SimulateBedsRecs {
       key = "GPATI00503";
     }
     return key;
+  }
+
+  public static void setFrequency(double freq) {
+    frequency = freq;
   }
 }

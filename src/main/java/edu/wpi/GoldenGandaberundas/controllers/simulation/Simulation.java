@@ -77,14 +77,14 @@ public class Simulation {
     System.out.println(endTime);
     takeSnapshot();
     sortLists(fullMedList);
-    if(!isSimValid()){
+    if (!isSimValid()) {
       System.out.println("The Med Equipment Lists are Invalid");
-    } else{
+    } else {
       makeSimulationLists(fullMedList);
 
       for (hours = 1; hours <= endTime; hours++) {
         ArrayList<MedEquipmentSimulation> tempBedsRecs =
-                SimulateBedsRecs.updateBedsRecliners(Beds_List, Recliners_List, hours);
+            SimulateBedsRecs.updateBedsRecliners(Beds_List, Recliners_List, hours);
 
         ArrayList<MedEquipmentSimulation> tempPumps = SimulatePumps.updatePumps(Pumps_List, hours);
 
@@ -99,24 +99,23 @@ public class Simulation {
       }
       //    printSimList();
     }
-
   }
 
-  public boolean isSimValid(){
-    boolean beds=false, recs=false, pump=false, xray=false;
-    if(this.Beds_List.size() >= 1){
+  public boolean isSimValid() {
+    boolean beds = false, recs = false, pump = false, xray = false;
+    if (this.Beds_List.size() >= 1) {
       beds = true;
     }
 
-    if(this.Recliners_List.size() >= 1){
+    if (this.Recliners_List.size() >= 1) {
       recs = true;
     }
 
-    if(this.Pumps_List.size() >= 1){
+    if (this.Pumps_List.size() >= 1) {
       pump = true;
     }
 
-    if(this.XRay != null){
+    if (this.XRay != null) {
       xray = true;
     }
     return beds && recs && pump && xray;

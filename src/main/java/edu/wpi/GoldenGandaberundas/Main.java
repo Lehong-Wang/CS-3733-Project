@@ -1,7 +1,9 @@
 package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.SimulateBedsRecs;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.SimulatePumps;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.SimulateXRay;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Path;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
@@ -16,12 +18,8 @@ import java.util.Scanner;
 public class Main {
 
   public static void main(String[] args) throws SQLException {
-    MedEquipment med1 = new MedEquipment(1, "Bed", "In_Use", "FDEPT00101");
-    MedEquipment xRay = new MedEquipment(2, "X-Ray", "In_Use", "FDEPT00101");
-    ArrayList<MedEquipment> medEquipments = new ArrayList<>();
-    medEquipments.add(med1);
-    medEquipments.add(xRay);
-    Main.run(200, 200, 1280, 800, "CSS/api.css", medEquipments, 'G');
+
+    Main.run(200, 200, 1280, 800, "CSS/api.css", 1);
   }
 
   /**
@@ -32,16 +30,9 @@ public class Main {
    * @param windowWidth width of the spawned JFX window
    * @param windowLength length of the spawned JFX window
    * @param cssPath path starting from the resources folder
-   * @param medEquipmentList list of medical equipment objects
    */
   public static void run(
-      int xCoord,
-      int yCoord,
-      int windowWidth,
-      int windowLength,
-      String cssPath,
-      ArrayList<MedEquipment> medEquipmentList,
-      Character teamLetter) {
+      int xCoord, int yCoord, int windowWidth, int windowLength, String cssPath, double frequency) {
     floorMaps.load();
 
     Scanner readLocs = new Scanner(App.class.getResourceAsStream("locationTbl.csv"));
@@ -82,12 +73,32 @@ public class Main {
     }
     readPaths.close();
 
-    Simulation.setTeamLetter(teamLetter);
+    // MedEquipment med = new MedEquipment(Integer.parseInt(ele[0]), ele[1], ele[2], ele[3]);
+
+    Scanner redMeds = new Scanner(App.class.getResourceAsStream("medEquipmentTbl.csv"));
+    if (redMeds.hasNext()) {
+      redMeds.nextLine();
+    }
+    while (redMeds.hasNext()) { // cycles in the while loop until it reaches the end
+      String currentLine = redMeds.nextLine();
+      if (!currentLine.isEmpty()) { // check if a line is blank
+        String[] ele = currentLine.split(","); // separates each element based on a comma
+        MedEquipment path = new MedEquipment(Integer.parseInt(ele[0]), ele[1], ele[2], ele[3]);
+        System.out.println(path.toString());
+        SimMedEquipmentTbl.getInstance().addEntry(path);
+      }
+    }
+    readPaths.close();
+
     ArrayList<Point> points = LocationTbl.getInstance().getNodes();
     PathTbl.getInstance().createBranchedLocations(points);
     PathTbl.getInstance(); // .loadBackup("backupsCSVs/pathTbl.csv");
     PathTbl.createStatsMap();
-    SimMedEquipmentTbl.getInstance().loadFromArrayList(medEquipmentList);
+
+    SimulateBedsRecs.setFrequency(frequency);
+    SimulatePumps.setFrequency(frequency);
+    SimulateXRay.setFrequency(frequency);
+
     App.launch(
         App.class,
         String.valueOf(xCoord),

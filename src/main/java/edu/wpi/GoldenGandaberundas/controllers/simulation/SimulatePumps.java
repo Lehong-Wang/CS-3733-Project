@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulatePumps {
+  private static double frequency = 1;
+
   private static ArrayList<MedEquipmentSimulation> newPumpList = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_Stored = new ArrayList<>();
@@ -289,5 +291,9 @@ public class SimulatePumps {
               + "): "
               + currentValidPumpLocations);
     }
+  }
+
+  public static void setFrequency(double freq) {
+    frequency = freq;
   }
 }
