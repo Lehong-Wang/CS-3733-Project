@@ -31,9 +31,25 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" />
-            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" />
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="54.0" styleClass="editButton" text="Button" />
+            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton onAction="#addEmployee" prefHeight="69.0" prefWidth="120.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Add Employee" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXButton>
          </children></VBox>
    </right>
 </BorderPane>

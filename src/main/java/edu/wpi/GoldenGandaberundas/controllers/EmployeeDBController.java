@@ -2,7 +2,6 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
@@ -24,9 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -100,39 +97,6 @@ public class EmployeeDBController implements Initializable {
     refreshTable();
   }
 
-  @FXML
-  public void hamburgerToggle(MouseEvent actionEvent) throws IOException {
-    // attach the menu to the drawer
-    drawer.setSidePane(sideMenuMax);
-    // set the animation of the button
-    HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
-    burgerTask.setRate(burgerTask.getRate() * -1);
-    burgerTask.play();
-
-    // if the drawer is open, close it
-    if (drawer.isOpened()) {
-      drawer.close();
-      // sets the width of the left margin to the size of the icon
-      sideMenuCont.setMaxWidth(homeIconBtn.getWidth());
-
-      // hide the larger menu
-      sideMenuMax.setVisible(false);
-
-      // set the icon menu to visible
-      sideMenuMin.setVisible(true);
-    } else {
-      // if the drawer was closed when the button was pressed
-      // open the drawer menu
-      drawer.open();
-      // reset the width of the side menu
-      sideMenuCont.setMaxWidth(Region.USE_COMPUTED_SIZE);
-      // hide the icon menu from sight
-      sideMenuMin.setVisible(false);
-      // show the larger menu
-      sideMenuMax.setVisible(true);
-    }
-  }
-
   public void populateTable(List<Employee> empList) {
     empTable.getItems().setAll();
   }
@@ -184,5 +148,18 @@ public class EmployeeDBController implements Initializable {
     tbCont = null;
     tbCont = EmployeeTbl.getInstance();
     empTable.getItems().setAll(tbCont.readTable());
+  }
+
+  public void addEmployee() throws IOException {
+    try {
+      FXMLLoader load = new FXMLLoader(App.class.getResource("views/signUpScreen.fxml"));
+      Stage stage = new Stage();
+      Scene scene = new Scene(load.load());
+      stage.setScene(scene);
+      stage.show();
+      stage.setOnCloseRequest(e -> refreshTable());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

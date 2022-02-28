@@ -20,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -188,20 +187,6 @@ public class LaundryServiceController implements Initializable {
       // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
     }
     return locNodeAr;
-  }
-
-  /**
-   * Makes a delete window to delete requests
-   *
-   * @throws IOException
-   */
-  public void makeDelete() throws IOException {
-    Parent root = FXMLLoader.load(App.class.getResource("views/deleteLaundryReqForm.fxml"));
-    Scene scene = new Scene(root);
-
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
   }
 
   public void submit() {
