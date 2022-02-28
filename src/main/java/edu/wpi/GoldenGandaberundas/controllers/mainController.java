@@ -325,7 +325,12 @@ public class mainController {
   }
 
   public void switchAudioVisual(ActionEvent actionEvent) throws IOException {
-    nodeSwitch("views/audioVisual.fxml");
+    nodeSwitch("views/labRequest.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+  }
+
+  public void switchLabRequest(ActionEvent actionEvent) throws IOException {
+    nodeSwitch("views/labRequest.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
