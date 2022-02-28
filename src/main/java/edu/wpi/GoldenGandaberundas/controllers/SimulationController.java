@@ -320,6 +320,7 @@ public class SimulationController {
             prevHour,
             currentHourLabel);
     buttonHolder.setStyle("-fx-background-color: #002D59");
+    buttonHolder.setMargin(moreSim, new Insets(0, 0, 0, 10));
     buttonHolder.centerShapeProperty().set(true);
     buttonHolder.setAlignment(Pos.CENTER);
     buttonHolder.setSpacing(6);
@@ -514,7 +515,7 @@ public class SimulationController {
     HBox.setMargin(floor01, new Insets(0, 2, 0, 3));
     HBox.setMargin(floor02, new Insets(0, 2, 0, 3));
     HBox.setMargin(floorL1, new Insets(0, 2, 0, 3));
-    HBox.setMargin(floorL2, new Insets(0, 2, 0, 3));
+    HBox.setMargin(floorL2, new Insets(0, 2, 0, 13));
     HBox.setMargin(floor03, new Insets(0, 2, 0, 3));
     floorL2.setOnAction(
         e -> {

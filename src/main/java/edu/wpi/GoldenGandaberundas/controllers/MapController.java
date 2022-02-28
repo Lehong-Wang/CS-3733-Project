@@ -519,6 +519,7 @@ public class MapController {
     HBox buttonHolder = new HBox(toggleNodes, toggleEquip, toggleRequests, togglePathInputs);
     buttonHolder.setAlignment(Pos.TOP_LEFT);
     buttonHolder.setSpacing(6);
+    buttonHolder.setMargin(toggleNodes, new Insets(0, 0, 0, 10));
     Group buttonGroup = new Group();
     buttonGroup.getChildren().add(buttonHolder);
     imagePane.getChildren().add(buttonGroup);
@@ -790,7 +791,7 @@ public class MapController {
     HBox.setMargin(floor01, new Insets(0, 2, 0, 3));
     HBox.setMargin(floor02, new Insets(0, 2, 0, 3));
     HBox.setMargin(floorL1, new Insets(0, 2, 0, 3));
-    HBox.setMargin(floorL2, new Insets(0, 2, 0, 3));
+    HBox.setMargin(floorL2, new Insets(0, 2, 0, 13));
     HBox.setMargin(floor03, new Insets(0, 2, 0, 3));
     floorL2.setOnAction(
         e -> {

@@ -23,7 +23,7 @@
                <children>
                   <MenuBar prefHeight="40.0" prefWidth="1537.0" styleClass="topMenuBar" HBox.hgrow="ALWAYS">
                      <menus>
-                        <Menu mnemonicParsing="false">
+                        <Menu mnemonicParsing="false" styleClass="menuBar">
                            <graphic>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Switch Service" textAlignment="CENTER" wrappingWidth="175.83099365234375">
                                  <font>
@@ -47,7 +47,7 @@
                               <MenuItem mnemonicParsing="false" text="Location Table" />
                            </items>
                         </Menu>
-                        <Menu mnemonicParsing="false">
+                        <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#enableAuthor" text="Enable Authors" />
                               <MenuItem mnemonicParsing="false" onAction="#disableAuthor" text="Disable Authors" />
@@ -73,7 +73,7 @@
                               </Text>
                            </graphic>
                         </Menu>
-                        <Menu mnemonicParsing="false">
+                        <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#logoutProgram" text="Logout" />
                               <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
@@ -208,8 +208,7 @@
                         <Font size="21.0" />
                      </font>
                      <graphic>
-                        <SVGPath content="M 1.226 18.2082 H 13.8691 C 14.0302 18.2082 14.1677 18.0647 14.1634 17.8876 C 14.139 16.8823 13.7997 13.8578 10.6028 13.8578 H 4.4922 C 1.3011 13.8578 0.958 16.8822 0.9321 17.8876 C 0.9276 18.0647 1.0649 18.2082 1.226 18.2082 Z M 11.3444 16.2806 M 4.4922 25.5389 H 10.6016 C 13.6236 25.5389 14.0922 23.8225 14.1551 23.0947 C 14.1703 22.9184 14.029 22.7744 13.868 22.7744 H 1.226 C 1.0649 22.7744 0.9241 22.9184 0.9397 23.0947 C 1.0044 23.8225 1.4767 25.5389 4.4922 25.5389 M 14.0687 21.6023 C 14.6357 21.6023 15.0953 21.0967 15.0953 20.473 S 14.6357 19.3437 14.0687 19.3437 H 1.0266 C 0.4596 19.3437 0 19.8493 0 20.473 S 0.4596 21.6023 1.0266 21.6023 H 14.0687 Z M 25.7651 7.5901 H 23.3638 L 23.6559 6.3157 L 24.2619 3.6715 C 24.3013 3.4997 24.2071 3.3234 24.0516 3.2776 L 23.5643 3.1343 C 23.4088 3.0886 23.2513 3.1908 23.2125 3.3628 L 22.5467 6.3157 L 22.2594 7.5901 H 13.8724 C 13.7113 7.5901 13.5808 7.7337 13.5808 7.9109 V 8.7982 C 13.5808 8.9752 13.7113 9.1189 13.8724 9.1189 H 14.4719 L 16.5463 25.2214 C 16.5688 25.3967 16.7176 25.5389 16.8787 25.5389 H 22.7509 C 22.9118 25.5389 23.0608 25.3968 23.0834 25.2214 L 25.1654 9.1189 H 25.7652 C 25.9262 9.1189 26.0567 8.9752 26.0567 8.7982 V 7.9109 C 26.0567 7.7337 25.9262 7.5901 25.7651 7.5901 Z"
-                                 fill="WHITE" />
+                        <SVGPath content="M 1.226 18.2082 H 13.8691 C 14.0302 18.2082 14.1677 18.0647 14.1634 17.8876 C 14.139 16.8823 13.7997 13.8578 10.6028 13.8578 H 4.4922 C 1.3011 13.8578 0.958 16.8822 0.9321 17.8876 C 0.9276 18.0647 1.0649 18.2082 1.226 18.2082 Z M 11.3444 16.2806 M 4.4922 25.5389 H 10.6016 C 13.6236 25.5389 14.0922 23.8225 14.1551 23.0947 C 14.1703 22.9184 14.029 22.7744 13.868 22.7744 H 1.226 C 1.0649 22.7744 0.9241 22.9184 0.9397 23.0947 C 1.0044 23.8225 1.4767 25.5389 4.4922 25.5389 M 14.0687 21.6023 C 14.6357 21.6023 15.0953 21.0967 15.0953 20.473 S 14.6357 19.3437 14.0687 19.3437 H 1.0266 C 0.4596 19.3437 0 19.8493 0 20.473 S 0.4596 21.6023 1.0266 21.6023 H 14.0687 Z M 25.7651 7.5901 H 23.3638 L 23.6559 6.3157 L 24.2619 3.6715 C 24.3013 3.4997 24.2071 3.3234 24.0516 3.2776 L 23.5643 3.1343 C 23.4088 3.0886 23.2513 3.1908 23.2125 3.3628 L 22.5467 6.3157 L 22.2594 7.5901 H 13.8724 C 13.7113 7.5901 13.5808 7.7337 13.5808 7.9109 V 8.7982 C 13.5808 8.9752 13.7113 9.1189 13.8724 9.1189 H 14.4719 L 16.5463 25.2214 C 16.5688 25.3967 16.7176 25.5389 16.8787 25.5389 H 22.7509 C 22.9118 25.5389 23.0608 25.3968 23.0834 25.2214 L 25.1654 9.1189 H 25.7652 C 25.9262 9.1189 26.0567 8.9752 26.0567 8.7982 V 7.9109 C 26.0567 7.7337 25.9262 7.5901 25.7651 7.5901 Z" fill="WHITE" />
                      </graphic>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -237,8 +236,8 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="AudioVisualButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchAudioVisual" prefHeight="45.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Audio Visual Request" textFill="WHITE">
-                  <JFXButton fx:id="EmployeeDBButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchEmployeeDB" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Employee Database" styleClass="serviceButton">
+                  <JFXButton fx:id="AudioVisualButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchAudioVisual" prefHeight="45.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Audio Visual Request" textFill="WHITE">
+<!--                  <JFXButton fx:id="EmployeeDBButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchEmployeeDB" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Employee Database" styleClass="serviceButton">-->
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -249,8 +248,8 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="36.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Map Viewer" textFill="WHITE">
-                  <JFXButton fx:id="AudioVisualButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchAudioVisual" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Audio Visual Request" styleClass="serviceButton">
+                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="36.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Map Viewer" textFill="WHITE">
+<!--                  <JFXButton fx:id="AudioVisualButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchAudioVisual" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Audio Visual Request" styleClass="serviceButton">-->
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -261,8 +260,8 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="34.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Side Viewer" textFill="WHITE">
-                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Map Viewer" styleClass="serviceButton">
+                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="34.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Side Viewer" textFill="WHITE">
+<!--                  <JFXButton fx:id="MapViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchMapView" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  text="Map Viewer" styleClass="serviceButton">-->
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -273,8 +272,8 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="SimulationButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSimulationView" prefHeight="46.0" prefWidth="254.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Simulation" textFill="WHITE">
-                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  styleClass="serviceButton" text="Side Viewer">
+                  <JFXButton fx:id="SimulationButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSimulationView" prefHeight="46.0" prefWidth="254.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Simulation" textFill="WHITE">
+<!--                  <JFXButton fx:id="SideViewButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchSideView" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00"  styleClass="serviceButton" text="Side Viewer">-->
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -282,10 +281,10 @@
                         <SVGPath content="M16.394 12L10 7.737v8.526L16.394 12zm2.982.416L8.777 19.482A.5.5 0 0 1 8 19.066V4.934a.5.5 0 0 1 .777-.416l10.599 7.066a.5.5 0 0 1 0 .832z" fill="WHITE" scaleX="1.5" scaleY="1.5" scaleZ="1.5" />
                      </graphic>
                      <VBox.margin>
-                        <Insets bottom="10.0"/>
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="EmployeeDBButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchEmployeeDB" prefHeight="45.0" style="-fx-background-color: #002D59 #002D59; -fx-alignment: LEFT;" text="Employee Database" textFill="WHITE">
+                  <JFXButton fx:id="EmployeeDBButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchEmployeeDB" prefHeight="45.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Employee Database" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>

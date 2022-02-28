@@ -46,7 +46,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="600.0">
                            <children>
-                              <JFXButton onAction="#addToCart" prefHeight="32.0" prefWidth="109.0" text="Add To Cart" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                              <JFXButton onAction="#addToCart" prefHeight="32.0" prefWidth="109.0" text="Add To Cart" textAlignment="CENTER" HBox.hgrow="ALWAYS" styleClass="actionButton"/>
                            </children>
                            <VBox.margin>
                               <Insets right="10.0" />
@@ -77,7 +77,7 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="336.0">
                            <children>
-                              <JFXButton onAction="#removeFromCart" prefHeight="34.0" prefWidth="302.0" text="Remove Selected Item" HBox.hgrow="ALWAYS" />
+                              <JFXButton onAction="#removeFromCart" prefHeight="34.0" prefWidth="302.0" text="Remove Selected Item" HBox.hgrow="ALWAYS" styleClass="actionButton"/>
                            </children>
                         </HBox>
                         <TableView fx:id="menuTable" prefHeight="355.0" prefWidth="272.0" VBox.vgrow="SOMETIMES">

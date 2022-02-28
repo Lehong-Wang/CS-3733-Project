@@ -225,7 +225,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
   public void switchAllRequests() {
@@ -408,7 +408,7 @@ public class mainController {
 
   public void switchSimulationView() {
     nodeSwitch("views/simulationView.fxml");
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
   public void switchSettings() {

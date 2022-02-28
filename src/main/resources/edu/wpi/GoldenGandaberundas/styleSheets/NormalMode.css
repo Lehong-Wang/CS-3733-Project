@@ -86,6 +86,11 @@
     -fx-text-fill: text-black;
 }
 
+
+.check-box{
+    -fx-text-fill: text-black;
+}
+
 /*.text{*/
 /*    -fx-fill: darkcyan;*/
 /*}*/
@@ -94,19 +99,24 @@
     /*-fx-border-color: black;*/
     -fx-background-radius: 0px;
     -fx-background-color: #f2f2f2;
-    -fx-text-fill: text-color;
+    -fx-text-fill: text-black;
     -fx-alignment: center;
     -fx-wrap-text: true;
 }
 
 .backupButton:hover{
-    -fx-background-insets: 0, 10;
+    -fx-background-insets: 0, 6;
     -fx-background-radius: 5px;
-    -fx-background-color: #f2f2f2, derive(blue, 50%);
+    -fx-background-color: #f2f2f2, derive(backup-color, 50%);
+    -fx-text-fill: text-color;
 }
 
 .backupButton:pressed{
-    -fx-background-color: green !important;
+
+    -fx-background-insets: 0, 6;
+    -fx-background-radius: 5px;
+    -fx-background-color: #f2f2f2, derive(backup-color, 50%);
+    -fx-text-fill: text-color;
     -fx-effect: innershadow(one-pass-box ,shadow-color ,5, 0, 0, 3);
 
 }
@@ -118,6 +128,7 @@
     -fx-alignment: center;
     -fx-background-radius: 30px;
     -fx-effect: dropshadow(three-pass-box ,shadow-color , 5, 0, 0, 3);
+    -fx-text-font: 30px;
 }
 
 /*.actionButton:selected{*/
