@@ -10,17 +10,20 @@ import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class mainController {
 
@@ -51,6 +54,7 @@ public class mainController {
   @FXML ImageView mainView;
   @FXML BorderPane homePageNode;
 
+  int count;
   boolean disabledAuthors = true;
 
   // CSS Style strings, used to style drawer buttons
@@ -118,7 +122,9 @@ public class mainController {
 
     mainView.setFitHeight(1080);
     mainView.setFitWidth(1920);
-    mainView.setImage(floorMaps.hospital);
+    //    mainView.setImage(floorMaps.hospital);
+    //    mainView.setImage(floorMaps.hospitalLogo);
+    slideShow();
   }
 
   /**
@@ -515,5 +521,73 @@ public class mainController {
 
   public void enableEmbedded(ActionEvent actionEvent) {
     TableController.setConnection(true);
+  }
+
+  public void slideShow() {
+
+    ArrayList<Image> images = new ArrayList<>();
+    images.add(floorMaps.hospital);
+    images.add(floorMaps.towerSideview);
+    images.add(floorMaps.firstFloor);
+    //
+    //    FadeTransition fades = new FadeTransition();
+    //    for(int i = 0 ; i < images.size() ; i ++ ){
+    //      mainView.setImage(images.get(i));
+    //      fades.setNode(mainView);
+    //      fades.setDuration(new Duration(2000));
+    //      fades.setFromValue(1.0);
+    //      fades.setToValue(0.0);
+    //      fades.setCycleCount(0);
+    //      fades.setAutoReverse(true);
+    //      fades.play();
+    //    }
+
+    Timeline timeline = new Timeline();
+    KeyValue transparent = new KeyValue(mainView.opacityProperty(), 0.4);
+    KeyValue opaque = new KeyValue(mainView.opacityProperty(), 1.0);
+
+    KeyFrame startFadeIn = new KeyFrame(Duration.millis(500), transparent);
+    KeyFrame endFadeIn = new KeyFrame(Duration.seconds(1), opaque);
+    KeyFrame startFadeOut = new KeyFrame(Duration.seconds(15), opaque);
+    KeyFrame endFadeOut =
+        new KeyFrame(
+            Duration.millis(500),
+            e -> {
+              if (count < images.size()) {
+                mainView.setImage(images.get(count));
+                count++;
+              }
+            },
+            transparent);
+
+    timeline.getKeyFrames().addAll(startFadeIn, endFadeIn, startFadeOut, endFadeOut);
+
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+
+    //    Timeline timeline = new Timeline();
+    //    timeline
+    //        .getKeyFrames()
+    //        .add(
+    //            new KeyFrame(
+    //                Duration.seconds(5),
+    //                event -> {
+    //                  timeline
+    //                      .getKeyFrames()
+    //                      .add(
+    //                          new KeyFrame(
+    //                              Duration.seconds(1),
+    //                              new KeyValue(
+    //                                  mainView.translateXProperty(), 25, Interpolator.EASE_IN)));
+    //                  System.out.println(mainView.translateYProperty());
+    //                  mainView.setImage(images.get(count));
+    //                  count++;
+    //                  if (count == 3) {
+    //                    count = 0;
+    //                  }
+    //                }));
+    //
+    //    timeline.setCycleCount(Timeline.INDEFINITE);
+    //    timeline.play();
   }
 }
