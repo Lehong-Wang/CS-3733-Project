@@ -31,6 +31,11 @@ public class floorMaps {
   public static Image lowerFirstFloorIcon;
   public static Image equlaizer;
   public static Image hospitalLogo;
+  public static Image peopleHospital;
+  public static Image sideBuildingHospital;
+  public static Image PeopleWalkingBWH;
+  public static Image BWH_BridgeInside;
+  public static Image lookingAtXrays;
 
   public static void load() {
     System.out.println("IMAGES LOADED");
@@ -64,5 +69,11 @@ public class floorMaps {
     equlaizer = new Image(App.class.getResourceAsStream("images/Simulation-equalizer-line .png"));
     hospitalLogo =
         new Image(App.class.getResourceAsStream("images/Brigham_and_Womens_Hospital_logo.png"));
+    peopleHospital = new Image(App.class.getResourceAsStream("images/peopleHospital.jpg"));
+    sideBuildingHospital =
+        new Image(App.class.getResourceAsStream("images/sideBuildingHospital.jpg"));
+    BWH_BridgeInside = new Image(App.class.getResourceAsStream("images/BWH_BridgeInside_JK.jpg"));
+    PeopleWalkingBWH = new Image(App.class.getResourceAsStream("images/PeopleWalkingBWH.jpg"));
+    lookingAtXrays = new Image(App.class.getResourceAsStream("images/lookingAtXrays.jpg"));
   }
 }
