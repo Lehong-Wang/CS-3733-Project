@@ -150,9 +150,15 @@ public class SimulatePumps {
     for (MedEquipmentSimulation pump : Pumps_Cleaning) {
       if (pump.getCleaningEndTime() <= hours) {
         pump.setStatus("Stored");
-        pump.setCurrLoc("GSTOR00103");
+        if (ThreadLocalRandom.current().nextInt(0, 1) == 1) {
+          pump.setCurrLoc("GSTOR00103");
+        } else {
+          pump.setCurrLoc("GSTOR00303");
+        }
+
         if (DEUBUG_PUMP_SIM) {
-          System.out.println("Pump # " + pump.getMedID() + " is now in storage");
+          System.out.println(
+              "Pump # " + pump.getMedID() + " is now in storage room " + pump.getCurrLoc());
         }
       }
       newPumpList.add(pump);
@@ -220,7 +226,7 @@ public class SimulatePumps {
       tempPump.setCurrLoc(loc);
       tempPump.setStatus("In-Use");
       // TODO change hours to be more realistic
-      int rndTTD = ThreadLocalRandom.current().nextInt(1, 8);
+      int rndTTD = ThreadLocalRandom.current().nextInt(1, 16);
       tempPump.setInRoomEndTime(hours + rndTTD);
       if (DEUBUG_PUMP_SIM) {
         System.out.println(
