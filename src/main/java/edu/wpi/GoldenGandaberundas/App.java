@@ -1,5 +1,6 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,8 @@ public class App extends Application {
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();
+    primaryStage.getIcons().add(floorMaps.hospitalLogo);
+    primaryStage.setTitle("Brigham & Woman's Hospital");
     // primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("views/main.fxml"))));
     // primaryStage.show();
   }

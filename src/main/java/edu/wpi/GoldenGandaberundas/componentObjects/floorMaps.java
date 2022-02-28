@@ -19,7 +19,6 @@ public class floorMaps {
   public static Image laundry;
   public static Image gift;
   public static Image towerSideview;
-  public static Image towerSideviewCropped;
   public static Image bedIcon;
   public static Image redBed;
   public static Image greenBed;
@@ -31,15 +30,16 @@ public class floorMaps {
   public static Image thirdFloorIcon;
   public static Image lowerFirstFloorIcon;
   public static Image equlaizer;
+  public static Image hospitalLogo;
 
   public static void load() {
     System.out.println("IMAGES LOADED");
-    thirdFloor = new Image(App.class.getResourceAsStream("images/thirdFloorCropped.png"));
-    secondFloor = new Image(App.class.getResourceAsStream("images/secondFloorCropped.png"));
-    firstFloor = new Image(App.class.getResourceAsStream("images/firstFloorCropped.png"));
+    thirdFloor = new Image(App.class.getResourceAsStream("images/thirdFloor.png"));
+    secondFloor = new Image(App.class.getResourceAsStream("images/secondFloor.png"));
+    firstFloor = new Image(App.class.getResourceAsStream("images/firstFloor.png"));
     // groundFloor = new Image(App.class.getResourceAsStream("images/groundFloorCropped.png"));
-    lower1Floor = new Image(App.class.getResourceAsStream("images/Lower1Cropped.png"));
-    lower2Floor = new Image(App.class.getResourceAsStream("images/Lower2Cropped.png"));
+    lower1Floor = new Image(App.class.getResourceAsStream("images/Lower1.png"));
+    lower2Floor = new Image(App.class.getResourceAsStream("images/Lower2.png"));
     bedIcon = new Image(App.class.getResourceAsStream("images/bed.png"));
     reclinerIcon = new Image(App.class.getResourceAsStream("images/recliner.png"));
     xRayIcon = new Image(App.class.getResourceAsStream("images/xray.png"));
@@ -51,10 +51,7 @@ public class floorMaps {
     medicalEquipmentGreen =
         new Image(App.class.getResourceAsStream("images/medicalEquipmentGREEN.png"));
     gift = new Image(App.class.getResourceAsStream("images/giftFloral.png"));
-
     towerSideview = new Image(App.class.getResourceAsStream("images/TowerSideView.png"));
-    towerSideviewCropped =
-        new Image(App.class.getResourceAsStream("images/TowerSideViewCropped.png"));
     redBed = new Image(App.class.getResourceAsStream("images/bedRED.png"));
     greenBed = new Image(App.class.getResourceAsStream("images/bedGREEN.png"));
     redRecliner = new Image(App.class.getResourceAsStream("images/reclinerRED.png"));
@@ -65,5 +62,7 @@ public class floorMaps {
     thirdFloorIcon = new Image(App.class.getResourceAsStream("images/floor3Icon.png"));
     lowerFirstFloorIcon = new Image(App.class.getResourceAsStream("images/lower1Icon.png"));
     equlaizer = new Image(App.class.getResourceAsStream("images/Simulation-equalizer-line .png"));
+    hospitalLogo =
+        new Image(App.class.getResourceAsStream("images/Brigham_and_Womens_Hospital_logo.png"));
   }
 }

@@ -33,6 +33,7 @@ public class Main {
 
     System.out.println(PathTbl.getInstance().objList);
 
+    floorMaps.load();
     EmployeeTbl.getInstance();
     LocationTbl.getInstance();
     EmployeeTbl.getInstance();
@@ -91,7 +92,6 @@ public class Main {
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
-    floorMaps.load();
 
     //    Simulation.update();
     PathTbl.createStatsMap();
@@ -138,7 +138,6 @@ public class Main {
     //    EmployeePermission staffPerm = new EmployeePermission(456, 222);
     //    EmployeePermissionTbl.getInstance().addEntry(adminPerm);
     //    EmployeePermissionTbl.getInstance().addEntry(staffPerm);
-    floorMaps.load();
     App.launch(App.class, args);
 
     //    SimulationController sim = new SimulationController();

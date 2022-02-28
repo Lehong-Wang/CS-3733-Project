@@ -36,7 +36,7 @@ public class TowerSideViewController {
   private Group mapGroup = new Group();
   private Group equipGroup = new Group();
 
-  private ImageView towerImage = new ImageView(floorMaps.towerSideviewCropped);
+  private ImageView towerImage = new ImageView(floorMaps.towerSideview);
   private Group imageGroup = null;
 
   private ImageView mapImage = new ImageView(floorMaps.firstFloor);
