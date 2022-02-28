@@ -10,6 +10,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -48,6 +51,7 @@ public class FoodProviderController {
   @FXML private Label statusLabel;
   @FXML private Label timeStartLabel;
   @FXML private Label timeCompLabel;
+  @FXML private Label foodIDLabel;
 
   @FXML private TableView foodTable;
   @FXML private TableColumn<FoodRequest, Integer> reqID;
@@ -59,6 +63,7 @@ public class FoodProviderController {
 
   @FXML private JFXButton pathButton;
   @FXML private JFXButton clearButton;
+  @FXML private ComboBox statusBox;
 
   public TableController<Location, String> locations = null;
 
@@ -89,6 +94,8 @@ public class FoodProviderController {
 
   @FXML
   public void initialize() {
+
+    statusBox.getItems().addAll("Submitted", "In_Progress", "Completed");
     coord = new ArrayList<ArrayList<String>>();
     coord.add(new ArrayList<>());
     coord.add(new ArrayList<>());
@@ -137,13 +144,14 @@ public class FoodProviderController {
     statusLabel.setText("");
     timeStartLabel.setText("");
     timeCompLabel.setText("");
+    foodIDLabel.setText("");
 
     HBox floorSelect = createFloorSelector();
     floorSelect.setMaxHeight(25);
     imagePane.getChildren().add(floorSelect);
-    imagePane.setAlignment(floorSelect, Pos.TOP_CENTER);
-
+    floorSelect.setMaxHeight(25);
     setLocations(currentFloor);
+    imagePane.setAlignment(floorSelect, Pos.TOP_LEFT);
 
     // Populating the location search box
     locList();
@@ -158,14 +166,17 @@ public class FoodProviderController {
     pathButton.setOnMouseReleased(
         (event) -> {
           FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
-          String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
-          String end = (String) selectedItem.getLocationID();
-          // System.out.println(previouslyUsed(start, end));
-          if (!previouslyUsed(start, end)) {
-            astar = PathTbl.getInstance().createAStarPath(start, end);
-            dividePath(astar);
-            animatedPath();
-            pathNodePane.setVisible(true);
+          try {
+            String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
+            String end = (String) selectedItem.getLocationID();
+            // System.out.println(previouslyUsed(start, end));
+            if (!previouslyUsed(start, end)) {
+              astar = PathTbl.getInstance().createAStarPath(start, end);
+              dividePath(astar);
+              animatedPath();
+              pathNodePane.setVisible(true);
+            }
+          } catch (Exception e) {
           }
         });
 
@@ -188,7 +199,7 @@ public class FoodProviderController {
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
   }
-  //////////////////////////
+
   public void dividePath(List<String> locs) {
     coord.get(0).clear();
     coord.get(1).clear();
@@ -293,7 +304,20 @@ public class FoodProviderController {
       timeline2.play();
     }
   }
-  ///////////////////////////
+
+  @FXML
+  public void updateStatus() {
+    try {
+      Request selectedItem = (Request) foodTable.getSelectionModel().getSelectedItem();
+      String curStatus = (String) statusBox.getSelectionModel().getSelectedItem();
+      RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "requestStatus", curStatus);
+      statusLabel.setText(curStatus);
+      // FoodRequestTbl.getInstance().getEntry()
+      refresh();
+    } catch (Exception e) {
+      // Nothing
+    }
+  }
 
   @FXML
   public void getRequestInfo() {
@@ -318,7 +342,10 @@ public class FoodProviderController {
         timeStartLabel.setText(String.valueOf(tStart));
 
         long tEnd = selectedItem.getTimeEnd();
-        timeCompLabel.setText("    " + String.valueOf(tEnd));
+        timeCompLabel.setText(String.valueOf(tEnd));
+
+        Integer foodID = selectedItem.getFoodID();
+        foodIDLabel.setText(String.valueOf(foodID));
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -365,6 +392,7 @@ public class FoodProviderController {
   public void refreshMap() {
     setLocations(currentFloor);
     refreshPath();
+    animatedPath();
   }
 
   public void refreshPath() {
@@ -401,7 +429,7 @@ public class FoodProviderController {
     HBox.setMargin(floor01, new Insets(0, 2, 0, 3));
     HBox.setMargin(floor02, new Insets(0, 2, 0, 3));
     HBox.setMargin(floorL1, new Insets(0, 2, 0, 3));
-    HBox.setMargin(floorL2, new Insets(0, 2, 0, 3));
+    HBox.setMargin(floorL2, new Insets(0, 2, 0, 12));
     HBox.setMargin(floor03, new Insets(0, 2, 0, 3));
     floorL2.setOnAction(
         e -> {
