@@ -2,26 +2,33 @@ package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.controlsfx.control.SearchableComboBox;
 
 public class editComputerReqFormController {
   @FXML TextField computerRequestIDField;
-  @FXML TextField locField;
   @FXML TextField subTimeField;
   @FXML TextField finishTimeField;
-  @FXML TextField requesterIDField;
-  @FXML TextField completerIDField;
-  @FXML TextField statusField;
   @FXML TextField computerField;
   @FXML JFXButton editButton;
+  @FXML ComboBox<String> statusComboBox;
+  @FXML SearchableComboBox<Integer> completerComboBox;
+  @FXML SearchableComboBox<Integer> requesterComboBox;
+  @FXML SearchableComboBox<String> locationComboBox;
 
   RequestTable requests = RequestTable.getInstance();
   ComputerRequestTbl compRequests = ComputerRequestTbl.getInstance();
@@ -35,12 +42,35 @@ public class editComputerReqFormController {
    */
   public void editForm(Request computerReq) throws IOException {
     computerRequestIDField.setText(String.valueOf(computerReq.getRequestID()));
-    locField.setText(computerReq.getLocationID());
     subTimeField.setText(String.valueOf(computerReq.getTimeStart()));
     finishTimeField.setText(String.valueOf(computerReq.getTimeEnd()));
-    requesterIDField.setText(String.valueOf(computerReq.getEmpInitiated()));
-    completerIDField.setText(String.valueOf(computerReq.getEmpCompleter()));
-    statusField.setText(computerReq.getRequestStatus());
+
+    statusComboBox.setPromptText(computerReq.getRequestStatus());
+    statusComboBox.setValue(computerReq.getRequestStatus());
+    ArrayList<String> statusTypes = new ArrayList<String>();
+    statusTypes.add("Submitted");
+    statusTypes.add("In_Progress");
+    statusTypes.add("Completed");
+    statusComboBox.setItems(FXCollections.observableArrayList(statusTypes));
+
+    completerComboBox.setPromptText(String.valueOf(computerReq.getEmpCompleter()));
+    completerComboBox.setValue(computerReq.getEmpCompleter());
+    requesterComboBox.setPromptText(String.valueOf(computerReq.getEmpInitiated()));
+    requesterComboBox.setValue(computerReq.getEmpInitiated());
+    ArrayList<Integer> employeeIDs = new ArrayList<>();
+    for (Employee e : EmployeeTbl.getInstance().readTable()) {
+      employeeIDs.add(e.getEmpID());
+    }
+    completerComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
+    requesterComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
+
+    locationComboBox.setPromptText(computerReq.getLocationID());
+    locationComboBox.setValue(computerReq.getLocationID());
+    ArrayList<String> locations = new ArrayList<>();
+    for (Location l : (ArrayList<Location>) LocationTbl.getInstance().readTable()) {
+      locations.add(l.getNodeID());
+    }
+    locationComboBox.setItems(FXCollections.observableArrayList(locations));
   }
 
   private boolean computerRequestExists() {
@@ -52,13 +82,13 @@ public class editComputerReqFormController {
     try {
       if (computerRequestExists()) {
         try {
-          String locationID = locField.getText();
+          String locationID = locationComboBox.getValue();
           Integer pkID = Integer.parseInt(computerRequestIDField.getText());
-          Integer empInitiated = Integer.parseInt(requesterIDField.getText());
-          Integer empCompleter = Integer.parseInt(completerIDField.getText());
+          Integer empInitiated = requesterComboBox.getValue();
+          Integer empCompleter = completerComboBox.getValue();
           long timeStart = Integer.parseInt(subTimeField.getText());
           long timeEnd = Integer.parseInt(finishTimeField.getText());
-          String requestStatus = statusField.getText();
+          String requestStatus = statusComboBox.getValue();
 
           requests.editEntry(pkID, "locationID", locationID);
           requests.editEntry(pkID, "empInitiated", empInitiated);
@@ -71,18 +101,17 @@ public class editComputerReqFormController {
           // TODO Need refresh table here
         } catch (Exception e) {
           e.printStackTrace();
-          locField.setText("Invalid input");
-          completerIDField.setText("Invalid input");
+          locationComboBox.setPromptText(locationComboBox.getValue());
+          completerComboBox.setPromptText(String.valueOf(completerComboBox.getValue()));
           computerRequestIDField.setText("Invalid input");
-          requesterIDField.setText("Invalid input");
+          requesterComboBox.setPromptText(String.valueOf(requesterComboBox.getValue()));
           subTimeField.setText("Invalid input");
           finishTimeField.setText("Invalid input");
-          statusField.setText("Invalid input");
+          statusComboBox.setPromptText(statusComboBox.getValue());
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
-      completerIDField.setText("Invalid input");
     }
   }
 

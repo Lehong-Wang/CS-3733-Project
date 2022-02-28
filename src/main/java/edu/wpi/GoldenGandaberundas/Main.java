@@ -7,10 +7,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
@@ -115,6 +112,7 @@ public class Main {
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     //    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
+    EmployeePermissionTbl.getInstance().addEntry(new EmployeePermission(0, 111));
 
     //    Simulation.update();
     PathTbl.createStatsMap();

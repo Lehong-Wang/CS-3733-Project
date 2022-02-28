@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,10 +12,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers.editEquipmentReqFormController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Edit Equipment Request">
                <font>
@@ -72,14 +75,12 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="locField" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Finish Time:" GridPane.columnIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <TextField fx:id="finishTimeField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="patientIDField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Patient ID:" GridPane.columnIndex="3">
                      <font>
                         <Font size="14.0" />
@@ -90,21 +91,39 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="requesterIDField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Completer ID:" GridPane.columnIndex="5">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="completerIDField" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="311.0" text="Status:" GridPane.columnIndex="6">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="statusField" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                   <JFXButton fx:id="patientBtn" onAction="#editRequest" text="Edit" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <JFXButton fx:id="patientBtn1" alignment="CENTER" onAction="#deleteRequest" prefHeight="58.0" prefWidth="86.0" text="Delete Request" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="549.0" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <SearchableComboBox fx:id="completerComboBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.2" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
+                  <SearchableComboBox fx:id="requesterComboBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.2" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
+                  <SearchableComboBox fx:id="locationComboBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
+                  <SearchableComboBox fx:id="patientComboBox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.2" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </SearchableComboBox>
                </children>
             </GridPane>
          </children>

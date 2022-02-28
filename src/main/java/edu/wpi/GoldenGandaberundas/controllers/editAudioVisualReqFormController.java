@@ -2,27 +2,42 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
+import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
+import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.controlsfx.control.SearchableComboBox;
 
 public class editAudioVisualReqFormController {
   @FXML TextField AVRequestIDField;
   @FXML TextField deviceField;
-  @FXML TextField locField;
+  // @FXML TextField locField;
   @FXML TextField subTimeField;
   @FXML TextField finishTimeField;
-  @FXML TextField patientIDField;
-  @FXML TextField requesterIDField;
-  @FXML TextField completerIDField;
-  @FXML TextField statusField;
+  // @FXML TextField patientIDField;
+  // @FXML TextField requesterIDField;
+  // @FXML TextField completerIDField;
+  // @FXML TextField statusField;
   @FXML JFXButton editButton;
+
+  @FXML ComboBox<String> statusComboBox;
+  @FXML SearchableComboBox<Integer> completerComboBox;
+  @FXML SearchableComboBox<Integer> requesterComboBox;
+  @FXML SearchableComboBox<Integer> patientComboBox;
+  @FXML SearchableComboBox<String> locationComboBox;
 
   RequestTable requests = RequestTable.getInstance();
   AudioVisualRequestTbl AVReqs = AudioVisualRequestTbl.getInstance();
@@ -31,18 +46,48 @@ public class editAudioVisualReqFormController {
   /**
    * edits the form
    *
-   * @param medReq request
+   * @param avReq request
    * @throws IOException oops
    */
-  public void editForm(Request medReq) throws IOException {
-    AVRequestIDField.setText(String.valueOf(medReq.getRequestID()));
-    locField.setText(medReq.getLocationID());
-    subTimeField.setText(String.valueOf(medReq.getTimeStart()));
-    finishTimeField.setText(String.valueOf(medReq.getTimeEnd()));
-    patientIDField.setText(String.valueOf(medReq.getPatientID()));
-    completerIDField.setText(String.valueOf(medReq.getEmpCompleter()));
-    requesterIDField.setText(String.valueOf(medReq.getEmpInitiated()));
-    statusField.setText(medReq.getRequestStatus());
+  public void editForm(Request avReq) throws IOException {
+    AVRequestIDField.setText(String.valueOf(avReq.getRequestID()));
+    subTimeField.setText(String.valueOf(avReq.getTimeStart()));
+    finishTimeField.setText(String.valueOf(avReq.getTimeEnd()));
+
+    statusComboBox.setPromptText(avReq.getRequestStatus());
+    statusComboBox.setValue(avReq.getRequestStatus());
+    ArrayList<String> statusTypes = new ArrayList<String>();
+    statusTypes.add("Submitted");
+    statusTypes.add("In_Progress");
+    statusTypes.add("Completed");
+    statusComboBox.setItems(FXCollections.observableArrayList(statusTypes));
+
+    completerComboBox.setPromptText(String.valueOf(avReq.getEmpCompleter()));
+    completerComboBox.setValue(avReq.getEmpCompleter());
+    requesterComboBox.setPromptText(String.valueOf(avReq.getEmpInitiated()));
+    requesterComboBox.setValue(avReq.getEmpInitiated());
+    ArrayList<Integer> employeeIDs = new ArrayList<>();
+    for (Employee e : EmployeeTbl.getInstance().readTable()) {
+      employeeIDs.add(e.getEmpID());
+    }
+    completerComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
+    requesterComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
+
+    locationComboBox.setPromptText(avReq.getLocationID());
+    locationComboBox.setValue(avReq.getLocationID());
+    ArrayList<String> locations = new ArrayList<>();
+    for (Location l : (ArrayList<Location>) LocationTbl.getInstance().readTable()) {
+      locations.add(l.getNodeID());
+    }
+    locationComboBox.setItems(FXCollections.observableArrayList(locations));
+
+    patientComboBox.setPromptText(String.valueOf(avReq.getPatientID()));
+    patientComboBox.setValue(avReq.getPatientID());
+    ArrayList<Integer> patientIDs = new ArrayList<>();
+    for (Patient p : PatientTbl.getInstance().readTable()) {
+      patientIDs.add(p.getPatientID());
+    }
+    patientComboBox.setItems(FXCollections.observableArrayList(patientIDs));
   }
 
   /**
@@ -60,14 +105,14 @@ public class editAudioVisualReqFormController {
     try {
       if (avRequestExists()) {
         try {
-          String locationID = locField.getText();
+          String locationID = locationComboBox.getValue();
           Integer pkID = Integer.parseInt(AVRequestIDField.getText());
-          Integer empInitiated = Integer.parseInt(requesterIDField.getText());
-          Integer empCompleter = Integer.parseInt(completerIDField.getText());
+          Integer empInitiated = requesterComboBox.getValue();
+          Integer empCompleter = completerComboBox.getValue();
           long timeStart = Integer.parseInt(subTimeField.getText());
           long timeEnd = Integer.parseInt(finishTimeField.getText());
-          Integer patientID = Integer.parseInt(patientIDField.getText());
-          String requestStatus = statusField.getText();
+          Integer patientID = patientComboBox.getValue();
+          String requestStatus = statusComboBox.getValue();
 
           requests.editEntry(pkID, "locationID", locationID);
           requests.editEntry(pkID, "empInitiated", empInitiated);
@@ -82,14 +127,14 @@ public class editAudioVisualReqFormController {
           // TODO Need refresh table here
         } catch (Exception e) {
           e.printStackTrace();
-          locField.setText("Invalid input");
+          locationComboBox.setPromptText(locationComboBox.getValue());
           AVRequestIDField.setText("Invalid input");
-          requesterIDField.setText("Invalid input");
-          completerIDField.setText("Invalid input");
+          requesterComboBox.setPromptText(String.valueOf(requesterComboBox.getValue()));
+          completerComboBox.setPromptText(String.valueOf(completerComboBox.getValue()));
           subTimeField.setText("Invalid input");
           finishTimeField.setText("Invalid input");
-          patientIDField.setText("Invalid input");
-          statusField.setText("Invalid input");
+          patientComboBox.setPromptText(String.valueOf(patientComboBox.getValue()));
+          statusComboBox.setPromptText(statusComboBox.getValue());
         }
       }
     } catch (Exception e) {
