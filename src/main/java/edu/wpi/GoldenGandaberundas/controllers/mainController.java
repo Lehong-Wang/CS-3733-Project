@@ -198,28 +198,30 @@ public class mainController {
    * @throws IOException error
    */
   public void switchMapView() throws IOException {
-    FXMLLoader subControllerLoader = new FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
-
-    try {
-
-      BorderPane subPane = subControllerLoader.load();
-      MapController master = subControllerLoader.getController();
-      master.setMainController(this);
-      AnchorPane.setTopAnchor(subPane, 0.0);
-      AnchorPane.setBottomAnchor(subPane, 0.0);
-      AnchorPane.setLeftAnchor(subPane, 0.0);
-      AnchorPane.setRightAnchor(subPane, 0.0);
-      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
-      subPane.setPrefHeight(nodeDataPane.getHeight());
-      subPane.setPrefWidth(nodeDataPane.getWidth());
-      // nodeDataPane.getLayoutBounds().getHeight();
-      nodeDataPane.getChildren().clear();
-      nodeDataPane.getChildren().add(subPane);
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+    edu.wpi.cs3733.c22.teamD.Main.run(0, 0, 1000, 1000, "", "FDEPT00101", "FDEPT00201");
+    //    FXMLLoader subControllerLoader = new
+    // FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
+    //
+    //    try {
+    //
+    //      BorderPane subPane = subControllerLoader.load();
+    //      MapController master = subControllerLoader.getController();
+    //      master.setMainController(this);
+    //      AnchorPane.setTopAnchor(subPane, 0.0);
+    //      AnchorPane.setBottomAnchor(subPane, 0.0);
+    //      AnchorPane.setLeftAnchor(subPane, 0.0);
+    //      AnchorPane.setRightAnchor(subPane, 0.0);
+    //      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+    //      subPane.setPrefHeight(nodeDataPane.getHeight());
+    //      subPane.setPrefWidth(nodeDataPane.getWidth());
+    //      // nodeDataPane.getLayoutBounds().getHeight();
+    //      nodeDataPane.getChildren().clear();
+    //      nodeDataPane.getChildren().add(subPane);
+    //
+    //    } catch (IOException e) {
+    //      e.printStackTrace();
+    //    }
+    //    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   public void switchAllRequests() {
