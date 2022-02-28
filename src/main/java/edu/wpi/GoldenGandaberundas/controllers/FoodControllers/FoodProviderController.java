@@ -4,17 +4,23 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -26,13 +32,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polyline;
+import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 import org.controlsfx.control.SearchableComboBox;
 
 public class FoodProviderController {
 
-  @FXML private SearchableComboBox locationSearchBox;
+  @FXML private SearchableComboBox<String> locationSearchBox;
   @FXML private Label requestIDLabel;
   @FXML private Label locationLabel;
   @FXML private Label patientLabel;
@@ -48,6 +57,9 @@ public class FoodProviderController {
   @FXML TableColumn<FoodRequest, Integer> patientID;
   @FXML TableColumn<FoodRequest, String> requestStatus;
 
+  @FXML private JFXButton pathButton;
+  @FXML private JFXButton clearButton;
+
   public TableController<Location, String> locations = null;
 
   private final Image LL2 = floorMaps.lower2Floor;
@@ -58,6 +70,9 @@ public class FoodProviderController {
 
   private String currentFloor = "1";
   private ArrayList<Location> currentLocations = null;
+  private ArrayList<ArrayList<String>> coord = null;
+  private String startTemp = null;
+  private String endTemp = null;
 
   @FXML private StackPane imagePane;
   @FXML private GesturePane gesturePane = new GesturePane();
@@ -65,12 +80,23 @@ public class FoodProviderController {
   private Group imageGroup = null;
   private Pane locNodePane = null;
   private Pane pathNodePane = null;
+  private Group animatedPathNodeGroup = null;
+  private List<String> astar = null;
 
-  public TableController tableController = FoodRequestTbl.getInstance();
-  public LocationTbl locationTableController = LocationTbl.getInstance();
+  private TableController tableController = FoodRequestTbl.getInstance();
+  private LocationTbl locationTableController = LocationTbl.getInstance();
+  private PathTbl path = PathTbl.getInstance();
 
   @FXML
   public void initialize() {
+    coord = new ArrayList<ArrayList<String>>();
+    coord.add(new ArrayList<>());
+    coord.add(new ArrayList<>());
+    coord.add(new ArrayList<>());
+    coord.add(new ArrayList<>());
+    coord.add(new ArrayList<>());
+    locations = LocationTbl.getInstance();
+
     reqID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("requestID"));
     locID.setCellValueFactory(new PropertyValueFactory<FoodRequest, String>("locationID"));
     tStartCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeStart"));
@@ -95,9 +121,14 @@ public class FoodProviderController {
     gesturePane.setMinScale(0.005);
     gesturePane.setFitMode(GesturePane.FitMode.COVER);
 
-    locNodePane = new Pane();
+    pathNodePane = new Pane();
+    imageGroup.getChildren().add(pathNodePane);
 
+    locNodePane = new Pane();
     imageGroup.getChildren().add(locNodePane);
+
+    animatedPathNodeGroup = new Group();
+    imageGroup.getChildren().add(animatedPathNodeGroup);
 
     // Hiding the text changing labels
     requestIDLabel.setText("");
@@ -106,6 +137,13 @@ public class FoodProviderController {
     statusLabel.setText("");
     timeStartLabel.setText("");
     timeCompLabel.setText("");
+
+    HBox floorSelect = createFloorSelector();
+    floorSelect.setMaxHeight(25);
+    imagePane.getChildren().add(floorSelect);
+    imagePane.setAlignment(floorSelect, Pos.TOP_CENTER);
+
+    setLocations(currentFloor);
 
     // Populating the location search box
     locList();
@@ -117,8 +155,27 @@ public class FoodProviderController {
           }
         });
 
-    Location tloc = locationTableController.getEntry("FDEPT00101");
-    createIcon(tloc);
+    pathButton.setOnMouseReleased(
+        (event) -> {
+          FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+          String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
+          String end = (String) selectedItem.getLocationID();
+          // System.out.println(previouslyUsed(start, end));
+          if (!previouslyUsed(start, end)) {
+            astar = PathTbl.getInstance().createAStarPath(start, end);
+            dividePath(astar);
+            animatedPath();
+            pathNodePane.setVisible(true);
+          }
+        });
+
+    clearButton.setOnMouseReleased(
+        (event) -> {
+          pathNodePane.getChildren().clear();
+          animatedPathNodeGroup.getChildren().clear();
+          startTemp = null;
+          endTemp = null;
+        });
   }
 
   public void locList() {
@@ -131,6 +188,112 @@ public class FoodProviderController {
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
   }
+  //////////////////////////
+  public void dividePath(List<String> locs) {
+    coord.get(0).clear();
+    coord.get(1).clear();
+    coord.get(2).clear();
+    coord.get(3).clear();
+    coord.get(4).clear();
+    for (int i = 0; i < locs.size(); i++) {
+      if (locs.get(i).substring(locs.get(i).length() - 2).equals("L2")) {
+        coord.get(0).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 2).equals("L1")) {
+        coord.get(1).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 1).equals("1")) {
+        coord.get(2).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 1).equals("2")) {
+        coord.get(3).add(locs.get(i));
+      } else {
+        coord.get(4).add(locs.get(i));
+      }
+    }
+  }
+
+  /** Generate the path based on the current floor */
+  public void animatedPath() {
+    animatedPathNodeGroup.getChildren().clear();
+    ArrayList<String> locs = new ArrayList<>();
+    if (currentFloor.equals("L2")) {
+      locs = coord.get(0);
+    } else if (currentFloor.equals("L1")) {
+      locs = coord.get(1);
+    } else if (currentFloor.equals("1")) {
+      locs = coord.get(2);
+    } else if (currentFloor.equals("2")) {
+      locs = coord.get(3);
+    } else if (currentFloor.equals("3")) {
+      locs = coord.get(4);
+    }
+
+    // iterates through the list of locations and adds it to the coords list of the poly line
+    ArrayList<Double> coordsList = new ArrayList<>();
+    boolean secondLine = false;
+    int tempStop = 0;
+    for (int i = 0; i < locs.size() - 1; i++) {
+      if (locs.get(i).substring(0, 5).equals("WELEV")
+              && locs.get(i + 1).substring(0, 5).equals("WELEV")
+          || locs.get(i + 1).substring(0, 5).equals("WELEV")
+              && locs.get(i).substring(0, 5).equals("WELEV")) {
+        secondLine = true;
+        tempStop = i + 1;
+        break;
+      }
+      Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+      Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+      coordsList.add((double) (loc.getXcoord()));
+      coordsList.add((double) (loc.getYcoord()));
+      coordsList.add((double) (loc1.getXcoord()));
+      coordsList.add((double) (loc1.getYcoord()));
+    }
+
+    // creates the polyline bases on the positions coordinates
+    Polyline polyline = new Polyline();
+    polyline.getPoints().addAll(coordsList);
+    polyline.setStroke(Color.web("#006db3"));
+    polyline.setStrokeWidth(10);
+    polyline.getStrokeDashArray().setAll(20.0, 20.0);
+    animatedPathNodeGroup.getChildren().addAll(polyline);
+
+    // animates the line accordingly
+    Timeline timeline =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(polyline.strokeDashOffsetProperty(), 1000)),
+            new KeyFrame(
+                Duration.seconds(15), new KeyValue(polyline.strokeDashOffsetProperty(), 0)));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+
+    if (secondLine) {
+      ArrayList<Double> coordsList2 = new ArrayList<>();
+      for (int i = tempStop; i < locs.size() - 1; i++) {
+        Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+        Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+        coordsList2.add((double) (loc.getXcoord()));
+        coordsList2.add((double) (loc.getYcoord()));
+        coordsList2.add((double) (loc1.getXcoord()));
+        coordsList2.add((double) (loc1.getYcoord()));
+      }
+
+      // creates the polyline bases on the positions coordinates
+      Polyline polyline2 = new Polyline();
+      polyline2.getPoints().addAll(coordsList2);
+      polyline2.setStroke(Color.web("#006db3"));
+      polyline2.setStrokeWidth(10);
+      polyline2.getStrokeDashArray().setAll(20.0, 20.0);
+      animatedPathNodeGroup.getChildren().addAll(polyline2);
+
+      // animates the line accordingly
+      Timeline timeline2 =
+          new Timeline(
+              new KeyFrame(Duration.ZERO, new KeyValue(polyline2.strokeDashOffsetProperty(), 1000)),
+              new KeyFrame(
+                  Duration.seconds(15), new KeyValue(polyline2.strokeDashOffsetProperty(), 0)));
+      timeline2.setCycleCount(Timeline.INDEFINITE);
+      timeline2.play();
+    }
+  }
+  ///////////////////////////
 
   @FXML
   public void getRequestInfo() {
@@ -188,7 +351,7 @@ public class FoodProviderController {
   public void setLocations(String floor) {
     locNodePane.getChildren().clear();
     currentFloor = floor;
-    currentLocations = locations.readTable();
+    currentLocations = locationTableController.readTable();
     currentLocations =
         (ArrayList)
             currentLocations.stream()
@@ -288,6 +451,17 @@ public class FoodProviderController {
         });
 
     return floorSelect;
+  }
+
+  /**
+   * checks to see if the previous path was already use
+   *
+   * @param start the initial starting location
+   * @param end the initial ending location
+   * @return returns a bool if the locations match
+   */
+  public boolean previouslyUsed(String start, String end) {
+    return start.equals(startTemp) && end.equals(endTemp);
   }
 
   private class LocationCircle extends Circle {
