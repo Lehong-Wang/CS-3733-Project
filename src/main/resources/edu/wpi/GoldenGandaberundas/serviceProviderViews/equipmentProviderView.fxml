@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.FoodControllers.FoodProviderController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers.EquipmentProviderController">
    <center>
       <HBox>
          <children>
@@ -126,12 +126,12 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="foodIDLabel" prefWidth="46.0" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                        <Label fx:id="equipmentIDLabel" prefWidth="46.0" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" text="Food ID:" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                        <Label alignment="TOP_LEFT" text="Equipment ID:" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -182,7 +182,7 @@
                         </SearchableComboBox>
                      </children>
                   </GridPane>
-                  <TableView fx:id="foodTable" prefHeight="420.0" prefWidth="596.0">
+                  <TableView fx:id="equipTable" prefHeight="420.0" prefWidth="596.0">
                     <columns>
                       <TableColumn fx:id="reqID" prefWidth="75.0" text="Request ID" />
                       <TableColumn fx:id="locID" prefWidth="75.0" text="Location" />

@@ -1,15 +1,16 @@
-package edu.wpi.GoldenGandaberundas.controllers.FoodControllers;
+package edu.wpi.GoldenGandaberundas.controllers.EquipmentControllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
-import edu.wpi.GoldenGandaberundas.controllers.mainController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
@@ -37,7 +38,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
@@ -45,7 +48,7 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 import org.controlsfx.control.SearchableComboBox;
 
-public class FoodProviderController {
+public class EquipmentProviderController {
 
   @FXML private SearchableComboBox<String> locationSearchBox;
   @FXML private Label requestIDLabel;
@@ -54,15 +57,15 @@ public class FoodProviderController {
   @FXML private Label statusLabel;
   @FXML private Label timeStartLabel;
   @FXML private Label timeCompLabel;
-  @FXML private Label foodIDLabel;
+  @FXML private Label equipmentIDLabel;
 
-  @FXML private TableView foodTable;
-  @FXML private TableColumn<FoodRequest, Integer> reqID;
-  @FXML private TableColumn<FoodRequest, String> locID;
-  @FXML private TableColumn<FoodRequest, Integer> tStartCol;
-  @FXML private TableColumn<FoodRequest, Integer> tEndCol;
-  @FXML TableColumn<FoodRequest, Integer> patientID;
-  @FXML TableColumn<FoodRequest, String> requestStatus;
+  @FXML private TableView equipTable;
+  @FXML private TableColumn<MedEquipRequest, Integer> reqID;
+  @FXML private TableColumn<MedEquipRequest, String> locID;
+  @FXML private TableColumn<MedEquipRequest, Integer> tStartCol;
+  @FXML private TableColumn<MedEquipRequest, Integer> tEndCol;
+  @FXML TableColumn<MedEquipRequest, Integer> patientID;
+  @FXML TableColumn<MedEquipRequest, String> requestStatus;
 
   @FXML private JFXButton pathButton;
   @FXML private JFXButton clearButton;
@@ -91,9 +94,7 @@ public class FoodProviderController {
   private Group animatedPathNodeGroup = null;
   private List<String> astar = null;
 
-  mainController main = null;
-
-  private TableController tableController = FoodRequestTbl.getInstance();
+  private TableController tableController = MedEquipRequestTbl.getInstance();
   private LocationTbl locationTableController = LocationTbl.getInstance();
   private PathTbl path = PathTbl.getInstance();
 
@@ -109,13 +110,13 @@ public class FoodProviderController {
     coord.add(new ArrayList<>());
     locations = LocationTbl.getInstance();
 
-    reqID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("requestID"));
-    locID.setCellValueFactory(new PropertyValueFactory<FoodRequest, String>("locationID"));
-    tStartCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeStart"));
-    tEndCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeEnd"));
-    patientID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("patientID"));
+    reqID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("requestID"));
+    locID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, String>("locationID"));
+    tStartCol.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("timeStart"));
+    tEndCol.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("timeEnd"));
+    patientID.setCellValueFactory(new PropertyValueFactory<MedEquipRequest, Integer>("patientID"));
     requestStatus.setCellValueFactory(
-        new PropertyValueFactory<FoodRequest, String>("requestStatus"));
+        new PropertyValueFactory<MedEquipRequest, String>("requestStatus"));
 
     refresh();
 
@@ -149,7 +150,7 @@ public class FoodProviderController {
     statusLabel.setText("");
     timeStartLabel.setText("");
     timeCompLabel.setText("");
-    foodIDLabel.setText("");
+    equipmentIDLabel.setText("");
 
     HBox floorSelect = createFloorSelector();
     floorSelect.setMaxHeight(25);
@@ -161,7 +162,7 @@ public class FoodProviderController {
     // Populating the location search box
     locList();
 
-    foodTable.setOnMouseClicked(
+    equipTable.setOnMouseClicked(
         e -> {
           if (e.getClickCount() > 1) {
             getRequestInfo();
@@ -170,7 +171,7 @@ public class FoodProviderController {
 
     pathButton.setOnMouseReleased(
         (event) -> {
-          FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+          FoodRequest selectedItem = (FoodRequest) equipTable.getSelectionModel().getSelectedItem();
           try {
             String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
             String end = (String) selectedItem.getLocationID();
@@ -313,7 +314,7 @@ public class FoodProviderController {
   @FXML
   public void updateStatus() {
     try {
-      Request selectedItem = (Request) foodTable.getSelectionModel().getSelectedItem();
+      Request selectedItem = (Request) equipTable.getSelectionModel().getSelectedItem();
       String curStatus = (String) statusBox.getSelectionModel().getSelectedItem();
       RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "requestStatus", curStatus);
       if (curStatus == "Completed") {
@@ -332,8 +333,9 @@ public class FoodProviderController {
 
   @FXML
   public void getRequestInfo() {
-    if (foodTable.getSelectionModel().getSelectedItem() != null) {
-      FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+    if (equipTable.getSelectionModel().getSelectedItem() != null) {
+      MedEquipRequest selectedItem =
+          (MedEquipRequest) equipTable.getSelectionModel().getSelectedItem();
       try {
         // tableController.getEntry(selectedItem.getPK())
         Integer id = selectedItem.getRequestID();
@@ -364,8 +366,8 @@ public class FoodProviderController {
         String eTimeDisplay = endDate.toString().replace("T", " ");
         timeCompLabel.setText(eTimeDisplay);
 
-        Integer foodID = selectedItem.getFoodID();
-        foodIDLabel.setText(String.valueOf(foodID));
+        Integer equipID = selectedItem.getMedID();
+        equipmentIDLabel.setText(String.valueOf(equipID));
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -380,7 +382,7 @@ public class FoodProviderController {
   @FXML
   public void refresh() {
     tableController = FoodRequestTbl.getInstance();
-    foodTable.getItems().setAll(tableController.readTable());
+    equipTable.getItems().setAll(tableController.readTable());
   }
 
   @FXML

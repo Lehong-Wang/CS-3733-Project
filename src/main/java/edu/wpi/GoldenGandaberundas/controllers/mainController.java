@@ -279,7 +279,7 @@ public class mainController {
   }
 
   public void switchProvider() {
-    nodeSwitch("serviceProviderViews/foodProviderView.fxml");
+    nodeSwitch("serviceProviderViews/equipmentProviderView.fxml");
     // nodeDataPane.setPadding(new Insets(0, 100, 0, 0));
   }
 
