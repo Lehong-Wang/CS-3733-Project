@@ -507,11 +507,6 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
-  public void switchSettings() {
-    nodeSwitch("views/settingsPage.fxml");
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
-  }
-
   // Goes to the location table
   //  public void switchLocationTable(ActionEvent actionEvent) throws IOException {
   //    //    Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
