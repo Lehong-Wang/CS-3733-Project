@@ -17,8 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -573,10 +573,8 @@ public class mainController {
     SwitchSceneButton.getScene()
         .getStylesheets()
         .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
-      }
-  /**
-   * Slide show function to display an assortment of images that fade in an out
-   */
+  }
+  /** Slide show function to display an assortment of images that fade in an out */
   public void slideShow() {
     ArrayList<Image> images = new ArrayList<>();
     images.add(floorMaps.hospital);
