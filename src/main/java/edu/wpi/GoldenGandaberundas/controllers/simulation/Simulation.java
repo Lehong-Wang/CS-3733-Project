@@ -77,24 +77,49 @@ public class Simulation {
     System.out.println(endTime);
     takeSnapshot();
     sortLists(fullMedList);
-    makeSimulationLists(fullMedList);
+    if(!isSimValid()){
+      System.out.println("The Med Equipment Lists are Invalid");
+    } else{
+      makeSimulationLists(fullMedList);
 
-    for (hours = 1; hours <= endTime; hours++) {
-      ArrayList<MedEquipmentSimulation> tempBedsRecs =
-          SimulateBedsRecs.updateBedsRecliners(Beds_List, Recliners_List, hours);
+      for (hours = 1; hours <= endTime; hours++) {
+        ArrayList<MedEquipmentSimulation> tempBedsRecs =
+                SimulateBedsRecs.updateBedsRecliners(Beds_List, Recliners_List, hours);
 
-      ArrayList<MedEquipmentSimulation> tempPumps = SimulatePumps.updatePumps(Pumps_List, hours);
+        ArrayList<MedEquipmentSimulation> tempPumps = SimulatePumps.updatePumps(Pumps_List, hours);
 
-      MedEquipmentSimulation tempXRay = SimulateXRay.updateXRay(XRay, hours);
+        MedEquipmentSimulation tempXRay = SimulateXRay.updateXRay(XRay, hours);
 
-      ArrayList<MedEquipmentSimulation> tempFullList = new ArrayList<>();
-      tempFullList.addAll(tempPumps);
-      tempFullList.addAll(tempBedsRecs);
-      tempFullList.add(tempXRay);
-      addIterationToSimLists(tempFullList);
-      sortLists(tempFullList);
+        ArrayList<MedEquipmentSimulation> tempFullList = new ArrayList<>();
+        tempFullList.addAll(tempPumps);
+        tempFullList.addAll(tempBedsRecs);
+        tempFullList.add(tempXRay);
+        addIterationToSimLists(tempFullList);
+        sortLists(tempFullList);
+      }
+      //    printSimList();
     }
-    //    printSimList();
+
+  }
+
+  public boolean isSimValid(){
+    boolean beds=false, recs=false, pump=false, xray=false;
+    if(this.Beds_List.size() >= 1){
+      beds = true;
+    }
+
+    if(this.Recliners_List.size() >= 1){
+      recs = true;
+    }
+
+    if(this.Pumps_List.size() >= 1){
+      pump = true;
+    }
+
+    if(this.XRay != null){
+      xray = true;
+    }
+    return beds && recs && pump && xray;
   }
 
   /**
