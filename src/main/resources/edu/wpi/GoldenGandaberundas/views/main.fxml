@@ -75,6 +75,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
+                              <MenuItem mnemonicParsing="false" onAction="#switchProvider" text="Switch Provider View" />
                               <MenuItem mnemonicParsing="false" onAction="#logoutProgram" text="Logout" />
                               <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
                            </items>

@@ -152,7 +152,6 @@ public class LaundryServiceController implements Initializable {
             onEdit();
           }
         });
-
     checkPerms();
     refresh();
   }

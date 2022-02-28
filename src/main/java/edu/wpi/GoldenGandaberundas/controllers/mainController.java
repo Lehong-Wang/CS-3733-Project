@@ -278,6 +278,11 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
+  public void switchProvider() {
+    nodeSwitch("serviceProviderViews/foodProviderView.fxml");
+    // nodeDataPane.setPadding(new Insets(0, 100, 0, 0));
+  }
+
   public void switchAllRequests() {
     FXMLLoader subControllerLoader =
         new FXMLLoader(App.class.getResource("views/masterRequestTable.fxml"));
