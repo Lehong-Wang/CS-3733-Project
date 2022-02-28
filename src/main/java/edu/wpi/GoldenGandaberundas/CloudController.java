@@ -1,11 +1,14 @@
 package edu.wpi.GoldenGandaberundas;
 
+import static io.grpc.netty.shaded.io.netty.util.internal.ObjectUtil.checkNotNull;
+
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import io.grpc.LoadBalancerRegistry;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +24,8 @@ public class CloudController {
   private static CloudController instance = null;
 
   private CloudController() {
+    PickFirstBalancerFactory();
+
     FirebaseOptions options = null;
     try {
       FileInputStream serviceAccount =
@@ -172,5 +177,12 @@ public class CloudController {
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
+  }
+
+  private void PickFirstBalancerFactory() {
+    var provider =
+        checkNotNull(
+            LoadBalancerRegistry.getDefaultRegistry().getProvider("pick_first"),
+            "pick_first balancer not available");
   }
 }

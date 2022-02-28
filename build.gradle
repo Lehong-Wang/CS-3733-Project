@@ -12,8 +12,6 @@ run{
     standardInput = System.in
 }
 
-
-
 repositories {
     mavenCentral()
     jcenter()
@@ -32,6 +30,7 @@ dependencies {
     //compile group:'com.google',name:'firebase:firebase-admin',version:'8.1.0'
     compile group:'org.xerial', name:'sqlite-jdbc', version:'3.30.1'
     compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '6.4.0.jre8'
+    compile 'com.google.cloud:google-cloud-firestore:1.32.0'
     implementation(
             'com.google.firebase:firebase-admin:8.1.0',
             'com.jfoenix:jfoenix:9.0.10',
