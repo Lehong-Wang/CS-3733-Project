@@ -48,6 +48,7 @@ public class CredentialsClientServer implements TableController<Credential, Inte
       while (r.next()) {
         tableInfo.add(new Credential(r.getInt(1), r.getString(2), r.getString(3)));
       }
+      objList = tableInfo;
       return tableInfo;
     } catch (SQLException se) {
       se.printStackTrace();

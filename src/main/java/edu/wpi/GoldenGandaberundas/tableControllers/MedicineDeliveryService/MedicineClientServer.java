@@ -54,6 +54,7 @@ public class MedicineClientServer implements TableController<Medicine, Integer> 
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

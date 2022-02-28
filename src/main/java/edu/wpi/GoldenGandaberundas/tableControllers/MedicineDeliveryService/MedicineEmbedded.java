@@ -51,6 +51,7 @@ public class MedicineEmbedded implements TableController<Medicine, Integer> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

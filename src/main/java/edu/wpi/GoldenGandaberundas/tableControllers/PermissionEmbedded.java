@@ -141,7 +141,9 @@ public class PermissionEmbedded implements TableController<Permission, Integer> 
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON");
       s.execute(
-          "CREATE TABLE IF NOT EXISTS  Permissions("
+          "CREATE TABLE IF NOT EXISTS "
+              + tbName
+              + "("
               + "permID INTEGER NOT NULL, "
               + "type TEXT NOT NULL, "
               + "permDescription TEXT, "

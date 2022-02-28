@@ -26,8 +26,6 @@ public class EmployeePermissionClientServer
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public EmployeePermissionClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<EmployeePermission> objList)
       throws SQLException {
@@ -43,7 +41,10 @@ public class EmployeePermissionClientServer
   public ArrayList<EmployeePermission> readTable() { // **
     ArrayList tableInfo = new ArrayList<EmployeePermission>(); // **
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(new EmployeePermission(r.getInt(1), r.getInt(2)));
@@ -60,19 +61,21 @@ public class EmployeePermissionClientServer
     PreparedStatement s = null;
     try {
       s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?) AND"
-                  + colNames.get(1)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?)"
-                  + "end");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?) AND"
+                      + colNames.get(1)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?)"
+                      + "end");
       // **
       s.setInt(1, empPerm.getEmpID());
       s.setInt(2, empPerm.getPermID());
@@ -126,16 +129,21 @@ public class EmployeePermissionClientServer
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
-          "CREATE TABLE  EmployeePermissions(empID INTEGER NOT NULL, permID INTEGER NOT NULL, CONSTRAINT EmployeePermissionsPK PRIMARY KEY (empID,permID) "
+          "CREATE TABLE  EmployeePermissions("
+              + "empID INTEGER NOT NULL, "
+              + "permID INTEGER NOT NULL,"
+              + " CONSTRAINT EmployeePermissionsPK PRIMARY KEY (empID,permID), "
               + "CONSTRAINT EmplyoeePermissionsFK1 FOREIGN KEY (empID) REFERENCES Employees (empID) "
               + " ON UPDATE CASCADE "
               + " ON DELETE CASCADE, "
@@ -154,8 +162,10 @@ public class EmployeePermissionClientServer
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?,?);");
+            ConnectionHandler.getInstance()
+                .getConnection()
+                .prepareStatement(
+                    "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -186,7 +196,10 @@ public class EmployeePermissionClientServer
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -219,14 +232,16 @@ public class EmployeePermissionClientServer
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -249,8 +264,9 @@ public class EmployeePermissionClientServer
     //    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -321,7 +337,10 @@ public class EmployeePermissionClientServer
     ArrayList<EmployeePermission> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -339,8 +358,10 @@ public class EmployeePermissionClientServer
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

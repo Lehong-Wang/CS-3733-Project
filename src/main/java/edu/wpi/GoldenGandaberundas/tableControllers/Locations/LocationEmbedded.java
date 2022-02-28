@@ -59,6 +59,7 @@ public class LocationEmbedded implements TableController<Location, String> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

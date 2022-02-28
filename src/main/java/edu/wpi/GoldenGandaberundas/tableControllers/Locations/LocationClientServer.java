@@ -24,8 +24,6 @@ public class LocationClientServer implements TableController<Location, String> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public LocationClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<Location> objList)
       throws SQLException {
@@ -43,7 +41,10 @@ public class LocationClientServer implements TableController<Location, String> {
   public ArrayList<Location> readTable() {
     ArrayList tableInfo = new ArrayList<Location>();
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
@@ -61,6 +62,7 @@ public class LocationClientServer implements TableController<Location, String> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 
@@ -76,8 +78,9 @@ public class LocationClientServer implements TableController<Location, String> {
   public boolean deleteEntry(String pkid) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -91,17 +94,19 @@ public class LocationClientServer implements TableController<Location, String> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-                  + "end");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                      + "end");
       s.setString(1, loc.getNodeID());
       s.setString(2, loc.getNodeID());
       s.setInt(3, loc.getXcoord());
@@ -221,7 +226,10 @@ public class LocationClientServer implements TableController<Location, String> {
     ArrayList<Location> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -236,14 +244,16 @@ public class LocationClientServer implements TableController<Location, String> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -258,14 +268,16 @@ public class LocationClientServer implements TableController<Location, String> {
   public void createTable() {
     try {
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
           "CREATE TABLE Locations("
               + "nodeID VARCHAR(50) NOT NULL ,"
@@ -287,8 +299,10 @@ public class LocationClientServer implements TableController<Location, String> {
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 
@@ -313,7 +327,9 @@ public class LocationClientServer implements TableController<Location, String> {
       }
       // System.out.println(pkID);
       PreparedStatement s =
-          connection.prepareStatement("SELECT * FROM " + tbName + " WHERE nodeID = ?");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT * FROM " + tbName + " WHERE nodeID = ?");
       // s.setString(1, tbName);
       s.setString(1, pkID);
       ResultSet r = s.executeQuery();
@@ -338,9 +354,11 @@ public class LocationClientServer implements TableController<Location, String> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Location> objList) {
-    connection = ConnectionHandler.getInstance().getConnection();
     this.createTable();
     deleteTableData();
+    System.out.println("LOCATION SWITCH");
+    System.out.println(objList);
+    System.out.println(ConnectionHandler.getInstance().getConnection());
     for (Location loc : objList) {
       if (!this.addEntry(loc)) {
         return false;
@@ -351,7 +369,10 @@ public class LocationClientServer implements TableController<Location, String> {
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();

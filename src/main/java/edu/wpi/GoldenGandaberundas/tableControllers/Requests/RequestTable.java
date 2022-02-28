@@ -29,8 +29,6 @@ public class RequestTable implements TableController<Request, Integer> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   TableController<Request, Integer> embeddedTable = null;
 
   TableController<Request, Integer> clientServerTable = null;
@@ -52,7 +50,7 @@ public class RequestTable implements TableController<Request, Integer> {
     colNames = Arrays.asList(cols);
     pkCols = "requestID";
 
-    objList = new ArrayList<Request>();
+    objList = new ArrayList<>();
     embeddedTable = new RequestEmbedded(tbName, cols, pkCols, objList);
     clientServerTable = new RequestClientServer(tbName, cols, pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
@@ -85,7 +83,7 @@ public class RequestTable implements TableController<Request, Integer> {
 
   private TableController<Request, Integer> getCurrentTable() {
     System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
-    switch (connectionHandler.getCurrentConnectionType()) {
+    switch (ConnectionHandler.getInstance().getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;
       case clientServer:

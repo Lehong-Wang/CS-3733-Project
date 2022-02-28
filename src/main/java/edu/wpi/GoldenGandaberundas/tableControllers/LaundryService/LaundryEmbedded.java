@@ -50,6 +50,7 @@ public class LaundryEmbedded implements TableController<Laundry, Integer> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

@@ -51,7 +51,7 @@ public class MedEquipmentEmbedded implements TableController<MedEquipment, Integ
       e.printStackTrace();
       return null;
     }
-
+    objList = medEquipments;
     return medEquipments;
   }
 

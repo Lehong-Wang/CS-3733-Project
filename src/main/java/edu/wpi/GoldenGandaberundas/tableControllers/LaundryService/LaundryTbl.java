@@ -64,7 +64,6 @@ public class LaundryTbl implements TableController<Laundry, Integer> {
   }
 
   private TableController<Laundry, Integer> getCurrentTable() {
-    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (connectionHandler.getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;

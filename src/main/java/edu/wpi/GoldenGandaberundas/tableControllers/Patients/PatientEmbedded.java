@@ -49,7 +49,7 @@ public class PatientEmbedded implements TableController<Patient, Integer> {
       e.printStackTrace();
       return null;
     }
-
+    objList = patients;
     return patients;
   }
 

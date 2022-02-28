@@ -51,6 +51,7 @@ public class PathEmbedded implements TableController<Path, String> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

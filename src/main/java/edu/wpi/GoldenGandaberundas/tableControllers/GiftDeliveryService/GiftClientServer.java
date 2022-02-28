@@ -42,6 +42,7 @@ public class GiftClientServer implements TableController<Gift, Integer> {
         tableInfo.add(
             new Gift(r.getInt(1), r.getString(2), r.getString(3), r.getDouble(4), r.getBoolean(5)));
       }
+      objList = tableInfo;
       return tableInfo;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -132,7 +133,9 @@ public class GiftClientServer implements TableController<Gift, Integer> {
       }
       Statement s = connectionHandler.getConnection().createStatement();
       s.execute(
-          "CREATE TABLE  Gifts("
+          "CREATE TABLE "
+              + tbName
+              + "("
               + "giftID INTEGER NOT NULL ,"
               + "giftType TEXT NOT NULL, "
               + "description TEXT, "
@@ -170,21 +173,25 @@ public class GiftClientServer implements TableController<Gift, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Gift> objList) {
+    this.createTable();
+    deleteTableData();
+    for (Gift gift : objList) {
+      if (!this.addEntry(gift)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
     try {
       PreparedStatement s =
-          connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
-      this.objList = new ArrayList<Gift>();
-      for (Gift g : objList) {
-        this.objList.add(
-            new Gift(
-                g.getGiftID(), g.getGiftType(), g.getDescription(), g.getPrice(), g.getInStock()));
-      }
-      this.writeTable();
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
   }
 

@@ -54,6 +54,7 @@ public class GiftRequestEmbedded implements TableController<GiftRequest, ArrayLi
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

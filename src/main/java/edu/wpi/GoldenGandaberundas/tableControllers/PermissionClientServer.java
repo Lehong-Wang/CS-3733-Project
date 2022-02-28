@@ -25,8 +25,6 @@ public class PermissionClientServer implements TableController<Permission, Integ
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public PermissionClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<Permission> objList)
       throws SQLException {
@@ -42,7 +40,10 @@ public class PermissionClientServer implements TableController<Permission, Integ
   public ArrayList<Permission> readTable() { // **
     ArrayList tableInfo = new ArrayList<Permission>(); // **
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
@@ -61,17 +62,19 @@ public class PermissionClientServer implements TableController<Permission, Integ
     PreparedStatement s = null;
     try {
       s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?)"
-                  + "end");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?)"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?)"
+                      + "end");
       // **
       s.setInt(1, perm.getPermID());
       s.setInt(2, perm.getPermID());
@@ -124,16 +127,20 @@ public class PermissionClientServer implements TableController<Permission, Integ
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
-          "CREATE TABLE  Permission(permID INTEGER NOT NULL ,type TEXT NOT NULL, permDescription TEXT , PRIMARY KEY (permID));");
+          "CREATE TABLE "
+              + tbName
+              + "(permID INTEGER NOT NULL ,type TEXT NOT NULL, permDescription TEXT , PRIMARY KEY (permID));");
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -145,8 +152,9 @@ public class PermissionClientServer implements TableController<Permission, Integ
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
+            ConnectionHandler.getInstance()
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
         s.setInt(1, pkID); // **
         ResultSet r = s.executeQuery();
         r.next();
@@ -175,7 +183,10 @@ public class PermissionClientServer implements TableController<Permission, Integ
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -208,14 +219,16 @@ public class PermissionClientServer implements TableController<Permission, Integ
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -238,8 +251,9 @@ public class PermissionClientServer implements TableController<Permission, Integ
     //    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -310,7 +324,10 @@ public class PermissionClientServer implements TableController<Permission, Integ
     ArrayList<Permission> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -328,8 +345,10 @@ public class PermissionClientServer implements TableController<Permission, Integ
     boolean exists = false;
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

@@ -54,7 +54,7 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
       e.printStackTrace();
       return null;
     }
-
+    objList = medEquipments;
     return medEquipments;
   }
 

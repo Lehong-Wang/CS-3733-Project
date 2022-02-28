@@ -51,6 +51,7 @@ public class AudioVisualClientServer implements TableController<AudioVisual, Int
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

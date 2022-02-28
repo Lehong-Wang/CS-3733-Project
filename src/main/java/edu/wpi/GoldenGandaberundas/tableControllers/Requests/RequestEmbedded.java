@@ -74,6 +74,7 @@ public class RequestEmbedded implements TableController<Request, Integer> {
                 resultSet.getString(9),
                 resultSet.getString(10)));
       }
+      objList = requests;
       return requests;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -542,9 +543,7 @@ public class RequestEmbedded implements TableController<Request, Integer> {
 
   // checks if an entry exists
   public boolean entryExists(Integer pkID) {
-    //    if (pkID instanceof ArrayList) {
-    //      return entryExistsComposite((ArrayList<Integer>) pkID);
-    //    }
+    System.out.println("CHECK REQ IN EMBEDDED");
     boolean exists = false;
     try {
       PreparedStatement s =

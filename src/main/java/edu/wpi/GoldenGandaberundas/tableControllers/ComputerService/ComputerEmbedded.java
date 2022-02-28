@@ -57,6 +57,7 @@ public class ComputerEmbedded implements TableController<Computer, Integer> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

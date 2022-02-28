@@ -165,7 +165,7 @@ public class FoodRequestEmbedded implements TableController<FoodRequest, ArrayLi
               + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE, "
-              + "CONSTRAINT FoodFK FOREIGN KEY (foodID) REFERENCES Foods (foodID) "
+              + "CONSTRAINT FoodFK FOREIGN KEY (foodID) REFERENCES Food (foodID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE SET NULL);");
 

@@ -1,2 +1,7 @@
 medicineID,medName,description,price,inStock
-123,Tylenol,Headaches go bye bye,1.01,true
+111,tylenol,this is the first med,1.11,TRUE
+222,ibuprofen,this is the second med,2.22,FALSE
+333,nyquil,this is the third med,3.33,TRUE
+444,aspirin,this is the fourth med,4.44,FALSE
+555,zyrtec,this is the fifth med,5.55,TRUE
+666,acetaminophen,this is the sixth med,6.66,FALSE

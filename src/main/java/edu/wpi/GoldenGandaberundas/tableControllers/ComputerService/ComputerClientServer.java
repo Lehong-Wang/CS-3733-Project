@@ -58,6 +58,7 @@ public class ComputerClientServer implements TableController<Computer, Integer> 
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

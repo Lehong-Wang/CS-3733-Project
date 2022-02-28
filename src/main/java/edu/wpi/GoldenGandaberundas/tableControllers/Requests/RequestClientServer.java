@@ -32,8 +32,6 @@ public class RequestClientServer implements TableController<Request, Integer> {
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   /**
    * creates an instance of the master request table this table holds common and meta data across
    * all data objects
@@ -58,7 +56,10 @@ public class RequestClientServer implements TableController<Request, Integer> {
   public ArrayList<Request> readTable() {
     ArrayList<Request> requests = new ArrayList<>();
     try {
-      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT * FROM " + tbName + ";");
       ResultSet resultSet = s.executeQuery();
       while (resultSet.next()) {
         requests.add(
@@ -74,6 +75,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
                 resultSet.getString(9),
                 resultSet.getString(10)));
       }
+      objList = requests;
       return requests;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -92,7 +94,11 @@ public class RequestClientServer implements TableController<Request, Integer> {
   public boolean addEntry(Request obj) {
     Boolean addSuccess = false;
     if (entryExists(obj.getRequestID()) || addRequest(obj)) {
-      addSuccess = this.getSpecificServiceTable(obj).addEntry(obj);
+      try {
+        addSuccess = this.getSpecificServiceTable(obj).addEntry(obj);
+      } catch (ClassCastException c) {
+        System.err.println("Class Cast Exception");
+      }
     } else addSuccess = false;
     return addSuccess;
   }
@@ -106,7 +112,9 @@ public class RequestClientServer implements TableController<Request, Integer> {
   private boolean addRequest(Request obj) {
     try {
       PreparedStatement s =
-          connection.prepareStatement("INSERT INTO " + tbName + " VALUES (?,?,?,?,?,?,?,?,?,?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("INSERT INTO " + tbName + " VALUES (?,?,?,?,?,?,?,?,?,?);");
       s.setInt(1, obj.getRequestID());
       s.setString(2, obj.getLocationID());
       s.setInt(3, obj.getEmpInitiated());
@@ -216,14 +224,16 @@ public class RequestClientServer implements TableController<Request, Integer> {
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
           "CREATE TABLE Requests("
               + "requestID INTEGER PRIMARY KEY, "
@@ -259,8 +269,10 @@ public class RequestClientServer implements TableController<Request, Integer> {
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+            ConnectionHandler.getInstance()
+                .getConnection()
+                .prepareStatement(
+                    "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
         s.setInt(1, pkID);
         ResultSet r = s.executeQuery();
         r.next();
@@ -286,7 +298,27 @@ public class RequestClientServer implements TableController<Request, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Request> objList) {
-    return false;
+    System.out.println("REQ OBJ TRANS: "+objList);
+    this.createTable();
+    deleteTableData();
+    for (Request av : objList) {
+      if (!this.addEntry(av)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -335,7 +367,8 @@ public class RequestClientServer implements TableController<Request, Integer> {
 
   private void deleteEntries() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName);
+      PreparedStatement s =
+          ConnectionHandler.getInstance().getConnection().prepareStatement("DELETE FROM " + tbName);
       s.executeUpdate();
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -371,14 +404,16 @@ public class RequestClientServer implements TableController<Request, Integer> {
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + colNames.get(0)
-                  + ") =(?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + colNames.get(0)
+                      + ") =(?);");
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
@@ -401,8 +436,9 @@ public class RequestClientServer implements TableController<Request, Integer> {
     //    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
       s.setObject(1, pkid);
       s.executeUpdate();
     } catch (SQLException e) {
@@ -473,7 +509,10 @@ public class RequestClientServer implements TableController<Request, Integer> {
     ArrayList<Request> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -486,10 +525,13 @@ public class RequestClientServer implements TableController<Request, Integer> {
   // checks if an entry exists
   public boolean entryExists(Integer pkID) {
     boolean exists = false;
+    System.out.println("CHECK REQ IN CLIENT");
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
 
       s.setObject(1, pkID);
 

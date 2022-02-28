@@ -84,23 +84,24 @@ public class ConnectionHandler {
   public void setConnection(ConnectionType connectionType) {
     if (this.connectionType != connectionType) {
       try {
+        var oldConnection = this.connectionType;
+        this.connectionType = connectionType;
         if (connectionType == ConnectionType.embedded) {
           SQLiteConfig config = new SQLiteConfig();
           config.enforceForeignKeys(true);
           connection = DriverManager.getConnection(dbPath, config.toProperties());
-          this.transferAllData(this.connectionType, connectionType);
+          this.transferAllData(oldConnection, connectionType);
         } else if (connectionType == ConnectionType.clientServer) {
           this.connection = DriverManager.getConnection(clientServerPath, "admin", "admin");
-          this.transferAllData(this.connectionType, connectionType);
+          this.transferAllData(oldConnection, connectionType);
         } else if (connectionType == ConnectionType.cloud) {
-          this.transferAllData(this.connectionType, connectionType);
+          this.transferAllData(oldConnection, connectionType);
         } else {
           System.err.println("Connection type error in ConnectionHandler");
         }
       } catch (SQLException e) {
         e.printStackTrace();
       }
-      this.connectionType = connectionType;
     }
   }
 
@@ -139,7 +140,8 @@ public class ConnectionHandler {
     System.out.println(this.getConnection());
     for (int i = 0; i < oldTables.size(); i++) {
       var objList = oldTables.get(i).getObjList();
-      newTables.get(i).loadFromArrayList(objList);
+      System.out.println(oldTables.get(i).readTable());
+      newTables.get(i).loadFromArrayList(oldTables.get(i).readTable());
     }
   }
 }

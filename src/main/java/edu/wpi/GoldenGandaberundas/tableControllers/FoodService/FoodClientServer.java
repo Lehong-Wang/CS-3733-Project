@@ -55,6 +55,7 @@ public class FoodClientServer implements TableController<Food, Integer> {
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 

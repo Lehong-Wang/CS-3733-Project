@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.LaundryService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -25,8 +26,6 @@ public class LaundryRequestClientServer
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public LaundryRequestClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<LaundryRequest> objList)
       throws SQLException {
@@ -42,7 +41,10 @@ public class LaundryRequestClientServer
   public ArrayList<LaundryRequest> readTable() {
     ArrayList tableInfo = new ArrayList<LaundryRequest>(); // **
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         System.out.println(masterTable.getEntry(r.getInt(1)));
@@ -59,23 +61,28 @@ public class LaundryRequestClientServer
 
   @Override
   public boolean addEntry(LaundryRequest laundryReq) {
+    if (!RequestTable.getInstance().entryExists(laundryReq.getRequestID())) {
+      RequestTable.getInstance().addEntry(laundryReq);
+    }
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?"
-                  + " AND "
-                  + colNames.get(1)
-                  + " = ?"
-                  + ")"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?)"
-                  + "end");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?"
+                      + " AND "
+                      + colNames.get(1)
+                      + " = ?"
+                      + ")"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?)"
+                      + "end");
 
       s.setInt(1, laundryReq.getRequestID());
       s.setInt(2, laundryReq.getLaundryID());
@@ -132,14 +139,16 @@ public class LaundryRequestClientServer
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
           "CREATE TABLE  LaundryRequests("
               + "reqID INTEGER NOT NULL, "
@@ -164,8 +173,9 @@ public class LaundryRequestClientServer
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
+            ConnectionHandler.getInstance()
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -198,7 +208,10 @@ public class LaundryRequestClientServer
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -233,16 +246,18 @@ public class LaundryRequestClientServer
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + pkCols
-                  + ") = ("
-                  + pkString
-                  + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + pkCols
+                      + ") = ("
+                      + pkString
+                      + ");");
       s.setObject(1, value);
       s.executeUpdate();
       return true;
@@ -266,8 +281,10 @@ public class LaundryRequestClientServer
     pkString.append(pkid.get(pkid.size() - 1));
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -337,7 +354,10 @@ public class LaundryRequestClientServer
     ArrayList<LaundryRequest> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -358,14 +378,16 @@ public class LaundryRequestClientServer
 
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM "
-                  + tbName
-                  + " WHERE ("
-                  + pkCols
-                  + ") = ("
-                  + pkString.toString()
-                  + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM "
+                      + tbName
+                      + " WHERE ("
+                      + pkCols
+                      + ") = ("
+                      + pkString.toString()
+                      + ");");
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {

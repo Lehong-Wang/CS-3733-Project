@@ -43,6 +43,7 @@ public class GiftEmbedded implements TableController<Gift, Integer> {
         tableInfo.add(
             new Gift(r.getInt(1), r.getString(2), r.getString(3), r.getDouble(4), r.getBoolean(5)));
       }
+      objList = tableInfo;
       return tableInfo;
     } catch (SQLException e) {
       e.printStackTrace();

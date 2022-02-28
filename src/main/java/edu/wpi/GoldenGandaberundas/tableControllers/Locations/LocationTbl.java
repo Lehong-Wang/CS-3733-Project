@@ -45,10 +45,9 @@ public class LocationTbl implements TableController<Location, String> {
     clientServerTable = new LocationClientServer(tbName, cols, pkCols, objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
-
     createTable();
-
     objList = readTable();
+    System.out.println("After Create: " + objList);
   }
 
   public static LocationTbl getInstance() {
@@ -68,7 +67,6 @@ public class LocationTbl implements TableController<Location, String> {
   }
 
   private TableController<Location, String> getCurrentTable() {
-    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (connectionHandler.getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;
@@ -179,6 +177,6 @@ public class LocationTbl implements TableController<Location, String> {
   }
 
   public ArrayList<Location> getObjList() {
-    return objList;
+    return this.getCurrentTable().getObjList();
   }
 }

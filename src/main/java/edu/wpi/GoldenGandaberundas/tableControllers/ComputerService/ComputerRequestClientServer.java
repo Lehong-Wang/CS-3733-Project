@@ -26,8 +26,6 @@ public class ComputerRequestClientServer
   /** relative path to the database file */
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
-  Connection connection = connectionHandler.getConnection();
-
   public ComputerRequestClientServer(
       String tbName, String[] cols, String pkCols, ArrayList<ComputerRequest> objList)
       throws SQLException {
@@ -43,7 +41,10 @@ public class ComputerRequestClientServer
   public ArrayList<ComputerRequest> readTable() {
     ArrayList tableInfo = new ArrayList<ComputerRequest>(); // **
     try {
-      PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
@@ -62,21 +63,23 @@ public class ComputerRequestClientServer
   public boolean addEntry(ComputerRequest computer) {
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?"
-                  + " AND "
-                  + colNames.get(1)
-                  + " = ?"
-                  + ")"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?)"
-                  + "end");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  " IF NOT EXISTS (SELECT 1 FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?"
+                      + " AND "
+                      + colNames.get(1)
+                      + " = ?"
+                      + ")"
+                      + "BEGIN"
+                      + "    INSERT INTO "
+                      + tbName
+                      + " VALUES (?, ?, ?, ?)"
+                      + "end");
 
       s.setInt(1, computer.getRequestID());
       s.setInt(2, computer.getComputerID());
@@ -143,14 +146,16 @@ public class ComputerRequestClientServer
     try {
 
       PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
       s1.setString(1, tbName);
       ResultSet r = s1.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
         return;
       }
-      Statement s = connection.createStatement();
+      Statement s = ConnectionHandler.getInstance().getConnection().createStatement();
       s.execute(
           "CREATE TABLE  ComputerRequests("
               + "reqID INTEGER NOT NULL, "
@@ -158,7 +163,7 @@ public class ComputerRequestClientServer
               + "problemType TEXT NOT NULL,"
               + "priority TEXT NOT NULL, "
               + "CONSTRAINT ComputerRequestPK PRIMARY KEY (reqID, computerID), "
-              + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
+              + "CONSTRAINT CompRequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE, "
               + "CONSTRAINT ComputerFK FOREIGN KEY (computerID) REFERENCES Computer (computerID) "
@@ -175,8 +180,9 @@ public class ComputerRequestClientServer
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
+            ConnectionHandler.getInstance()
+                .getConnection()
+                .prepareStatement("SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -210,7 +216,10 @@ public class ComputerRequestClientServer
 
   private void deleteTableData() {
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -245,16 +254,18 @@ public class ComputerRequestClientServer
     try {
 
       PreparedStatement s =
-          connection.prepareStatement(
-              "UPDATE "
-                  + tbName
-                  + " SET "
-                  + colName
-                  + " = ? WHERE ("
-                  + pkCols
-                  + ") = ("
-                  + pkString
-                  + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "UPDATE "
+                      + tbName
+                      + " SET "
+                      + colName
+                      + " = ? WHERE ("
+                      + pkCols
+                      + ") = ("
+                      + pkString
+                      + ");");
       s.setObject(1, value);
       s.executeUpdate();
       return true;
@@ -278,8 +289,10 @@ public class ComputerRequestClientServer
     pkString.append(pkid.get(pkid.size() - 1));
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "DELETE FROM " + tbName + " WHERE (" + pkCols + ") = (" + pkString + ");");
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -349,7 +362,10 @@ public class ComputerRequestClientServer
     ArrayList<ComputerRequest> listObjs = readBackup(fileName);
 
     try {
-      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      PreparedStatement s =
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
       this.objList = listObjs;
       this.writeTable();
@@ -370,14 +386,16 @@ public class ComputerRequestClientServer
 
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM "
-                  + tbName
-                  + " WHERE ("
-                  + pkCols
-                  + ") = ("
-                  + pkString.toString()
-                  + ");");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement(
+                  "SELECT count(*) FROM "
+                      + tbName
+                      + " WHERE ("
+                      + pkCols
+                      + ") = ("
+                      + pkString.toString()
+                      + ");");
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {

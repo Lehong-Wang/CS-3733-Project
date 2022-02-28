@@ -46,6 +46,7 @@ public class MedEquipRequestEmbedded
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
+        System.out.println(r.getInt(1));
         System.out.println(masterTable.getEntry(r.getInt(1)));
         tableInfo.add(new MedEquipRequest(masterTable.getEntry(r.getInt(1)), r.getInt(2))); // **
       }

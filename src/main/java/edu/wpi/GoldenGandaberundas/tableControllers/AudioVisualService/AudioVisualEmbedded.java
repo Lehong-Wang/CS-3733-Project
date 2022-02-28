@@ -52,6 +52,7 @@ public class AudioVisualEmbedded implements TableController<AudioVisual, Integer
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 
