@@ -11,13 +11,15 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -32,8 +34,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 
 /** Controller class for template file. Template FXML file is templatetemplate.fxml */
@@ -55,7 +58,7 @@ public class SimulationController {
   private ImageView mapImage = null;
   private Group imageGroup = null;
   private Pane locNodePane = null;
-  private Pane pathNodePane = null;
+  private Group animatedPathNodeGroup = null;
   private MapSubController subController = null;
   private String currentFloor = "1";
   private Group equipGroup = null;
@@ -63,6 +66,8 @@ public class SimulationController {
   private List<String> astar = null;
   private Integer currentHour = 0;
   private Integer fasterHour = 0;
+  private ArrayList<ArrayList<ArrayList<String>>> coord = null;
+  private Integer medEquip;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -85,6 +90,20 @@ public class SimulationController {
 
   @FXML
   public void initialize() {
+    coord = new ArrayList<ArrayList<ArrayList<String>>>();
+    coord.add(new ArrayList<ArrayList<String>>());
+    coord.add(new ArrayList<ArrayList<String>>());
+    coord.add(new ArrayList<ArrayList<String>>());
+    coord.add(new ArrayList<ArrayList<String>>());
+    coord.add(new ArrayList<ArrayList<String>>());
+    int medStuff = MedEquipmentTbl.getInstance().readTable().size();
+    for (int i = 0; i < medStuff; i++) {
+      coord.get(0).add(new ArrayList<String>());
+      coord.get(1).add(new ArrayList<String>());
+      coord.get(2).add(new ArrayList<String>());
+      coord.get(3).add(new ArrayList<String>());
+      coord.get(4).add(new ArrayList<String>());
+    }
 
     locations = LocationTbl.getInstance();
 
@@ -113,9 +132,6 @@ public class SimulationController {
     // creates new layer to add the interactive nodes to
     locNodePane = new Pane();
 
-    pathNodePane = new Pane();
-    imageGroup.getChildren().add(pathNodePane);
-
     imageGroup.getChildren().add(locNodePane);
 
     equipGroup = new Group();
@@ -123,6 +139,9 @@ public class SimulationController {
 
     requestGroup = new Group();
     imageGroup.getChildren().add(requestGroup);
+
+    animatedPathNodeGroup = new Group();
+    imageGroup.getChildren().add(animatedPathNodeGroup);
 
     // creates button to select visible floor
     HBox floorSelect = createFloorSelector();
@@ -180,7 +199,7 @@ public class SimulationController {
         e -> {
           Simulation sim = new Simulation();
           sim.update((int) (timeSlider.getValue() * 4));
-          pathNodePane.getChildren().clear();
+          animatedPathNodeGroup.getChildren().clear();
           currentHour = 0;
           createPath(currentHour);
           toggleStart.setText("Rerun Simulation");
@@ -195,7 +214,7 @@ public class SimulationController {
     currentHourLabel.setFont(nextHour.getFont());
     nextHour.setOnMouseReleased(
         e -> {
-          pathNodePane.getChildren().clear();
+          animatedPathNodeGroup.getChildren().clear();
           currentHour++;
           createPath(currentHour);
           setEquipment();
@@ -208,7 +227,7 @@ public class SimulationController {
     prevHour.setPrefWidth(110);
     prevHour.setOnMouseReleased(
         e -> {
-          pathNodePane.getChildren().clear();
+          animatedPathNodeGroup.getChildren().clear();
           if (currentHour != 0) {
             currentHour--;
           }
@@ -287,7 +306,7 @@ public class SimulationController {
 
     simulateLonger.setOnMouseReleased(
         e -> {
-          pathNodePane.getChildren().clear();
+          animatedPathNodeGroup.getChildren().clear();
           fasterHour = (int) (moreHourSlider.getValue() * 4);
           createPathLonger(currentHour, fasterHour);
           currentHour = currentHour + fasterHour;
@@ -403,50 +422,6 @@ public class SimulationController {
           System.out.println("alt click");
         });
   }
-
-  //  public void createRequestIcon(Request req, Location loc) {
-  //    ReqImageView reqIcon = new ReqImageView(loc, req);
-  //    switch (req.getRequestType()) {
-  //      case "MedEquipDelivery":
-  //        reqIcon.setImage(floorMaps.medicalEquipmentGreen);
-  //        break;
-  //      case "MedicineDelivery":
-  //        reqIcon.setImage(floorMaps.medicineGreen);
-  //        break;
-  //      case "GiftFloral":
-  //        reqIcon.setImage(floorMaps.gift);
-  //        break;
-  //      case "LaundryService":
-  //        reqIcon.setImage(floorMaps.laundry);
-  //        break;
-  //      case "CompServ":
-  //        reqIcon.setImage(floorMaps.computer);
-  //        break;
-  //    }
-  //    reqIcon.setFitHeight(20);
-  //    reqIcon.setFitWidth(20);
-  //    requestGroup.getChildren().add(reqIcon);
-  //    reqIcon.setLayoutX(loc.getXcoord());
-  //    reqIcon.setLayoutY(loc.getYcoord());
-  //    reqIcon.setOnContextMenuRequested(
-  //        e -> {
-  //          nodeDataPane.getChildren().clear();
-  //          FXMLLoader controllerLoader =
-  //              new FXMLLoader(Main.class.getResource("views/mapViewRequestEntry.fxml"));
-  //          nodeDataPane.setManaged(true);
-  //          nodeDataPane.setVisible(true);
-  //          try {
-  //            Node subPane = (Node) controllerLoader.load();
-  //            nodeDataPane.getChildren().add(subPane);
-  //            MapSubReqController subController = controllerLoader.getController();
-  //            //                        subController.setMapController(this);
-  //
-  //            subController.setText(reqIcon.request);
-  //          } catch (IOException exc) {
-  //            exc.printStackTrace();
-  //          }
-  //        });
-  //  }
 
   public void createMedEquipIcon(MedEquipment med, Location loc) {
     MedEqpImageView medIcon = new MedEqpImageView(loc, med);
@@ -588,43 +563,10 @@ public class SimulationController {
     }
   }
 
-  //  public void setRequest() {
-  //    requestGroup.getChildren().clear();
-  //
-  //    TableController<Location, String> locations = LocationTbl.getInstance();
-  //    TableController<Request, Integer> reqTable = RequestTable.getInstance();
-  //    ArrayList<Request> reqList = reqTable.readTable();
-  //    if (reqList == null || reqList.isEmpty()) {
-  //      return;
-  //    }
-  //    reqList =
-  //        (ArrayList)
-  //            reqList.stream()
-  //                .filter(
-  //                    l -> {
-  //                      if (locations.getEntry(l.getLocationID().trim()) != null) {
-  //                        return (locations.getEntry(l.getLocationID().trim()))
-  //                            .getFloor()
-  //                            .equals(currentFloor);
-  //                      }
-  //                      return false;
-  //                    })
-  //                .collect(Collectors.toList());
-  //    for (Request mer : reqList) {
-  //      createRequestIcon(mer, locations.getEntry(mer.getLocationID().trim()));
-  //    }
-  //  }
-
-  public String getCurrentFloor() {
-    return currentFloor;
-  }
-
   public void refreshMap() {
     setLocations(currentFloor);
     setEquipment();
-    // setRequest();
-    refreshPath();
-    //    refreshCircles();
+    animateFloor();
   }
 
   /** Function for populating the location choice box, called in initialize */
@@ -640,62 +582,25 @@ public class SimulationController {
   }
 
   /**
-   * creates the path for using the a star path
-   *
-   * @param locs the list of String location node ids
-   */
-  public void buildPath(List<String> locs) {
-    // pathNodePane.getChildren().clear();
-    for (int i = 0; i < locs.size() - 1; i++) {
-      Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
-      Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
-      PathBar path = new PathBar(loc, loc1);
-      pathNodePane.getChildren().add(path);
-      if (!path.getFloor().equals(currentFloor)) {
-        path.setVisible(false);
-      }
-    }
-  }
-
-  /** refreshes the map to load the path to the appropriate floor (inspired by Will) */
-  public void refreshPath() {
-    for (Node p : pathNodePane.getChildren()) {
-      PathBar pb = (PathBar) p;
-      if (!pb.getFloor().equals(currentFloor)) {
-        pb.setVisible(false);
-      } else {
-        pb.setVisible(true);
-      }
-    }
-  }
-
-  /** refreshs the map to include the circlees for the paths */
-  //  public void refreshCircles() {
-  //    for (Node cir : pathNodePane.getChildren()) {
-  //      EquipmentCircle c = (EquipmentCircle) cir;
-  //      if (!c.getFloor().equals(currentFloor)) {
-  //        c.setVisible(false);
-  //      } else {
-  //        c.setVisible(true);
-  //      }
-  //    }
-  //  }
-
-  /**
    * generated that path based on the input hour
    *
    * @param hour given hour for the simulation
    */
   public void createPath(int hour) {
+    medEquip = 0;
+    animatedPathNodeGroup.getChildren().clear();
     for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
       if (current.get(0).equals(current.get(1))) {
+        clearMedPath();
+        medEquip++;
         continue;
       }
       astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
-      buildPath(astar);
+      dividePath(astar);
+      animatedPath();
+      medEquip++;
     }
-    pathNodePane.setVisible(true);
   }
 
   /**
@@ -705,16 +610,201 @@ public class SimulationController {
    * @param fasterHour the end time interval
    */
   public void createPathLonger(int currentHour, int fasterHour) {
+    medEquip = 0;
+    animatedPathNodeGroup.getChildren().clear();
     for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPointsFaster(med.getMedID(), currentHour, fasterHour);
       if (current.get(0).equals(current.get(1))) {
+        clearMedPath();
+        medEquip++;
         continue;
       }
-      System.out.println(current);
       astar = PathTbl.getInstance().createAStarPath(current.get(0), current.get(1));
-      buildPath(astar);
+      dividePath(astar);
+      animatedPath();
+      medEquip++;
     }
-    pathNodePane.setVisible(true);
+  }
+
+  /**
+   * Divides the list of locations from the astar to change between floors
+   *
+   * @param locs the list of location names from the path
+   */
+  public void dividePath(List<String> locs) {
+    clearMedPath();
+
+    for (int i = 0; i < locs.size(); i++) {
+      if (locs.get(i).substring(locs.get(i).length() - 2).equals("L2")) {
+        coord.get(0).get(medEquip).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 2).equals("L1")) {
+        coord.get(1).get(medEquip).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 1).equals("1")) {
+        coord.get(2).get(medEquip).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 1).equals("2")) {
+        coord.get(3).get(medEquip).add(locs.get(i));
+      } else if (locs.get(i).substring(locs.get(i).length() - 1).equals("3")) {
+        coord.get(4).get(medEquip).add(locs.get(i));
+      }
+    }
+  }
+
+  /** Generate the path based on the current floor */
+  public void animatedPath() {
+    ArrayList<String> locs = new ArrayList<>();
+    if (currentFloor.equals("L2")) {
+      if (coord.get(0).get(medEquip).isEmpty()) {
+        return;
+      }
+      locs = coord.get(0).get(medEquip);
+
+    } else if (currentFloor.equals("L1")) {
+      if (coord.get(1).get(medEquip).isEmpty()) {
+        return;
+      }
+      locs = coord.get(1).get(medEquip);
+
+    } else if (currentFloor.equals("1")) {
+      if (coord.get(2).get(medEquip).isEmpty()) {
+        return;
+      }
+      locs = coord.get(2).get(medEquip);
+
+    } else if (currentFloor.equals("2")) {
+      if (coord.get(3).get(medEquip).isEmpty()) {
+        return;
+      }
+      locs = coord.get(3).get(medEquip);
+
+    } else if (currentFloor.equals("3")) {
+      if (coord.get(4).get(medEquip).isEmpty()) {
+        return;
+      }
+      locs = coord.get(4).get(medEquip);
+    }
+
+    // iterates through the list of locations and adds it to the coords list of the poly line
+    ArrayList<Double> coordsList = new ArrayList<>();
+    boolean secondLine = false;
+    int tempStop = 0;
+    for (int i = 0; i < locs.size() - 1; i++) {
+      if (locs.get(i).substring(0, 5).equals("WELEV")
+              && locs.get(i + 1).substring(0, 5).equals("WELEV")
+          || locs.get(i + 1).substring(0, 5).equals("WELEV")
+              && locs.get(i).substring(0, 5).equals("WELEV")) {
+        secondLine = true;
+        tempStop = i + 1;
+        break;
+      }
+      Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+      Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+      coordsList.add((double) (loc.getXcoord()));
+      coordsList.add((double) (loc.getYcoord()));
+      coordsList.add((double) (loc1.getXcoord()));
+      coordsList.add((double) (loc1.getYcoord()));
+    }
+    // creates the polyline bases on the positions coordinates
+    Polyline polyline = new Polyline();
+    polyline.getPoints().addAll(coordsList);
+    String color;
+    if (MedEquipmentTbl.getInstance().getEntry(medEquip + 1).getMedEquipmentType().equals("Bed")) {
+      color = "#FF0000";
+    } else if (MedEquipmentTbl.getInstance()
+        .getEntry(medEquip + 1)
+        .getMedEquipmentType()
+        .equals("Recliner")) {
+      color = "#800080";
+    } else if (MedEquipmentTbl.getInstance()
+        .getEntry(medEquip + 1)
+        .getMedEquipmentType()
+        .equals("X-ray")) {
+      color = "000000";
+    } else {
+      color = "#006db3";
+    }
+
+    polyline.setStroke(Color.web(color));
+    polyline.setStrokeWidth(10);
+    polyline.getStrokeDashArray().setAll(20.0, 20.0);
+    animatedPathNodeGroup.getChildren().addAll(polyline);
+
+    // animates the line accordingly
+    Timeline timeline =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(polyline.strokeDashOffsetProperty(), 1000)),
+            new KeyFrame(
+                Duration.seconds(15), new KeyValue(polyline.strokeDashOffsetProperty(), 0)));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+
+    // Runs when the edge case is met
+    if (secondLine) {
+      ArrayList<Double> coordsList2 = new ArrayList<>();
+      for (int i = tempStop; i < locs.size() - 1; i++) {
+        Location loc = LocationTbl.getInstance().getEntry(locs.get(i));
+        Location loc1 = LocationTbl.getInstance().getEntry(locs.get(i + 1));
+        coordsList2.add((double) (loc.getXcoord()));
+        coordsList2.add((double) (loc.getYcoord()));
+        coordsList2.add((double) (loc1.getXcoord()));
+        coordsList2.add((double) (loc1.getYcoord()));
+      }
+
+      // creates the polyline bases on the positions coordinates
+      Polyline polyline2 = new Polyline();
+      polyline2.getPoints().addAll(coordsList2);
+      String color2 = "";
+      if (MedEquipmentTbl.getInstance()
+          .getEntry(medEquip + 1)
+          .getMedEquipmentType()
+          .equals("Bed")) {
+        color2 = "#FF0000";
+      } else if (MedEquipmentTbl.getInstance()
+          .getEntry(medEquip + 1)
+          .getMedEquipmentType()
+          .equals("Recliner")) {
+        color2 = "#800080";
+      } else if (MedEquipmentTbl.getInstance()
+          .getEntry(medEquip + 1)
+          .getMedEquipmentType()
+          .equals("X-ray")) {
+        color2 = "000000";
+      } else {
+        color2 = "#006db3";
+      }
+      polyline2.setStroke(Color.web(color2));
+      polyline2.setStrokeWidth(10);
+      polyline2.getStrokeDashArray().setAll(20.0, 20.0);
+      animatedPathNodeGroup.getChildren().addAll(polyline2);
+
+      // animates the line accordingly
+      Timeline timeline2 =
+          new Timeline(
+              new KeyFrame(Duration.ZERO, new KeyValue(polyline2.strokeDashOffsetProperty(), 1000)),
+              new KeyFrame(
+                  Duration.seconds(15), new KeyValue(polyline2.strokeDashOffsetProperty(), 0)));
+      timeline2.setCycleCount(Timeline.INDEFINITE);
+      timeline2.play();
+    }
+  }
+
+  /**
+   * Iterates through the medical equipment and prints the correct path (used for floor switching)
+   */
+  public void animateFloor() {
+    animatedPathNodeGroup.getChildren().clear();
+    for (int i = 0; i < MedEquipmentTbl.getInstance().readTable().size(); i++) {
+      medEquip = i;
+      animatedPath();
+    }
+  }
+
+  /** Clears the astar path for based on the current medical equipment */
+  public void clearMedPath() {
+    coord.get(0).get(medEquip).clear();
+    coord.get(1).get(medEquip).clear();
+    coord.get(2).get(medEquip).clear();
+    coord.get(3).get(medEquip).clear();
+    coord.get(4).get(medEquip).clear();
   }
 
   private class MedEqpImageView extends ImageView {
@@ -725,37 +815,6 @@ public class SimulationController {
       super();
       location = loc;
       medEquipment = med;
-    }
-  }
-
-  private class ReqImageView extends ImageView {
-    public Location location = null;
-    public Request request = null;
-
-    public ReqImageView(Location loc, Request req) {
-      super();
-      location = loc;
-      request = req;
-    }
-  }
-
-  private class LocationPane extends Pane {
-    public Location location = null;
-    public MedEquipment medEquipment = null;
-
-    public LocationPane(Location loc) {
-      super();
-      location = loc;
-    }
-
-    public LocationPane(Location loc, MedEquipment med) {
-      super();
-      location = loc;
-      medEquipment = med;
-    }
-
-    void setLocation(Location loc) {
-      location = loc;
     }
   }
 
@@ -770,40 +829,6 @@ public class SimulationController {
 
     void setLocation(Location loc) {
       location = loc;
-    }
-  }
-
-  /** Creates a path bar class for path to follow */
-  private class PathBar extends Line {
-    private String floor = "00";
-
-    public PathBar(Location startLoc, Location endLoc) {
-      super(startLoc.getXcoord(), startLoc.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
-      this.setStrokeWidth(15);
-      this.setStroke(Color.rgb(7, 16, 115));
-      if (startLoc.getFloor().equals(endLoc.getFloor())) {
-        floor = startLoc.getFloor();
-      }
-    }
-
-    public String getFloor() {
-      return floor;
-    }
-  }
-
-  /** Class to show the equipment with circles */
-  private class EquipmentCircle extends Circle {
-    private String floor = "00";
-
-    public EquipmentCircle(Location startLoc, Location endLoc) {
-      super();
-      if (startLoc.getFloor().equals(endLoc.getFloor())) {
-        floor = startLoc.getFloor();
-      }
-    }
-
-    public String getFloor() {
-      return floor;
     }
   }
 }
