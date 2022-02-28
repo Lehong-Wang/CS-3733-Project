@@ -21,12 +21,12 @@
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="Request IT Service">
+            <Label alignment="CENTER" prefHeight="113.0" prefWidth="1598.0" text="Request IT Service">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <HBox prefHeight="786.0" prefWidth="1600.0">
+            <HBox prefHeight="655.0" prefWidth="1600.0">
                <children>
                   <VBox prefHeight="786.0" prefWidth="948.0">
                      <children>
@@ -66,12 +66,12 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" styleClass="actionButton" text="Submit" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" style="-fx-background-color: #0067B1;" text="Cancel" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" styleClass="actionButton" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -103,9 +103,9 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="492.0" prefWidth="1149.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="424.0" prefWidth="901.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="computersTable" prefHeight="423.0" prefWidth="872.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="computersTable" prefHeight="453.0" prefWidth="901.0" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
                               <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
@@ -116,12 +116,15 @@
                               <TableColumn fx:id="manufacturer" prefWidth="116.39990234375" text="Manufacturer" />
                               <TableColumn fx:id="serialNumber" prefWidth="86.400146484375" text="Serial Number" />
                            </columns>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
                         </TableView>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <TableView fx:id="computerRequestsTbl" prefHeight="648.0" prefWidth="1600.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <TableView fx:id="computerRequestsTbl" prefHeight="548.0" prefWidth="1600.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="requestID" prefWidth="75.0" text="Request ID" />
                   <TableColumn fx:id="locationID" prefWidth="75.0" text="Location ID" />
@@ -142,26 +145,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Computers" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Computer Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Computers" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
          </children>
       </VBox>
    </right>

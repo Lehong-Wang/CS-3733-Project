@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -45,6 +46,9 @@ public class mainController {
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
+  @FXML JFXButton SwitchSceneButton;
+  @FXML Button switchBtn2;
+  @FXML JFXButton SettingsButton;
 
   @FXML Group medGroup;
 
@@ -56,8 +60,9 @@ public class mainController {
   // CSS Style strings, used to style drawer buttons
   private static final String IDLE_BUTTON_STYLE =
       "-fx-background-color: #002D59;-fx-alignment: center-left;";
-  private static final String HOVERED_BUTTON_STYLE =
-      "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
+  //  private static final String HOVERED_BUTTON_STYLE =
+  //      "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
+  // -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
 
   public void initialize() {
     // BUTTONS HIDDEN TILL IMPLEMENTATION
@@ -71,22 +76,22 @@ public class mainController {
     drawer.setSidePane(drawerBox);
     drawer.setMiniDrawerSize(36);
     drawer.setResizableOnDrag(true);
-    buttonStyle(ComputerServiceButton);
-    buttonStyle(EmployeeDBButton);
-    buttonStyle(AudioVisualButton);
-    buttonStyle(FoodButton);
-    buttonStyle(GiftFloralButton);
-    buttonStyle(LanguageButton);
-    buttonStyle(LaundryButton);
-    buttonStyle(MedicineDeliveryButton);
-    buttonStyle(MedicalEquipmentButton);
-    buttonStyle(PatientTransportButton);
-    buttonStyle(ReligiousButton);
-    buttonStyle(MapViewButton);
-    buttonStyle(HomeButton);
-    buttonStyle(SideViewButton);
-    buttonStyle(allRequestsButton);
-    buttonStyle(SimulationButton);
+    // buttonStyle(ComputerServiceButton);
+    // buttonStyle(EmployeeDBButton);
+    // buttonStyle(AudioVisualButton);
+    // buttonStyle(FoodButton);
+    // buttonStyle(GiftFloralButton);
+    // buttonStyle(LanguageButton);
+    // buttonStyle(LaundryButton);
+    // buttonStyle(MedicineDeliveryButton);
+    // buttonStyle(MedicalEquipmentButton);
+    // buttonStyle(PatientTransportButton);
+    // buttonStyle(ReligiousButton);
+    // buttonStyle(MapViewButton);
+    // buttonStyle(HomeButton);
+    // buttonStyle(SideViewButton);
+    // buttonStyle(allRequestsButton);
+    // buttonStyle(SimulationButton);
     ComputerServiceButton.setText("");
     EmployeeDBButton.setText("");
     AudioVisualButton.setText("");
@@ -103,6 +108,7 @@ public class mainController {
     SideViewButton.setText("");
     allRequestsButton.setText("");
     SimulationButton.setText("");
+    SettingsButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -128,10 +134,10 @@ public class mainController {
    */
   public void buttonStyle(JFXButton buttonO) {
     buttonO.setStyle(IDLE_BUTTON_STYLE);
-    buttonO.setOnMouseEntered(
-        e -> {
-          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-        });
+    //    buttonO.setOnMouseEntered(
+    //        e -> {
+    //          buttonO.setStyle(HOVERED_BUTTON_STYLE);
+    //        });
     buttonO.setOnMouseExited(
         e -> {
           buttonO.setStyle(IDLE_BUTTON_STYLE);
@@ -219,7 +225,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
   public void switchAllRequests() {
@@ -402,6 +408,11 @@ public class mainController {
 
   public void switchSimulationView() {
     nodeSwitch("views/simulationView.fxml");
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
+  }
+
+  public void switchSettings() {
+    nodeSwitch("views/settingsPage.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
@@ -444,6 +455,7 @@ public class mainController {
         SideViewButton.setText("Side View");
         allRequestsButton.setText("All Requests View");
         SimulationButton.setText("Simulation");
+        SettingsButton.setText("Settings");
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -461,6 +473,7 @@ public class mainController {
         SideViewButton.setText("Neena Xiang");
         allRequestsButton.setText("Paul Godinez");
         SimulationButton.setText("Mason Figler");
+        SettingsButton.setText("Lehong Wang");
       }
     }
   }
@@ -489,6 +502,7 @@ public class mainController {
       SideViewButton.setText("");
       allRequestsButton.setText("");
       SimulationButton.setText("");
+      SettingsButton.setText("");
     }
   }
 
@@ -515,5 +529,44 @@ public class mainController {
 
   public void enableEmbedded(ActionEvent actionEvent) {
     TableController.setConnection(true);
+  }
+
+  public void switchScene(ActionEvent actionEvent) throws IOException {
+
+    System.out.println("before switch");
+    SwitchSceneButton.getScene().getStylesheets().clear();
+    //    SwitchSceneButton.getScene().getStylesheets().removeAll("styleSheets/DarkMode.css");
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
+    System.out.println("after switch");
+
+    //    //    String css =
+    //    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
+    //    //    Stage.getScene().getStylesheets().clear();
+    //    //    scene.getStylesheets().add(css);
+    //    //    File f = new File("/styleSheets/WaterMelon.css");
+    //
+    //    SwitchSceneButton.getScene().getStylesheets().clear();
+    //    //    SwitchSceneButton.getScene().getStylesheets().add(f.getAbsolutePath());
+    //
+    //    SwitchSceneButton.getScene()
+    //        .getStylesheets()
+    //        .add(Main.class.getResource("@../styleSheets/WaterMelon.css").toExternalForm());
+    //
+    //    //
+    // com.sun.javafx.css.StyleManager.getInstance().reloadStylesheets(SwitchSceneButton.getScene());
+    //
+    //    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
+    //    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
+  }
+
+  public void switchOrigin() {
+
+    SwitchSceneButton.getScene().getStylesheets().clear();
+
+    SwitchSceneButton.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
   }
 }

@@ -21,6 +21,7 @@ public class App extends Application {
   public void start(Stage primaryStage) throws IOException {
 
     Parent root = FXMLLoader.load(getClass().getResource("views/loginScreen.fxml"));
+    // Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
 
     // Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
     Scene scene = new Scene(root, 1280, 800);
@@ -28,6 +29,8 @@ public class App extends Application {
     // stylesheet is added in fxml file
     // scene.getStylesheets().add(getClass().getResource("styleSheets/cssTest.css").toExternalForm());
 
+    //
+    // scene.getStylesheets().add(getClass().getResource("styleSheets/DarkMode.css").toExternalForm());
     primaryStage.setScene(scene);
     primaryStage.setMaximized(true);
     primaryStage.show();

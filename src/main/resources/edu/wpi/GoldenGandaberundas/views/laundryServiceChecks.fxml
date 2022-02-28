@@ -19,26 +19,11 @@
    <right>
       <VBox alignment="TOP_RIGHT" prefHeight="800.0" prefWidth="103.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXButton fx:id="backupMenuButton" maxWidth="100.0" onAction="#backupLaundry" prefHeight="64.0" prefWidth="100.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Laundry" textAlignment="CENTER" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" maxWidth="100.0" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" maxWidth="100.0" onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Laundry Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" maxWidth="100.0" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" maxWidth="100.0" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textFill="WHITE" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" maxWidth="100.0" onAction="#backupLaundry" prefHeight="64.0" prefWidth="100.0" text="Backup Laundry" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="backupRequestsButton" maxWidth="100.0" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="loadMenuButton" maxWidth="100.0" onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" text="Load Laundry Backup" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="loadRequestButton" maxWidth="100.0" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="refreshButton" maxWidth="100.0" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" text="Refresh" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
          </children>
       </VBox>
    </right>
@@ -128,7 +113,7 @@
                         </GridPane>
                         <HBox alignment="CENTER">
                            <children>
-                              <JFXButton onAction="#submit" prefHeight="45.0" prefWidth="90.0" style="-fx-border-color: #002D59;" text="Submit">
+                              <JFXButton onAction="#submit" prefHeight="45.0" prefWidth="90.0" styleClass="actionButton" text="Submit">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

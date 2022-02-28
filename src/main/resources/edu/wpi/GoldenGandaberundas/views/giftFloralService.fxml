@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.GiftFloralControllers.GiftFloralController">
@@ -34,13 +33,9 @@
                 <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="47.599999999999994" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="55.79999999999998" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="142.20001220703125" minHeight="10.0" prefHeight="58.60000000000002" vgrow="SOMETIMES" />
+                  <RowConstraints />
               </rowConstraints>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="column-header-background" text="Order Gifts and Flowers" textAlignment="CENTER" wrappingWidth="218.21722412109375" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                     <font>
-                        <Font name="SansSerif Regular" size="24.0" />
-                     </font>
-                  </Text>
                   <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="264.0" text="Location:" GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
@@ -57,7 +52,17 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #0067B1;" text="Submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                  <TextField fx:id="patientIDField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="requesterIDField" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="45.0" prefWidth="90.0" styleClass="actionButton" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -103,6 +108,11 @@
                         <Insets bottom="12.0" left="10.0" right="10.0" top="15.0" />
                      </GridPane.margin>
                   </SearchableComboBox>
+                  <Label text="Order Gifts and Flowers" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
             <TableView fx:id="giftMenuTable" prefHeight="200.0" prefWidth="515.0" VBox.vgrow="ALWAYS">
@@ -134,26 +144,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Gifts" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load GiftBackup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupGift" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Gifts" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBGifts" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load GiftBackup" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
          </children>
       </VBox>
    </right>

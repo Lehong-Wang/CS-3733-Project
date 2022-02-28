@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.SettingsPageController">
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="29.0" prefWidth="1299.0" text="Settings" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="477.0" prefWidth="1250.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="196.0" prefWidth="196.0" text="Switch Scene" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox prefHeight="477.0" prefWidth="322.0" spacing="10.0" />
+                  <GridPane hgap="15.0" prefHeight="477.0" prefWidth="537.0" vgap="15.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="181.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="186.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXButton prefHeight="113.0" prefWidth="269.0" text="Wong Button" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <ImageView fitHeight="169.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../images/mapping.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="192.0" text="Normal Mode Picture" />
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="214.0" text="Dark Mode Picture" GridPane.columnIndex="1" />
+                        <Label prefHeight="17.0" prefWidth="211.0" text="Watermelon Mode Picture" GridPane.columnIndex="2" />
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="203.0" text="Developer mode picture" GridPane.rowIndex="2" />
+                        <ImageView fitHeight="167.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../images/wpi-logo.png" />
+                           </image>
+                        </ImageView>
+                        <JFXButton fx:id="NormalModeBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#switchNormal" prefHeight="44.0" prefWidth="185.0" styleClass="actionButton" text="Normal mode" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="DarkModeButton" alignment="CENTER" onAction="#switchDark" prefHeight="35.0" prefWidth="191.0" styleClass="actionButton" text="Dark mode" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="WatermelonBtn" alignment="CENTER" onAction="#switchWatermelon" prefHeight="35.0" prefWidth="193.0" styleClass="actionButton" text="Watermelon" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="DeveloperModeBtn" alignment="CENTER" onAction="#switchDeveloper" prefHeight="35.0" prefWidth="185.0" styleClass="actionButton" text="Developer mode" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="WPIModeBtn" alignment="CENTER" onAction="#switchWPI" prefHeight="26.0" prefWidth="195.0" styleClass="actionButton" text="WPI mode" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="129.0" prefWidth="570.0" text="Other Stuff">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="30.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

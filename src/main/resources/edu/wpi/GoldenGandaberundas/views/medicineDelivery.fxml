@@ -21,26 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Medicine" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Medicine Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textAlignment="CENTER" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0"  text="Backup Medicine" styleClass="backupButton" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests" styleClass="backupButton" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0"  text="Load Medicine Backup" styleClass="backupButton" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup" styleClass="backupButton" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" textAlignment="CENTER" styleClass="backupButton" />
          </children>
       </VBox>
    </right>
@@ -51,7 +36,7 @@
                <children>
                   <VBox prefHeight="448.0" prefWidth="554.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="1104.0" text="Medicine Request Form:" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="1104.0" text="Medicine Request Form:" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -111,7 +96,7 @@
                         </GridPane>
                         <HBox prefHeight="25.0" prefWidth="1433.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="1100.0" text="Submit" HBox.hgrow="ALWAYS">
+                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="1100.0" text="Submit" HBox.hgrow="ALWAYS" styleClass="actionButton">
                                  <HBox.margin>
                                     <Insets left="140.0" right="65.0" top="20.0" />
                                  </HBox.margin></Button>

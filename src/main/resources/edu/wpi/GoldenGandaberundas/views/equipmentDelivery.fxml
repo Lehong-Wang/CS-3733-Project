@@ -21,26 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Equipment" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Backup Requests" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Equipment Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Load Requests Backup" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
-            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black; -fx-background-color: #002D59#002D59;" text="Refresh" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></JFXButton>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" text="Backup Equipment" styleClass="backupButton"/>
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" styleClass="backupButton"/>
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" text="Load Equipment Backup" styleClass="backupButton"/>
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" styleClass="backupButton"/>
+            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" text="Refresh" styleClass="backupButton"/>
          </children>
       </VBox>
    </right>
@@ -51,7 +36,7 @@
                <children>
                   <VBox prefHeight="384.0" prefWidth="504.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <GridPane>
+                        <GridPane hgap="10.0" prefHeight="120.0" prefWidth="727.0" vgap="10.0">
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -84,10 +69,10 @@
                         </GridPane>
                         <HBox prefHeight="15.0" prefWidth="1100.0">
                            <children>
-                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="1434.0" text=" Submit Request" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="37.0" prefWidth="727.0" styleClass="actionButton" text=" Submit Request" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <TableView fx:id="equipmentTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="equipmentTable" prefHeight="271.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="equipID" prefWidth="75.0" text="medID" />
                             <TableColumn fx:id="type" prefWidth="75.0" text="type" />
