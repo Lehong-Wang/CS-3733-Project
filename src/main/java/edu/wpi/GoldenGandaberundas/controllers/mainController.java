@@ -245,7 +245,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+    nodeDataPane.setPadding(new Insets(0, 0, 10, 100));
   }
   // goes to the Computer Services page
   public void switchCompService(ActionEvent actionEvent) throws IOException {

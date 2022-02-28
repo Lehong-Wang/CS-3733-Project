@@ -2,12 +2,14 @@ package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.AStar.Point;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Credential;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
@@ -24,6 +26,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.Medi
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -82,15 +85,20 @@ public class Main {
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
     PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
-    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
-    //    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    //    points = PathTbl.getInstance().createBranchedLocations(points);
+    MedEquipmentTbl.getInstance(); // .loadBackup("TestCSVs/medEquipSimulation.csv");
+    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
+    points = PathTbl.getInstance().createBranchedLocations(points);
 
+    EmployeeTbl.getInstance()
+        .addEntry(
+            new Employee(0, "admin", "admin", "admin", "admin@bhm.org", "1111111111", "I live"));
+    EmployeeTbl.getInstance()
+        .addEntry(
+            new Employee(1, "staff", "staff", "staff", "staff@bhm.org", "2222222222", "I die"));
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
     //    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
-    //    floorMaps.load();
 
     //    Simulation.update();
     PathTbl.createStatsMap();
