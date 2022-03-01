@@ -1242,7 +1242,7 @@ public class MapController {
   }
 
   /** Creates a path bar class for path to follow */
-  private class PathBar extends Line {
+  public class PathBar extends Line {
     private String floor = "00";
 
     public PathBar(Location startLoc, Location endLoc) {
