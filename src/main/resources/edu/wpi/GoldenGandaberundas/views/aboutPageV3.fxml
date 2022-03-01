@@ -244,6 +244,54 @@
                                     <Insets left="110.0" />
                                  </GridPane.margin>
                               </Label>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/MichaelCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                                 <image>
+                                    <Image url="@../images/LehongCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <Label text="Michael O’Connor" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Lead Software Engineer" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="220.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Lehong Wang" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="220.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Back-End Database Engineer" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="220.0" />
+                                 </padding>
+                              </Label>
                            </children>
                         </GridPane>
                      </children>
