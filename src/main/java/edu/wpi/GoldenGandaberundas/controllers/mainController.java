@@ -44,14 +44,16 @@ public class mainController {
   @FXML JFXButton MedicalEquipmentButton;
   @FXML JFXButton PatientTransportButton;
   @FXML JFXButton ReligiousButton;
-  @FXML JFXButton MapViewButton;
+  // @FXML JFXButton MapViewButton;
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
   @FXML JFXButton SwitchSceneButton;
-  @FXML Button switchBtn2;
   @FXML JFXButton SettingsButton;
+
+  @FXML JFXButton serviceRequestButton;
+  @FXML JFXButton mapViewButton;
 
   @FXML Group medGroup;
 
@@ -107,12 +109,13 @@ public class mainController {
     MedicalEquipmentButton.setText("");
     PatientTransportButton.setText("");
     ReligiousButton.setText("");
-    MapViewButton.setText("");
     HomeButton.setText("");
     SideViewButton.setText("");
     allRequestsButton.setText("");
     SimulationButton.setText("");
     SettingsButton.setText("");
+    serviceRequestButton.setText("");
+    mapViewButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -128,6 +131,44 @@ public class mainController {
 
     mainView.setFitHeight(1080);
     mainView.setFitWidth(1920);
+    mainView.setImage(floorMaps.hospital);
+    toggleRequestButtons(false);
+    toggleMapButtons(false);
+    EmployeeDBButton.setManaged(false);
+    EmployeeDBButton.setVisible(false);
+  }
+
+  public void toggleMapButtons(Boolean toggle) {
+    SideViewButton.setManaged(toggle);
+    SimulationButton.setManaged(toggle);
+
+    SideViewButton.setVisible(toggle);
+    SimulationButton.setVisible(toggle);
+  }
+
+  public void toggleRequestButtons(Boolean toggle) {
+    ComputerServiceButton.setManaged(toggle);
+    AudioVisualButton.setManaged(toggle);
+    FoodButton.setManaged(toggle);
+    GiftFloralButton.setManaged(toggle);
+    LaundryButton.setManaged(toggle);
+    MedicineDeliveryButton.setManaged(toggle);
+    MedicalEquipmentButton.setManaged(toggle);
+    allRequestsButton.setManaged(toggle);
+
+    ComputerServiceButton.setVisible(toggle);
+    AudioVisualButton.setVisible(toggle);
+    FoodButton.setVisible(toggle);
+    GiftFloralButton.setVisible(toggle);
+    LaundryButton.setVisible(toggle);
+    MedicineDeliveryButton.setVisible(toggle);
+    MedicalEquipmentButton.setVisible(toggle);
+    allRequestsButton.setVisible(toggle);
+
+    EmployeeDBButton.setVisible(toggle);
+    EmployeeDBButton.setManaged(toggle);
+
+    checkPerms();
     slideShow();
   }
 
@@ -175,9 +216,7 @@ public class mainController {
    */
   public void checkPerms() {
     int currID = CurrentUser.getUser().getEmpID();
-    //
     ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
-    System.out.println(perms);
     boolean hideShit = true;
     for (int i = 0; i < perms.size(); i++) {
       if (perms.get(i) == 111) {
@@ -197,6 +236,15 @@ public class mainController {
   }
 
   public void goHome(ActionEvent actionEvent) {
+    serviceRequestButton.setManaged(true);
+    serviceRequestButton.setVisible(true);
+    mapViewButton.setManaged(true);
+    mapViewButton.setVisible(true);
+    SettingsButton.setManaged(true);
+    SettingsButton.setVisible(true);
+
+    toggleRequestButtons(false);
+    toggleMapButtons(false);
     nodeSwitch("views/homePage.fxml");
     slideShow();
   }
@@ -209,6 +257,12 @@ public class mainController {
    * @throws IOException error
    */
   public void switchMapView() throws IOException {
+    toggleMapButtons(true);
+    toggleRequestButtons(false);
+    SettingsButton.setManaged(false);
+    SettingsButton.setVisible(false);
+    serviceRequestButton.setManaged(false);
+    serviceRequestButton.setVisible(false);
     FXMLLoader subControllerLoader = new FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
 
     try {
@@ -230,7 +284,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   public void switchAllRequests() {
@@ -258,6 +312,39 @@ public class mainController {
     }
     nodeDataPane.setPadding(new Insets(0, 0, 10, 100));
   }
+
+  @FXML
+  public void switchRequestPage() {
+    toggleRequestButtons(true);
+    toggleMapButtons(false);
+    SettingsButton.setManaged(false);
+    SettingsButton.setVisible(false);
+    mapViewButton.setManaged(false);
+    mapViewButton.setVisible(false);
+    FXMLLoader subControllerLoader =
+        new FXMLLoader(App.class.getResource("views/serviceRequestPage.fxml"));
+
+    try {
+      BorderPane subPane = subControllerLoader.load();
+      serviceRequestPageController master = subControllerLoader.getController();
+      master.setMainControler(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 10, 110));
+  }
+
   // goes to the Computer Services page
   public void switchCompService(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/computerServiceRequest.fxml");
@@ -417,6 +504,10 @@ public class mainController {
   }
 
   public void switchSettings() {
+    mapViewButton.setVisible(false);
+    mapViewButton.setManaged(false);
+    serviceRequestButton.setVisible(false);
+    serviceRequestButton.setManaged(false);
     nodeSwitch("views/settingsPage.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
@@ -455,12 +546,14 @@ public class mainController {
         MedicalEquipmentButton.setText("Medical Equipment");
         PatientTransportButton.setText("Patient Transportation");
         ReligiousButton.setText("Religious Request");
-        MapViewButton.setText("Map Viewer");
         HomeButton.setText("Home");
         SideViewButton.setText("Side View");
         allRequestsButton.setText("All Requests View");
         SimulationButton.setText("Simulation");
         SettingsButton.setText("Settings");
+        serviceRequestButton.setText("Service Request Page");
+        mapViewButton.setText("Map Views");
+
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -473,12 +566,13 @@ public class mainController {
         MedicalEquipmentButton.setText("Will BC");
         PatientTransportButton.setText("Jason Martino");
         ReligiousButton.setText("Will BC");
-        MapViewButton.setText("Michael O'Connor");
         HomeButton.setText("Neena Xiang");
         SideViewButton.setText("Neena Xiang");
         allRequestsButton.setText("Paul Godinez");
         SimulationButton.setText("Mason Figler");
         SettingsButton.setText("Lehong Wang");
+        serviceRequestButton.setText("Paul Godinez");
+        mapViewButton.setText("Michael O'Connor");
       }
     }
   }
@@ -502,12 +596,13 @@ public class mainController {
       MedicalEquipmentButton.setText("");
       PatientTransportButton.setText("");
       ReligiousButton.setText("");
-      MapViewButton.setText("");
       HomeButton.setText("");
       SideViewButton.setText("");
       allRequestsButton.setText("");
       SimulationButton.setText("");
       SettingsButton.setText("");
+      serviceRequestButton.setText("");
+      mapViewButton.setText("");
     }
   }
 
