@@ -502,11 +502,6 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
-  public void switchSettings() {
-    nodeSwitch("views/settingsPage.fxml");
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
-  }
-
   // Goes to the location table
   //  public void switchLocationTable(ActionEvent actionEvent) throws IOException {
   //    //    Stage stage = (Stage) ComputerServiceButton.getScene().getWindow();
@@ -663,23 +658,5 @@ public class mainController {
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
   }
-
-  public void switchOrigin() {
-
-    System.out.println("before switch");
-    SwitchSceneButton.getScene().getStylesheets().clear();
-
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
-  }
-
-  public void switchOrigin() {
-
-    SwitchSceneButton.getScene().getStylesheets().clear();
-
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
-  }
+  
 }
