@@ -2,9 +2,9 @@
 
 .background {
     -fx-background: linear-gradient(to bottom right, #94cbff, #edfbff, white 90%);
-    -fx-background-image: url('../images/MasonCropped.jpg');
-    -fx-background-repeat: infinite;
-    -fx-background-size: 300 300;
+    -fx-background-image: url('../images/developerTeam.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 1450 847;
     -fx-background-position: center center;
 }
 

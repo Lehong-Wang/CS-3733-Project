@@ -2,6 +2,9 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class SettingsPageController {
@@ -51,5 +54,13 @@ public class SettingsPageController {
     WPIModeBtn.getScene()
         .getStylesheets()
         .add(App.class.getResource("styleSheets/BearBone.css").toExternalForm());
+  }
+
+  public void enableClientServer(ActionEvent actionEvent) {
+    ConnectionHandler.getInstance().setConnection(ConnectionType.clientServer);
+  }
+
+  public void enableEmbedded(ActionEvent actionEvent) {
+    ConnectionHandler.getInstance().setConnection(ConnectionType.embedded);
   }
 }

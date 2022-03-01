@@ -79,8 +79,8 @@
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#enableAuthor" text="Enable Authors" />
                               <MenuItem mnemonicParsing="false" onAction="#disableAuthor" text="Disable Authors" />
-                              <MenuItem mnemonicParsing="false" onAction="#enableClientServer" text="Enable Client/Server" />
-                              <MenuItem mnemonicParsing="false" onAction="#enableEmbedded" text="Enable Embedded" />
+<!--                              <MenuItem mnemonicParsing="false" onAction="#enableClientServer" text="Enable Client/Server" />-->
+<!--                              <MenuItem mnemonicParsing="false" onAction="#enableEmbedded" text="Enable Embedded" />-->
                               <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
                               <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
                            </items>
