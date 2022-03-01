@@ -5,8 +5,6 @@ import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.MedEquipmentSimulation;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.SimulatePumps;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
@@ -522,14 +520,16 @@ public class SimulationController {
     toggleStart.setPrefWidth(110);
     toggleStart.setOnMouseReleased(
         e -> {
-          Simulation sim = new Simulation();
-          sim.update((int) (timeSlider.getValue() * 4));
+          if (start) {
+            Simulation sim = new Simulation();
+            sim.update((int) (timeSlider.getValue() * 4));
+          }
           animatedPathNodeGroup.getChildren().clear();
           start = true;
           next = false;
           currentHour = 0;
           createPath(currentHour);
-          toggleStart.setText("Rerun Simulation");
+          toggleStart.setText("Restart Simulation");
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
           setEquipment();
           updateStats();
@@ -1540,7 +1540,6 @@ public class SimulationController {
     most3TraveledNum.setText(num.get(2).toString());
     most4TraveledNum.setText(num.get(3).toString());
     most5TraveledNum.setText(num.get(4).toString());
-
   }
 
   public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
