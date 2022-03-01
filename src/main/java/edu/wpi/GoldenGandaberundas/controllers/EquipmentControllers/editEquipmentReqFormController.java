@@ -95,8 +95,8 @@ public class editEquipmentReqFormController {
           Integer pkID = Integer.parseInt(equipReqIDField.getText());
           Integer empInitiated = requesterComboBox.getValue();
           Integer empCompleter = completerComboBox.getValue();
-          long timeStart = Integer.parseInt(subTimeField.getText());
-          long timeEnd = Integer.parseInt(finishTimeField.getText());
+          long timeStart = Long.parseLong(subTimeField.getText());
+          long timeEnd = Long.parseLong(finishTimeField.getText());
           Integer patientID = patientComboBox.getValue();
           String requestStatus = statusComboBox.getValue();
 

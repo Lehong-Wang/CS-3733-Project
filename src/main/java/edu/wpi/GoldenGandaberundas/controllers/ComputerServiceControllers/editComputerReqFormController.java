@@ -86,8 +86,8 @@ public class editComputerReqFormController {
           Integer pkID = Integer.parseInt(computerRequestIDField.getText());
           Integer empInitiated = requesterComboBox.getValue();
           Integer empCompleter = completerComboBox.getValue();
-          long timeStart = Integer.parseInt(subTimeField.getText());
-          long timeEnd = Integer.parseInt(finishTimeField.getText());
+          long timeStart = Long.parseLong(subTimeField.getText());
+          long timeEnd = Long.parseLong(finishTimeField.getText());
           String requestStatus = statusComboBox.getValue();
 
           requests.editEntry(pkID, "locationID", locationID);
