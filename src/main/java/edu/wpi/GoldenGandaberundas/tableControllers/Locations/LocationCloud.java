@@ -22,4 +22,8 @@ public class LocationCloud {
   public boolean editEntry(String pkid, String colname, Object value) {
     return CloudController.getInstance().editEntry(tbName, pkid, colname, value);
   }
+
+  public boolean deleteEntry(String pkid){
+    return CloudController.getInstance().deleteEntry(tbName, pkid);
+  }
 }

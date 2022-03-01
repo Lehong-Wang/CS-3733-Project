@@ -148,9 +148,10 @@ public class CloudController {
     return null;
   }
 
-  public void deleteEntry(String collection, String pkid) {
+  public boolean deleteEntry(String collection, String pkid) {
     ApiFuture<WriteResult> doc = db.collection(collection).document(pkid).delete();
     System.out.println(doc);
+    return true;
   }
 
   public <T> void addEntry(String collectionName, T obj) {
@@ -185,4 +186,8 @@ public class CloudController {
             LoadBalancerRegistry.getDefaultRegistry().getProvider("pick_first"),
             "pick_first balancer not available");
   }
+
+
+
+
 }
