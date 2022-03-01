@@ -47,6 +47,14 @@ public class serviceRequestPageController {
     }
   }
 
+  // TODO API IMPLEMENTATION
+  @FXML
+  public void showPatientTransport() {}
+
+  // TODO API IMPLEMENTATION
+  @FXML
+  public void showSanitationServices() {}
+
   @FXML
   public void switchAllRequests() {
     main.switchAllRequests();
@@ -85,11 +93,6 @@ public class serviceRequestPageController {
   @FXML
   public void switchFood() throws IOException {
     main.switchFood(null);
-  }
-
-  @FXML
-  public void switchPatientTransport() throws IOException {
-    main.switchPatientTransport(null);
   }
 
   @FXML
