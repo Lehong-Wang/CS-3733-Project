@@ -433,11 +433,6 @@ public class mainController {
     nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
   }
 
-
-
-
-
-
   public void switchSimulationView() {
     nodeSwitch("views/simulationView.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
