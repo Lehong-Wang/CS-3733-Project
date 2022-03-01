@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,12 +43,10 @@ public class mainController {
   @FXML JFXButton MedicalEquipmentButton;
   @FXML JFXButton PatientTransportButton;
   @FXML JFXButton ReligiousButton;
-  // @FXML JFXButton MapViewButton;
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
-  @FXML JFXButton SwitchSceneButton;
   @FXML JFXButton SettingsButton;
 
   @FXML JFXButton serviceRequestButton;
@@ -71,6 +68,7 @@ public class mainController {
   // -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
 
   public void initialize() {
+    slideShow();
     // BUTTONS HIDDEN TILL IMPLEMENTATION
     // FoodButton.setManaged(false);
     // FoodButton.setVisible(false);
@@ -138,6 +136,11 @@ public class mainController {
     EmployeeDBButton.setVisible(false);
   }
 
+  /**
+   * Toggles all the buttons that the map viewer uses
+   *
+   * @param toggle True to toggle the buttons on, false to turn them off
+   */
   public void toggleMapButtons(Boolean toggle) {
     SideViewButton.setManaged(toggle);
     SimulationButton.setManaged(toggle);
@@ -146,6 +149,11 @@ public class mainController {
     SimulationButton.setVisible(toggle);
   }
 
+  /**
+   * TOggles all the buttons that the request buttons use
+   *
+   * @param toggle True to toggle the buttons on, false to turn them off
+   */
   public void toggleRequestButtons(Boolean toggle) {
     ComputerServiceButton.setManaged(toggle);
     AudioVisualButton.setManaged(toggle);
@@ -169,24 +177,6 @@ public class mainController {
     EmployeeDBButton.setManaged(toggle);
 
     checkPerms();
-    slideShow();
-  }
-
-  /**
-   * Method that applies CSS styling to button's in and Idle and Hovered states
-   *
-   * @param buttonO
-   */
-  public void buttonStyle(JFXButton buttonO) {
-    buttonO.setStyle(IDLE_BUTTON_STYLE);
-    //    buttonO.setOnMouseEntered(
-    //        e -> {
-    //          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-    //        });
-    buttonO.setOnMouseExited(
-        e -> {
-          buttonO.setStyle(IDLE_BUTTON_STYLE);
-        });
   }
 
   public void nodeSwitch(String fxmlFile) {
@@ -631,44 +621,6 @@ public class mainController {
     TableController.setConnection(true);
   }
 
-  public void switchScene(ActionEvent actionEvent) throws IOException {
-
-    System.out.println("before switch");
-    SwitchSceneButton.getScene().getStylesheets().clear();
-    //    SwitchSceneButton.getScene().getStylesheets().removeAll("styleSheets/DarkMode.css");
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
-    System.out.println("after switch");
-
-    //    //    String css =
-    //    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
-    //    //    Stage.getScene().getStylesheets().clear();
-    //    //    scene.getStylesheets().add(css);
-    //    //    File f = new File("/styleSheets/WaterMelon.css");
-    //
-    //    SwitchSceneButton.getScene().getStylesheets().clear();
-    //    //    SwitchSceneButton.getScene().getStylesheets().add(f.getAbsolutePath());
-    //
-    //    SwitchSceneButton.getScene()
-    //        .getStylesheets()
-    //        .add(Main.class.getResource("@../styleSheets/WaterMelon.css").toExternalForm());
-    //
-    //    //
-    // com.sun.javafx.css.StyleManager.getInstance().reloadStylesheets(SwitchSceneButton.getScene());
-    //
-    //    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
-    //    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
-  }
-
-  public void switchOrigin() {
-
-    SwitchSceneButton.getScene().getStylesheets().clear();
-
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
-  }
   /** Slide show function to display an assortment of images that fade in an out */
   public void slideShow() {
     ArrayList<Image> images = new ArrayList<>();
