@@ -325,7 +325,7 @@ public class PathTbl implements TableController<Path, String> {
   public String getTableName() {
     return tbName;
   }
-  
+
   public static HashMap<String, Integer> getStatsMap() {
     return statsMap;
   }

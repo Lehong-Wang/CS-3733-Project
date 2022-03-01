@@ -85,8 +85,6 @@ public class Main {
     PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
 
     MedEquipmentTbl.getInstance(); // .loadBackup("TestCSVs/medEquipSimulation.csv");
-    ArrayList<Point> points = LocationTbl.getInstance().getNodes();
-    points = PathTbl.getInstance().createBranchedLocations(points);
 
     EmployeeTbl.getInstance()
         .addEntry(
