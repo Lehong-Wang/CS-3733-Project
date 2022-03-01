@@ -54,12 +54,12 @@
                               </ImageView>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <image>
-                                    <Image url="@Team%20Photos/EliCropped.jpg" />
+                                    <Image url="@../images/EliCropped.jpg" />
                                  </image>
                               </ImageView>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                                  <image>
-                                    <Image url="@Team%20Photos/MasonCropped.jpg" />
+                                    <Image url="@../images/MasonCropped.jpg" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets left="100.0" />
@@ -67,7 +67,7 @@
                               </ImageView>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                                  <image>
-                                    <Image url="@Team%20Photos/WillCropped.jpg" />
+                                    <Image url="@../images/WillCropped.jpg" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets left="100.0" />
@@ -75,7 +75,7 @@
                               </ImageView>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <image>
-                                    <Image url="@Team%20Photos/JoshuaCropped.jpg" />
+                                    <Image url="@../images/JoshuaCropped.jpg" />
                                  </image>
                               </ImageView>
                               <Label text="Mason Figler, Algorithm Engineer" GridPane.halignment="LEFT" GridPane.rowIndex="2">
@@ -128,7 +128,7 @@
                               </Label>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                                  <image>
-                                    <Image url="@Team%20Photos/PaulCropped.jpg" />
+                                    <Image url="@../images/PaulCropped.jpg" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets left="100.0" />
@@ -152,7 +152,7 @@
                               </Label>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <image>
-                                    <Image url="@Team%20Photos/NeenaCropped.jpg" />
+                                    <Image url="@../images/NeenaCropped.jpg" />
                                  </image>
                               </ImageView>
                               <Label text="Neena Xiang, Product Owner" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
@@ -165,7 +165,7 @@
                               </Label>
                               <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                                  <image>
-                                    <Image url="@Team%20Photos/JasonCropped.jpg" />
+                                    <Image url="@../images/JasonCropped.jpg" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets />
