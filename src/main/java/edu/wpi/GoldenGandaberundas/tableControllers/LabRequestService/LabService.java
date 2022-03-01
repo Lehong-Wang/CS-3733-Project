@@ -5,13 +5,11 @@ import java.util.Objects;
 public class LabService {
   private int labID;
   private String labType;
-  private String locID;
   private String description;
 
-  public LabService(int labID, String labType, String locID, String description) {
+  public LabService(int labID, String labType, String description) {
     this.labID = labID;
     this.labType = labType;
-    this.locID = locID;
     this.description = description;
   }
 
@@ -24,19 +22,12 @@ public class LabService {
     LabService that = (LabService) o;
     return labID == that.labID
         && Objects.equals(labType, that.labType)
-        && Objects.equals(locID, that.locID)
         && Objects.equals(description, that.description);
   }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(labID)
-        .append(",")
-        .append(labType)
-        .append(",")
-        .append(locID)
-        .append(",")
-        .append(description);
+    sb.append(labID).append(",").append(labType).append(",").append(description);
     return sb.toString();
   }
 
@@ -54,14 +45,6 @@ public class LabService {
 
   public void setLabType(String labType) {
     this.labType = labType;
-  }
-
-  public String getLocID() {
-    return locID;
-  }
-
-  public void setLocID(String locID) {
-    this.locID = locID;
   }
 
   public String getDescription() {
