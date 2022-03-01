@@ -371,6 +371,8 @@ public class mainController {
     SettingsButton.setVisible(false);
     mapViewButton.setManaged(false);
     mapViewButton.setVisible(false);
+    serviceProviderButton.setVisible(false);
+    serviceProviderButton.setManaged(false);
     FXMLLoader subControllerLoader =
         new FXMLLoader(App.class.getResource("views/serviceRequestPage.fxml"));
 
@@ -403,6 +405,8 @@ public class mainController {
     SettingsButton.setVisible(false);
     mapViewButton.setManaged(false);
     mapViewButton.setVisible(false);
+    serviceRequestButton.setManaged(false);
+    serviceRequestButton.setVisible(false);
     FXMLLoader subControllerLoader =
         new FXMLLoader(App.class.getResource("serviceProviderViews/serviceProviderPage.fxml"));
 
