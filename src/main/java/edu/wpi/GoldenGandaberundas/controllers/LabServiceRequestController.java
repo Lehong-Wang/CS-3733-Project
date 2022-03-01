@@ -4,11 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisual;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabService;
+import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabServiceRequest;
+import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabServiceRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabServiceTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
@@ -33,7 +35,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
-public class LabRequestController implements Initializable {
+public class LabServiceRequestController implements Initializable {
 
   @FXML private TextField patientField;
   @FXML private TextField priorityField;
@@ -44,23 +46,23 @@ public class LabRequestController implements Initializable {
   @FXML private SearchableComboBox<String> locationBox;
   @FXML private SearchableComboBox<Integer> patientComboBox;
 
-  @FXML private TableView deviceMenu;
-  @FXML private TableColumn<AudioVisual, Integer> deviceID;
-  @FXML private TableColumn<AudioVisual, String> type;
-  @FXML private TableColumn<AudioVisual, String> locationID;
-  @FXML private TableColumn<AudioVisual, String> description;
+  @FXML private TableView labMenu;
+  @FXML private TableColumn<LabService, Integer> labID;
+  @FXML private TableColumn<LabService, String> type;
+  @FXML private TableColumn<LabService, String> locationID;
+  @FXML private TableColumn<LabService, String> description;
 
-  @FXML private TableView avRequests;
-  @FXML private TableColumn<AudioVisualRequest, Integer> requestID;
-  @FXML private TableColumn<AudioVisualRequest, String> nodeID;
-  @FXML private TableColumn<AudioVisualRequest, Integer> requesterID;
-  @FXML private TableColumn<AudioVisualRequest, Integer> completerID;
-  @FXML private TableColumn<AudioVisualRequest, Integer> submittedTime;
-  @FXML private TableColumn<AudioVisualRequest, Integer> completedTime;
-  @FXML private TableColumn<AudioVisualRequest, Integer> patientID;
-  @FXML private TableColumn<AudioVisualRequest, String> status;
-  @FXML private TableColumn<AudioVisualRequest, Integer> device;
-  @FXML private TableColumn<AudioVisualRequest, String> notes;
+  @FXML private TableView labRequests;
+  @FXML private TableColumn<LabServiceRequest, Integer> requestID;
+  @FXML private TableColumn<LabServiceRequest, String> nodeID;
+  @FXML private TableColumn<LabServiceRequest, Integer> requesterID;
+  @FXML private TableColumn<LabServiceRequest, Integer> completerID;
+  @FXML private TableColumn<LabServiceRequest, Integer> submittedTime;
+  @FXML private TableColumn<LabServiceRequest, Integer> completedTime;
+  @FXML private TableColumn<LabServiceRequest, Integer> patientID;
+  @FXML private TableColumn<LabServiceRequest, String> status;
+  @FXML private TableColumn<LabServiceRequest, Integer> labService;
+  @FXML private TableColumn<LabServiceRequest, String> notes;
 
   // Admin Buttons
   @FXML private JFXButton backupMenuButton;
@@ -70,44 +72,44 @@ public class LabRequestController implements Initializable {
   @FXML private JFXButton refreshButton;
 
   private RequestTable requestTableController = RequestTable.getInstance();
-  private TableController menuTableController = AudioVisualTbl.getInstance();
-  private TableController requestAVController = AudioVisualRequestTbl.getInstance();
+  private TableController menuTableController = LabServiceTbl.getInstance();
+  private TableController requestLabController = LabServiceRequestTbl.getInstance();
 
   private TableController locationTableController = LocationTbl.getInstance();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-    deviceID.setCellValueFactory(new PropertyValueFactory<AudioVisual, Integer>("avID"));
-    type.setCellValueFactory(new PropertyValueFactory<AudioVisual, String>("deviceType"));
-    locationID.setCellValueFactory(new PropertyValueFactory<AudioVisual, String>("locID"));
-    description.setCellValueFactory(new PropertyValueFactory<AudioVisual, String>("description"));
+    labID.setCellValueFactory(new PropertyValueFactory<LabService, Integer>("labID"));
+    type.setCellValueFactory(new PropertyValueFactory<LabService, String>("labType"));
+    locationID.setCellValueFactory(new PropertyValueFactory<LabService, String>("locID"));
+    description.setCellValueFactory(new PropertyValueFactory<LabService, String>("description"));
 
     requestID.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("requestID"));
-    nodeID.setCellValueFactory(new PropertyValueFactory<AudioVisualRequest, String>("locationID"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("requestID"));
+    nodeID.setCellValueFactory(new PropertyValueFactory<LabServiceRequest, String>("locationID"));
     requesterID.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("empInitiated"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("empInitiated"));
     completerID.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("empCompleter"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("empCompleter"));
     submittedTime.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("timeStart"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("timeStart"));
     completedTime.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("timeEnd"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("timeEnd"));
     patientID.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("patientID"));
+        new PropertyValueFactory<LabServiceRequest, Integer>("patientID"));
     status.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, String>("requestStatus"));
-    device.setCellValueFactory(
-        new PropertyValueFactory<AudioVisualRequest, Integer>("audioVisualID"));
-    notes.setCellValueFactory(new PropertyValueFactory<AudioVisualRequest, String>("notes"));
+        new PropertyValueFactory<LabServiceRequest, String>("requestStatus"));
+    labService.setCellValueFactory(
+        new PropertyValueFactory<LabServiceRequest, Integer>("labServiceID"));
+    notes.setCellValueFactory(new PropertyValueFactory<LabServiceRequest, String>("notes"));
 
     // Populating location choice box
     ArrayList<String> searchList = locList();
     ObservableList<String> oList = FXCollections.observableArrayList(searchList);
     locationBox.setItems(oList);
 
-    // Populating device ID choice box
+    // Populating Lab Type choice box
     ArrayList<String> findList = labTypeList();
     ObservableList<String> tList = FXCollections.observableArrayList(findList);
     labTypeBox.setItems(tList);
@@ -121,7 +123,7 @@ public class LabRequestController implements Initializable {
     }
     patientComboBox.setItems(FXCollections.observableArrayList(patientIDs));
 
-    avRequests.setOnMouseClicked(
+    labRequests.setOnMouseClicked(
         e -> {
           if (e.getClickCount() > 1) {
             onEdit();
@@ -136,32 +138,32 @@ public class LabRequestController implements Initializable {
 
   // refresh tables
   public void refresh() {
-    menuTableController = AudioVisualTbl.getInstance();
-    requestAVController = AudioVisualRequestTbl.getInstance();
+    menuTableController = LabServiceTbl.getInstance();
+    requestLabController = LabServiceRequestTbl.getInstance();
     if (CurrentUser.getUser().getEmpID() != 0) {
-      ArrayList<AudioVisualRequest> avrs = new ArrayList<>();
-      for (AudioVisualRequest avr : AudioVisualRequestTbl.getInstance().readTable()) {
-        if (avr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
-          avrs.add(avr);
+      ArrayList<LabServiceRequest> lsrs = new ArrayList<>();
+      for (LabServiceRequest lsr : LabServiceRequestTbl.getInstance().readTable()) {
+        if (lsr.getEmpInitiated() == CurrentUser.getUser().getEmpID()) {
+          lsrs.add(lsr);
         }
       }
-      avRequests.getItems().setAll(avrs);
+      labRequests.getItems().setAll(lsrs);
     } else {
-      avRequests.getItems().setAll(requestAVController.readTable());
+      labRequests.getItems().setAll(requestLabController.readTable());
     }
 
-    deviceMenu.getItems().setAll(menuTableController.readTable());
+    labMenu.getItems().setAll(menuTableController.readTable());
   }
 
   void onEdit() {
-    if (avRequests.getSelectionModel().getSelectedItem() != null) {
-      AudioVisualRequest selectedItem =
-          (AudioVisualRequest) avRequests.getSelectionModel().getSelectedItem();
+    if (labRequests.getSelectionModel().getSelectedItem() != null) {
+      LabServiceRequest selectedItem =
+          (LabServiceRequest) labRequests.getSelectionModel().getSelectedItem();
       try {
         FXMLLoader load =
-            new FXMLLoader(App.class.getResource("views/editAudioVisualReqForm.fxml"));
+            new FXMLLoader(App.class.getResource("views/editLabServiceReqForm.fxml"));
         AnchorPane editForm = load.load();
-        editAudioVisualReqFormController edit = load.getController();
+        editLabServiceReqFormController edit = load.getController();
         edit.editForm(RequestTable.getInstance().getEntry(selectedItem.getPK().get(0)));
         Stage stage = new Stage();
         stage.setScene(new Scene(editForm));
@@ -236,8 +238,8 @@ public class LabRequestController implements Initializable {
       if (!priorityField.getText().isEmpty() || priorityField.getText() != null) {
         priority = priorityField.getText();
       }
-      AudioVisualRequest AVrequest =
-          new AudioVisualRequest(
+      LabServiceRequest LSrequest =
+          new LabServiceRequest(
               idCounter,
               location,
               requesterID,
@@ -249,8 +251,8 @@ public class LabRequestController implements Initializable {
               note,
               deviceID,
               priority);
-      System.out.println(AVrequest);
-      AudioVisualRequestTbl.getInstance().addEntry(AVrequest);
+      System.out.println(LSrequest);
+      LabServiceRequestTbl.getInstance().addEntry(LSrequest);
       clear();
       refresh();
     } catch (Exception e) {
@@ -283,44 +285,44 @@ public class LabRequestController implements Initializable {
     refresh();
   }
 
-  /** creates backups of the Audio Visual table in the users file system */
+  /** creates backups of the Lab Service Request table in the users file system */
   @FXML
-  public void backupAV() {
+  public void backupLS() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
-    directoryChooser.setTitle("Select Back Up Audio Visual File");
+    directoryChooser.setTitle("Select Back Up Lab Service File");
     Stage popUpDialog = new Stage();
     File selectedFile = directoryChooser.showDialog(popUpDialog);
     popUpDialog.show();
 
     if (selectedFile != null) {
-      AudioVisualTbl.getInstance()
-          .createBackup(new File(selectedFile.toString() + "/audioVisualBackUp.csv"));
+      LabServiceTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "/labServiceRequestBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
   }
 
-  /** Creates a backup in the users file system of the AudioVisualRequestTbl */
+  /** Creates a backup in the users file system of the LabServiceREquestTbl */
   public void backupRequests() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
-    directoryChooser.setTitle("Select Back Up Audio Visual File");
+    directoryChooser.setTitle("Select Back Up Lab Service Request File");
     Stage popUpDialog = new Stage();
     File selectedFile = directoryChooser.showDialog(popUpDialog);
     popUpDialog.show();
 
     if (selectedFile != null) {
-      AudioVisualRequestTbl.getInstance()
-          .createBackup(new File(selectedFile.toString() + "/audioVisualRequestsBackUp.csv"));
+      LabServiceRequestTbl.getInstance()
+          .createBackup(new File(selectedFile.toString() + "/labServiceRequestsBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
     popUpDialog.close();
   }
 
-  /** Method that loads a csv file to replace the AudioVisualTbl */
+  /** Method that loads a csv file to replace the LabServiceTbl */
   @FXML
-  public void loadAV() {
+  public void loadLS() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Select Back Up Laundry File To Load");
     fileChooser
@@ -331,7 +333,7 @@ public class LabRequestController implements Initializable {
     popUpDialog.show();
     if (selectedFile != null) {
       System.out.println(selectedFile.toString());
-      AudioVisualTbl.getInstance().loadBackup(selectedFile.toString());
+      LabServiceTbl.getInstance().loadBackup(selectedFile.toString());
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
@@ -339,11 +341,11 @@ public class LabRequestController implements Initializable {
     refresh();
   }
 
-  /** Method that loads a csv file to replace the AudioVisualRequestTbl */
+  /** Method that loads a csv file to replace the LabServiceRequestTbl */
   @FXML
   public void loadRequests() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Select Back Up Laundry Requests File To Load");
+    fileChooser.setTitle("Select Back Up Lab Service Request File To Load");
     fileChooser
         .getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("Comma Seperated Values", "*.csv", "*.CSV"));
@@ -352,7 +354,7 @@ public class LabRequestController implements Initializable {
     popUpDialog.show();
     if (selectedFile != null) {
       System.out.println(selectedFile.toString());
-      AudioVisualRequestTbl.getInstance().loadBackup(selectedFile.toString());
+      LabServiceRequestTbl.getInstance().loadBackup(selectedFile.toString());
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
@@ -373,23 +375,6 @@ public class LabRequestController implements Initializable {
   }
 
   /**
-   * populates the deviceID list
-   *
-   * @return arraylist of the device IDs as strings
-   */
-  public ArrayList<String> deviceIDList() {
-    ArrayList<AudioVisual> deviceArray = new ArrayList<AudioVisual>();
-    deviceArray = menuTableController.readTable();
-    ArrayList<String> AvArray = new ArrayList<String>();
-
-    for (int i = 0; i < deviceArray.size(); i++) {
-      AudioVisual av = deviceArray.get(i);
-      AvArray.add(i, av.getAvID() + "");
-    }
-    return AvArray;
-  }
-
-  /**
    * populates the labType list
    *
    * @return arraylist of the possible types of lab procedures
@@ -406,23 +391,7 @@ public class LabRequestController implements Initializable {
 
     return labType;
   }
-
-  /**
-   * populates the device type search box
-   *
-   * @return
-   */
-  public ArrayList<String> deviceTypeList() {
-    ArrayList<AudioVisual> deviceArray = new ArrayList<AudioVisual>();
-    deviceArray = menuTableController.readTable();
-    ArrayList<String> AvArray = new ArrayList<String>();
-
-    for (int i = 0; i < deviceArray.size(); i++) {
-      AudioVisual av = deviceArray.get(i);
-      AvArray.add(i, av.getDeviceType());
-    }
-    return AvArray;
-  }
+  
 
   /**
    * Method that iterates through a users permissions and hides elements they dont have access too
