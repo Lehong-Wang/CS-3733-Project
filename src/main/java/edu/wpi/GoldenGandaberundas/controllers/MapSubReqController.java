@@ -53,7 +53,6 @@ public class MapSubReqController {
         e -> {
           anchorPane.getParent().setManaged(false);
           anchorPane.getParent().setVisible(false);
-          System.out.println("alt click");
         });
 
     ObservableList<String> locList = FXCollections.observableArrayList();
@@ -97,12 +96,13 @@ public class MapSubReqController {
     submitBtn.setText("Submit");
     reqIDText.setDisable(true);
     reqIDText.setText(req.getRequestID().toString());
-    locSearch.setPromptText(req.getLocationID());
+    reqStatusSearch.setValue(req.getRequestStatus());
+    locSearch.setValue(req.getLocationID());
     Employee temp = EmployeeTbl.getInstance().getEntry(req.getEmpInitiated());
-    empStartSearch.setPromptText(temp.getFName() + " " + temp.getLName());
+    empStartSearch.setValue(temp.getFName() + " " + temp.getLName());
     temp = EmployeeTbl.getInstance().getEntry(req.getEmpCompleter());
-    empEndSearch.setPromptText(temp.getFName() + " " + temp.getLName());
-    patientIDSearch.setPromptText(req.getPatientID().toString());
+    empEndSearch.setValue(temp.getFName() + " " + temp.getLName());
+    patientIDSearch.setValue(req.getPatientID().toString());
 
     reqs = req;
 
@@ -178,5 +178,6 @@ public class MapSubReqController {
           .editEntry(reqs, "requestStatus", reqStatusSearch.getValue().trim());
     }
     mapController.setRequest();
+    clear();
   }
 }
