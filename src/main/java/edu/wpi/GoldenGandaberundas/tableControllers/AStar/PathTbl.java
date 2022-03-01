@@ -182,7 +182,9 @@ public class PathTbl implements TableController<Path, String> {
       }
       points.get(startID).g = 0;
       Point test = points.get(startID).aStar(points.get(endID));
-      return points.get(startID).locationsPath(test);
+      List<String> path = points.get(startID).locationsPath(test);
+      pathStats(path);
+      return path;
     }
     return null;
   }
@@ -204,6 +206,14 @@ public class PathTbl implements TableController<Path, String> {
       return path;
     } else {
       return null;
+    }
+  }
+
+  public static void pathStats(List<String> path) {
+    if (path != null) {
+      for (String node : path) {
+        statsMap.put(node, statsMap.get(node) + 1);
+      }
     }
   }
 

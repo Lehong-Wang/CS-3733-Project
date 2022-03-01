@@ -454,6 +454,7 @@ public class SimulationController {
           toggleStart.setText("Rerun Simulation");
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
           setEquipment();
+          PathTbl.printStatsMap();
         });
     // creates the next hour button
     JFXButton nextHour = new JFXButton();
@@ -469,6 +470,7 @@ public class SimulationController {
           createPath(currentHour);
           setEquipment();
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          PathTbl.printStatsMap();
         });
     // previous hour button
     JFXButton prevHour = new JFXButton();
