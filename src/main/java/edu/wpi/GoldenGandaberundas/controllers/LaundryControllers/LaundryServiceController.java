@@ -183,7 +183,7 @@ public class LaundryServiceController implements Initializable {
     ArrayList<String> locNodeAr = new ArrayList<String>();
 
     for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
+      locNodeAr.add(i, locArray.get(i).getLongName());
       // locationSearchBox.getItems().add(locArray.get(i).getNodeID());
     }
     return locNodeAr;
@@ -199,7 +199,12 @@ public class LaundryServiceController implements Initializable {
                     .getRequestID()
                 + 1;
     int requesterID = CurrentUser.getUser().getEmpID();
-    locations = locationSearchBox.getValue();
+    String locationID = locationSearchBox.getValue().trim();
+    String locations = "";
+    for (int i = 0; i < locationTableController.readTable().size(); i++) {
+      Location loc = (Location) locationTableController.readTable().get(i);
+      if (loc.getLongName().trim().equals(locationID)) locations = loc.getNodeID();
+    }
 
     try {
       if (towel == true) {
