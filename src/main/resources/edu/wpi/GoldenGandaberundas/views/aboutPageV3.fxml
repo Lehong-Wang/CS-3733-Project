@@ -202,20 +202,26 @@
                                     <Font size="30.0" />
                                  </font>
                               </Label>
-                              <Label text="Special Thanks To:" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                              <Label text="Special Thanks To:" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                                  <font>
                                     <Font size="48.0" />
                                  </font>
                               </Label>
-                              <Label text="Brigham and Women’s Hospital " GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                              <Label text="Brigham and Women’s Hospital " GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Label>
-                              <Label text="Andrew Shinn" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                              <Label text="Andrew Shinn" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets top="20.0" />
+                                 </GridPane.margin>
                               </Label>
                               <Label text="The Brigham &amp; Women’s Hospital maps and data " GridPane.halignment="LEFT" GridPane.rowIndex="8">
                                  <font>
