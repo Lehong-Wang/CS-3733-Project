@@ -69,14 +69,14 @@
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <children>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="39.0" prefWidth="116.0" styleClass="actionButton" text="Submit" HBox.hgrow="ALWAYS">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="39.0" prefWidth="116.0" text="Submit" HBox.hgrow="ALWAYS" styleClass="actionButton">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
                            </children>
                         </HBox>
-                        <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" styleClass="actionButton" text="Cancel" GridPane.rowIndex="9">
+                        <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" text="Cancel" GridPane.rowIndex="9" styleClass="actionButton">
                            <font>
                               <Font size="18.0" />
                            </font>
