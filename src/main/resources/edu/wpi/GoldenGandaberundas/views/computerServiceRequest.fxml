@@ -149,7 +149,7 @@
             <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
             <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
             <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
          </children>
       </VBox>
    </right>
