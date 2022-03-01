@@ -555,7 +555,6 @@ public class MapController {
         (event) -> {
           String start = (String) startLoc.getSelectionModel().getSelectedItem();
           String end = (String) endLoc.getSelectionModel().getSelectedItem();
-          System.out.println(previouslyUsed(start, end));
           if (!previouslyUsed(start, end)) {
             astar = PathTbl.getInstance().createAStarPath(start, end);
             //            buildPath(astar);
@@ -623,9 +622,7 @@ public class MapController {
                   placeHolder.location.getNodeID(), "yCoord", (int) placeHolder.getLayoutY());
           placeHolder.location.setXcoord((int) placeHolder.getLayoutX());
           placeHolder.location.setYcoord((int) placeHolder.getLayoutY());
-          System.out.println("drag done");
           subController.setText(placeHolder.location);
-          System.out.println("clicked");
         });
     placeHolder.setOnContextMenuRequested(
         e -> {
@@ -645,7 +642,6 @@ public class MapController {
           } catch (IOException exc) {
             exc.printStackTrace();
           }
-          System.out.println("alt click");
         });
   }
 
@@ -766,7 +762,6 @@ public class MapController {
     //
     medIcon.setOnMouseReleased(
         e -> {
-          System.out.println("DRAG RELEASE");
           gesturePane.setGestureEnabled(true);
           double mouseX = medIcon.getLayoutX();
           double mouseY = medIcon.getLayoutY();
@@ -786,7 +781,6 @@ public class MapController {
                 new FXMLLoader(Main.class.getResource("views/confirmationBox.fxml"));
             Popup reqQuestion = new Popup();
             try {
-              System.out.println("SNAP TO: " + snapTo);
               reqQuestion.getContent().add(popupLoader.load());
               reqQuestion.show(medIcon, e.getScreenX(), e.getScreenY());
               MapViewConfirmationButtons subController = popupLoader.getController();
@@ -798,9 +792,6 @@ public class MapController {
               ioException.printStackTrace();
             }
           } else {
-            System.out.println(loc);
-            System.out.println(snapTo);
-            System.out.println(minDist);
           }
         });
   }
