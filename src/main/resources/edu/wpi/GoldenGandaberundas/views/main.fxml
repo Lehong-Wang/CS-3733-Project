@@ -44,8 +44,6 @@
                               <MenuItem mnemonicParsing="false" onAction="#switchmapViewerHelpPage" text="Map Viewer Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchmedicineDeliveryHelpPage" text="Medicine Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchsideViewHelpPage" text="Side View Help Page" />
-                              <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
-                              <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
                            </items>
                            <graphic>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" wrappingWidth="55.87416076660156">
