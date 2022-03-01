@@ -167,15 +167,15 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON"); // **
       s.execute(
-          "CREATE TABLE TABLE IF NOT EXISTS LabServiceRequests("
+          "CREATE TABLE IF NOT EXISTS LabServiceRequests("
               + "reqID INTEGER NOT NULL, "
-              + "labServiceID INTEGER NOT NULL, "
+              + "labServiceID integer, "
               + "priority TEXT NOT NULL, "
-              + "CONSTRAINT LabServiceRequestPK PRIMARY KEY (reqID, audioVisualID), "
+              + "CONSTRAINT LabServiceRequestPK PRIMARY KEY (reqID, labServiceID), "
               + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE, "
-              + "CONSTRAINT LabServiceFK FOREIGN KEY (audioVisualID) REFERENCES LabService (labID) "
+              + "CONSTRAINT LabServiceFK FOREIGN KEY (labServiceID) REFERENCES LabService (labID) "
               + "ON UPDATE CASCADE "
               + "ON DELETE CASCADE);");
 
