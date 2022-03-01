@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,13 +48,6 @@ public class EmployeeDBController implements Initializable {
   @FXML TableColumn<Employee, String> address;
 
   TableController tbCont;
-
-  @FXML
-  public void openForm(ActionEvent actionEvent) throws IOException {
-    Stage stage = (Stage) formButton.getScene().getWindow();
-
-    stage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/employeeForm.fxml"))));
-  }
 
   @FXML
   public void backup() {
@@ -150,6 +142,11 @@ public class EmployeeDBController implements Initializable {
     empTable.getItems().setAll(tbCont.readTable());
   }
 
+  /**
+   * adds a new employee
+   *
+   * @throws IOException oops
+   */
   public void addEmployee() throws IOException {
     try {
       FXMLLoader load = new FXMLLoader(App.class.getResource("views/signUpScreen.fxml"));

@@ -46,6 +46,9 @@ public class serviceRequestPageController {
       EmployeeDBButton.setManaged(false);
       EmployeeDBButton.setVisible(false);
     }
+
+    LanguageButton.setManaged(false);
+    LanguageButton.setVisible(false);
   }
 
   // TODO API IMPLEMENTATION

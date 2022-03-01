@@ -25,6 +25,7 @@
          <children>
             <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" textAlignment="CENTER" wrapText="true" />
             <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#addEmployee" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Add Employee" textAlignment="CENTER" wrapText="true" />
          </children></VBox>
    </right>
 </BorderPane>
