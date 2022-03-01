@@ -17,15 +17,15 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="83.0" prefWidth="1150.0" text="Settings" VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" prefHeight="119.0" prefWidth="1150.0" text="Settings" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="35.0" />
                </font>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="477.0" prefWidth="1250.0">
+            <HBox prefHeight="421.0" prefWidth="1250.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="399.0" prefWidth="293.0" text="Switch Scene" HBox.hgrow="ALWAYS">
                      <HBox.margin>
@@ -42,15 +42,15 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="109.48794555664062" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="71.89004516601562" minHeight="10.0" prefHeight="68.51205444335938" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <ImageView fitHeight="169.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <image>
-                              <Image url="@../images/mapping.jpg" />
+                              <Image url="@../images/bearBoneDemo.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="167.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -112,12 +112,37 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="158.0" prefWidth="1250.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="129.0" prefWidth="570.0" text="Other Stuff">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Label>
+                  <GridPane prefHeight="100.0" prefWidth="794.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.5" minWidth="10.0" prefWidth="284.8962707519531" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.81353759765625" minWidth="0.0" prefWidth="77.86810302734375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="187.0379638671875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.93121337890625" minWidth="10.0" prefWidth="63.1510009765625" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.098388671875" minWidth="10.0" prefWidth="192.3489990234375" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="328.0" text="Switch Database Serveer">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <JFXButton onAction="#enableClientServer" prefHeight="26.0" prefWidth="219.0" styleClass="actionButton" text="Client / Server" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton onAction="#enableEmbedded" prefHeight="26.0" prefWidth="238.0" styleClass="actionButton" text="Embedded" GridPane.columnIndex="4">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </GridPane>
                </children>
             </HBox>
          </children>
