@@ -276,7 +276,7 @@ public class MedicineDeliveryController {
                 locations,
                 requesterID,
                 123,
-                000,
+                System.currentTimeMillis(),
                 000,
                 patientID,
                 "Submitted",

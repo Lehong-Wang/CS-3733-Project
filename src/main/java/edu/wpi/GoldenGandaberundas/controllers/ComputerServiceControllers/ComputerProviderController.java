@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
@@ -332,11 +333,15 @@ public class ComputerProviderController {
       if (curStatus == "Completed") {
         RequestTable.getInstance()
             .editEntry(selectedItem.getRequestID(), "timeEnd", System.currentTimeMillis());
+        RequestTable.getInstance()
+            .editEntry(
+                selectedItem.getRequestID(), "empCompleter", CurrentUser.getUser().getEmpID());
         LocalDateTime t = LocalDateTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
         String timeDisplay = t.toString().replace("T", " ");
         timeCompLabel.setText(timeDisplay);
       } else if (curStatus != "Completed") {
         RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "timeEnd", 0);
+        RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "empCompleter", 0);
         timeCompLabel.setText("0");
       }
       statusLabel.setText(curStatus);

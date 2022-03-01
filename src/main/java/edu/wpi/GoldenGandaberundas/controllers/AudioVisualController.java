@@ -247,7 +247,7 @@ public class AudioVisualController implements Initializable {
               location,
               requesterID,
               123,
-              0,
+              System.currentTimeMillis(),
               0,
               patientID,
               "Submitted",
