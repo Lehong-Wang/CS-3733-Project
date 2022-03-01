@@ -180,7 +180,7 @@ public class EquipmentDeliveryController {
     locArray = locationTableController.readTable();
     ArrayList<String> locNodeAr = new ArrayList<String>();
     for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
+      locNodeAr.add(i, locArray.get(i).getLongName());
     }
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
@@ -289,7 +289,12 @@ public class EquipmentDeliveryController {
               equipmentSearchBox
                   .getSelectionModel()
                   .getSelectedItem(); // equipmentSearchBox.getValue();
-      String node = locationSearchBox.getValue();
+      String location = locationSearchBox.getValue().trim();
+      String node = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(location)) node = loc.getNodeID();
+      }
       String notes = notesField.getText();
       String requestStatus = "not done";
 
