@@ -6,7 +6,7 @@
     text-color: #000227;
     text-black: #f0f0f0;
     shadow-color: #1a1a1a;
-    backup-color: #002D59;
+    backup-color: #00254a;
     action-color: default-blue;
     box-color: #424242;
     /*table-head-color: #499cc9;*/
@@ -48,7 +48,7 @@
 
 .serviceButton:pressed {
     -fx-background-insert: 1,1,1,1;
-    -fx-text-fill: text-color;
+    -fx-text-fill: text-black;
     -fx-background-color: default-blue;
 
 }
@@ -86,22 +86,27 @@
 
 .backupButton{
     /*-fx-border-color: black;*/
-    -fx-background-radius: 5;
-    -fx-background-color: backup-color;
-    -fx-text-fill: text-color;
+    -fx-background-radius: 0px;
+    -fx-background-color: #303030;
+    -fx-text-fill: text-black;
     -fx-alignment: center;
     -fx-wrap-text: true;
 }
 
-.backupButton.hover{
-    -fx-background-insert: 1, 1, 1, 1;
-    -fx-background-radius: 10px;
-    -fx-background-color: red !important;
+.backupButton:hover{
+    -fx-background-insets: 0, 6;
+    -fx-background-radius: 5px;
+    -fx-background-color: #303030, derive(backup-color, 0%);
+    -fx-text-fill: text-black;
 }
 
-.backupButton.pressed{
-    -fx-background-color: green !important;
-    -fx-effect: innershadow(three-pass-box ,shadow-color , 5, 0, 0, 3)
+.backupButton:pressed{
+
+    /*-fx-background-insets: 0, 6;*/
+    /*-fx-background-radius: 5px;*/
+    /*-fx-background-color: #303030, derive(backup-color, 50%);*/
+    /*-fx-text-fill: text-color;*/
+    -fx-effect: innershadow(one-pass-box ,shadow-color ,5, 0, 0, 3);
 
 }
 
@@ -109,6 +114,7 @@
 .actionButton{
     -fx-background-color: default-blue;
     -fx-text-fill: text-color;
+    -fx-text-font: 16px;
     -fx-alignment: center;
     -fx-background-radius: 30px;
     -fx-effect: dropshadow(three-pass-box ,shadow-color , 5, 0, 0, 3);
@@ -142,6 +148,7 @@
 
 .combo-box-base{
     -fx-background-color: box-color;
+    -fx-text-fill: white;
     -fx-padding: 2 2;
     -fx-effect: innershadow(three-pass-box ,shadow-color , 5, 0.5, 0, 2);
 }

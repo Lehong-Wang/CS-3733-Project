@@ -21,11 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" text="Backup Equipment" styleClass="backupButton"/>
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" styleClass="backupButton"/>
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" text="Load Equipment Backup" styleClass="backupButton"/>
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" styleClass="backupButton"/>
-            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" text="Refresh" styleClass="backupButton"/>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" text="Backup Equipment" textAlignment="CENTER" wrapText="true"  styleClass="backupButton"/>
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" textAlignment="CENTER" wrapText="true" styleClass="backupButton"/>
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" text="Load Equipment Backup" textAlignment="CENTER" wrapText="true" styleClass="backupButton"/>
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" styleClass="backupButton"/>
+            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" text="Refresh" textAlignment="CENTER" wrapText="true" styleClass="backupButton"/>
          </children>
       </VBox>
    </right>

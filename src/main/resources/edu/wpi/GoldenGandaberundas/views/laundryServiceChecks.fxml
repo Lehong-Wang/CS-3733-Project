@@ -19,11 +19,11 @@
    <right>
       <VBox alignment="TOP_RIGHT" prefHeight="800.0" prefWidth="103.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXButton fx:id="backupMenuButton" maxWidth="100.0" onAction="#backupLaundry" prefHeight="64.0" prefWidth="100.0" text="Backup Laundry" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
-            <JFXButton fx:id="backupRequestsButton" maxWidth="100.0" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
-            <JFXButton fx:id="loadMenuButton" maxWidth="100.0" onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" text="Load Laundry Backup" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
-            <JFXButton fx:id="loadRequestButton" maxWidth="100.0" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
-            <JFXButton fx:id="refreshButton" maxWidth="100.0" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" text="Refresh" VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="backupMenuButton" maxWidth="100.0" onAction="#backupLaundry" prefHeight="64.0" prefWidth="100.0" text="Backup Laundry" textAlignment="CENTER" wrapText="true"  VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="backupRequestsButton" maxWidth="100.0" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" text="Backup Requests" textAlignment="CENTER" wrapText="true"  VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="loadMenuButton" maxWidth="100.0" onAction="#loadDBLaundry" prefHeight="64.0" prefWidth="103.0" text="Load Laundry Backup" textAlignment="CENTER" wrapText="true"  VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="loadRequestButton" maxWidth="100.0" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" text="Load Requests Backup" textAlignment="CENTER" wrapText="true"  VBox.vgrow="ALWAYS" styleClass="backupButton"/>
+            <JFXButton fx:id="refreshButton" maxWidth="100.0" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" text="Refresh" textAlignment="CENTER" wrapText="true"  VBox.vgrow="ALWAYS" styleClass="backupButton"/>
          </children>
       </VBox>
    </right>

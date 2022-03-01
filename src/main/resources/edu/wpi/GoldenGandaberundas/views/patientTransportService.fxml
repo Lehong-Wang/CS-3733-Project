@@ -105,8 +105,8 @@
          <right>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Backup" />
-                  <JFXButton prefHeight="64.0" prefWidth="103.0" style="-fx-border-color: black;" text="Load" />
+                  <JFXButton prefHeight="64.0" prefWidth="103.0" text="Backup" textAlignment="CENTER" wrapText="true" styleClass="backupButton" />
+                  <JFXButton prefHeight="64.0" prefWidth="103.0" text="Load" textAlignment="CENTER" wrapText="true" styleClass="backupButton"/>
                </children>
             </VBox>
          </right>

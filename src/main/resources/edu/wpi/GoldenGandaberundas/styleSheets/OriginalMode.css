@@ -3,8 +3,8 @@
 .background {
     -fx-background: linear-gradient(to bottom right, #94cbff, #edfbff, white 90%);
     -fx-background-image: url('../images/mapping.jpg');
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: 500 500;
+    -fx-background-repeat: infinite;
+    -fx-background-size: 300 300;
     -fx-background-position: center center;
 }
 
@@ -54,21 +54,10 @@
 .label{
     -fx-text-fill: lawnGreen;
 }
+.text{
+    -fx-fill: darkcyan;
 
-/*.JFXCheckBox{*/
-/*    -fx-text-fill: darkgreen;*/
-
-/*}*/
-
-.check-box{
-    -fx-text-fill: darkgreen;
 }
-
-
-
-/*.text{*/
-/*    -fx-fill: darkcyan;*/
-/*}*/
 
 .backupButton{
     -fx-border-color: green;
@@ -98,24 +87,120 @@
 /**********************************/
 /* combo box */
 
-.combo-box-base{
-    -fx-background-color: mediumvioletred;
-    -fx-padding: 2 2;
-    -fx-effect: dropshadow(three-pass-box ,white , 5, 0, 0, 3);
+/*.combo-box-base{*/
+/*    -fx-background-color: mediumvioletred;*/
+/*    -fx-padding: 2 2;*/
+/*    -fx-effect: dropshadow(three-pass-box ,white , 5, 0, 0, 3);*/
+/*}*/
+
+/*.combo-box-base > .arrow-button {*/
+/*    -fx-background-color: darkblue;*/
+/*    -fx-padding: 0 4;*/
+/*}*/
+
+/*.combo-box-base > .arrow-button > .arrow {*/
+/*    -fx-background-color: black;*/
+/*    -fx-background-insets: 0 0 0 0;*/
+/*    -fx-padding: 2 4;*/
+/*    -fx-shape: "M 0 0 H 7 L 3.5 4 z";*/
+/*}*/
+
+/*.combo-box .list-cell*/
+/*{*/
+/*    -fx-background: orange;*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-text-fill: lightblue;*/
+/*    -fx-padding: 3 0 2 7;*/
+/*    -fx-cell-size: 1.66667em;*/
+/*}*/
+
+/*.combo-box-popup .list-view*/
+/*{*/
+/*    -fx-background-color: darkred, darkblue;*/
+/*    -fx-background-insets: 0, 1;*/
+/*    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );*/
+/*}*/
+
+/*.combo-box-popup .list-view .list-cell*/
+/*{*/
+/*    -fx-padding: 4 0 4 5;*/
+
+/*    !* No alternate highlighting *!*/
+/*    -fx-background-color: darkgreen;*/
+/*}*/
+
+/*.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover*/
+/*{*/
+/*    -fx-background: red;*/
+/*    -fx-background-color: darkblue;*/
+/*    -fx-text-fill: orange;*/
+/*}*/
+
+/*.combo-box-popup .list-view .list-cell:filled:hover*/
+/*{*/
+/*    -fx-background-color: grey;*/
+/*    -fx-text-fill: lightgreen;*/
+/*}*/
+
+
+/*.combo-box-base*/
+/*{*/
+/*    -fx-skin: "com.sun.javafx.scene.control.skin.ComboBoxBaseSkin";*/
+/*    -fx-background-color: red, blue, yellow, green;*/
+/*    -fx-background-radius: 10, 5, 4, 3;*/
+/*    -fx-background-insets: 0 0 -1 0, 0, 1, 2;*/
+/*    -fx-padding: 0;*/
+/*}*/
+
+/*.combo-box-base:hover*/
+/*{*/
+/*    -fx-color: pink;*/
+/*}*/
+
+/*.combo-box-base:showing*/
+/*{*/
+/*    -fx-color: purple;*/
+/*}*/
+
+/*.combo-box-base:focused {*/
+/*    -fx-background-color: brown, black, pink, blue;*/
+/*    -fx-background-radius: 6.4, 4, 5, 3;*/
+/*    -fx-background-insets: -1.4, 0, 1, 2;*/
+/*}*/
+
+/*.combo-box-base:disabled {*/
+/*    -fx-opacity: .4;*/
+/*}*/
+
+
+.combo-box-base {
+    -fx-background-color: red;
 }
 
-.combo-box-base > .arrow-button {
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: green;
+    -fx-text-fill: pink;
+}
+
+.combo-box-popup .list-view .list-cell:filled
+{
+    -fx-background-color: yellow;
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    /*-fx-background: red;*/
     -fx-background-color: darkblue;
-    -fx-padding: 0 4;
+    -fx-text-fill: orange;
 }
 
-.combo-box-base > .arrow-button > .arrow {
-    -fx-background-color: black;
-    -fx-background-insets: 0 0 0 0;
-    -fx-padding: 2 4;
-    -fx-shape: "M 0 0 H 7 L 3.5 4 z";
+.combo-box-popup .list-view .scroll-bar:vertical .thumb{
+    -fx-background-color:  linear-gradient(to bottom, #1dbbdd99, #93f9b944);
 }
-
+.combo-box-popup .list-view .scroll-bar {
+    -fx-background-color:  purple;
+}
 
 
 /*****************************/
@@ -135,9 +220,6 @@
 
 }
 
-/*.textbox-base{*/
-/*    -fx-background-color: maroon;*/
-/*}*/
 .textbox-base{
     -fx-background-color: grey;
 }
