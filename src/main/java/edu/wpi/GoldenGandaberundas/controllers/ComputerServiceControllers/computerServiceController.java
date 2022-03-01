@@ -340,7 +340,6 @@ public class computerServiceController implements Initializable {
         Location loc = (Location) locationTableController.readTable().get(i);
         if (loc.getLongName().trim().equals(location)) locationID = loc.getNodeID();
       }
-      int submitTime = 0;
       int completeTime = 0;
       // Patient ID = null
       int empInitiated = CurrentUser.getUser().getEmpID();
@@ -356,7 +355,7 @@ public class computerServiceController implements Initializable {
               locationID,
               empInitiated,
               null,
-              submitTime,
+              System.currentTimeMillis(),
               completeTime,
               null,
               requestStatus,

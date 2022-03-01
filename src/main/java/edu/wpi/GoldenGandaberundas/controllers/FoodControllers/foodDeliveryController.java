@@ -312,7 +312,7 @@ public class foodDeliveryController {
                 location,
                 requesterID,
                 null,
-                0,
+                System.currentTimeMillis(),
                 0,
                 patientID,
                 "Submitted",

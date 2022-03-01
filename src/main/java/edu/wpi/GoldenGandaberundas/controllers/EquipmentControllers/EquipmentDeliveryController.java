@@ -297,10 +297,18 @@ public class EquipmentDeliveryController {
       }
       String notes = notesField.getText();
       String requestStatus = "not done";
-
       MedEquipRequest request =
           new MedEquipRequest(
-              requestNum, node, requesterID, null, 0, 0, null, "Submitted", notes, itemID);
+              requestNum,
+              node,
+              requesterID,
+              null,
+              System.currentTimeMillis(),
+              0,
+              null,
+              "Submitted",
+              notes,
+              itemID);
       reqTable.addEntry(request);
       refreshTable();
 

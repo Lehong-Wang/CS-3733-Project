@@ -208,19 +208,46 @@ public class LaundryServiceController implements Initializable {
     try {
       if (towel == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 111);
+            new LaundryRequest(
+                idCounter,
+                locations,
+                requesterID,
+                123,
+                System.currentTimeMillis(),
+                0,
+                "Submitted",
+                "",
+                111);
         LaundryRequestTbl.getInstance().addEntry(tlr);
       }
 
       if (gown == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 333);
+            new LaundryRequest(
+                idCounter,
+                locations,
+                requesterID,
+                123,
+                System.currentTimeMillis(),
+                0,
+                "Submitted",
+                "",
+                333);
         LaundryRequestTbl.getInstance().addEntry(tlr);
       }
 
       if (bedding == true) {
         LaundryRequest tlr =
-            new LaundryRequest(idCounter, locations, requesterID, 123, 0, 0, "Submitted", "", 222);
+            new LaundryRequest(
+                idCounter,
+                locations,
+                requesterID,
+                123,
+                System.currentTimeMillis(),
+                0,
+                "Submitted",
+                "",
+                222);
         LaundryRequestTbl.getInstance().addEntry(tlr);
       }
     } catch (Exception e) {

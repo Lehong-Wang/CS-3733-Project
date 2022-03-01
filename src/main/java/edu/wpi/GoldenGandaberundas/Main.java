@@ -113,6 +113,7 @@ public class Main {
     //    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     CredentialsTbl.getInstance().addEntry(new Credential(999, "999"));
+    CredentialsTbl.getInstance().addEntry(new Credential(666, "666"));
     EmployeePermissionTbl.getInstance().addEntry(new EmployeePermission(0, 111));
 
     //    Simulation.update();

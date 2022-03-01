@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.controllers.MedicineControllers;
 
 import com.jfoenix.controls.JFXButton;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
@@ -322,11 +323,15 @@ public class MedicineProviderController {
       if (curStatus == "Completed") {
         RequestTable.getInstance()
             .editEntry(selectedItem.getRequestID(), "timeEnd", System.currentTimeMillis());
+        RequestTable.getInstance()
+            .editEntry(
+                selectedItem.getRequestID(), "empCompleter", CurrentUser.getUser().getEmpID());
         LocalDateTime t = LocalDateTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
         String timeDisplay = t.toString().replace("T", " ");
         timeCompLabel.setText(timeDisplay);
       } else if (curStatus != "Completed") {
         RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "timeEnd", 0);
+        RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "empCompleter", 0);
         timeCompLabel.setText("0");
       }
       statusLabel.setText(curStatus);
@@ -362,14 +367,22 @@ public class MedicineProviderController {
                 .truncatedTo(ChronoUnit.MINUTES);
         String sTimeDisplay = startDate.toString().replace("T", " ");
         // LocalDateTime t = LocalDateTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
-        timeStartLabel.setText(sTimeDisplay);
+        if (tStart == 0) {
+          timeStartLabel.setText("0");
+        } else {
+          timeStartLabel.setText(sTimeDisplay);
+        }
 
         long tEnd = selectedItem.getTimeEnd();
         LocalDateTime endDate =
             LocalDateTime.ofInstant(Instant.ofEpochMilli(tEnd), ZoneId.systemDefault())
                 .truncatedTo(ChronoUnit.MINUTES);
         String eTimeDisplay = endDate.toString().replace("T", " ");
-        timeCompLabel.setText(eTimeDisplay);
+        if (tEnd == 0) {
+          timeCompLabel.setText("0");
+        } else {
+          timeCompLabel.setText(eTimeDisplay);
+        }
 
         Integer foodID = selectedItem.getMedicineID();
         medIDLabel.setText(String.valueOf(foodID));
