@@ -526,7 +526,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   @FXML
@@ -582,6 +582,16 @@ public class mainController {
   @FXML
   public void switchsideViewHelpPage() {
     nodeSwitch("views/sideViewHelpPage.fxml");
+  }
+
+  @FXML
+  void switchCreditsPage() {
+    nodeSwitch("views/creditsPage.fxml");
+  }
+
+  @FXML
+  void switchAboutPage() {
+    nodeSwitch("views/aboutPageV3.fxml");
   }
 
   public void switchSimulationView() {

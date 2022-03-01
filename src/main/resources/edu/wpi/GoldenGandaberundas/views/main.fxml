@@ -49,21 +49,18 @@
                         </Menu>
                         <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#enableAuthor" text="Enable Authors" />
-                              <MenuItem mnemonicParsing="false" onAction="#disableAuthor" text="Disable Authors" />
-                              <MenuItem mnemonicParsing="false" onAction="#enableClientServer" text="Enable Client/Server" />
-                              <MenuItem mnemonicParsing="false" onAction="#enableEmbedded" text="Enable Embedded" />
                               <MenuItem mnemonicParsing="false" onAction="#switchAVHelpPage" text="Audio/Visual Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchComputerServiceHelpPage" text="IT Service Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchemployeeDatabaseAndRequestsViewHelpPage" text="Employee Database/Request View Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchequipmentDeliveryHelpPage" text="Equipment Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchfoodDeliveryHelpPage" text="Food Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchgiftFloralHelpPage" text="Gift/Floral Delivery Help Page" />
-                              <MenuItem mnemonicParsing="false" onAction="#switchLanguageRequestHelpPage" text="Language Service Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchlaundryHelpPage" text="Laundry Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchmapViewerHelpPage" text="Map Viewer Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchmedicineDeliveryHelpPage" text="Medicine Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchsideViewHelpPage" text="Side View Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
                            </items>
                            <graphic>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" wrappingWidth="55.87416076660156">
@@ -86,6 +83,23 @@
                                  </font>
                               </Text>
                            </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" styleClass="menuBar">
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra" textAlignment="CENTER" wrappingWidth="56.523529052734375">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#enableAuthor" text="Enable Authors" />
+                              <MenuItem mnemonicParsing="false" onAction="#disableAuthor" text="Disable Authors" />
+                              <MenuItem mnemonicParsing="false" onAction="#enableClientServer" text="Enable Client/Server" />
+                              <MenuItem mnemonicParsing="false" onAction="#enableEmbedded" text="Enable Embedded" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
+                           </items>
                         </Menu>
                      </menus>
                   </MenuBar>

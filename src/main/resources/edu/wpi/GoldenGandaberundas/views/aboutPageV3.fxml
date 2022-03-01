@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1104.0" prefWidth="1600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="1598.0" text="About">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <ScrollPane prefHeight="1048.0" prefWidth="1600.0">
+               <content>
+                  <HBox prefHeight="1034.0" prefWidth="1598.0">
+                     <children>
+                        <GridPane prefHeight="914.0" prefWidth="1598.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <children>
+                              <ImageView fitHeight="115.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../images/EliCropped.jpg" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                                 <image>
+                                    <Image url="@../images/MasonCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../images/WillCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@../images/JoshuaCropped.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Mason Figler, Algorithm Engineer" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Joshua Moy, Documentation Analyst" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="130.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Eli Hoffberg" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="130.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="William Bazakas-Chamberlain" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Assistant Lead Software Engineer" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Assistant Lead Software Engineer" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="130.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                                 <image>
+                                    <Image url="@../images/PaulCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <Label text="Paul Godinez" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Project Manager, Feature Engineer" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <image>
+                                    <Image url="@../images/NeenaCropped.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Neena Xiang, Product Owner" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="120.0" />
+                                 </padding>
+                              </Label>
+                              <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                                 <image>
+                                    <Image url="@../images/JasonCropped.jpg" />
+                                 </image>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </ImageView>
+                              <Label text="Jason Martino, Scrum Master" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="CS3733-C22 Software Engineering" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="WPI Computer Science Department" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Professor Wilson Wong" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Luke Deratzou" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Special Thanks To:" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Brigham and Women’s Hospital " GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Andrew Shinn" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text="The Brigham &amp; Women’s Hospital maps and data " GridPane.halignment="LEFT" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="31.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="110.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="are copyrighted and provided for the sole use of " GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="31.0" />
+                                 </font>
+                              </Label>
+                              <Label text="of educational purposes." GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="31.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="110.0" />
+                                 </GridPane.margin>
+                              </Label>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

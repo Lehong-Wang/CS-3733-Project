@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -21,116 +17,74 @@
             </Label>
             <HBox prefHeight="786.0" prefWidth="1496.0">
                <children>
-                  <GridPane prefHeight="786.0" prefWidth="1602.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="How to use the the map:" GridPane.halignment="CENTER">
+                        <Label text="How to use the the map:" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="48.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Floor selector is on the bottom left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Floor selector is on the bottom left" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Toggle locations and equipment icons in the top left" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label text="Toggle locations and equipment icons in the top left" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Path planning will work between floors" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="Path planning will work between floors" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" top="15.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Use path planning to find the quickest path from place to place" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label text="Use path planning to find the quickest path from place to place" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="24.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="The top left buttons toggle location and equipment icons" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Label text="Scroll or pinch to zoom in and out of the map" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Scroll or pinch to zoom in and out of the map" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <Label text="Click and hold to pan around the map" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Click and hold to pan around the map" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="100.0" top="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="What is on this page:" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="What is on this page:" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Label>
-                        <Label text="The bottom left buttons change what floor is shown" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="The top left buttons toggle location and equipment icons" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="If path is planned it will be displayed" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label text="The bottom left buttons change what floor is shown" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
                         </Label>
-                        <Label text="Icons on map show locations and services" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label text="If path is planned it will be displayed" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="30.0" />
                            </font>
-                           <GridPane.margin>
-                              <Insets left="20.0" top="15.0" />
-                           </GridPane.margin>
+                        </Label>
+                        <Label text="Icons on map show locations and services" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
                         </Label>
                      </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </GridPane>
+                  </VBox>
                </children>
             </HBox>
          </children>
