@@ -1,19 +1,25 @@
 package edu.wpi.GoldenGandaberundas;
 
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService.GiftTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedicineDeliveryService.MedicineTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 
@@ -63,17 +69,17 @@ public class Main {
     FoodTbl.getInstance().loadBackup("BackupsCSVs/foodTbl.csv");
     PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
 
-    GiftRequestTbl.getInstance();
-    MedicineRequestTbl.getInstance();
+
+    MedEquipRequestTbl.getInstance().loadBackup("backups/MedEquipRequests.csv");
+    LaundryRequestTbl.getInstance().loadBackup("backups/LaundryRequests.csv");
+    GiftRequestTbl.getInstance().loadBackup("backups/GiftRequests.csv");
+    MedicineRequestTbl.getInstance().loadBackup("backups/MedicineRequests.csv");
     FoodRequestTbl.getInstance();
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
-
-
-    MedEquipRequestTbl.getInstance().loadBackup("backups/medEquipReqTbl.csv");
-    LaundryRequestTbl.getInstance().loadBackup("backups/LaundryRequest.csv");
-
     ConnectionHandler.getInstance().setConnection(ConnectionType.clientServer);
+
+    ConnectionHandler.getInstance().setConnection(ConnectionType.embedded);
 
     //    floorMaps.load();
     //    App.launch(App.class, args);

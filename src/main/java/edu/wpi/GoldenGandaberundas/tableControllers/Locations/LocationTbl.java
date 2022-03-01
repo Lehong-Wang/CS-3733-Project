@@ -75,7 +75,6 @@ public class LocationTbl implements TableController<Location, String> {
       case cloud:
         return null;
     }
-    System.out.println(connectionHandler.getCurrentConnectionType());
     return null;
   }
   // method to read the table and output an ArrayList of Locations

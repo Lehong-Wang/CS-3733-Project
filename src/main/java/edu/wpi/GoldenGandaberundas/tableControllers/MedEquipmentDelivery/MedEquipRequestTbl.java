@@ -69,7 +69,6 @@ public class MedEquipRequestTbl implements TableController<MedEquipRequest, Arra
   }
 
   private TableController<MedEquipRequest, ArrayList<Integer>> getCurrentTable() {
-    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (connectionHandler.getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;

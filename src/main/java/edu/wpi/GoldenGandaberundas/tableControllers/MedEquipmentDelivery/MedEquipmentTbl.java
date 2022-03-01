@@ -63,7 +63,6 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
   }
 
   private TableController<MedEquipment, Integer> getCurrentTable() {
-    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (connectionHandler.getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;

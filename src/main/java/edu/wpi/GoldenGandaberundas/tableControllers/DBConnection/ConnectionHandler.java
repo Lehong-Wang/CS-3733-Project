@@ -137,10 +137,8 @@ public class ConnectionHandler {
   private void transferAllData(ConnectionType old, ConnectionType update) {
     ArrayList<TableController> oldTables = getConnectionSet(old);
     ArrayList<TableController> newTables = getConnectionSet(update);
-    System.out.println(this.getConnection());
     for (int i = 0; i < oldTables.size(); i++) {
       var objList = oldTables.get(i).getObjList();
-      System.out.println(oldTables.get(i).readTable());
       newTables.get(i).loadFromArrayList(oldTables.get(i).readTable());
     }
   }

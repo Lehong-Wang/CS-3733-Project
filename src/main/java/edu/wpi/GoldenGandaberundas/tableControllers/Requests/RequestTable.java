@@ -82,7 +82,6 @@ public class RequestTable implements TableController<Request, Integer> {
   }
 
   private TableController<Request, Integer> getCurrentTable() {
-    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
     switch (ConnectionHandler.getInstance().getCurrentConnectionType()) {
       case embedded:
         return embeddedTable;

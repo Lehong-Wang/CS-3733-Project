@@ -53,7 +53,6 @@ public class LaundryRequestEmbedded implements TableController<LaundryRequest, A
       return null;
     }
     objList = tableInfo;
-    System.out.println(tableInfo);
     return tableInfo;
   }
 
@@ -93,7 +92,6 @@ public class LaundryRequestEmbedded implements TableController<LaundryRequest, A
       currentLine = buffer.readLine();
 
       while (currentLine != null) { // cycles in the while loop until it reaches the end
-        System.out.println(currentLine);
         String[] element = currentLine.split(","); // separates each element based on a comma
         LaundryRequest req = // **
             new LaundryRequest(

@@ -92,14 +92,17 @@ public class RequestClientServer implements TableController<Request, Integer> {
    */
   @Override
   public boolean addEntry(Request obj) {
-    Boolean addSuccess = false;
+    Boolean addSuccess = true;
     if (entryExists(obj.getRequestID()) || addRequest(obj)) {
       try {
         addSuccess = this.getSpecificServiceTable(obj).addEntry(obj);
       } catch (ClassCastException c) {
         System.err.println("Class Cast Exception");
       }
-    } else addSuccess = false;
+    } else {
+      System.err.println("FAILED TO ADD OR DETECT: " + obj.getRequestID());
+      addSuccess = false;
+    }
     return addSuccess;
   }
 
@@ -111,6 +114,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
    */
   private boolean addRequest(Request obj) {
     try {
+      System.out.println(obj);
       PreparedStatement s =
           ConnectionHandler.getInstance()
               .getConnection()
@@ -125,7 +129,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
       if (obj.getTimeEnd() != null) {
         s.setLong(6, obj.getTimeEnd());
       } else s.setNull(6, Types.NULL);
-      if (obj.getPatientID() != null) {
+      if (obj.getPatientID() != null && obj.getPatientID() != 0) {
         s.setInt(7, obj.getPatientID());
       } else s.setNull(7, Types.NULL);
       s.setString(8, obj.getRequestType());
@@ -242,7 +246,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
               + "empCompleter INTEGER,"
               + "timeStart INTEGER,"
               + "timeEnd INTEGER,"
-              + "patientID INTEGER,"
+              + "patientID INTEGER NULL,"
               + "requestType VARCHAR(50),"
               + "requestStatus VARCHAR(50),"
               + "notes TEXT,"
@@ -298,11 +302,12 @@ public class RequestClientServer implements TableController<Request, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Request> objList) {
-    System.out.println("REQ OBJ TRANS: "+objList);
+    System.out.println("REQ OBJ TRANS: " + objList);
     this.createTable();
     deleteTableData();
     for (Request av : objList) {
       if (!this.addEntry(av)) {
+        System.err.println("FAILED TO ADD REQUEST");
         return false;
       }
     }
