@@ -64,7 +64,7 @@ public class MapSubReqController {
 
     ObservableList<String> empList = FXCollections.observableArrayList();
     for (Employee e : EmployeeTbl.getInstance().readTable()) {
-      empList.add((e.getFName() + " " + e.getLName() + " " + e.getEmpID()));
+      empList.add(e.getEmpID() + "");
     }
     empStartSearch.setItems(empList);
     empEndSearch.setItems(empList);
@@ -78,7 +78,7 @@ public class MapSubReqController {
     ObservableList<String> reqStatusList = FXCollections.observableArrayList();
     reqStatusList.add("Submitted");
     reqStatusList.add("In_Progress");
-    reqStatusList.add("Submitted");
+    reqStatusList.add("Completed");
     reqStatusSearch.setItems(reqStatusList);
   }
 
@@ -97,11 +97,12 @@ public class MapSubReqController {
     reqIDText.setDisable(true);
     reqIDText.setText(req.getRequestID().toString());
     reqStatusSearch.setValue(req.getRequestStatus());
+    System.out.println(req.getRequestStatus());
     locSearch.setValue(req.getLocationID());
     Employee temp = EmployeeTbl.getInstance().getEntry(req.getEmpInitiated());
-    empStartSearch.setValue(temp.getFName() + " " + temp.getLName());
+    empStartSearch.setValue(temp.getEmpID() + "");
     temp = EmployeeTbl.getInstance().getEntry(req.getEmpCompleter());
-    empEndSearch.setValue(temp.getFName() + " " + temp.getLName());
+    empEndSearch.setValue(temp.getEmpID() + "");
     patientIDSearch.setValue(req.getPatientID().toString());
 
     reqs = req;
@@ -159,6 +160,7 @@ public class MapSubReqController {
   }
 
   public void submit() {
+
     if (locSearch.getValue() != null) {
       RequestTable.getInstance()
           .editEntry(reqs, "locationID", locSearch.getValue().trim().toUpperCase(Locale.ROOT));
@@ -167,17 +169,29 @@ public class MapSubReqController {
     if (empStartSearch.getValue() != null) {
       RequestTable.getInstance()
           .editEntry(
-              reqs, "empInitiated", empStartSearch.getValue().trim().toUpperCase(Locale.ROOT));
+              reqs,
+              "empInitiated",
+              Integer.parseInt(empStartSearch.getValue().trim().toUpperCase(Locale.ROOT)));
     }
     if (empEndSearch.getValue() != null) {
       RequestTable.getInstance()
-          .editEntry(reqs, "empCompleter", empEndSearch.getValue().trim().toUpperCase(Locale.ROOT));
+          .editEntry(
+              reqs,
+              "empCompleter",
+              Integer.parseInt(empEndSearch.getValue().trim().toUpperCase(Locale.ROOT)));
     }
-    if (reqStatusSearch.getValue() != null) {
+    if (patientIDSearch.getValue() != null) {
+      RequestTable.getInstance()
+          .editEntry(reqs, "patientID", Integer.parseInt(patientIDSearch.getValue().trim()));
+    }
+    if (reqStatusSearch.getValue() != null || !reqStatusSearch.getValue().equals("")) {
+      System.out.println(reqStatusSearch.getValue().trim());
+      if (reqStatusSearch.getValue().equals("")) {
+        reqStatusSearch.setValue(reqs.getRequestStatus());
+      }
       RequestTable.getInstance()
           .editEntry(reqs, "requestStatus", reqStatusSearch.getValue().trim());
     }
     mapController.setRequest();
-    clear();
   }
 }
