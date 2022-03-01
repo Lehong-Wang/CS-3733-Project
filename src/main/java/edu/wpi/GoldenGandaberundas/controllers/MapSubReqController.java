@@ -161,29 +161,6 @@ public class MapSubReqController {
 
   public void submit() {
 
-    if (locSearch.getValue() != null) {
-      RequestTable.getInstance()
-          .editEntry(reqs, "locationID", locSearch.getValue().trim().toUpperCase(Locale.ROOT));
-      System.out.println(RequestTable.getInstance().getEntry(reqs.getRequestID()));
-    }
-    if (empStartSearch.getValue() != null) {
-      RequestTable.getInstance()
-          .editEntry(
-              reqs,
-              "empInitiated",
-              Integer.parseInt(empStartSearch.getValue().trim().toUpperCase(Locale.ROOT)));
-    }
-    if (empEndSearch.getValue() != null) {
-      RequestTable.getInstance()
-          .editEntry(
-              reqs,
-              "empCompleter",
-              Integer.parseInt(empEndSearch.getValue().trim().toUpperCase(Locale.ROOT)));
-    }
-    if (patientIDSearch.getValue() != null) {
-      RequestTable.getInstance()
-          .editEntry(reqs, "patientID", Integer.parseInt(patientIDSearch.getValue().trim()));
-    }
     if (reqStatusSearch.getValue() != null || !reqStatusSearch.getValue().equals("")) {
       System.out.println(reqStatusSearch.getValue().trim());
       if (reqStatusSearch.getValue().equals("")) {
@@ -191,6 +168,41 @@ public class MapSubReqController {
       }
       RequestTable.getInstance()
           .editEntry(reqs, "requestStatus", reqStatusSearch.getValue().trim());
+    }
+    if (locSearch.getValue() != null) {
+      if (locSearch.getValue().equals("")) {
+        locSearch.setValue(reqs.getLocationID());
+      }
+      RequestTable.getInstance()
+          .editEntry(reqs, "locationID", locSearch.getValue().trim().toUpperCase(Locale.ROOT));
+      System.out.println(RequestTable.getInstance().getEntry(reqs.getRequestID()));
+    }
+    if (empStartSearch.getValue() != null) {
+      if (empStartSearch.getValue().equals("")) {
+        empStartSearch.setValue(String.valueOf(reqs.getEmpInitiated()));
+      }
+      RequestTable.getInstance()
+          .editEntry(
+              reqs,
+              "empInitiated",
+              Integer.parseInt(empStartSearch.getValue().trim().toUpperCase(Locale.ROOT)));
+    }
+    if (empEndSearch.getValue() != null) {
+      if (empEndSearch.getValue().equals("")) {
+        empEndSearch.setValue(String.valueOf(reqs.getEmpCompleter()));
+      }
+      RequestTable.getInstance()
+          .editEntry(
+              reqs,
+              "empCompleter",
+              Integer.parseInt(empEndSearch.getValue().trim().toUpperCase(Locale.ROOT)));
+    }
+    if (patientIDSearch.getValue() != null) {
+      if (patientIDSearch.getValue().equals("")) {
+        patientIDSearch.setValue(String.valueOf(reqs.getPatientID()));
+      }
+      RequestTable.getInstance()
+          .editEntry(reqs, "patientID", Integer.parseInt(patientIDSearch.getValue().trim()));
     }
     mapController.setRequest();
   }
