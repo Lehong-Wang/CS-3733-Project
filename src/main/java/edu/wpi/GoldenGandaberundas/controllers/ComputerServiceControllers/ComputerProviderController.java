@@ -378,14 +378,22 @@ public class ComputerProviderController {
                 .truncatedTo(ChronoUnit.MINUTES);
         String sTimeDisplay = startDate.toString().replace("T", " ");
         // LocalDateTime t = LocalDateTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
-        timeStartLabel.setText(sTimeDisplay);
+        if (tStart == 0) {
+          timeStartLabel.setText("0");
+        } else {
+          timeStartLabel.setText(sTimeDisplay);
+        }
 
         long tEnd = selectedItem.getTimeEnd();
         LocalDateTime endDate =
             LocalDateTime.ofInstant(Instant.ofEpochMilli(tEnd), ZoneId.systemDefault())
                 .truncatedTo(ChronoUnit.MINUTES);
         String eTimeDisplay = endDate.toString().replace("T", " ");
-        timeCompLabel.setText(eTimeDisplay);
+        if (tEnd == 0) {
+          timeCompLabel.setText("0");
+        } else {
+          timeCompLabel.setText(eTimeDisplay);
+        }
 
         Integer computerID = selectedItem.getComputerID();
         computerIDLabel.setText(String.valueOf(computerID));
