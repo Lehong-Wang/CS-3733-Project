@@ -113,6 +113,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
    * @return true on success, false otherwise
    */
   private boolean addRequest(Request obj) {
+    System.out.println(obj);
     try {
       PreparedStatement s =
           ConnectionHandler.getInstance()
@@ -243,8 +244,8 @@ public class RequestClientServer implements TableController<Request, Integer> {
               + "locationID VARCHAR(50),"
               + "empInitiated INTEGER,"
               + "empCompleter INTEGER,"
-              + "timeStart INTEGER,"
-              + "timeEnd INTEGER,"
+              + "timeStart BIGINT,"
+              + "timeEnd BIGINT,"
               + "patientID INTEGER NULL,"
               + "requestType VARCHAR(50),"
               + "requestStatus VARCHAR(50),"
