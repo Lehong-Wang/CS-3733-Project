@@ -553,7 +553,7 @@ public class mainController {
         AudioVisualButton.setText("Neena Xiang");
         FoodButton.setText("Eli Hoffberg");
         GiftFloralButton.setText("Neena Xiang");
-        LabServicesButton.setText("Mason Figler");
+        LabServicesButton.setText("Jason Martino");
         LaundryButton.setText("Lehong Wang");
         MedicineDeliveryButton.setText("Paul Godinez");
         MedicalEquipmentButton.setText("Will BC");
