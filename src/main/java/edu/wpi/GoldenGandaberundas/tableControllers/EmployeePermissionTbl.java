@@ -176,8 +176,8 @@ public class EmployeePermissionTbl
 
   // checks if an entry exists
   public boolean entryExists(ArrayList<Integer> pkID) {
-<    return this.getCurrentTable().entryExists(pkID);
-}
+    return this.getCurrentTable().entryExists(pkID);
+  }
   /**
    * Method that when given an employee ID returns a list of permissions associated with that
    * employee
@@ -190,8 +190,9 @@ public class EmployeePermissionTbl
     try {
       // returns the selected object that matches the pkid
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?);");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =(?);");
       s.setInt(1, empID);
       ResultSet r = s.executeQuery();
       while (r.next()) {
@@ -204,7 +205,6 @@ public class EmployeePermissionTbl
 
     return permAr; // **
   }
-
 
   public String getTableName() {
     return tbName;

@@ -139,7 +139,6 @@ public class ConnectionHandler {
     ArrayList<TableController> newTables = getConnectionSet(update);
     for (int i = 0; i < oldTables.size(); i++) {
       var objList = oldTables.get(i).getObjList();
-      System.out.println(oldTables.get(i).getClass().toString().substring(60) + "    " + objList);
       newTables.get(i).loadFromArrayList(objList);
     }
   }

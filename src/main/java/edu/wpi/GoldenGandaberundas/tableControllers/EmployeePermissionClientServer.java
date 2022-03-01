@@ -192,6 +192,7 @@ public class EmployeePermissionClientServer
       }
     }
     this.objList = readTable();
+    System.err.println("PERMS: " + this.objList);
     return true;
   }
 
@@ -364,9 +365,17 @@ public class EmployeePermissionClientServer
           ConnectionHandler.getInstance()
               .getConnection()
               .prepareStatement(
-                  "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-      s.setObject(1, pkID);
+                  "SELECT * FROM "
+                      + tbName
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?"
+                      + " AND "
+                      + colNames.get(1)
+                      + " = ?"
+                      + ");");
+      s.setInt(1, pkID.get(0));
+      s.setInt(2, pkID.get(1));
 
       ResultSet r = s.executeQuery();
       r.next();

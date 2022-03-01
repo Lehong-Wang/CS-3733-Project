@@ -1,22 +1,18 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.AStar;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
-import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.io.*;
 import java.sql.*;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.*;
 
 public class PathTbl implements TableController<Path, String> {
 
@@ -31,6 +27,7 @@ public class PathTbl implements TableController<Path, String> {
   protected ArrayList<Path> objList;
   /** relative path to the database file */
   private static HashMap<String, Integer> statsMap = new HashMap<>();
+
   TableController<Path, String> embeddedTable = null;
 
   TableController<Path, String> clientServerTable = null;
@@ -123,8 +120,9 @@ public class PathTbl implements TableController<Path, String> {
     ArrayList<String> connect = new ArrayList<>();
     try {
       PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT * FROM " + tbName + " WHERE " + colNames.get(1) + " =?;");
+          ConnectionHandler.getInstance()
+              .getConnection()
+              .prepareStatement("SELECT * FROM " + tbName + " WHERE " + colNames.get(1) + " =?;");
       s.setString(1, startNode);
       ResultSet r = s.executeQuery();
       while (r.next()) {
@@ -248,133 +246,14 @@ public class PathTbl implements TableController<Path, String> {
     return this.getCurrentTable().editEntry(pkid, colName, value);
   }
 
-  /**
-  * removes a row from the database
-  *
-  * @param pkid primary key of row to be removed
-  * @return true if successful, false otherwise
-  */
- public boolean deleteEntry(String pkid) {
-   //    if (pkid instanceof ArrayList) {
-   //      return deleteEntryComposite((ArrayList<Integer>) pkid);
-   //    }
-   try {
-     PreparedStatement s =
-         connection.prepareStatement(
-             "DELETE FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-     s.setObject(1, pkid);
-     s.executeUpdate();
-   } catch (SQLException e) {
-     e.printStackTrace();
-   }
-
-   return false;
- }
-
- /**
-  * creates CSV file representing the objects stored in the table
-  *
-  * @param f filename of the to be created CSV
-  */
- public void createBackup(File f) {
-   if (objList.isEmpty()) {
-     return;
-   }
-   /* Instantiate the writer */
-   PrintWriter writer = null;
-   try {
-     writer = new PrintWriter(f);
-   } catch (FileNotFoundException e) {
-     e.printStackTrace();
-   }
-
-   /* Get the class type of the objects in the array */
-   final Class<?> type = objList.get(0).getClass();
-
-   /* Get the name of all the attributes */
-   final ArrayList<Field> classAttributes = new ArrayList<>(List.of(type.getDeclaredFields()));
-
-   boolean doesExtend = Request.class.isAssignableFrom(type);
-   if (doesExtend) {
-     final Class<?> superType = objList.get(0).getClass().getSuperclass();
-     classAttributes.addAll(0, (List.of(superType.getDeclaredFields())));
-   }
-
-   /* Write the parsed attributes to the file */
-   writer.println(classAttributes.stream().map(Field::getName).collect(Collectors.joining(",")));
-
-   /* For each object, read each attribute and append it to the file with a comma separating */
-   PrintWriter finalWriter = writer;
-   objList.forEach(
-       obj -> {
-         finalWriter.println(
-             classAttributes.stream()
-                 .map(
-                     attribute -> {
-                       attribute.setAccessible(true);
-                       String output = "";
-                       try {
-                         output = attribute.get(obj).toString();
-                       } catch (IllegalAccessException | ClassCastException e) {
-                         System.err.println("[CSVUtil] Object attribute access error.");
-                       }
-                       return output;
-                     })
-                 .collect(Collectors.joining(",")));
-         finalWriter.flush();
-       });
-   writer.close();
- }
-
- // drop current table and enter data from CSV
- public ArrayList<Path> loadBackup(String fileName) {
-   createTable();
-   ArrayList<Path> listObjs = readBackup(fileName);
-
-   try {
-     PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
-     s.executeUpdate();
-     this.objList = listObjs;
-     this.writeTable();
-   } catch (SQLException e) {
-     e.printStackTrace();
-   }
-   return listObjs;
- }
-
- // checks if an entry exists
- public boolean entryExists(String pkID) {
-   //    if (pkID instanceof ArrayList) {
-   //      return entryExistsComposite((ArrayList<Integer>) pkID);
-   //    }
-   boolean exists = false;
-   try {
-     PreparedStatement s =
-         connection.prepareStatement(
-             "SELECT count(*) FROM " + tbName + " WHERE " + colNames.get(0) + " = ?;");
-
-     s.setObject(1, pkID);
-
-     ResultSet r = s.executeQuery();
-     r.next();
-     if (r.getInt(1) != 0) {
-       exists = true;
-     }
-
-   } catch (SQLException e) {
-     e.printStackTrace();
-   }
-   return exists;
-   /*
+  /*
    * Returns the starting and ending points of a MedEquip in the SimulationList
    *
    * @param medID - Piece of Equipment
    * @param hour - Beginning hour of path
    * @return List<String> where index 0 = starting point, index 1 = ending point
    */
-  public boolean deleteEntry(String pkid) {
-    return this.getCurrentTable().deleteEntry(pkid);
-  }
+
   public static List<String> getPathPoints(int medID, int hour) {
     List<String> retVal = new ArrayList<>();
     retVal.add(0, Simulation.pathList[medID][hour]);
@@ -385,15 +264,10 @@ public class PathTbl implements TableController<Path, String> {
     return retVal;
   }
 
-  /**
-   * Returns the starting and ending points of a MedEquip in the SimulationList for a longer
-   * duration
-   *
-   * @param medID - Piece of Equipment
-   * @param hour - Beginning time of path
-   * @param fasterHour - End of lonnher duration time
-   * @return List<String> where index 0 = starting point, index 1 = ending point
-   */
+  public boolean deleteEntry(String pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
+
   public void createBackup(File f) {
     this.getCurrentTable().createBackup(f);
   }
@@ -407,6 +281,16 @@ public class PathTbl implements TableController<Path, String> {
   public boolean entryExists(String pkID) {
     return this.getCurrentTable().entryExists(pkID);
   }
+
+  /**
+   * Returns the starting and ending points of a MedEquip in the SimulationList for a longer
+   * duration
+   *
+   * @param medID - Piece of Equipment
+   * @param hour - Beginning time of path
+   * @param fasterHour - End of lonnher duration time
+   * @return List<String> where index 0 = starting point, index 1 = ending point
+   */
   public static List<String> getPathPointsFaster(int medID, int hour, int fasterHour) {
     List<String> retVal = new ArrayList<>();
     retVal.add(0, Simulation.pathList[medID][hour]);
@@ -414,7 +298,6 @@ public class PathTbl implements TableController<Path, String> {
     MedEquipmentTbl.getInstance().editEntry(medID, "currLoc", retVal.get(1));
     return retVal;
   }
-
 
   public String getTableName() {
     return tbName;

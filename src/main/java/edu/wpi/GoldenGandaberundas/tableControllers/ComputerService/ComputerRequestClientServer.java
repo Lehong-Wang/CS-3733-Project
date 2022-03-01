@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.ComputerService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class ComputerRequestClientServer
     implements TableController<ComputerRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -182,7 +183,16 @@ public class ComputerRequestClientServer
         PreparedStatement s =
             ConnectionHandler.getInstance()
                 .getConnection()
-                .prepareStatement("SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
+                .prepareStatement(
+                    "SELECT * FROM "
+                        + tbName
+                        + " WHERE "
+                        + colNames.get(0)
+                        + " = ?"
+                        + " AND "
+                        + colNames.get(1)
+                        + " = ?"
+                        + ");");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();
@@ -394,8 +404,8 @@ public class ComputerRequestClientServer
                   "SELECT count(*) FROM "
                       + tbName
                       + " WHERE ("
-                      + pkCols
-                      + ") = ("
+                      + colNames.get(0)
+                      + " = ("
                       + pkString.toString()
                       + ");");
       ResultSet r = s.executeQuery();

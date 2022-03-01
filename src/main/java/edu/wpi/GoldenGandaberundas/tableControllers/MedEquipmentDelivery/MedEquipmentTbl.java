@@ -132,7 +132,7 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
    */
   // public boolean editEntry(T1 pkid, String colName, Object value)
   public boolean editEntry(Integer pkid, String colName, Object value) {
-    return editEntry(pkid, colName, value);
+    return this.getCurrentTable().editEntry(pkid, colName, value);
   }
 
   /**

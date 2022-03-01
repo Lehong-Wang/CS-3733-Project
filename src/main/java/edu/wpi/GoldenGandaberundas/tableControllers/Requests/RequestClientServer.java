@@ -114,7 +114,6 @@ public class RequestClientServer implements TableController<Request, Integer> {
    */
   private boolean addRequest(Request obj) {
     try {
-      System.out.println(obj);
       PreparedStatement s =
           ConnectionHandler.getInstance()
               .getConnection()
@@ -302,7 +301,6 @@ public class RequestClientServer implements TableController<Request, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Request> objList) {
-    System.out.println("REQ OBJ TRANS: " + objList);
     this.createTable();
     deleteTableData();
     for (Request av : objList) {
@@ -312,7 +310,6 @@ public class RequestClientServer implements TableController<Request, Integer> {
       }
     }
     this.objList = this.readTable();
-    System.err.println(objList);
     return true;
   }
 

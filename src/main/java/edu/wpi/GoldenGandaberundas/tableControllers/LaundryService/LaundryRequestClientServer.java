@@ -381,13 +381,17 @@ public class LaundryRequestClientServer
           ConnectionHandler.getInstance()
               .getConnection()
               .prepareStatement(
-                  "SELECT count(*) FROM "
+                  "SELECT * FROM "
                       + tbName
-                      + " WHERE ("
-                      + pkCols
-                      + ") = ("
-                      + pkString.toString()
+                      + " WHERE "
+                      + colNames.get(0)
+                      + " = ?"
+                      + " AND "
+                      + colNames.get(1)
+                      + " = ?"
                       + ");");
+      s.setInt(1, pkID.get(0));
+      s.setInt(2, pkID.get(1));
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
