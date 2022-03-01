@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas.controllers.FoodControllers;
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
+import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.Food;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
@@ -71,6 +72,8 @@ public class foodDeliveryController {
   @FXML private JFXButton loadRequestButton;
   @FXML private JFXButton refreshButton;
 
+  TableController locationTableController = LocationTbl.getInstance();
+
   @FXML
   public void initialize() {
 
@@ -124,7 +127,7 @@ public class foodDeliveryController {
     /** Gets the locations from the locations table and sets them to the location combobox */
     ArrayList<String> locations = new ArrayList<String>();
     for (Location l : (ArrayList<Location>) LocationTbl.getInstance().readTable()) {
-      locations.add(l.getNodeID());
+      locations.add(l.getLongName());
     }
     locationComboBox.setItems(FXCollections.observableArrayList(locations));
 
@@ -295,7 +298,12 @@ public class foodDeliveryController {
                   + 1;
       int requesterID = CurrentUser.getUser().getEmpID();
       int patientID = patientComboBox.getValue();
-      String location = locationComboBox.getValue();
+      String node = locationComboBox.getValue().trim();
+      String location = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(node)) location = loc.getNodeID();
+      }
       String notes = noteField.getText();
       for (FoodMenuItem fm : currentMenu) {
         FoodRequest foodRequest =

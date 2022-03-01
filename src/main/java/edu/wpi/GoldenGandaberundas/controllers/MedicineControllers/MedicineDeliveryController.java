@@ -147,7 +147,7 @@ public class MedicineDeliveryController {
     locArray = locationTableController.readTable();
     ArrayList<String> locNodeAr = new ArrayList<String>();
     for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
+      locNodeAr.add(i, locArray.get(i).getLongName());
     }
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
@@ -256,7 +256,12 @@ public class MedicineDeliveryController {
       } else {
         requestID = reqTable.readTable().get(reqTable.readTable().size() - 1).getRequestID() + 1;
       }
-      String nodeID = locations;
+      String locationID = locationSearchBox.getValue().trim();
+      String locations = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(locationID)) locations = loc.getNodeID();
+      }
       int patientID = (Integer) patientSearchBox.getSelectionModel().getSelectedItem();
       int requesterID = CurrentUser.getUser().getEmpID();
       int medicineID = (Integer) medicineSearchBox.getSelectionModel().getSelectedItem();
@@ -268,7 +273,7 @@ public class MedicineDeliveryController {
         MedicineRequest medicineRequest2 =
             new MedicineRequest(
                 requestID,
-                nodeID,
+                locations,
                 requesterID,
                 123,
                 000,

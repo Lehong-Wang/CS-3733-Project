@@ -225,7 +225,12 @@ public class AudioVisualController implements Initializable {
                       .getRequestID()
                   + 1;
       int requesterID = CurrentUser.getUser().getEmpID();
-      String location = locationBox.getValue();
+      String locationID = locationBox.getValue().trim();
+      String location = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(locationID)) location = loc.getNodeID();
+      }
       int deviceID = Integer.parseInt(deviceIDBox.getValue());
       int patientID = patientComboBox.getValue();
       String note = "";
@@ -367,7 +372,7 @@ public class AudioVisualController implements Initializable {
     ArrayList<String> locNodeAr = new ArrayList<String>();
 
     for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
+      locNodeAr.add(locArray.get(i).getLongName());
     }
     return locNodeAr;
   }

@@ -112,7 +112,7 @@ public class GiftFloralController implements Initializable {
 
     ArrayList<String> locs = new ArrayList<>();
     for (Object l : LocationTbl.getInstance().readTable()) {
-      locs.add(((Location) l).getNodeID());
+      locs.add(((Location) l).getLongName());
     }
     ObservableList<String> locations = FXCollections.observableArrayList(locs);
     locationSearchBox.setItems(locations);
@@ -243,7 +243,12 @@ public class GiftFloralController implements Initializable {
                       .get(requestTableController.readTable().size() - 1)
                       .getRequestID()
                   + 1;
-      String nodeID = locationSearchBox.getValue();
+      String nodeID = locationSearchBox.getValue().trim();
+      String node = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(nodeID)) node = loc.getNodeID();
+      }
       int submittedTime;
       int completedTime;
       int patientID = patientSearchBox.getValue();
@@ -259,7 +264,7 @@ public class GiftFloralController implements Initializable {
       GiftRequest giftRequest =
           new GiftRequest(
               idCounter,
-              nodeID,
+              node,
               requesterID,
               null,
               0,

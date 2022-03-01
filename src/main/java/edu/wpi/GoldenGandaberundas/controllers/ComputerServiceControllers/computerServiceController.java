@@ -334,7 +334,12 @@ public class computerServiceController implements Initializable {
                       .get(RequestTable.getInstance().readTable().size() - 1)
                       .getRequestID()
                   + 1;
-      String locationID = locationSearchBox.getValue();
+      String location = locationSearchBox.getValue().trim();
+      String locationID = "";
+      for (int i = 0; i < locationTableController.readTable().size(); i++) {
+        Location loc = (Location) locationTableController.readTable().get(i);
+        if (loc.getLongName().trim().equals(location)) locationID = loc.getNodeID();
+      }
       int submitTime = 0;
       int completeTime = 0;
       // Patient ID = null
@@ -345,7 +350,6 @@ public class computerServiceController implements Initializable {
       int compID = deviceSearchBox.getValue();
       String problemType = problemTypeBox.getValue();
       String priority = priorityField.getText();
-
       ComputerRequest request =
           new ComputerRequest(
               requestID,
@@ -376,7 +380,7 @@ public class computerServiceController implements Initializable {
     ArrayList<String> locNodeAr = new ArrayList<String>();
 
     for (int i = 0; i < locArray.size(); i++) {
-      locNodeAr.add(i, locArray.get(i).getNodeID());
+      locNodeAr.add(i, locArray.get(i).getLongName());
     }
     ObservableList<String> oList = FXCollections.observableArrayList(locNodeAr);
     locationSearchBox.setItems(oList);
