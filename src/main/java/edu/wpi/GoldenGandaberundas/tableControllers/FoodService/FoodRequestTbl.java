@@ -38,7 +38,7 @@ public class FoodRequestTbl implements TableController<FoodRequest, ArrayList<In
   // **
   // created constructor fo the table
   private FoodRequestTbl() throws SQLException {
-    String[] cols = {"reqID", "giftID", "quantity"};
+    String[] cols = {"reqID", "foodID", "quantity"};
 
     tbName = "FoodRequests";
     pkCols = "reqID, foodID";

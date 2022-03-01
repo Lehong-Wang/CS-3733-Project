@@ -211,6 +211,6 @@ public class EmployeePermissionTbl
   }
 
   public ArrayList<EmployeePermission> getObjList() {
-    return objList;
+    return this.getCurrentTable().getObjList();
   }
 }

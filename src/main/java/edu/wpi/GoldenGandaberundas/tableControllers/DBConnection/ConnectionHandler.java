@@ -1,6 +1,7 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.DBConnection;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionEmbedded;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -139,6 +140,9 @@ public class ConnectionHandler {
     ArrayList<TableController> newTables = getConnectionSet(update);
     for (int i = 0; i < oldTables.size(); i++) {
       var objList = oldTables.get(i).getObjList();
+      if (oldTables.get(i) instanceof EmployeePermissionEmbedded) {
+        System.err.println(objList);
+      }
       newTables.get(i).loadFromArrayList(objList);
     }
   }

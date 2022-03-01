@@ -179,6 +179,7 @@ public class PermissionClientServer implements TableController<Permission, Integ
       }
     }
     this.objList = this.readTable();
+    System.out.println("PERMS CS: " + objList);
     return true;
   }
 

@@ -119,6 +119,7 @@ public class PermissionEmbedded implements TableController<Permission, Integer> 
       ResultSet r = s.executeQuery();
       r.next();
       if (r.getInt(1) != 0) {
+        objList = this.readTable();
         return;
       }
     } catch (SQLException e) {

@@ -48,7 +48,6 @@ public class MedicineRequestClientServer
               .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        System.out.println(masterTable.getEntry(r.getInt(1)));
         tableInfo.add(
             new MedicineRequest(
                 masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getInt(3), r.getInt(4)));

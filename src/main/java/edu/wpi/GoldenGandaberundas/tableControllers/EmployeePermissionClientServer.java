@@ -53,6 +53,7 @@ public class EmployeePermissionClientServer
       se.printStackTrace();
       return null;
     }
+    objList = tableInfo;
     return tableInfo;
   }
 
@@ -192,6 +193,7 @@ public class EmployeePermissionClientServer
       }
     }
     this.objList = readTable();
+    System.err.println("PERMS PARAM: " + objList);
     System.err.println("PERMS: " + this.objList);
     return true;
   }
