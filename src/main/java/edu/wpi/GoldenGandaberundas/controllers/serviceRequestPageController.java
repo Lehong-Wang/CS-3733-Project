@@ -6,6 +6,7 @@ import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import teamA_API.exceptions.ServiceException;
 
 public class serviceRequestPageController {
   @FXML JFXButton ComputerServiceButton;
@@ -49,11 +50,25 @@ public class serviceRequestPageController {
 
   // TODO API IMPLEMENTATION
   @FXML
-  public void showPatientTransport() {}
+  public void showPatientTransport() {
+    try {
+      edu.wpi.cs3733.c22.teamD.Main.run(100, 0, 1500, 800, "", "FDEPT00101", "FDEPT00101");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   // TODO API IMPLEMENTATION
   @FXML
-  public void showSanitationServices() {}
+  public void showSanitationServices() {
+    try {
+      teamA_API.Main.run(100, 0, 1500, 800, "", "FDEPT00101");
+    } catch (ServiceException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   @FXML
   public void switchAllRequests() {
