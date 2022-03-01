@@ -37,7 +37,7 @@ public class mainController {
   @FXML JFXButton AudioVisualButton;
   @FXML JFXButton FoodButton;
   @FXML JFXButton GiftFloralButton;
-  @FXML JFXButton LanguageButton;
+  @FXML JFXButton LabServicesButton;
   @FXML JFXButton LaundryButton;
   @FXML JFXButton MedicineDeliveryButton;
   @FXML JFXButton MedicalEquipmentButton;
@@ -101,7 +101,7 @@ public class mainController {
     AudioVisualButton.setText("");
     FoodButton.setText("");
     GiftFloralButton.setText("");
-    LanguageButton.setText("");
+    LabServicesButton.setText("");
     LaundryButton.setText("");
     MedicineDeliveryButton.setText("");
     MedicalEquipmentButton.setText("");
@@ -117,8 +117,6 @@ public class mainController {
 
     // Hiding buttons until service is fully implemented
 
-    LanguageButton.setManaged(false);
-    LanguageButton.setVisible(false);
     ReligiousButton.setManaged(false);
     ReligiousButton.setVisible(false);
     PatientTransportButton.setManaged(false);
@@ -402,11 +400,11 @@ public class mainController {
   }
 
   public void switchAudioVisual(ActionEvent actionEvent) throws IOException {
-    nodeSwitch("views/labRequest.fxml");
+    nodeSwitch("views/audioVisual.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
-  public void switchLabRequest(ActionEvent actionEvent) throws IOException {
+  public void switchLabServices(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/labRequest.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
@@ -535,7 +533,7 @@ public class mainController {
         AudioVisualButton.setText("Audio Visual");
         FoodButton.setText("Food Delivery");
         GiftFloralButton.setText("Gift & Floral Delivery");
-        LanguageButton.setText("Language Interpreter");
+        LabServicesButton.setText("Laboratory Services");
         LaundryButton.setText("Laundry Services");
         MedicineDeliveryButton.setText("Medicine Delivery");
         MedicalEquipmentButton.setText("Medical Equipment");
@@ -555,7 +553,7 @@ public class mainController {
         AudioVisualButton.setText("Neena Xiang");
         FoodButton.setText("Eli Hoffberg");
         GiftFloralButton.setText("Neena Xiang");
-        LanguageButton.setText("Mason Figler");
+        LabServicesButton.setText("Mason Figler");
         LaundryButton.setText("Lehong Wang");
         MedicineDeliveryButton.setText("Paul Godinez");
         MedicalEquipmentButton.setText("Will BC");
@@ -585,7 +583,7 @@ public class mainController {
       AudioVisualButton.setText("");
       FoodButton.setText("");
       GiftFloralButton.setText("");
-      LanguageButton.setText("");
+      LabServicesButton.setText("");
       LaundryButton.setText("");
       MedicineDeliveryButton.setText("");
       MedicalEquipmentButton.setText("");
