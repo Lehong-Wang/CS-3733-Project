@@ -33,6 +33,7 @@ dependencies {
     compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '6.4.0.jre8'
     implementation(
             files("libs/teamD.jar"),
+            files("libs/teamA.jar"),
             'com.jfoenix:jfoenix:9.0.10',
             // You may comment out the database dependency you do not use
             'org.xerial:sqlite-jdbc:3.30.1',

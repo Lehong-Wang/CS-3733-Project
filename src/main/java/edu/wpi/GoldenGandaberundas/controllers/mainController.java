@@ -199,6 +199,12 @@ public class mainController {
    */
   public void switchMapView() throws IOException {
     edu.wpi.cs3733.c22.teamD.Main.run(0, 0, 1000, 1000, "", "FDEPT00101", "FDEPT00201");
+    //    try {
+    //      teamA_API.Main.run(0, 0, 100, 100, "", "FDEPT00101");
+    //    } catch (ServiceException e) {
+    //      e.printStackTrace();
+    //    }
+
     //    FXMLLoader subControllerLoader = new
     // FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
     //
