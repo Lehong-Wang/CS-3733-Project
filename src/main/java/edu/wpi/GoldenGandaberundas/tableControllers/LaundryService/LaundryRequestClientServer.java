@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class LaundryRequestClientServer
     implements TableController<LaundryRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -47,7 +47,6 @@ public class LaundryRequestClientServer
               .prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        System.out.println(masterTable.getEntry(r.getInt(1)));
         tableInfo.add(new LaundryRequest(masterTable.getEntry(r.getInt(1)), r.getInt(2))); // **
       }
     } catch (SQLException se) {

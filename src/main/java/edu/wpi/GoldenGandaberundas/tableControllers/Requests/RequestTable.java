@@ -78,6 +78,7 @@ public class RequestTable implements TableController<Request, Integer> {
         }
       }
     }
+    instance.readTable();
     return instance;
   }
 

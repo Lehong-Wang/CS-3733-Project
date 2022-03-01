@@ -46,8 +46,6 @@ public class MedEquipRequestEmbedded
       PreparedStatement s = connection.prepareStatement("SElECT * FROM " + tbName + ";");
       ResultSet r = s.executeQuery();
       while (r.next()) {
-        System.out.println(r.getInt(1));
-        System.out.println(masterTable.getEntry(r.getInt(1)));
         tableInfo.add(new MedEquipRequest(masterTable.getEntry(r.getInt(1)), r.getInt(2))); // **
       }
     } catch (SQLException se) {
@@ -55,7 +53,6 @@ public class MedEquipRequestEmbedded
       return null;
     }
     objList = tableInfo;
-    System.out.println(tableInfo);
     return tableInfo;
   }
 
@@ -143,7 +140,6 @@ public class MedEquipRequestEmbedded
     }
 
     System.out.println("SQLite driver registered!");
-    System.out.println("MED EQUIP BUILT");
     Statement s = null;
     try { // this part actually makes the table after getting everything else set up
       s = connection.createStatement();

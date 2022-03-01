@@ -91,9 +91,13 @@ public class RequestEmbedded implements TableController<Request, Integer> {
    */
   @Override
   public boolean addEntry(Request obj) {
-    Boolean addSuccess = false;
+    Boolean addSuccess = true;
     if (entryExists(obj.getRequestID()) || addRequest(obj)) {
-      addSuccess = this.getSpecificServiceTable(obj).addEntry(obj);
+      try {
+        addSuccess = this.getSpecificServiceTable(obj).addEntry(obj);
+      } catch (ClassCastException c) {
+        System.err.println("Class Cast Exception");
+      }
     } else addSuccess = false;
     return addSuccess;
   }
@@ -118,7 +122,7 @@ public class RequestEmbedded implements TableController<Request, Integer> {
       if (obj.getTimeEnd() != null) {
         s.setLong(6, obj.getTimeEnd());
       } else s.setNull(6, Types.NULL);
-      if (obj.getPatientID() != null) {
+      if (obj.getPatientID() != null && obj.getPatientID() != 0) {
         s.setInt(7, obj.getPatientID());
       } else s.setNull(7, Types.NULL);
       s.setString(8, obj.getRequestType());
@@ -560,7 +564,6 @@ public class RequestEmbedded implements TableController<Request, Integer> {
 
   // checks if an entry exists
   public boolean entryExists(Integer pkID) {
-    System.out.println("CHECK REQ IN EMBEDDED");
     boolean exists = false;
     try {
       PreparedStatement s =

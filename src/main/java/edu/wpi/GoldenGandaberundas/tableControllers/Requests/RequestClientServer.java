@@ -312,6 +312,7 @@ public class RequestClientServer implements TableController<Request, Integer> {
       }
     }
     this.objList = this.readTable();
+    System.err.println(objList);
     return true;
   }
 
@@ -531,7 +532,6 @@ public class RequestClientServer implements TableController<Request, Integer> {
   // checks if an entry exists
   public boolean entryExists(Integer pkID) {
     boolean exists = false;
-    System.out.println("CHECK REQ IN CLIENT");
     try {
       PreparedStatement s =
           ConnectionHandler.getInstance()
