@@ -19,7 +19,7 @@
    <right>
       <VBox fx:id="adminViewVBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" />
+            <JFXButton onAction="#refresh" prefHeight="55.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
          </children>
       </VBox>
    </right>
