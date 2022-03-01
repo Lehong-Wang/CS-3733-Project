@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,14 +43,14 @@ public class mainController {
   @FXML JFXButton MedicalEquipmentButton;
   @FXML JFXButton PatientTransportButton;
   @FXML JFXButton ReligiousButton;
-  @FXML JFXButton MapViewButton;
   @FXML JFXButton SideViewButton;
   @FXML JFXButton HomeButton;
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
-  @FXML JFXButton SwitchSceneButton;
-  @FXML Button switchBtn2;
   @FXML JFXButton SettingsButton;
+
+  @FXML JFXButton serviceRequestButton;
+  @FXML JFXButton mapViewButton;
 
   @FXML Group medGroup;
 
@@ -69,6 +68,7 @@ public class mainController {
   // -fx-body-color; -fx-text-fill: #002D59; -fx-alignment: center-left;";
 
   public void initialize() {
+    slideShow();
     // BUTTONS HIDDEN TILL IMPLEMENTATION
     // FoodButton.setManaged(false);
     // FoodButton.setVisible(false);
@@ -107,12 +107,13 @@ public class mainController {
     MedicalEquipmentButton.setText("");
     PatientTransportButton.setText("");
     ReligiousButton.setText("");
-    MapViewButton.setText("");
     HomeButton.setText("");
     SideViewButton.setText("");
     allRequestsButton.setText("");
     SimulationButton.setText("");
     SettingsButton.setText("");
+    serviceRequestButton.setText("");
+    mapViewButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -128,24 +129,54 @@ public class mainController {
 
     mainView.setFitHeight(1080);
     mainView.setFitWidth(1920);
-    slideShow();
+    mainView.setImage(floorMaps.hospital);
+    toggleRequestButtons(false);
+    toggleMapButtons(false);
+    EmployeeDBButton.setManaged(false);
+    EmployeeDBButton.setVisible(false);
   }
 
   /**
-   * Method that applies CSS styling to button's in and Idle and Hovered states
+   * Toggles all the buttons that the map viewer uses
    *
-   * @param buttonO
+   * @param toggle True to toggle the buttons on, false to turn them off
    */
-  public void buttonStyle(JFXButton buttonO) {
-    buttonO.setStyle(IDLE_BUTTON_STYLE);
-    //    buttonO.setOnMouseEntered(
-    //        e -> {
-    //          buttonO.setStyle(HOVERED_BUTTON_STYLE);
-    //        });
-    buttonO.setOnMouseExited(
-        e -> {
-          buttonO.setStyle(IDLE_BUTTON_STYLE);
-        });
+  public void toggleMapButtons(Boolean toggle) {
+    SideViewButton.setManaged(toggle);
+    SimulationButton.setManaged(toggle);
+
+    SideViewButton.setVisible(toggle);
+    SimulationButton.setVisible(toggle);
+  }
+
+  /**
+   * TOggles all the buttons that the request buttons use
+   *
+   * @param toggle True to toggle the buttons on, false to turn them off
+   */
+  public void toggleRequestButtons(Boolean toggle) {
+    ComputerServiceButton.setManaged(toggle);
+    AudioVisualButton.setManaged(toggle);
+    FoodButton.setManaged(toggle);
+    GiftFloralButton.setManaged(toggle);
+    LaundryButton.setManaged(toggle);
+    MedicineDeliveryButton.setManaged(toggle);
+    MedicalEquipmentButton.setManaged(toggle);
+    allRequestsButton.setManaged(toggle);
+
+    ComputerServiceButton.setVisible(toggle);
+    AudioVisualButton.setVisible(toggle);
+    FoodButton.setVisible(toggle);
+    GiftFloralButton.setVisible(toggle);
+    LaundryButton.setVisible(toggle);
+    MedicineDeliveryButton.setVisible(toggle);
+    MedicalEquipmentButton.setVisible(toggle);
+    allRequestsButton.setVisible(toggle);
+
+    EmployeeDBButton.setVisible(toggle);
+    EmployeeDBButton.setManaged(toggle);
+
+    checkPerms();
   }
 
   public void nodeSwitch(String fxmlFile) {
@@ -175,9 +206,7 @@ public class mainController {
    */
   public void checkPerms() {
     int currID = CurrentUser.getUser().getEmpID();
-    //
     ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
-    System.out.println(perms);
     boolean hideShit = true;
     for (int i = 0; i < perms.size(); i++) {
       if (perms.get(i) == 111) {
@@ -197,6 +226,15 @@ public class mainController {
   }
 
   public void goHome(ActionEvent actionEvent) {
+    serviceRequestButton.setManaged(true);
+    serviceRequestButton.setVisible(true);
+    mapViewButton.setManaged(true);
+    mapViewButton.setVisible(true);
+    SettingsButton.setManaged(true);
+    SettingsButton.setVisible(true);
+
+    toggleRequestButtons(false);
+    toggleMapButtons(false);
     nodeSwitch("views/homePage.fxml");
     slideShow();
   }
@@ -209,6 +247,12 @@ public class mainController {
    * @throws IOException error
    */
   public void switchMapView() throws IOException {
+    toggleMapButtons(true);
+    toggleRequestButtons(false);
+    SettingsButton.setManaged(false);
+    SettingsButton.setVisible(false);
+    serviceRequestButton.setManaged(false);
+    serviceRequestButton.setVisible(false);
     FXMLLoader subControllerLoader = new FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
 
     try {
@@ -230,7 +274,7 @@ public class mainController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    nodeDataPane.setPadding(new Insets(0, 0, 0, 90));
+    nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
 
   public void switchAllRequests() {
@@ -258,6 +302,39 @@ public class mainController {
     }
     nodeDataPane.setPadding(new Insets(0, 0, 10, 100));
   }
+
+  @FXML
+  public void switchRequestPage() {
+    toggleRequestButtons(true);
+    toggleMapButtons(false);
+    SettingsButton.setManaged(false);
+    SettingsButton.setVisible(false);
+    mapViewButton.setManaged(false);
+    mapViewButton.setVisible(false);
+    FXMLLoader subControllerLoader =
+        new FXMLLoader(App.class.getResource("views/serviceRequestPage.fxml"));
+
+    try {
+      BorderPane subPane = subControllerLoader.load();
+      serviceRequestPageController master = subControllerLoader.getController();
+      master.setMainControler(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 10, 110));
+  }
+
   // goes to the Computer Services page
   public void switchCompService(ActionEvent actionEvent) throws IOException {
     nodeSwitch("views/computerServiceRequest.fxml");
@@ -417,6 +494,10 @@ public class mainController {
   }
 
   public void switchSettings() {
+    mapViewButton.setVisible(false);
+    mapViewButton.setManaged(false);
+    serviceRequestButton.setVisible(false);
+    serviceRequestButton.setManaged(false);
     nodeSwitch("views/settingsPage.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
   }
@@ -455,12 +536,14 @@ public class mainController {
         MedicalEquipmentButton.setText("Medical Equipment");
         PatientTransportButton.setText("Patient Transportation");
         ReligiousButton.setText("Religious Request");
-        MapViewButton.setText("Map Viewer");
         HomeButton.setText("Home");
         SideViewButton.setText("Side View");
         allRequestsButton.setText("All Requests View");
         SimulationButton.setText("Simulation");
         SettingsButton.setText("Settings");
+        serviceRequestButton.setText("Service Request Page");
+        mapViewButton.setText("Map Views");
+
       } else {
         ComputerServiceButton.setText("Joshua Moy");
         EmployeeDBButton.setText("Paul Godinez");
@@ -473,12 +556,13 @@ public class mainController {
         MedicalEquipmentButton.setText("Will BC");
         PatientTransportButton.setText("Jason Martino");
         ReligiousButton.setText("Will BC");
-        MapViewButton.setText("Michael O'Connor");
         HomeButton.setText("Neena Xiang");
         SideViewButton.setText("Neena Xiang");
         allRequestsButton.setText("Paul Godinez");
         SimulationButton.setText("Mason Figler");
         SettingsButton.setText("Lehong Wang");
+        serviceRequestButton.setText("Paul Godinez");
+        mapViewButton.setText("Michael O'Connor");
       }
     }
   }
@@ -502,12 +586,13 @@ public class mainController {
       MedicalEquipmentButton.setText("");
       PatientTransportButton.setText("");
       ReligiousButton.setText("");
-      MapViewButton.setText("");
       HomeButton.setText("");
       SideViewButton.setText("");
       allRequestsButton.setText("");
       SimulationButton.setText("");
       SettingsButton.setText("");
+      serviceRequestButton.setText("");
+      mapViewButton.setText("");
     }
   }
 
@@ -536,44 +621,6 @@ public class mainController {
     TableController.setConnection(true);
   }
 
-  public void switchScene(ActionEvent actionEvent) throws IOException {
-
-    System.out.println("before switch");
-    SwitchSceneButton.getScene().getStylesheets().clear();
-    //    SwitchSceneButton.getScene().getStylesheets().removeAll("styleSheets/DarkMode.css");
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/WaterMelon.css").toExternalForm());
-    System.out.println("after switch");
-
-    //    //    String css =
-    //    // mainController.class.getResource("/styleSheets/DarkMode.css").toExternalForm();
-    //    //    Stage.getScene().getStylesheets().clear();
-    //    //    scene.getStylesheets().add(css);
-    //    //    File f = new File("/styleSheets/WaterMelon.css");
-    //
-    //    SwitchSceneButton.getScene().getStylesheets().clear();
-    //    //    SwitchSceneButton.getScene().getStylesheets().add(f.getAbsolutePath());
-    //
-    //    SwitchSceneButton.getScene()
-    //        .getStylesheets()
-    //        .add(Main.class.getResource("@../styleSheets/WaterMelon.css").toExternalForm());
-    //
-    //    //
-    // com.sun.javafx.css.StyleManager.getInstance().reloadStylesheets(SwitchSceneButton.getScene());
-    //
-    //    // SwitchSceneButton.getScene().setUserAgentStylesheet((new
-    //    // File("/styleSheets/WaterMelon.css")).getAbsolutePath());
-  }
-
-  public void switchOrigin() {
-
-    SwitchSceneButton.getScene().getStylesheets().clear();
-
-    SwitchSceneButton.getScene()
-        .getStylesheets()
-        .add(App.class.getResource("styleSheets/OriginalMode.css").toExternalForm());
-  }
   /** Slide show function to display an assortment of images that fade in an out */
   public void slideShow() {
     ArrayList<Image> images = new ArrayList<>();
