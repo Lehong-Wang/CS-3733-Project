@@ -1,29 +1,49 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.GiftDeliveryService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
 import java.io.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.List;
 
 // first parameter is object giftType, second is pkid giftType
 // change the giftTypes accordingly in the methods
-public class GiftTbl extends TableController<Gift, String> {
+public class GiftTbl implements TableController<Gift, Integer> {
 
   private static GiftTbl instance = null;
+  /** name of table */
+  protected String tbName;
+  /** name of columns in database table the first entry is the primary key */
+  protected List<String> colNames;
+  /** list of keys that make a composite primary key */
+  protected String pkCols = null;
+  /** list that contains the objects stored in the database */
+  protected ArrayList<Gift> objList;
+  /** relative path to the database file */
+  TableController<Gift, Integer> embeddedTable = null;
+
+  TableController<Gift, Integer> clientServerTable = null;
+
+  ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
+
+  Connection connection = connectionHandler.getConnection();
 
   private GiftTbl() throws SQLException {
-    super(
-        "Gifts",
-        Arrays.asList(new String[] {"giftID", "giftType", "description", "price", "inStock"}));
     String[] cols = {"giftID", "giftType", "description", "price", "inStock"};
-    createTable();
+    tbName = "Gifts";
+    pkCols = "giftID";
+    colNames = Arrays.asList(cols);
 
     objList = new ArrayList<Gift>();
+
+    embeddedTable = new GiftEmbedded(tbName, cols, pkCols, objList);
+    clientServerTable = new GiftClientServer(tbName, cols, pkCols, objList);
+    connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
+    connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    createTable();
     objList = readTable();
   }
 
@@ -43,213 +63,102 @@ public class GiftTbl extends TableController<Gift, String> {
     return instance;
   }
 
+  private TableController<Gift, Integer> getCurrentTable() {
+    System.out.println("Connection Type: " + connectionHandler.getCurrentConnectionType());
+    switch (connectionHandler.getCurrentConnectionType()) {
+      case embedded:
+        return embeddedTable;
+      case clientServer:
+        return clientServerTable;
+      case cloud:
+        return null;
+    }
+    System.out.println(connectionHandler.getCurrentConnectionType());
+    return null;
+  }
+
   @Override
   public ArrayList<Gift> readTable() {
-
-    ArrayList<Gift> tableInfo = new ArrayList<>();
-    try {
-      PreparedStatement s = connection.prepareStatement("SELECT * FROM " + tbName + ";");
-      ResultSet r = s.executeQuery();
-
-      while (r.next()) {
-        tableInfo.add(
-            new Gift(r.getInt(1), r.getString(2), r.getString(3), r.getDouble(4), r.getBoolean(5)));
-      }
-      return tableInfo;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return null;
-    }
+    return this.getCurrentTable().readTable();
   }
 
   @Override
   public boolean addEntry(Gift obj) {
-    if (!this.getEmbedded()) {
-      return addEntryOnline(obj);
-    }
-    Gift gift = (Gift) obj;
-    PreparedStatement s = null;
-    try {
-      s =
-          connection.prepareStatement(
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?, ?);");
-
-      s.setInt(1, gift.getGiftID());
-      s.setString(2, gift.getGiftType());
-      s.setString(3, gift.getDescription());
-      s.setDouble(4, gift.getPrice());
-      s.setBoolean(5, gift.getInStock());
-      s.executeUpdate();
-      return true;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  private boolean addEntryOnline(Gift gift) {
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              " IF NOT EXISTS (SELECT 1 FROM "
-                  + tbName
-                  + " WHERE "
-                  + colNames.get(0)
-                  + " = ?)"
-                  + "BEGIN"
-                  + "    INSERT INTO "
-                  + tbName
-                  + " VALUES (?, ?, ?, ?, ?)"
-                  + "end");
-
-      s.setInt(1, gift.getGiftID());
-      s.setInt(2, gift.getGiftID());
-      s.setString(3, gift.getGiftType());
-      s.setString(4, gift.getDescription());
-      s.setDouble(5, gift.getPrice());
-      s.setBoolean(6, gift.getInStock());
-      s.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-    return true;
+    return this.getCurrentTable().addEntry(obj);
   }
 
   @Override
   public ArrayList<Gift> readBackup(String fileName) {
-    ArrayList<Gift> gifts = new ArrayList<>();
-
-    try {
-      File csvFile = new File(fileName);
-      BufferedReader buffer = new BufferedReader(new FileReader(csvFile)); // reads the files
-      String currentLine = buffer.readLine(); // reads a line from the csv file
-
-      if (!currentLine
-          .toLowerCase(Locale.ROOT)
-          .trim()
-          .equals(new String("giftID,description,price,inStock"))) {
-        System.err.println("gift backup format not recognized");
-      }
-      currentLine = buffer.readLine();
-
-      while (currentLine != null) { // cycles in the while loop until it reaches the end
-        String[] element = currentLine.split(","); // separates each element based on a comma
-        Gift gift =
-            new Gift(
-                Integer.parseInt(element[0]),
-                element[1],
-                element[2],
-                Double.parseDouble(element[3]),
-                Boolean.parseBoolean(element[4]));
-        gifts.add(gift); // adds the location to the list
-        currentLine = buffer.readLine();
-      }
-      ; // creates a Location
-
-    } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return gifts;
+    return this.getCurrentTable().readBackup(fileName);
   }
 
   @Override
   public void createTable() {
-    if (!this.getEmbedded()) {
-      createTableOnline();
-      return;
-    }
-    try {
-      PreparedStatement s =
-          connection.prepareStatement(
-              "SELECT count(*) FROM sqlite_master WHERE tbl_name = ? LIMIT 1;");
-      s.setString(1, tbName);
-      ResultSet r = s.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return;
-    }
-
-    try {
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      System.out.println("SQLite driver not found on classpath, check your gradle configuration.");
-      e.printStackTrace();
-      return;
-    }
-
-    System.out.println("SQLite driver registered!");
-
-    Statement s = null;
-    try {
-      s = connection.createStatement();
-      s.execute("PRAGMA foreign_keys = ON");
-      s.execute(
-          "CREATE TABLE IF NOT EXISTS  Gifts("
-              + "giftID INTEGER NOT NULL ,"
-              + "giftType TEXT NOT NULL, "
-              + "description TEXT, "
-              + "price DOUBLE NOT NULL, "
-              + "inStock BOOLEAN NOT NULL, "
-              + "PRIMARY KEY ('giftID'));");
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void createTableOnline() {
-    try {
-
-      PreparedStatement s1 =
-          connection.prepareStatement("SELECT COUNT(*) FROM sys.tables WHERE name = ?;");
-      s1.setString(1, tbName);
-      ResultSet r = s1.executeQuery();
-      r.next();
-      if (r.getInt(1) != 0) {
-        return;
-      }
-      Statement s = connection.createStatement();
-      s.execute(
-          "CREATE TABLE  Gifts("
-              + "giftID INTEGER NOT NULL ,"
-              + "giftType TEXT NOT NULL, "
-              + "description TEXT, "
-              + "price FLOAT NOT NULL, "
-              + "inStock BIT NOT NULL, "
-              + "PRIMARY KEY (giftID));");
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    this.getCurrentTable().createTable();
   }
 
   @Override
-  public Gift getEntry(String pkID) {
-    Gift gift = new Gift();
-    if (this.entryExists(pkID)) {
-      try {
-        PreparedStatement s =
-            connection.prepareStatement(
-                "SELECT * FROM " + tbName + " WHERE " + colNames.get(0) + " =?;");
-        s.setString(1, pkID);
-        ResultSet r = s.executeQuery();
-        r.next();
-        gift.setGiftID(r.getInt(1));
-        gift.setGiftType(r.getString(2));
-        gift.setDescription(r.getString(3));
-        gift.setPrice(r.getDouble(4));
-        gift.setInStock(r.getBoolean(5));
-        return gift;
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-    return gift;
+  public Gift getEntry(Integer pkID) {
+    return this.getCurrentTable().getEntry(pkID);
+  }
+
+  @Override
+  public boolean loadFromArrayList(ArrayList<Gift> objList) {
+    return this.getCurrentTable().loadFromArrayList(objList);
+  }
+
+  public void writeTable() {
+    this.getCurrentTable().writeTable();
+  }
+
+  /**
+   * Modifies the attribute so that it is equal to value MAKE SURE YOU KNOW WHAT DATA TYPE YOU ARE
+   * MODIFYING
+   *
+   * @param pkid the primary key that represents the row you are modifying
+   * @param colName column to be modified
+   * @param value new value for column
+   * @return true if successful, false otherwise
+   */
+  // public boolean editEntry(T1 pkid, String colName, Object value)
+  public boolean editEntry(Integer pkid, String colName, Object value) {
+    return this.getCurrentTable().editEntry(pkid, colName, value);
+  }
+
+  /**
+   * removes a row from the database
+   *
+   * @param pkid primary key of row to be removed
+   * @return true if successful, false otherwise
+   */
+  public boolean deleteEntry(Integer pkid) {
+    return this.getCurrentTable().deleteEntry(pkid);
+  }
+
+  /**
+   * creates CSV file representing the objects stored in the table
+   *
+   * @param f filename of the to be created CSV
+   */
+  public void createBackup(File f) {
+    this.getCurrentTable().createBackup(f);
+  }
+
+  // drop current table and enter data from CSV
+  public ArrayList<Gift> loadBackup(String fileName) {
+    return this.getCurrentTable().loadBackup(fileName);
+  }
+
+  // checks if an entry exists
+  public boolean entryExists(Integer pkID) {
+    return this.getCurrentTable().entryExists(pkID);
+  }
+
+  public String getTableName() {
+    return tbName;
+  }
+
+  public ArrayList<Gift> getObjList() {
+    return objList;
   }
 }

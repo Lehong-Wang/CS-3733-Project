@@ -5,8 +5,9 @@ import com.jfoenix.controls.JFXDrawer;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.Main;
-import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
+import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -769,11 +770,11 @@ public class mainController {
   }
 
   public void enableClientServer(ActionEvent actionEvent) {
-    TableController.setConnection(false);
+    ConnectionHandler.getInstance().setConnection(ConnectionType.clientServer);
   }
 
   public void enableEmbedded(ActionEvent actionEvent) {
-    TableController.setConnection(true);
+    ConnectionHandler.getInstance().setConnection(ConnectionType.embedded);
   }
 
   /** Slide show function to display an assortment of images that fade in an out */

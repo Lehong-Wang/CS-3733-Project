@@ -25,7 +25,7 @@ public class testMedicineRequestTbl {
   public TableController setupMedicineRequestsTbl() {
     TableController tbControl = null;
     tbControl = MedicineRequestTbl.getInstance(); // **
-    tbControl.loadBackup("backups/medicineRequests.csv"); // **
+    tbControl.loadBackup("backups/MedicineRequests.csv"); // **
     return tbControl;
   }
 
@@ -116,10 +116,22 @@ public class testMedicineRequestTbl {
     // create object from first object in csv and get that object with getEntry
     MedicineRequest refObj =
         new MedicineRequest(
-            146, "FDEPT00101", 123, 456, 0, 100, 111, "Submitted", "", 111, 5, 500); // **
+            420,
+            "GPATI00101",
+            123,
+            456,
+            604800,
+            86400,
+            123,
+            "Submitted",
+            "this is a note",
+            111,
+            111,
+            111); // **
     ArrayList<Integer> test = new ArrayList<>();
-    test.add(146);
+    test.add(420);
     test.add(111);
+
     MedicineRequest tbObj = (MedicineRequest) tbControl.getEntry(test); // **
     System.out.println("tb " + tbObj);
     System.out.println("ref " + refObj);

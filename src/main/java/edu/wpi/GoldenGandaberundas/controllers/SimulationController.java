@@ -889,7 +889,7 @@ public class SimulationController {
   public void createPath(int hour) {
     medEquip = 0;
     animatedPathNodeGroup.getChildren().clear();
-    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+    for (MedEquipment med : (ArrayList<MedEquipment>) MedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPoints(med.getMedID(), hour);
       if (current.get(0).equals(current.get(1))) {
         clearMedPath();
@@ -914,7 +914,7 @@ public class SimulationController {
   public void createPathLonger(int currentHour, int fasterHour) {
     medEquip = 0;
     animatedPathNodeGroup.getChildren().clear();
-    for (MedEquipment med : MedEquipmentTbl.getInstance().readTable()) {
+    for (MedEquipment med : (ArrayList<MedEquipment>) MedEquipmentTbl.getInstance().readTable()) {
       List<String> current = PathTbl.getPathPointsFaster(med.getMedID(), currentHour, fasterHour);
       if (current.get(0).equals(current.get(1))) {
         clearMedPath();

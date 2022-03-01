@@ -74,7 +74,7 @@ public class testEmployeePermissionTbl {
     EmployeePermission refObj = new EmployeePermission(123, 111); // **
     ArrayList<Integer> test = new ArrayList<>();
     test.add(123);
-    test.add(555);
+    test.add(111);
     EmployeePermission tbObj = (EmployeePermission) tbControl.getEntry(test); // **
     // compare them
     Assertions.assertTrue(refObj.equals(tbObj));

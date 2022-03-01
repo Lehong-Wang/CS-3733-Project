@@ -116,7 +116,7 @@ public class testMedEquipmentTbl {
     }
 
     // check the columns    //**
-    String[] cols = {"medID", "type", "status", "currLoc"};
+    String[] cols = {"medID", "medEquipmentType", "status", "currLoc"};
     ArrayList<String> refColNames = new ArrayList(Arrays.asList(cols));
 
     boolean isSame = refColNames.equals(testColNameList);
