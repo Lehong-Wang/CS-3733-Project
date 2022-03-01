@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.LabRequestController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.LabServiceRequestController">
    <center>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
@@ -116,10 +116,10 @@
                   </GridPane>
                   <VBox prefHeight="786.0" prefWidth="948.0">
                      <children>
-                        <TableView fx:id="deviceMenu" prefHeight="351.0" prefWidth="489.0">
+                        <TableView fx:id="labMenu" prefHeight="351.0" prefWidth="489.0">
                           <columns>
-                              <TableColumn fx:id="deviceID" prefWidth="94.79998469352722" text="Device ID" />
-                            <TableColumn fx:id="type" prefWidth="126.0" text="Device Type" />
+                              <TableColumn fx:id="labID" prefWidth="94.79998469352722" text="Lab Service ID" />
+                            <TableColumn fx:id="type" prefWidth="126.0" text="Lab Service Type" />
                             <TableColumn fx:id="locationID" prefWidth="111.60005187988281" text="Location" />
                               <TableColumn fx:id="description" prefWidth="115.199951171875" text="Description" />
                           </columns>
@@ -128,7 +128,7 @@
                   </VBox>
                </children>
             </HBox>
-            <TableView fx:id="avRequests" prefHeight="454.0" prefWidth="1227.0">
+            <TableView fx:id="labRequests" prefHeight="454.0" prefWidth="1227.0">
               <columns>
                 <TableColumn fx:id="requestID" prefWidth="90.80004680156708" text="Request ID" />
                 <TableColumn fx:id="nodeID" prefWidth="84.79997253417969" text="Location" />
@@ -138,7 +138,7 @@
                   <TableColumn fx:id="completedTime" prefWidth="112.66668701171875" text="Completed Time" />
                   <TableColumn fx:id="patientID" prefWidth="97.7333984375" text="Patient ID" />
                   <TableColumn fx:id="status" prefWidth="98.2666015625" text="Status" />
-                  <TableColumn fx:id="device" prefWidth="99.33343505859375" text="Device ID" />
+                  <TableColumn fx:id="labService" prefWidth="99.33343505859375" text="Lab Service ID" />
                   <TableColumn fx:id="notes" prefWidth="143.466552734375" text="Notes" />
               </columns>
                <VBox.margin>
@@ -151,9 +151,9 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_RIGHT">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupAV" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Backup Device List" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupLS" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Backup Lab Service List" textAlignment="CENTER" wrapText="true" />
             <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
-            <JFXButton fx:id="loadMenuButton" onAction="#loadAV" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Load Device Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadLS" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Load Lab Service Backup" textAlignment="CENTER" wrapText="true" />
             <JFXButton fx:id="loadRequestButton" onAction="#loadRequests" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
             <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="100.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
          </children>

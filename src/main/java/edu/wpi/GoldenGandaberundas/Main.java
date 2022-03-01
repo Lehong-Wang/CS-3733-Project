@@ -36,7 +36,7 @@ public class Main {
     LocationTbl.getInstance();
     EmployeeTbl.getInstance();
     LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
-    PatientTbl.getInstance().loadBackup("BackupsCSVs/patientTbl.csv");
+    PatientTbl.getInstance(); //.loadBackup("BackupsCSVs/patientTbl.csv");
     LaundryTbl.getInstance();
     MedEquipmentTbl.getInstance(); // .loadBackup("BackupsCSVs/medEquipmentTbl.csv");
     MedicineTbl.getInstance();

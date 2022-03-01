@@ -2,37 +2,37 @@ package edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService;
 
 import java.util.Objects;
 
-public class LabRequest {
-  private int avID;
-  private String deviceType;
+public class LabService {
+  private int labID;
+  private String labType;
   private String locID;
   private String description;
 
-  public LabRequest(int avID, String deviceType, String locID, String description) {
-    this.avID = avID;
-    this.deviceType = deviceType;
+  public LabService(int labID, String labType, String locID, String description) {
+    this.labID = labID;
+    this.labType = labType;
     this.locID = locID;
     this.description = description;
   }
 
-  public LabRequest() {}
+  public LabService() {}
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    LabRequest that = (LabRequest) o;
-    return avID == that.avID
-        && Objects.equals(deviceType, that.deviceType)
+    LabService that = (LabService) o;
+    return labID == that.labID
+        && Objects.equals(labType, that.labType)
         && Objects.equals(locID, that.locID)
         && Objects.equals(description, that.description);
   }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(avID)
+    sb.append(labID)
         .append(",")
-        .append(deviceType)
+        .append(labType)
         .append(",")
         .append(locID)
         .append(",")
@@ -40,20 +40,20 @@ public class LabRequest {
     return sb.toString();
   }
 
-  public int getAvID() {
-    return avID;
+  public int getLabID() {
+    return labID;
   }
 
-  public void setAvID(int avID) {
-    this.avID = avID;
+  public void setLabID(int labID) {
+    this.labID = labID;
   }
 
-  public String getDeviceType() {
-    return deviceType;
+  public String getLabType() {
+    return labType;
   }
 
-  public void setDeviceType(String deviceType) {
-    this.deviceType = deviceType;
+  public void setLabType(String labType) {
+    this.labType = labType;
   }
 
   public String getLocID() {
