@@ -11,8 +11,13 @@ import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipment.MedEquipment;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentSimulation.SimMedEquipmentTbl;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class Main {
 
@@ -31,7 +36,8 @@ public class Main {
    * @param cssPath path starting from the resources folder
    */
   public void run(
-      int xCoord, int yCoord, int windowWidth, int windowHeight, String cssPath, double frequency) {
+      int xCoord, int yCoord, int windowWidth, int windowHeight, String cssPath, double frequency)
+      throws IOException {
     floorMaps.load();
 
     Scanner readLocs = new Scanner(App.class.getResourceAsStream("locationTbl.csv"));
@@ -72,8 +78,6 @@ public class Main {
     }
     readPaths.close();
 
-    // MedEquipment med = new MedEquipment(Integer.parseInt(ele[0]), ele[1], ele[2], ele[3]);
-
     Scanner redMeds = new Scanner(App.class.getResourceAsStream("medEquipmentTbl.csv"));
     if (redMeds.hasNext()) {
       redMeds.nextLine();
@@ -98,31 +102,21 @@ public class Main {
     SimulatePumps.setFrequency(frequency);
     SimulateXRay.setFrequency(frequency);
 
-    //    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
-    //    Scene scene = new Scene(root, windowWidth, windowHeight);
-    //    // Below line is to set styleSheet, does not maintain styleSheet when switching scenes
-    // unless
-    //    // stylesheet is added in fxml file
-    //    Stage stage2 = new Stage();
-    //    scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
-    //    stage2.setScene(scene);
-    //    // primaryStage.setMaximized(false);
-    //    stage2.setX(xCoord);
-    //    stage2.setY(yCoord);
-    //    stage2.setWidth(windowWidth);
-    //    stage2.setHeight(windowHeight);
-    //    stage2.show();
+    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
+    Scene scene = new Scene(root, windowWidth, windowHeight);
 
-    App.launch(
-        App.class,
-        String.valueOf(xCoord),
-        String.valueOf(yCoord),
-        String.valueOf(windowWidth),
-        String.valueOf(windowHeight),
-        cssPath);
+    Stage stage2 = new Stage();
+    scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+    stage2.setScene(scene);
+    // primaryStage.setMaximized(false);
+    stage2.setX(xCoord);
+    stage2.setY(yCoord);
+    stage2.setWidth(windowWidth);
+    stage2.setHeight(windowHeight);
+    stage2.show();
   }
 
-  public void run() {
+  public void run() throws IOException {
     run(0, 0, 1000, 1000, "", 1);
   }
 }
