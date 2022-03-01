@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXNodesList;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.MedEquipmentSimulation;
+import edu.wpi.GoldenGandaberundas.controllers.simulation.SimulatePumps;
 import edu.wpi.GoldenGandaberundas.controllers.simulation.Simulation;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
@@ -13,9 +15,8 @@ import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEqui
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -27,6 +28,8 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -60,6 +63,22 @@ public class SimulationController {
   @FXML private Pane nodeDataPane;
   @FXML private Pane sideViewPane;
 
+  @FXML GridPane gridPane = new GridPane();
+  @FXML private Label traveledID = new Label();
+  @FXML private Label traveledNum = new Label();
+  @FXML private Label mostTraveledID = new Label();
+  @FXML private Label mostTraveledNum = new Label();
+  @FXML private Label most2TraveledID = new Label();
+  @FXML private Label most2TraveledNum = new Label();
+  @FXML private Label most3TraveledID = new Label();
+  @FXML private Label most3TraveledNum = new Label();
+  @FXML private Label most4TraveledID = new Label();
+  @FXML private Label most4TraveledNum = new Label();
+  @FXML private Label most5TraveledID = new Label();
+  @FXML private Label most5TraveledNum = new Label();
+  @FXML private VBox statsBox = new VBox();
+  @FXML private Label statsTitle = new Label();
+
   public TableController<Location, String> locations = null;
   private ImageView mapImage = null;
   private Group imageGroup = null;
@@ -75,6 +94,10 @@ public class SimulationController {
   private Integer fasterHour = 0;
   private ArrayList<ArrayList<ArrayList<String>>> coord = null;
   private Integer medEquip;
+  private boolean start = true;
+  private boolean next = false;
+  CategoryAxis nodes = new CategoryAxis();
+  NumberAxis mostTraveled = new NumberAxis();
 
   private Rectangle rect;
 
@@ -120,6 +143,56 @@ public class SimulationController {
 
   @FXML
   public void initialize() {
+    traveledID.setText("Location ID");
+    traveledID.setStyle("-fx-text-fill: white; -fx-underline: true");
+    traveledNum.setText("Occurrences");
+    traveledNum.setStyle("-fx-text-fill: white; -fx-underline: true");
+    mostTraveledID.setStyle("-fx-text-fill: white");
+    mostTraveledNum.setStyle("-fx-text-fill: white");
+
+    most2TraveledID.setStyle("-fx-text-fill: white");
+    most2TraveledNum.setStyle("-fx-text-fill: white");
+
+    most3TraveledID.setStyle("-fx-text-fill: white");
+    most3TraveledNum.setStyle("-fx-text-fill: white");
+
+    most4TraveledID.setStyle("-fx-text-fill: white");
+    most4TraveledNum.setStyle("-fx-text-fill: white");
+
+    most5TraveledID.setStyle("-fx-text-fill: white");
+    most5TraveledNum.setStyle("-fx-text-fill: white");
+
+    gridPane.setMaxSize(200, 100);
+    gridPane.add(traveledID, 1, 1);
+    gridPane.add(traveledNum, 2, 1);
+    gridPane.add(mostTraveledID, 1, 2);
+    gridPane.add(mostTraveledNum, 2, 2);
+    gridPane.add(most2TraveledID, 1, 3);
+    gridPane.add(most2TraveledNum, 2, 3);
+    gridPane.add(most3TraveledID, 1, 4);
+    gridPane.add(most3TraveledNum, 2, 4);
+    gridPane.add(most4TraveledID, 1, 5);
+    gridPane.add(most4TraveledNum, 2, 5);
+    gridPane.add(most5TraveledID, 1, 6);
+    gridPane.add(most5TraveledNum, 2, 6);
+    gridPane.setStyle("-fx-text-fill: white");
+    gridPane.alignmentProperty().set(Pos.CENTER);
+    gridPane.setHgap(20);
+    gridPane.setVgap(4);
+    gridPane.setPadding(new Insets(2, 12, 2, 0));
+    gridPane.setCenterShape(true);
+
+    statsTitle.setText("Most Locations Traveled");
+    statsTitle.setStyle("-fx-text-fill: black;-fx-text-fill: white; -fx-font-size: 16");
+    statsTitle.alignmentProperty().setValue(Pos.CENTER);
+
+    statsBox.getChildren().add(statsTitle);
+    statsBox.getChildren().add(gridPane);
+    statsBox.setStyle(
+        "-fx-background-color: #002D59;-fx-background-radius: 5px;-fx-border-radius: 5px");
+    statsBox.setMaxSize(200, 120);
+    statsBox.alignmentProperty().set(Pos.CENTER);
+
     coord = new ArrayList<ArrayList<ArrayList<String>>>();
     coord.add(new ArrayList<ArrayList<String>>());
     coord.add(new ArrayList<ArrayList<String>>());
@@ -401,6 +474,9 @@ public class SimulationController {
             }
           }
         });
+    imagePane.getChildren().add(statsBox);
+    statsBox.setTranslateX(600);
+    statsBox.setTranslateY(50);
 
     try {
       Node subPane = (Node) subControllerLoader.load();
@@ -449,12 +525,15 @@ public class SimulationController {
           Simulation sim = new Simulation();
           sim.update((int) (timeSlider.getValue() * 4));
           animatedPathNodeGroup.getChildren().clear();
+          start = true;
+          next = false;
           currentHour = 0;
           createPath(currentHour);
           toggleStart.setText("Rerun Simulation");
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
           setEquipment();
-          PathTbl.printStatsMap();
+          updateStats();
+          start = false;
         });
     // creates the next hour button
     JFXButton nextHour = new JFXButton();
@@ -466,11 +545,12 @@ public class SimulationController {
     nextHour.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
+          next = true;
           currentHour++;
           createPath(currentHour);
+          updateStats();
           setEquipment();
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
-          PathTbl.printStatsMap();
         });
     // previous hour button
     JFXButton prevHour = new JFXButton();
@@ -480,10 +560,12 @@ public class SimulationController {
     prevHour.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
+          next = false;
           if (currentHour != 0) {
             currentHour--;
           }
           createPath(currentHour);
+          updateStats();
           setEquipment();
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
         });
@@ -559,10 +641,12 @@ public class SimulationController {
     simulateLonger.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
+          next = true;
           fasterHour = (int) (moreHourSlider.getValue() * 4);
           createPathLonger(currentHour, fasterHour);
           currentHour = currentHour + fasterHour;
           setEquipment();
+          updateStats();
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
         });
 
@@ -902,6 +986,13 @@ public class SimulationController {
       dividePath(astar);
       animatedPath();
       medEquip++;
+      if (currentHour == 0 && start) {
+        PathTbl.zeroPathStats();
+      } else if (!start && next) {
+        PathTbl.pathStats(astar);
+      } else if (!start && !next) {
+        PathTbl.pathRemoveStats(astar);
+      }
     }
     updateSideView(MedEquipmentTbl.getInstance().readTable());
     sideViewPane.toFront();
@@ -927,6 +1018,11 @@ public class SimulationController {
       dividePath(astar);
       animatedPath();
       medEquip++;
+      if (currentHour == 0) {
+        PathTbl.zeroPathStats();
+      } else if (!start && next) {
+        PathTbl.pathStats(astar);
+      }
     }
     updateSideView(MedEquipmentTbl.getInstance().readTable());
     sideViewPane.toFront();
@@ -1416,5 +1512,56 @@ public class SimulationController {
     public void showIcon() {
       if (displayed) icon.setVisible(true);
     }
+  }
+
+  public void updateStats() {
+    Map<String, Integer> hm1 = sortByValue(PathTbl.getStatsMap());
+    int count = 0;
+    ArrayList<String> nodes = new ArrayList<>();
+    ArrayList<Integer> num = new ArrayList<>();
+
+    for (Map.Entry<String, Integer> en : hm1.entrySet()) {
+      nodes.add(en.getKey());
+      num.add(en.getValue());
+      if (count == 4) {
+        break;
+      }
+      count++;
+    }
+
+    mostTraveledID.setText(nodes.get(0));
+    most2TraveledID.setText(nodes.get(1));
+    most3TraveledID.setText(nodes.get(2));
+    most4TraveledID.setText(nodes.get(3));
+    most5TraveledID.setText(nodes.get(4));
+
+    mostTraveledNum.setText(num.get(0).toString());
+    most2TraveledNum.setText(num.get(1).toString());
+    most3TraveledNum.setText(num.get(2).toString());
+    most4TraveledNum.setText(num.get(3).toString());
+    most5TraveledNum.setText(num.get(4).toString());
+
+  }
+
+  public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
+    // Create a list from elements of HashMap
+    List<Map.Entry<String, Integer>> list =
+        new LinkedList<Map.Entry<String, Integer>>(hm.entrySet());
+
+    // Sort the list
+    Collections.sort(
+        list,
+        new Comparator<Map.Entry<String, Integer>>() {
+          public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+            return (o2.getValue()).compareTo(o1.getValue());
+          }
+        });
+
+    // put data from sorted list to hashmap
+    HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+    for (Map.Entry<String, Integer> aa : list) {
+      temp.put(aa.getKey(), aa.getValue());
+    }
+    return temp;
   }
 }

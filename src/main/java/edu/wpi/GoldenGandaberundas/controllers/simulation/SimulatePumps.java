@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulatePumps {
   private static ArrayList<MedEquipmentSimulation> newPumpList = new ArrayList<>();
-  private static ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
+  public static ArrayList<MedEquipmentSimulation> Pumps_List = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_Stored = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_Dirty = new ArrayList<>();
   private static ArrayList<MedEquipmentSimulation> Pumps_InRoom = new ArrayList<>();
@@ -33,10 +33,12 @@ public class SimulatePumps {
     if (PRINT_PUMP_SIM) {
       printPumpLists();
     }
+
     updateDirtyPumps();
     updateCleaningPumps();
     updateInUsePumps();
     updateStoredPumps();
+
     if (DEUBUG_PUMP_SIM) {
       System.out.println("New Pump List" + "(" + newPumpList.size() + "): " + newPumpList);
     }
@@ -226,7 +228,7 @@ public class SimulatePumps {
       tempPump.setCurrLoc(loc);
       tempPump.setStatus("In-Use");
       // TODO change hours to be more realistic
-      int rndTTD = ThreadLocalRandom.current().nextInt(1, 16);
+      int rndTTD = ThreadLocalRandom.current().nextInt(1, 10);
       tempPump.setInRoomEndTime(hours + rndTTD);
       if (DEUBUG_PUMP_SIM) {
         System.out.println(
