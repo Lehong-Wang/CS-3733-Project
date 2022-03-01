@@ -434,55 +434,9 @@ public class mainController {
   }
 
 
-  @FXML
-  public void switchComputerServiceHelpPage() {
-    nodeSwitch("views/computerServiceHelpPage.fxml");
-  }
 
-  @FXML
-  public void switchemployeeDatabaseAndRequestsViewHelpPage() {
-    nodeSwitch("views/employeeDatabaseAndRequestsViewHelpPage.fxml");
-  }
 
-  @FXML
-  public void switchequipmentDeliveryHelpPage() {
-    nodeSwitch("views/equipmentDeliveryHelpPage.fxml");
-  }
 
-  @FXML
-  public void switchfoodDeliveryHelpPage() {
-    nodeSwitch("views/foodDeliveryHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchgiftFloralHelpPage() {
-    nodeSwitch("views/giftFloralHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchLanguageRequestHelpPage() {
-    nodeSwitch("views/LanguageRequestHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchlaundryHelpPage() {
-    nodeSwitch("views/laundryHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchmapViewerHelpPage() {
-    nodeSwitch("views/mapViewerHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchmedicineDeliveryHelpPage() {
-    nodeSwitch("views/medicineDeliveryHelpPage.fxml");
-  }
-
-  @FXML
-  public void switchsideViewHelpPage() {
-    nodeSwitch("views/sideViewHelpPage.fxml");
-  }
 
   public void switchSimulationView() {
     nodeSwitch("views/simulationView.fxml");
