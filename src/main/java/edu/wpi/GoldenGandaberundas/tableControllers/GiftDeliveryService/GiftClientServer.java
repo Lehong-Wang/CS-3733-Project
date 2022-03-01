@@ -180,6 +180,8 @@ public class GiftClientServer implements TableController<Gift, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
+
     return true;
   }
 

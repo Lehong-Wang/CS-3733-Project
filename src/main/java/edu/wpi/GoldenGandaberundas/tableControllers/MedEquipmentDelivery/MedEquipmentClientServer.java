@@ -188,6 +188,7 @@ public class MedEquipmentClientServer implements TableController<MedEquipment, I
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

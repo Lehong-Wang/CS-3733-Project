@@ -208,6 +208,7 @@ public class GiftRequestEmbedded implements TableController<GiftRequest, ArrayLi
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

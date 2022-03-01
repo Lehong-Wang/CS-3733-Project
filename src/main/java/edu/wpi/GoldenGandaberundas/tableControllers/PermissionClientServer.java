@@ -178,6 +178,7 @@ public class PermissionClientServer implements TableController<Permission, Integ
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

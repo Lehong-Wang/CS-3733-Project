@@ -257,6 +257,7 @@ public class LocationClientServer implements TableController<Location, String> {
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
+      objList = readTable();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();

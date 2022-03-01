@@ -225,6 +225,7 @@ public class MedicineRequestClientServer
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

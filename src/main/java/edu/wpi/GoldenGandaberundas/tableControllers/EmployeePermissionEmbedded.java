@@ -193,6 +193,7 @@ public class EmployeePermissionEmbedded
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

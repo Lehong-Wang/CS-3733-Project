@@ -218,6 +218,7 @@ public class MedicineRequestEmbedded
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

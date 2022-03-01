@@ -179,6 +179,7 @@ public class MedicineClientServer implements TableController<Medicine, Integer> 
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

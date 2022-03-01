@@ -193,6 +193,7 @@ public class AudioVisualEmbedded implements TableController<AudioVisual, Integer
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

@@ -213,6 +213,7 @@ public class EmployeeEmbedded implements TableController<Employee, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

@@ -208,15 +208,23 @@ public class FoodEmbedded implements TableController<Food, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Food> objList) {
+    this.createTable();
+    deleteTableData();
+    for (Food f : objList) {
+      if (!this.addEntry(f)) {
+        return false;
+      }
+    }
+    this.objList = readTable();
+    return true;
+  }
+
+  private void deleteTableData() {
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
-      this.objList = objList;
-      this.writeTable();
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
   }
 

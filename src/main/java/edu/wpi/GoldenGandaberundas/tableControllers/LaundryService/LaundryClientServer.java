@@ -193,6 +193,7 @@ public class LaundryClientServer implements TableController<Laundry, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

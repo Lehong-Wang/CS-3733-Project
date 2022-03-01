@@ -205,6 +205,7 @@ public class MedEquipRequestEmbedded
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

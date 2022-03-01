@@ -355,6 +355,7 @@ public class LocationEmbedded implements TableController<Location, String> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Location> objList) {
+    System.out.println(objList);
     this.createTable();
     deleteTableData();
     for (Location loc : objList) {
@@ -369,6 +370,7 @@ public class LocationEmbedded implements TableController<Location, String> {
     try {
       PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
+      System.out.println(this.readTable());
     } catch (SQLException e) {
       e.printStackTrace();
     }

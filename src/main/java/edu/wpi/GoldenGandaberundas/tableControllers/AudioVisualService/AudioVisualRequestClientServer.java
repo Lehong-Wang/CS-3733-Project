@@ -204,6 +204,7 @@ public class AudioVisualRequestClientServer
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

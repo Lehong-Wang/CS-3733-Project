@@ -211,6 +211,7 @@ public class AudioVisualRequestEmbedded
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

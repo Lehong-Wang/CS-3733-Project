@@ -68,7 +68,7 @@ public class EmployeePermissionClientServer
                       + tbName
                       + " WHERE "
                       + colNames.get(0)
-                      + " = ?) AND"
+                      + " = ? AND "
                       + colNames.get(1)
                       + " = ?)"
                       + "BEGIN"
@@ -79,8 +79,8 @@ public class EmployeePermissionClientServer
       // **
       s.setInt(1, empPerm.getEmpID());
       s.setInt(2, empPerm.getPermID());
-      s.setInt(1, empPerm.getEmpID());
-      s.setInt(2, empPerm.getPermID());
+      s.setInt(3, empPerm.getEmpID());
+      s.setInt(4, empPerm.getPermID());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -191,6 +191,7 @@ public class EmployeePermissionClientServer
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 
@@ -201,6 +202,7 @@ public class EmployeePermissionClientServer
               .getConnection()
               .prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
+      objList = this.readTable();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -210,9 +212,9 @@ public class EmployeePermissionClientServer
   public void writeTable() {
 
     for (EmployeePermission obj : objList) {
-
       this.addEntry(obj);
     }
+    this.objList = readTable();
   }
 
   /**
@@ -245,6 +247,7 @@ public class EmployeePermissionClientServer
       s.setObject(1, value);
       s.setObject(2, pkid);
       s.executeUpdate();
+      this.objList = this.readTable();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();

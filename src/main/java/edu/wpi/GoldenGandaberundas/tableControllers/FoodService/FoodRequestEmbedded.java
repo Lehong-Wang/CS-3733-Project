@@ -210,6 +210,7 @@ public class FoodRequestEmbedded implements TableController<FoodRequest, ArrayLi
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

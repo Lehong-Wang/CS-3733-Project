@@ -203,6 +203,7 @@ public class LaundryRequestClientServer
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

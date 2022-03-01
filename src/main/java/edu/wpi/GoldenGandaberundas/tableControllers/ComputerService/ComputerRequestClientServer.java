@@ -211,6 +211,8 @@ public class ComputerRequestClientServer
         return false;
       }
     }
+    this.objList = readTable();
+
     return true;
   }
 

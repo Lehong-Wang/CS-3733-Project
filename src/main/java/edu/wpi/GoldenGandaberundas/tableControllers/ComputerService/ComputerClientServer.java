@@ -208,6 +208,8 @@ public class ComputerClientServer implements TableController<Computer, Integer> 
         return false;
       }
     }
+    this.objList = this.readTable();
+
     return true;
   }
 

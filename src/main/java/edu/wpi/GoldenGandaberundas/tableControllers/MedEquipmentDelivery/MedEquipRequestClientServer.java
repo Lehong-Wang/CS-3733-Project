@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class MedEquipRequestClientServer
     implements TableController<MedEquipRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
@@ -201,6 +201,7 @@ public class MedEquipRequestClientServer
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

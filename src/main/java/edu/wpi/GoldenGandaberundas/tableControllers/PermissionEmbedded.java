@@ -186,6 +186,7 @@ public class PermissionEmbedded implements TableController<Permission, Integer> 
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

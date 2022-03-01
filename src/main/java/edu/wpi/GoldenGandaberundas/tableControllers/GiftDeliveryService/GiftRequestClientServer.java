@@ -206,6 +206,7 @@ public class GiftRequestClientServer implements TableController<GiftRequest, Arr
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

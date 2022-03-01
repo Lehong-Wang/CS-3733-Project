@@ -203,6 +203,7 @@ public class LaundryRequestEmbedded implements TableController<LaundryRequest, A
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

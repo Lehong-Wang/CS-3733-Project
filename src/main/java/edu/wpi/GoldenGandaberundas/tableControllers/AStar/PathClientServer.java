@@ -180,6 +180,8 @@ public class PathClientServer implements TableController<Path, String> {
         return false;
       }
     }
+    this.objList = this.readTable();
+
     return true;
   }
 

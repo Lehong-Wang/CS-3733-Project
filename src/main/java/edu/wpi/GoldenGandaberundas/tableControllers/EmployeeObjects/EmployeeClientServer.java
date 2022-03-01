@@ -204,6 +204,8 @@ public class EmployeeClientServer implements TableController<Employee, Integer> 
         return false;
       }
     }
+    this.objList = this.readTable();
+
     return true;
   }
 

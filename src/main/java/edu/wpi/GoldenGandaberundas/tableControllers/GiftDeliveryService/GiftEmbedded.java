@@ -180,7 +180,25 @@ public class GiftEmbedded implements TableController<Gift, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Gift> objList) {
-    return false;
+    this.createTable();
+    deleteTableData();
+    for (Gift gift : objList) {
+      if (!this.addEntry(gift)) {
+        return false;
+      }
+    }
+    this.objList = readTable();
+
+    return true;
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public void writeTable() {

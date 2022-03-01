@@ -151,6 +151,7 @@ public class PathEmbedded implements TableController<Path, String> {
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

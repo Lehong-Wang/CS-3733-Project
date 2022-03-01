@@ -189,6 +189,7 @@ public class MedicineEmbedded implements TableController<Medicine, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

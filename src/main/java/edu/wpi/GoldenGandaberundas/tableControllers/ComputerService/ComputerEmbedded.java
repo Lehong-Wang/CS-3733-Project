@@ -166,6 +166,7 @@ public class ComputerEmbedded implements TableController<Computer, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

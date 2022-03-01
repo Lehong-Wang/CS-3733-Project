@@ -205,6 +205,7 @@ public class FoodRequestClientServer implements TableController<FoodRequest, Arr
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 

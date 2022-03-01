@@ -193,6 +193,7 @@ public class MedEquipmentEmbedded implements TableController<MedEquipment, Integ
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

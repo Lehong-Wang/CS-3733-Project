@@ -181,6 +181,7 @@ public class AudioVisualClientServer implements TableController<AudioVisual, Int
         return false;
       }
     }
+    this.objList = this.readTable();
     return true;
   }
 
@@ -189,6 +190,7 @@ public class AudioVisualClientServer implements TableController<AudioVisual, Int
       PreparedStatement s =
           connectionHandler.getConnection().prepareStatement("DELETE FROM " + tbName + ";");
       s.executeUpdate();
+      this.objList = this.readTable();
     } catch (SQLException e) {
       e.printStackTrace();
     }

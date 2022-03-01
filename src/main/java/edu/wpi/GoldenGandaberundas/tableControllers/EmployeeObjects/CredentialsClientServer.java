@@ -186,6 +186,7 @@ public class CredentialsClientServer implements TableController<Credential, Inte
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

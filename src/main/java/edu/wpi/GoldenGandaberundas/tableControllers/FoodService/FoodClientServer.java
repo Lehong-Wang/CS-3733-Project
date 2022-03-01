@@ -207,6 +207,7 @@ public class FoodClientServer implements TableController<Food, Integer> {
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

@@ -197,6 +197,7 @@ public class CredentialsEmbedded implements TableController<Credential, Integer>
         return false;
       }
     }
+    this.objList = readTable();
     return true;
   }
 

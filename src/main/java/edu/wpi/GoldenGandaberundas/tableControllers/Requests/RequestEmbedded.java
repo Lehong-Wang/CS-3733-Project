@@ -309,7 +309,24 @@ public class RequestEmbedded implements TableController<Request, Integer> {
 
   @Override
   public boolean loadFromArrayList(ArrayList<Request> objList) {
-    return false;
+    this.createTable();
+    deleteTableData();
+    for (Request request : objList) {
+      if (!this.addEntry(request)) {
+        return false;
+      }
+    }
+    this.objList = this.readTable();
+    return true;
+  }
+
+  private void deleteTableData() {
+    try {
+      PreparedStatement s = connection.prepareStatement("DELETE FROM " + tbName + ";");
+      s.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
