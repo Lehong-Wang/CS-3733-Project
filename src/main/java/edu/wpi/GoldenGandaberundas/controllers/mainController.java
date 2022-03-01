@@ -240,14 +240,23 @@ public class mainController {
     int currID = CurrentUser.getUser().getEmpID();
     ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
     boolean hideShit = true;
+    boolean hideProvider = true;
     for (int i = 0; i < perms.size(); i++) {
       if (perms.get(i) == 111) {
         hideShit = false;
+        hideProvider = false;
+        break;
+      }
+      if (perms.get(i) == 555 || perms.get(i) == 666) {
+        hideProvider = false;
         break;
       }
     }
     if (hideShit == true) {
       hideAdmin();
+    }
+    if (hideProvider == true) {
+      hideProviderPage();
     }
   }
 
@@ -255,6 +264,12 @@ public class mainController {
   public void hideAdmin() {
     EmployeeDBButton.setVisible(false);
     EmployeeDBButton.setManaged(false);
+  }
+
+  /** Method for hiding the provider button in the main page */
+  public void hideProviderPage() {
+    serviceProviderButton.setManaged(false);
+    serviceProviderButton.setVisible(false);
   }
 
   public void goHome(ActionEvent actionEvent) {
@@ -270,6 +285,7 @@ public class mainController {
     toggleRequestButtons(false);
     toggleMapButtons(false);
     toggleProviderButtons(false);
+    checkPerms();
     nodeSwitch("views/homePage.fxml");
     slideShow();
   }
