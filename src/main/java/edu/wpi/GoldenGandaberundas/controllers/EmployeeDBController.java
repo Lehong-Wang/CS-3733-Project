@@ -144,6 +144,7 @@ public class EmployeeDBController implements Initializable {
 
   /**
    * adds a new employee
+   *
    * @throws IOException oops
    */
   public void addEmployee() throws IOException {
