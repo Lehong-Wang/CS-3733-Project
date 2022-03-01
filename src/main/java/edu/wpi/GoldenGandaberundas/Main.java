@@ -78,7 +78,7 @@ public class Main {
     ComputerRequestTbl.getInstance();
     AudioVisualRequestTbl.getInstance();
     ConnectionHandler.getInstance().setConnection(ConnectionType.clientServer);
-
+    System.out.println(LocationTbl.getInstance().editEntry("FDEPT00101", "xcoord", 100));
     ConnectionHandler.getInstance().setConnection(ConnectionType.embedded);
 
     //    floorMaps.load();
