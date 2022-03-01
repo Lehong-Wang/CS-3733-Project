@@ -5,8 +5,6 @@ import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipRequest;
@@ -171,7 +169,8 @@ public class EquipmentProviderController {
 
     pathButton.setOnMouseReleased(
         (event) -> {
-          FoodRequest selectedItem = (FoodRequest) equipTable.getSelectionModel().getSelectedItem();
+          MedEquipRequest selectedItem =
+              (MedEquipRequest) equipTable.getSelectionModel().getSelectedItem();
           try {
             String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
             String end = (String) selectedItem.getLocationID();
@@ -195,6 +194,7 @@ public class EquipmentProviderController {
         });
   }
 
+  /** Method that populates the stating location search box with possible hospital locations */
   public void locList() {
     ArrayList<Location> locArray = new ArrayList<Location>();
     locArray = locationTableController.readTable();
@@ -206,6 +206,11 @@ public class EquipmentProviderController {
     locationSearchBox.setItems(oList);
   }
 
+  /**
+   * Pathfinding method that splits the path among multiple array lists
+   *
+   * @param locs
+   */
   public void dividePath(List<String> locs) {
     coord.get(0).clear();
     coord.get(1).clear();
@@ -311,6 +316,10 @@ public class EquipmentProviderController {
     }
   }
 
+  /**
+   * Method that is used to update the status of a request when a status is selected and enter is
+   * pressed
+   */
   @FXML
   public void updateStatus() {
     try {
@@ -323,6 +332,9 @@ public class EquipmentProviderController {
         LocalDateTime t = LocalDateTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES);
         String timeDisplay = t.toString().replace("T", " ");
         timeCompLabel.setText(timeDisplay);
+      } else if (curStatus != "Completed") {
+        RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "timeEnd", 0);
+        timeCompLabel.setText("0");
       }
       statusLabel.setText(curStatus);
       refresh();
@@ -331,6 +343,7 @@ public class EquipmentProviderController {
     }
   }
 
+  /** Method that displays information about the selected request above the request table */
   @FXML
   public void getRequestInfo() {
     if (equipTable.getSelectionModel().getSelectedItem() != null) {
@@ -381,7 +394,7 @@ public class EquipmentProviderController {
    */
   @FXML
   public void refresh() {
-    tableController = FoodRequestTbl.getInstance();
+    tableController = MedEquipRequestTbl.getInstance();
     equipTable.getItems().setAll(tableController.readTable());
   }
 

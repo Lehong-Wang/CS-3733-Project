@@ -1,13 +1,11 @@
-package edu.wpi.GoldenGandaberundas.controllers.FoodControllers;
+package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
-import edu.wpi.GoldenGandaberundas.controllers.MapController;
-import edu.wpi.GoldenGandaberundas.controllers.mainController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequest;
+import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
@@ -37,7 +35,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
@@ -45,7 +45,7 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 import org.controlsfx.control.SearchableComboBox;
 
-public class FoodProviderController {
+public class AudioVisualProviderController {
 
   @FXML private SearchableComboBox<String> locationSearchBox;
   @FXML private Label requestIDLabel;
@@ -54,15 +54,15 @@ public class FoodProviderController {
   @FXML private Label statusLabel;
   @FXML private Label timeStartLabel;
   @FXML private Label timeCompLabel;
-  @FXML private Label foodIDLabel;
+  @FXML private Label avIDLabel;
 
-  @FXML private TableView foodTable;
-  @FXML private TableColumn<FoodRequest, Integer> reqID;
-  @FXML private TableColumn<FoodRequest, String> locID;
-  @FXML private TableColumn<FoodRequest, Integer> tStartCol;
-  @FXML private TableColumn<FoodRequest, Integer> tEndCol;
-  @FXML TableColumn<FoodRequest, Integer> patientID;
-  @FXML TableColumn<FoodRequest, String> requestStatus;
+  @FXML private TableView avTable;
+  @FXML private TableColumn<AudioVisualRequest, Integer> reqID;
+  @FXML private TableColumn<AudioVisualRequest, String> locID;
+  @FXML private TableColumn<AudioVisualRequest, Integer> tStartCol;
+  @FXML private TableColumn<AudioVisualRequest, Integer> tEndCol;
+  @FXML TableColumn<AudioVisualRequest, Integer> patientID;
+  @FXML TableColumn<AudioVisualRequest, String> requestStatus;
 
   @FXML private JFXButton pathButton;
   @FXML private JFXButton clearButton;
@@ -91,9 +91,7 @@ public class FoodProviderController {
   private Group animatedPathNodeGroup = null;
   private List<String> astar = null;
 
-  mainController main = null;
-
-  private TableController tableController = FoodRequestTbl.getInstance();
+  private TableController tableController = AudioVisualRequestTbl.getInstance();
   private LocationTbl locationTableController = LocationTbl.getInstance();
   private PathTbl path = PathTbl.getInstance();
 
@@ -109,13 +107,15 @@ public class FoodProviderController {
     coord.add(new ArrayList<>());
     locations = LocationTbl.getInstance();
 
-    reqID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("requestID"));
-    locID.setCellValueFactory(new PropertyValueFactory<FoodRequest, String>("locationID"));
-    tStartCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeStart"));
-    tEndCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeEnd"));
-    patientID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("patientID"));
+    reqID.setCellValueFactory(new PropertyValueFactory<AudioVisualRequest, Integer>("requestID"));
+    locID.setCellValueFactory(new PropertyValueFactory<AudioVisualRequest, String>("locationID"));
+    tStartCol.setCellValueFactory(
+        new PropertyValueFactory<AudioVisualRequest, Integer>("timeStart"));
+    tEndCol.setCellValueFactory(new PropertyValueFactory<AudioVisualRequest, Integer>("timeEnd"));
+    patientID.setCellValueFactory(
+        new PropertyValueFactory<AudioVisualRequest, Integer>("patientID"));
     requestStatus.setCellValueFactory(
-        new PropertyValueFactory<FoodRequest, String>("requestStatus"));
+        new PropertyValueFactory<AudioVisualRequest, String>("requestStatus"));
 
     refresh();
 
@@ -149,7 +149,7 @@ public class FoodProviderController {
     statusLabel.setText("");
     timeStartLabel.setText("");
     timeCompLabel.setText("");
-    foodIDLabel.setText("");
+    avIDLabel.setText("");
 
     HBox floorSelect = createFloorSelector();
     floorSelect.setMaxHeight(25);
@@ -161,7 +161,7 @@ public class FoodProviderController {
     // Populating the location search box
     locList();
 
-    foodTable.setOnMouseClicked(
+    avTable.setOnMouseClicked(
         e -> {
           if (e.getClickCount() > 1) {
             getRequestInfo();
@@ -170,7 +170,8 @@ public class FoodProviderController {
 
     pathButton.setOnMouseReleased(
         (event) -> {
-          FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+          AudioVisualRequest selectedItem =
+              (AudioVisualRequest) avTable.getSelectionModel().getSelectedItem();
           try {
             String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
             String end = (String) selectedItem.getLocationID();
@@ -323,7 +324,7 @@ public class FoodProviderController {
   @FXML
   public void updateStatus() {
     try {
-      Request selectedItem = (Request) foodTable.getSelectionModel().getSelectedItem();
+      Request selectedItem = (Request) avTable.getSelectionModel().getSelectedItem();
       String curStatus = (String) statusBox.getSelectionModel().getSelectedItem();
       RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "requestStatus", curStatus);
       if (curStatus == "Completed") {
@@ -346,8 +347,9 @@ public class FoodProviderController {
   /** Method that displays information about the selected request above the request table */
   @FXML
   public void getRequestInfo() {
-    if (foodTable.getSelectionModel().getSelectedItem() != null) {
-      FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+    if (avTable.getSelectionModel().getSelectedItem() != null) {
+      AudioVisualRequest selectedItem =
+          (AudioVisualRequest) avTable.getSelectionModel().getSelectedItem();
       try {
         // tableController.getEntry(selectedItem.getPK())
         Integer id = selectedItem.getRequestID();
@@ -378,8 +380,8 @@ public class FoodProviderController {
         String eTimeDisplay = endDate.toString().replace("T", " ");
         timeCompLabel.setText(eTimeDisplay);
 
-        Integer foodID = selectedItem.getFoodID();
-        foodIDLabel.setText(String.valueOf(foodID));
+        Integer avID = selectedItem.getAudioVisualID();
+        avIDLabel.setText(String.valueOf(avID));
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -393,15 +395,10 @@ public class FoodProviderController {
    */
   @FXML
   public void refresh() {
-    tableController = FoodRequestTbl.getInstance();
-    foodTable.getItems().setAll(tableController.readTable());
+    tableController = AudioVisualRequestTbl.getInstance();
+    avTable.getItems().setAll(tableController.readTable());
   }
 
-  /**
-   * Method to create the icons on the map
-   *
-   * @param loc
-   */
   @FXML
   public void createIcon(Location loc) {
     LocationCircle placeHolder = new LocationCircle(loc);
@@ -414,11 +411,6 @@ public class FoodProviderController {
     placeHolder.setLayoutY(loc.getYcoord());
   }
 
-  /**
-   * Method that get the locations from location table for the nodes
-   *
-   * @param floor
-   */
   public void setLocations(String floor) {
     locNodePane.getChildren().clear();
     currentFloor = floor;

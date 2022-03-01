@@ -1,4 +1,4 @@
-package edu.wpi.GoldenGandaberundas.controllers.FoodControllers;
+package edu.wpi.GoldenGandaberundas.controllers.ComputerServiceControllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.TableController;
@@ -6,8 +6,8 @@ import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.controllers.MapController;
 import edu.wpi.GoldenGandaberundas.controllers.mainController;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequest;
-import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequest;
+import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
@@ -37,7 +37,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
@@ -45,7 +47,7 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 import org.controlsfx.control.SearchableComboBox;
 
-public class FoodProviderController {
+public class ComputerProviderController {
 
   @FXML private SearchableComboBox<String> locationSearchBox;
   @FXML private Label requestIDLabel;
@@ -54,15 +56,15 @@ public class FoodProviderController {
   @FXML private Label statusLabel;
   @FXML private Label timeStartLabel;
   @FXML private Label timeCompLabel;
-  @FXML private Label foodIDLabel;
+  @FXML private Label computerIDLabel;
 
-  @FXML private TableView foodTable;
-  @FXML private TableColumn<FoodRequest, Integer> reqID;
-  @FXML private TableColumn<FoodRequest, String> locID;
-  @FXML private TableColumn<FoodRequest, Integer> tStartCol;
-  @FXML private TableColumn<FoodRequest, Integer> tEndCol;
-  @FXML TableColumn<FoodRequest, Integer> patientID;
-  @FXML TableColumn<FoodRequest, String> requestStatus;
+  @FXML private TableView computerTable;
+  @FXML private TableColumn<ComputerRequest, Integer> reqID;
+  @FXML private TableColumn<ComputerRequest, String> locID;
+  @FXML private TableColumn<ComputerRequest, Integer> tStartCol;
+  @FXML private TableColumn<ComputerRequest, Integer> tEndCol;
+  @FXML TableColumn<ComputerRequest, Integer> patientID;
+  @FXML TableColumn<ComputerRequest, String> requestStatus;
 
   @FXML private JFXButton pathButton;
   @FXML private JFXButton clearButton;
@@ -93,7 +95,7 @@ public class FoodProviderController {
 
   mainController main = null;
 
-  private TableController tableController = FoodRequestTbl.getInstance();
+  private TableController tableController = ComputerRequestTbl.getInstance();
   private LocationTbl locationTableController = LocationTbl.getInstance();
   private PathTbl path = PathTbl.getInstance();
 
@@ -109,13 +111,13 @@ public class FoodProviderController {
     coord.add(new ArrayList<>());
     locations = LocationTbl.getInstance();
 
-    reqID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("requestID"));
-    locID.setCellValueFactory(new PropertyValueFactory<FoodRequest, String>("locationID"));
-    tStartCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeStart"));
-    tEndCol.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("timeEnd"));
-    patientID.setCellValueFactory(new PropertyValueFactory<FoodRequest, Integer>("patientID"));
+    reqID.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("requestID"));
+    locID.setCellValueFactory(new PropertyValueFactory<ComputerRequest, String>("locationID"));
+    tStartCol.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("timeStart"));
+    tEndCol.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("timeEnd"));
+    patientID.setCellValueFactory(new PropertyValueFactory<ComputerRequest, Integer>("patientID"));
     requestStatus.setCellValueFactory(
-        new PropertyValueFactory<FoodRequest, String>("requestStatus"));
+        new PropertyValueFactory<ComputerRequest, String>("requestStatus"));
 
     refresh();
 
@@ -149,7 +151,7 @@ public class FoodProviderController {
     statusLabel.setText("");
     timeStartLabel.setText("");
     timeCompLabel.setText("");
-    foodIDLabel.setText("");
+    computerIDLabel.setText("");
 
     HBox floorSelect = createFloorSelector();
     floorSelect.setMaxHeight(25);
@@ -161,7 +163,7 @@ public class FoodProviderController {
     // Populating the location search box
     locList();
 
-    foodTable.setOnMouseClicked(
+    computerTable.setOnMouseClicked(
         e -> {
           if (e.getClickCount() > 1) {
             getRequestInfo();
@@ -170,7 +172,8 @@ public class FoodProviderController {
 
     pathButton.setOnMouseReleased(
         (event) -> {
-          FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+          ComputerRequest selectedItem =
+              (ComputerRequest) computerTable.getSelectionModel().getSelectedItem();
           try {
             String start = (String) locationSearchBox.getSelectionModel().getSelectedItem();
             String end = (String) selectedItem.getLocationID();
@@ -323,7 +326,7 @@ public class FoodProviderController {
   @FXML
   public void updateStatus() {
     try {
-      Request selectedItem = (Request) foodTable.getSelectionModel().getSelectedItem();
+      Request selectedItem = (Request) computerTable.getSelectionModel().getSelectedItem();
       String curStatus = (String) statusBox.getSelectionModel().getSelectedItem();
       RequestTable.getInstance().editEntry(selectedItem.getRequestID(), "requestStatus", curStatus);
       if (curStatus == "Completed") {
@@ -346,8 +349,9 @@ public class FoodProviderController {
   /** Method that displays information about the selected request above the request table */
   @FXML
   public void getRequestInfo() {
-    if (foodTable.getSelectionModel().getSelectedItem() != null) {
-      FoodRequest selectedItem = (FoodRequest) foodTable.getSelectionModel().getSelectedItem();
+    if (computerTable.getSelectionModel().getSelectedItem() != null) {
+      ComputerRequest selectedItem =
+          (ComputerRequest) computerTable.getSelectionModel().getSelectedItem();
       try {
         // tableController.getEntry(selectedItem.getPK())
         Integer id = selectedItem.getRequestID();
@@ -378,8 +382,8 @@ public class FoodProviderController {
         String eTimeDisplay = endDate.toString().replace("T", " ");
         timeCompLabel.setText(eTimeDisplay);
 
-        Integer foodID = selectedItem.getFoodID();
-        foodIDLabel.setText(String.valueOf(foodID));
+        Integer computerID = selectedItem.getComputerID();
+        computerIDLabel.setText(String.valueOf(computerID));
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -393,8 +397,8 @@ public class FoodProviderController {
    */
   @FXML
   public void refresh() {
-    tableController = FoodRequestTbl.getInstance();
-    foodTable.getItems().setAll(tableController.readTable());
+    tableController = ComputerRequestTbl.getInstance();
+    computerTable.getItems().setAll(tableController.readTable());
   }
 
   /**
