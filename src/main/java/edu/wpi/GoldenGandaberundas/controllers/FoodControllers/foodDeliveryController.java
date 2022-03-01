@@ -358,7 +358,7 @@ public class foodDeliveryController {
 
     if (selectedFile != null) {
       FoodRequestTbl.getInstance()
-          .createBackup(new File(selectedFile.toString() + "\\medLaundryRequestsBackUp.csv"));
+          .createBackup(new File(selectedFile.toString() + "\\foodRequestsBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }

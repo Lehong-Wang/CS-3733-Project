@@ -357,7 +357,7 @@ public class GiftFloralController implements Initializable {
     popUpDialog.show();
 
     if (selectedFile != null) {
-      GiftTbl.getInstance().createBackup(new File(selectedFile.toString() + "\\laundryBackUp.csv"));
+      GiftTbl.getInstance().createBackup(new File(selectedFile.toString() + "\\giftsBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
@@ -374,7 +374,7 @@ public class GiftFloralController implements Initializable {
 
     if (selectedFile != null) {
       GiftRequestTbl.getInstance()
-          .createBackup(new File(selectedFile.toString() + "\\medLaundryRequestsBackUp.csv"));
+          .createBackup(new File(selectedFile.toString() + "\\giftsRequestsBackUp.csv"));
     } else {
       System.err.println("BACK UP FILE SELECTED DOES NOT EXIST");
     }
