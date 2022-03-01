@@ -4,8 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
 import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabService;
 import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabServiceRequest;
@@ -160,8 +158,7 @@ public class LabServiceRequestController implements Initializable {
       LabServiceRequest selectedItem =
           (LabServiceRequest) labRequests.getSelectionModel().getSelectedItem();
       try {
-        FXMLLoader load =
-            new FXMLLoader(App.class.getResource("views/editLabServiceReqForm.fxml"));
+        FXMLLoader load = new FXMLLoader(App.class.getResource("views/editLabServiceReqForm.fxml"));
         AnchorPane editForm = load.load();
         editLabServiceReqFormController edit = load.getController();
         edit.editForm(RequestTable.getInstance().getEntry(selectedItem.getPK().get(0)));
@@ -391,7 +388,6 @@ public class LabServiceRequestController implements Initializable {
 
     return labType;
   }
-  
 
   /**
    * Method that iterates through a users permissions and hides elements they dont have access too

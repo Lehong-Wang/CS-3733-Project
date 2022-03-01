@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.editAudioVisualReqFormController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.editLabServiceReqFormController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -27,22 +27,22 @@
                <children>
                   <HBox prefHeight="52.0" prefWidth="600.0">
                      <children>
-                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="AV Request ID:" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="Lab Service Request ID:" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="AVRequestIDField" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="LabServiceRequestIDField" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox prefHeight="52.0" prefWidth="600.0">
                      <children>
-                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="Device ID:" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="170.0" text="Lab Service ID:" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="deviceField" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="labServiceIDField" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>

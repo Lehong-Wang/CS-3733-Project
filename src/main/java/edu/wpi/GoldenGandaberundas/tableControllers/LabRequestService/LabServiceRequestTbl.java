@@ -1,10 +1,8 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequest;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
-
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +23,9 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
   // created constructor fo the table
   private LabServiceRequestTbl() throws SQLException {
     super(
-            "LabServiceRequests",
-            Arrays.asList(new String[]{"reqID", "labServiceID", "priority"}),
-            "reqID, labServiceID");
+        "LabServiceRequests",
+        Arrays.asList(new String[] {"reqID", "labServiceID", "priority"}),
+        "reqID, labServiceID");
     String[] cols = {"reqID", "labServiceID", "priority"};
     masterTable = RequestTable.getInstance();
     createTable();
@@ -60,7 +58,7 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
-                new LabServiceRequest(masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getString(3)));
+            new LabServiceRequest(masterTable.getEntry(r.getInt(1)), r.getInt(2), r.getString(3)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
@@ -79,8 +77,8 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
     PreparedStatement s = null;
     try {
       s =
-              connection.prepareStatement( // **
-                      "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?);");
+          connection.prepareStatement( // **
+              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?);");
 
       s.setInt(1, obj.getRequestID());
       s.setInt(2, obj.getLabServiceID());
@@ -103,9 +101,9 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
       String currentLine = buffer.readLine(); // reads a line from the csv file
       System.out.println(currentLine);
       if (!currentLine
-              .toLowerCase(Locale.ROOT)
-              .trim()
-              .equals(new String("reqID,labServiceID,priority"))) { // **
+          .toLowerCase(Locale.ROOT)
+          .trim()
+          .equals(new String("reqID,labServiceID,priority"))) { // **
         System.err.println("lab service request backup format not recognized"); // **
       }
       currentLine = buffer.readLine();
@@ -113,18 +111,18 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
         LabServiceRequest req = // **
-                new LabServiceRequest(
-                        Integer.parseInt(element[0]),
-                        element[1],
-                        Integer.parseInt(element[2]),
-                        Integer.parseInt(element[3]),
-                        Long.parseLong(element[4]),
-                        Long.parseLong(element[5]),
-                        Integer.parseInt(element[6]),
-                        element[8],
-                        element[9],
-                        Integer.parseInt(element[10]),
-                        element[11]);
+            new LabServiceRequest(
+                Integer.parseInt(element[0]),
+                element[1],
+                Integer.parseInt(element[2]),
+                Integer.parseInt(element[3]),
+                Long.parseLong(element[4]),
+                Long.parseLong(element[5]),
+                Integer.parseInt(element[6]),
+                element[8],
+                element[9],
+                Integer.parseInt(element[10]),
+                element[11]);
         labReqList.add(req); // adds the location to the list
         currentLine = buffer.readLine();
       }
@@ -142,7 +140,7 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
   public void createTable() {
     try {
       PreparedStatement s =
-              connection.prepareStatement("SELECT count(*) FROM sqlite_master WHERE tbl_name = ?;");
+          connection.prepareStatement("SELECT count(*) FROM sqlite_master WHERE tbl_name = ?;");
       s.setString(1, tbName);
       ResultSet r = s.executeQuery();
       r.next();
@@ -169,17 +167,17 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
       s = connection.createStatement();
       s.execute("PRAGMA foreign_keys = ON"); // **
       s.execute(
-              "CREATE TABLE TABLE IF NOT EXISTS AudioVisualRequests("
-                      + "reqID INTEGER NOT NULL, "
-                      + "labServiceID INTEGER NOT NULL, "
-                      + "priority TEXT NOT NULL, "
-                      + "CONSTRAINT AudioVisualRequestPK PRIMARY KEY (reqID, audioVisualID), "
-                      + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
-                      + "ON UPDATE CASCADE "
-                      + "ON DELETE CASCADE, "
-                      + "CONSTRAINT AudioVisualFK FOREIGN KEY (audioVisualID) REFERENCES AudioVisual (avID) "
-                      + "ON UPDATE CASCADE "
-                      + "ON DELETE CASCADE);");
+          "CREATE TABLE TABLE IF NOT EXISTS LabServiceRequests("
+              + "reqID INTEGER NOT NULL, "
+              + "labServiceID INTEGER NOT NULL, "
+              + "priority TEXT NOT NULL, "
+              + "CONSTRAINT LabServiceRequestPK PRIMARY KEY (reqID, audioVisualID), "
+              + "CONSTRAINT RequestFK FOREIGN KEY (reqID) REFERENCES Requests (requestID) "
+              + "ON UPDATE CASCADE "
+              + "ON DELETE CASCADE, "
+              + "CONSTRAINT LabServiceFK FOREIGN KEY (audioVisualID) REFERENCES LabService (labID) "
+              + "ON UPDATE CASCADE "
+              + "ON DELETE CASCADE);");
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -192,8 +190,8 @@ public class LabServiceRequestTbl extends TableController<LabServiceRequest, Arr
     if (this.entryExists(pkID)) {
       try {
         PreparedStatement s =
-                connection.prepareStatement(
-                        "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
+            connection.prepareStatement(
+                "SELECT * FROM " + tbName + " WHERE (" + pkCols + ") =(?,?);");
         s.setInt(1, pkID.get(0));
         s.setInt(2, pkID.get(1));
         ResultSet r = s.executeQuery();

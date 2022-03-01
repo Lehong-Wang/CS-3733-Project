@@ -1,8 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisual;
-
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +15,7 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
   private static LabServiceTbl instance = null; // **
 
   private LabServiceTbl() throws SQLException { // **
-    super(
-        "LabService", Arrays.asList(new String[] {"labID", "labType", "description"}));
+    super("LabService", Arrays.asList(new String[] {"labID", "labType", "description"}));
     String[] cols = {"labID", "labType", "description"};
     createTable();
     objList = new ArrayList<LabService>();
@@ -49,8 +46,8 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
       ResultSet r = s.executeQuery();
       while (r.next()) {
         tableInfo.add(
-            new AudioVisual( // **
-                r.getInt(1), r.getString(2), r.getString(3), r.getString(4)));
+            new LabService( // **
+                r.getInt(1), r.getString(2), r.getString(3)));
       }
     } catch (SQLException se) {
       se.printStackTrace();
@@ -66,13 +63,12 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
     try {
       s =
           connection.prepareStatement( // **
-              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?, ?);");
+              "INSERT OR IGNORE INTO " + tbName + " VALUES (?, ?, ?);");
 
       // **
       s.setInt(1, med.getLabID());
       s.setString(2, med.getLabType());
-      s.setString(3, med.getLocID());
-      s.setString(4, med.getDescription());
+      s.setString(3, med.getDescription());
       s.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -93,7 +89,7 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
       if (!currentLine
           .toLowerCase(Locale.ROOT)
           .trim()
-          .equals(new String("labID,labType,locID,description"))) { // **
+          .equals(new String("labID,labType,description"))) { // **
         System.err.println("Lab Service tbl backup format not recognized"); // **
       }
       currentLine = buffer.readLine();
@@ -101,7 +97,7 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
       while (currentLine != null) { // cycles in the while loop until it reaches the end
         String[] element = currentLine.split(","); // separates each element based on a comma
         LabService med = // **
-            new LabService(Integer.parseInt(element[0]), element[1], element[2], element[3]); // **
+            new LabService(Integer.parseInt(element[0]), element[1], element[2]); // **
         medList.add(med); // adds the location to the list
         currentLine = buffer.readLine();
       }
@@ -150,7 +146,6 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
           "CREATE TABLE IF NOT EXISTS LabService("
               + "labID INTEGER NOT NULL ,"
               + "labType TEXT NOT NULL, "
-              + "locID TEXT NOT NULL, "
               + "description TEXT, "
               + "PRIMARY KEY ('labID')"
               + ");");
@@ -173,8 +168,7 @@ public class LabServiceTbl extends TableController<LabService, Integer> {
         r.next();
         med.setLabID(r.getInt(1));
         med.setLabType(r.getString(2));
-        med.setLocID(r.getString(3));
-        med.setDescription(r.getString(4));
+        med.setDescription(r.getString(3));
         return med;
       } catch (SQLException e) {
         e.printStackTrace();

@@ -1,15 +1,17 @@
 package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.GoldenGandaberundas.tableControllers.LabRequestService.LabServiceRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.Location;
 import edu.wpi.GoldenGandaberundas.tableControllers.Locations.LocationTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.Patient;
 import edu.wpi.GoldenGandaberundas.tableControllers.Patients.PatientTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
+import java.io.IOException;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,12 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class editLabServiceReqFormController {
-  @FXML TextField AVRequestIDField;
-  @FXML TextField deviceField;
+  @FXML TextField LabServiceRequestIDField;
+  @FXML TextField labServiceIDField;
   // @FXML TextField locField;
   @FXML TextField subTimeField;
   @FXML TextField finishTimeField;
@@ -41,32 +40,32 @@ public class editLabServiceReqFormController {
   @FXML SearchableComboBox<String> locationComboBox;
 
   RequestTable requests = RequestTable.getInstance();
-  AudioVisualRequestTbl AVReqs = AudioVisualRequestTbl.getInstance();
+  LabServiceRequestTbl LSReqs = LabServiceRequestTbl.getInstance();
   ArrayList<Integer> pkIDs = new ArrayList<Integer>();
 
   /**
    * edits the form
    *
-   * @param avReq request
+   * @param lsReq request
    * @throws IOException oops
    */
-  public void editForm(Request avReq) throws IOException {
-    AVRequestIDField.setText(String.valueOf(avReq.getRequestID()));
-    subTimeField.setText(String.valueOf(avReq.getTimeStart()));
-    finishTimeField.setText(String.valueOf(avReq.getTimeEnd()));
+  public void editForm(Request lsReq) throws IOException {
+    LabServiceRequestIDField.setText(String.valueOf(lsReq.getRequestID()));
+    subTimeField.setText(String.valueOf(lsReq.getTimeStart()));
+    finishTimeField.setText(String.valueOf(lsReq.getTimeEnd()));
 
-    statusComboBox.setPromptText(avReq.getRequestStatus());
-    statusComboBox.setValue(avReq.getRequestStatus());
+    statusComboBox.setPromptText(lsReq.getRequestStatus());
+    statusComboBox.setValue(lsReq.getRequestStatus());
     ArrayList<String> statusTypes = new ArrayList<String>();
     statusTypes.add("Submitted");
     statusTypes.add("In_Progress");
     statusTypes.add("Completed");
     statusComboBox.setItems(FXCollections.observableArrayList(statusTypes));
 
-    completerComboBox.setPromptText(String.valueOf(avReq.getEmpCompleter()));
-    completerComboBox.setValue(avReq.getEmpCompleter());
-    requesterComboBox.setPromptText(String.valueOf(avReq.getEmpInitiated()));
-    requesterComboBox.setValue(avReq.getEmpInitiated());
+    completerComboBox.setPromptText(String.valueOf(lsReq.getEmpCompleter()));
+    completerComboBox.setValue(lsReq.getEmpCompleter());
+    requesterComboBox.setPromptText(String.valueOf(lsReq.getEmpInitiated()));
+    requesterComboBox.setValue(lsReq.getEmpInitiated());
     ArrayList<Integer> employeeIDs = new ArrayList<>();
     for (Employee e : EmployeeTbl.getInstance().readTable()) {
       employeeIDs.add(e.getEmpID());
@@ -74,16 +73,16 @@ public class editLabServiceReqFormController {
     completerComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
     requesterComboBox.setItems(FXCollections.observableArrayList(employeeIDs));
 
-    locationComboBox.setPromptText(avReq.getLocationID());
-    locationComboBox.setValue(avReq.getLocationID());
+    locationComboBox.setPromptText(lsReq.getLocationID());
+    locationComboBox.setValue(lsReq.getLocationID());
     ArrayList<String> locations = new ArrayList<>();
     for (Location l : (ArrayList<Location>) LocationTbl.getInstance().readTable()) {
       locations.add(l.getNodeID());
     }
     locationComboBox.setItems(FXCollections.observableArrayList(locations));
 
-    patientComboBox.setPromptText(String.valueOf(avReq.getPatientID()));
-    patientComboBox.setValue(avReq.getPatientID());
+    patientComboBox.setPromptText(String.valueOf(lsReq.getPatientID()));
+    patientComboBox.setValue(lsReq.getPatientID());
     ArrayList<Integer> patientIDs = new ArrayList<>();
     for (Patient p : PatientTbl.getInstance().readTable()) {
       patientIDs.add(p.getPatientID());
@@ -96,18 +95,18 @@ public class editLabServiceReqFormController {
    *
    * @return true if a request exists
    */
-  private boolean avRequestExists() {
-    return requests.entryExists(Integer.parseInt(AVRequestIDField.getText()));
+  private boolean lsRequestExists() {
+    return requests.entryExists(Integer.parseInt(LabServiceRequestIDField.getText()));
   }
 
   /** edits a requests */
   @FXML
   public void editRequest() {
     try {
-      if (avRequestExists()) {
+      if (lsRequestExists()) {
         try {
           String locationID = locationComboBox.getValue();
-          Integer pkID = Integer.parseInt(AVRequestIDField.getText());
+          Integer pkID = Integer.parseInt(LabServiceRequestIDField.getText());
           Integer empInitiated = requesterComboBox.getValue();
           Integer empCompleter = completerComboBox.getValue();
           long timeStart = Integer.parseInt(subTimeField.getText());
@@ -129,7 +128,7 @@ public class editLabServiceReqFormController {
         } catch (Exception e) {
           e.printStackTrace();
           locationComboBox.setPromptText(locationComboBox.getValue());
-          AVRequestIDField.setText("Invalid input");
+          LabServiceRequestIDField.setText("Invalid input");
           requesterComboBox.setPromptText(String.valueOf(requesterComboBox.getValue()));
           completerComboBox.setPromptText(String.valueOf(completerComboBox.getValue()));
           subTimeField.setText("Invalid input");
@@ -140,7 +139,7 @@ public class editLabServiceReqFormController {
       }
     } catch (Exception e) {
       e.printStackTrace();
-      AVRequestIDField.setText("Invalid input");
+      LabServiceRequestIDField.setText("Invalid input");
     }
   }
 
@@ -148,38 +147,38 @@ public class editLabServiceReqFormController {
   @FXML
   public void deleteRequest() {
     ArrayList<Integer> pkIDs = new ArrayList<Integer>();
-    if (AVRequestIDField.getText() == null
-        || deviceField.getText() == null
-        || deviceField.getText().isEmpty()
-        || AVRequestIDField.getText().isEmpty()) {
-      AVRequestIDField.setText("Invalid input");
-      deviceField.setText("Invalid input");
+    if (LabServiceRequestIDField.getText() == null
+        || labServiceIDField.getText() == null
+        || labServiceIDField.getText().isEmpty()
+        || LabServiceRequestIDField.getText().isEmpty()) {
+      LabServiceRequestIDField.setText("Invalid input");
+      labServiceIDField.setText("Invalid input");
       return;
     }
     try {
-      pkIDs.add(Integer.parseInt(AVRequestIDField.getText()));
-      pkIDs.add(Integer.parseInt(deviceField.getText()));
+      pkIDs.add(Integer.parseInt(LabServiceRequestIDField.getText()));
+      pkIDs.add(Integer.parseInt(labServiceIDField.getText()));
     } catch (Exception e) {
       e.printStackTrace();
-      AVRequestIDField.setText("Invalid input");
-      deviceField.setText("Invalid input");
+      LabServiceRequestIDField.setText("Invalid input");
+      labServiceIDField.setText("Invalid input");
     }
-    if (AVReqs.entryExists(pkIDs)) {
+    if (LSReqs.entryExists(pkIDs)) {
       Alert alert =
           new Alert(
               Alert.AlertType.CONFIRMATION,
-              "Delete Request: " + AVRequestIDField.getText() + " ?",
+              "Delete Request: " + LabServiceRequestIDField.getText() + " ?",
               ButtonType.YES,
               ButtonType.NO);
       alert.showAndWait();
       if (alert.getResult() == ButtonType.YES) {
-        AVReqs.deleteEntry(pkIDs);
-        deviceField.setText("Request Deleted!");
-        AVRequestIDField.setText("Request Deleted!");
+        LSReqs.deleteEntry(pkIDs);
+        labServiceIDField.setText("Request Deleted!");
+        LabServiceRequestIDField.setText("Request Deleted!");
       }
     } else {
-      deviceField.setText("Invalid Request!");
-      AVRequestIDField.setText("Invalid Request!");
+      labServiceIDField.setText("Invalid Request!");
+      LabServiceRequestIDField.setText("Invalid Request!");
     }
     // TODO Need refresh table here
   }
