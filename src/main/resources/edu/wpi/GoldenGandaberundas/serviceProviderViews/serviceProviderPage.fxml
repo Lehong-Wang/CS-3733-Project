@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.GoldenGandaberundas.controllers.serviceProviderPageController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="1813.0" text="Service Provider Page" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="MedicalEquipmentButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderEquipment" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Equipment Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M22 11v9h-2v-3H4v3H2V4h2v10h8V7h6a4 4 0 0 1 4 4zM8 13a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM22 11v9h-2v-3H4v3H2V4h2v10h8V7h6a4 4 0 0 1 4 4zM8 13a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="MedicineDeliveryButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderMedicine" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Medicine Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M19 2v2h-2v3c1.657 0 3 1.343 3 3v11c0 .552-.448 1-1 1H5c-.552 0-1-.448-1-1V10c0-1.657 1.343-3 3-3V4H5V2h14zm-2 7H7c-.552 0-1 .448-1 1v10h12V10c0-.552-.448-1-1-1zm-4 2v2h2v2h-2.001L13 17h-2l-.001-2H9v-2h2v-2h2zm2-7H9v3h6V4zM19 2v2h-2v3c1.657 0 3 1.343 3 3v11c0 .552-.448 1-1 1H5c-.552 0-1-.448-1-1V10c0-1.657 1.343-3 3-3V4H5V2h14zm-2 7H7c-.552 0-1 .448-1 1v10h12V10c0-.552-.448-1-1-1zm-4 2v2h2v2h-2.001L13 17h-2l-.001-2H9v-2h2v-2h2zm2-7H9v3h6V4z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="GiftFloralButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderGift" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Gift &amp; Floral Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M15 2a4 4 0 0 1 3.464 6.001L23 8v2h-2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10H1V8l4.536.001A4 4 0 0 1 12 3.355 3.983 3.983 0 0 1 15 2zm-4 8H5v9h6v-9zm8 0h-6v9h6v-9zM9 4a2 2 0 0 0-.15 3.995L9 8h2V6a2 2 0 0 0-1.697-1.977l-.154-.018L9 4zm6 0a2 2 0 0 0-1.995 1.85L13 6v2h2a2 2 0 0 0 1.995-1.85L17 6a2 2 0 0 0-2-2zM15 2a4 4 0 0 1 3.464 6.001L23 8v2h-2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10H1V8l4.536.001A4 4 0 0 1 12 3.355 3.983 3.983 0 0 1 15 2zm-4 8H5v9h6v-9zm8 0h-6v9h6v-9zM9 4a2 2 0 0 0-.15 3.995L9 8h2V6a2 2 0 0 0-1.697-1.977l-.154-.018L9 4zm6 0a2 2 0 0 0-1.995 1.85L13 6v2h2a2 2 0 0 0 1.995-1.85L17 6a2 2 0 0 0-2-2z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="LaundryButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderLaundry" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Laundry Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M13 20h6v-4h-4v-2h4V6h-2v5l-4-1.6V20zm-2 0V9.4L7 11V6H5v14h6zM7 4V3h10v1h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3zm5 4l3.5-3h-7L12 8zM13 20h6v-4h-4v-2h4V6h-2v5l-4-1.6V20zm-2 0V9.4L7 11V6H5v14h6zM7 4V3h10v1h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3zm5 4l3.5-3h-7L12 8z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="ComputerServiceButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderComputer" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Computer Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M4 16h16V5H4v11zm9 2v2h4v2H7v-2h4v-2H2.992A.998.998 0 0 1 2 16.993V4.007C2 3.451 2.455 3 2.992 3h18.016c.548 0 .992.449.992 1.007v12.986c0 .556-.455 1.007-.992 1.007H13zM4 16h16V5H4v11zm9 2v2h4v2H7v-2h4v-2H2.992A.998.998 0 0 1 2 16.993V4.007C2 3.451 2.455 3 2.992 3h18.016c.548 0 .992.449.992 1.007v12.986c0 .556-.455 1.007-.992 1.007H13z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="FoodButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderFood" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Food Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M 1.226 18.2082 H 13.8691 C 14.0302 18.2082 14.1677 18.0647 14.1634 17.8876 C 14.139 16.8823 13.7997 13.8578 10.6028 13.8578 H 4.4922 C 1.3011 13.8578 0.958 16.8822 0.9321 17.8876 C 0.9276 18.0647 1.0649 18.2082 1.226 18.2082 Z M 11.3444 16.2806 M 4.4922 25.5389 H 10.6016 C 13.6236 25.5389 14.0922 23.8225 14.1551 23.0947 C 14.1703 22.9184 14.029 22.7744 13.868 22.7744 H 1.226 C 1.0649 22.7744 0.9241 22.9184 0.9397 23.0947 C 1.0044 23.8225 1.4767 25.5389 4.4922 25.5389 M 14.0687 21.6023 C 14.6357 21.6023 15.0953 21.0967 15.0953 20.473 S 14.6357 19.3437 14.0687 19.3437 H 1.0266 C 0.4596 19.3437 0 19.8493 0 20.473 S 0.4596 21.6023 1.0266 21.6023 H 14.0687 Z M 25.7651 7.5901 H 23.3638 L 23.6559 6.3157 L 24.2619 3.6715 C 24.3013 3.4997 24.2071 3.3234 24.0516 3.2776 L 23.5643 3.1343 C 23.4088 3.0886 23.2513 3.1908 23.2125 3.3628 L 22.5467 6.3157 L 22.2594 7.5901 H 13.8724 C 13.7113 7.5901 13.5808 7.7337 13.5808 7.9109 V 8.7982 C 13.5808 8.9752 13.7113 9.1189 13.8724 9.1189 H 14.4719 L 16.5463 25.2214 C 16.5688 25.3967 16.7176 25.5389 16.8787 25.5389 H 22.7509 C 22.9118 25.5389 23.0608 25.3968 23.0834 25.2214 L 25.1654 9.1189 H 25.7652 C 25.9262 9.1189 26.0567 8.9752 26.0567 8.7982 V 7.9109 C 26.0567 7.7337 25.9262 7.5901 25.7651 7.5901 Z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="AudioVisualButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderAV" prefHeight="45.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Audio Visual Provider" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                           <graphic>
+                              <SVGPath content="M12 4a8 8 0 0 0-8 8h3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7C2 6.477 6.477 2 12 2s10 4.477 10 10v7a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h3a8 8 0 0 0-8-8zM4 14v5h3v-5H4zm13 0v5h3v-5h-3zM12 4a8 8 0 0 0-8 8h3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7C2 6.477 6.477 2 12 2s10 4.477 10 10v7a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h3a8 8 0 0 0-8-8zM4 14v5h3v-5H4zm13 0v5h3v-5h-3z" fill="WHITE" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -10,7 +10,6 @@ import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,7 +48,15 @@ public class mainController {
   @FXML JFXButton allRequestsButton;
   @FXML JFXButton SimulationButton;
   @FXML JFXButton SettingsButton;
+  @FXML JFXButton EquipmentProviderButton;
+  @FXML JFXButton MedicineProviderButton;
+  @FXML JFXButton GiftFloralProviderButton;
+  @FXML JFXButton LaundryProviderButton;
+  @FXML JFXButton ComputerProviderButton;
+  @FXML JFXButton FoodProviderButton;
+  @FXML JFXButton AudioVisualProviderButton;
 
+  @FXML JFXButton serviceProviderButton;
   @FXML JFXButton serviceRequestButton;
   @FXML JFXButton mapViewButton;
 
@@ -115,6 +122,7 @@ public class mainController {
     SettingsButton.setText("");
     serviceRequestButton.setText("");
     mapViewButton.setText("");
+    serviceProviderButton.setText("");
 
     // Hiding buttons until service is fully implemented
 
@@ -133,6 +141,7 @@ public class mainController {
     mainView.setImage(floorMaps.hospital);
     toggleRequestButtons(false);
     toggleMapButtons(false);
+    toggleProviderButtons(false);
     EmployeeDBButton.setManaged(false);
     EmployeeDBButton.setVisible(false);
   }
@@ -148,6 +157,28 @@ public class mainController {
 
     SideViewButton.setVisible(toggle);
     SimulationButton.setVisible(toggle);
+  }
+
+  /**
+   * Toggles all the provider buttons on the main page
+   *
+   * @param toggle True to toggle the buttons on, false to toggle them off
+   */
+  public void toggleProviderButtons(boolean toggle) {
+    EquipmentProviderButton.setVisible(toggle);
+    EquipmentProviderButton.setManaged(toggle);
+    MedicineProviderButton.setVisible(toggle);
+    MedicineProviderButton.setManaged(toggle);
+    GiftFloralProviderButton.setVisible(toggle);
+    GiftFloralProviderButton.setManaged(toggle);
+    LaundryProviderButton.setVisible(toggle);
+    LaundryProviderButton.setManaged(toggle);
+    ComputerProviderButton.setVisible(toggle);
+    ComputerProviderButton.setManaged(toggle);
+    FoodProviderButton.setVisible(toggle);
+    FoodProviderButton.setManaged(toggle);
+    AudioVisualProviderButton.setVisible(toggle);
+    AudioVisualProviderButton.setManaged(toggle);
   }
 
   /**
@@ -229,6 +260,8 @@ public class mainController {
   public void goHome(ActionEvent actionEvent) {
     serviceRequestButton.setManaged(true);
     serviceRequestButton.setVisible(true);
+    serviceProviderButton.setManaged(true);
+    serviceProviderButton.setVisible(true);
     mapViewButton.setManaged(true);
     mapViewButton.setVisible(true);
     SettingsButton.setManaged(true);
@@ -236,6 +269,7 @@ public class mainController {
 
     toggleRequestButtons(false);
     toggleMapButtons(false);
+    toggleProviderButtons(false);
     nodeSwitch("views/homePage.fxml");
     slideShow();
   }
@@ -250,10 +284,13 @@ public class mainController {
   public void switchMapView() throws IOException {
     toggleMapButtons(true);
     toggleRequestButtons(false);
+    toggleProviderButtons(false);
     SettingsButton.setManaged(false);
     SettingsButton.setVisible(false);
     serviceRequestButton.setManaged(false);
     serviceRequestButton.setVisible(false);
+    serviceProviderButton.setManaged(false);
+    serviceProviderButton.setVisible(false);
     FXMLLoader subControllerLoader = new FXMLLoader(App.class.getResource("views/mapViewer.fxml"));
 
     try {
@@ -313,6 +350,7 @@ public class mainController {
   public void switchRequestPage() {
     toggleRequestButtons(true);
     toggleMapButtons(false);
+    toggleProviderButtons(false);
     SettingsButton.setManaged(false);
     SettingsButton.setVisible(false);
     mapViewButton.setManaged(false);
@@ -324,6 +362,38 @@ public class mainController {
       BorderPane subPane = subControllerLoader.load();
       serviceRequestPageController master = subControllerLoader.getController();
       master.setMainControler(this);
+      AnchorPane.setTopAnchor(subPane, 0.0);
+      AnchorPane.setBottomAnchor(subPane, 0.0);
+      AnchorPane.setLeftAnchor(subPane, 0.0);
+      AnchorPane.setRightAnchor(subPane, 0.0);
+      nodeDataPane.setPadding(new Insets(0, 0, 0, 0));
+      subPane.setPrefHeight(nodeDataPane.getHeight());
+      subPane.setPrefWidth(nodeDataPane.getWidth());
+      // nodeDataPane.getLayoutBounds().getHeight();
+      nodeDataPane.getChildren().clear();
+      nodeDataPane.getChildren().add(subPane);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    nodeDataPane.setPadding(new Insets(0, 0, 10, 110));
+  }
+
+  public void switchProviderPage() {
+    toggleProviderButtons(true);
+    toggleRequestButtons(false);
+    toggleMapButtons(false);
+    SettingsButton.setManaged(false);
+    SettingsButton.setVisible(false);
+    mapViewButton.setManaged(false);
+    mapViewButton.setVisible(false);
+    FXMLLoader subControllerLoader =
+        new FXMLLoader(App.class.getResource("serviceProviderViews/serviceProviderPage.fxml"));
+
+    try {
+      BorderPane subPane = subControllerLoader.load();
+      serviceProviderPageController master = subControllerLoader.getController();
+      master.setMainController(this);
       AnchorPane.setTopAnchor(subPane, 0.0);
       AnchorPane.setBottomAnchor(subPane, 0.0);
       AnchorPane.setLeftAnchor(subPane, 0.0);
@@ -504,8 +574,38 @@ public class mainController {
     mapViewButton.setManaged(false);
     serviceRequestButton.setVisible(false);
     serviceRequestButton.setManaged(false);
+    serviceProviderButton.setVisible(false);
+    serviceProviderButton.setManaged(false);
     nodeSwitch("views/settingsPage.fxml");
     nodeDataPane.setPadding(new Insets(0, 0, 0, 100));
+  }
+
+  public void switchProviderEquipment() {
+    nodeSwitch("serviceProviderViews/equipmentProviderView.fxml");
+  }
+
+  public void switchProviderMedicine() {
+    nodeSwitch("serviceProviderViews/medicineProviderView.fxml");
+  }
+
+  public void switchProviderGift() {
+    nodeSwitch("serviceProviderViews/giftFloralProviderView.fxml");
+  }
+
+  public void switchProviderLaundry() {
+    nodeSwitch("serviceProviderViews/laundryProviderView.fxml");
+  }
+
+  public void switchProviderAudioVisual() {
+    nodeSwitch("serviceProviderViews/avProviderView.fxml");
+  }
+
+  public void switchProviderComputer() {
+    nodeSwitch("serviceProviderViews/computerProviderView.fxml");
+  }
+
+  public void switchProviderFood() {
+    nodeSwitch("serviceProviderViews/foodProviderView.fxml");
   }
 
   // Goes to the location table
@@ -549,6 +649,14 @@ public class mainController {
         SettingsButton.setText("Settings");
         serviceRequestButton.setText("Service Request Page");
         mapViewButton.setText("Map Views");
+        serviceProviderButton.setText("Service Provider Page");
+        EquipmentProviderButton.setText("Equipment Provider");
+        MedicineProviderButton.setText("Medicine Provider");
+        GiftFloralProviderButton.setText("Gift & Floral Provider");
+        LaundryProviderButton.setText("Laundry Provider");
+        ComputerProviderButton.setText("Computer Provider");
+        FoodProviderButton.setText("Food Provider");
+        AudioVisualProviderButton.setText("Audio Visual Provider");
 
       } else {
         ComputerServiceButton.setText("Joshua Moy");
@@ -569,6 +677,14 @@ public class mainController {
         SettingsButton.setText("Lehong Wang");
         serviceRequestButton.setText("Paul Godinez");
         mapViewButton.setText("Michael O'Connor");
+        serviceProviderButton.setText("Will BC");
+        EquipmentProviderButton.setText("Will BC");
+        MedicineProviderButton.setText("Will BC");
+        GiftFloralProviderButton.setText("Michael O'Connor");
+        LaundryProviderButton.setText("Mason Figler");
+        ComputerProviderButton.setText("Neena Xiang");
+        FoodProviderButton.setText("Josh Moy");
+        AudioVisualProviderButton.setText("Jason Martino");
       }
     }
   }
@@ -599,6 +715,14 @@ public class mainController {
       SettingsButton.setText("");
       serviceRequestButton.setText("");
       mapViewButton.setText("");
+      serviceProviderButton.setText("");
+      EquipmentProviderButton.setText("");
+      MedicineProviderButton.setText("");
+      GiftFloralProviderButton.setText("");
+      LaundryProviderButton.setText("");
+      ComputerProviderButton.setText("");
+      FoodProviderButton.setText("");
+      AudioVisualProviderButton.setText("");
     }
   }
 
