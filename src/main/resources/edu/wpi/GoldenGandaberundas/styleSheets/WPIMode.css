@@ -9,7 +9,9 @@
     dropdown-shadow-color: #87121d;
     backup-color: #69000a;
     action-color: default-blue;
-    box-color: #87121d;
+    /*box-color: #87121d;*/
+    box-color: rgba(105, 0, 10,0.7);
+    combo-color: rgba(105, 0, 10,0.15);
     /*table-head-color: #499cc9;*/
     table-head-color: linear-gradient(to right, #69000a, #87121d);
     table-color1: rgb(105, 0, 10,0.25);
@@ -29,16 +31,16 @@
 
 }
 
-.text {
-    -fx-font-family: "Open Sans", "Helvetica Neue";
-}
+/*.text {*/
+/*    -fx-font-family: "Open Sans", "Helvetica Neue";*/
+/*}*/
 
 .serviceButton{
     -fx-background-color: default-blue;
     -fx-background-radius: 10px;
     -fx-font-size: 21px;
     /*-fx-text-color: white !important;*/
-    -fx-fill: text-color !important;
+    /*-fx-fill: text-color !important;*/
     /*-fx-wrap-text: white;*/
     -fx-alignment: LEFT;
     /*-fx-font-family: "Times New Roman";*/
@@ -218,6 +220,7 @@
 
 .combo-box-base {
     -fx-background-color: combo-background;
+    -fx-background-radius: 7px;
 }
 
 /*.combo-box-base{*/
@@ -263,7 +266,7 @@
 .text-field{
     -fx-background-color: box-color;
     -fx-background-radius: 7px;
-    -fx-effect: innershadow(three-pass-box ,dropdown-shadow-color , 14, 0, 0, 3);
+    /*-fx-effect: innershadow(three-pass-box ,dropdown-shadow-color , 14, 0, 0, 3);*/
     /*-fx-border-color: default-blue;*/
     /*-fx-border-style: solid;*/
     /*-fx-border-width: 3px;*/
@@ -271,18 +274,44 @@
 }
 
 
-.text-area{
-    /*-fx-background-color: box-color;*/
-    -fx-effect: innershadow(three-pass-box ,shadow-color , 10, 0.5, 0, 2);
+.text-area {
+    -fx-background-color: box-color;
+    -fx-background-radius: 7px;
 }
 
-.text-area .content{
-    -fx-background-color: box-color;
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 
 .text-input{
     -fx-text-fill: text-black;
 }
+
+
+
+
+
+/*.text-area{*/
+/*    !*-fx-background-color: box-color;*!*/
+/*    -fx-effect: innershadow(three-pass-box ,shadow-color , 10, 0.5, 0, 2);*/
+/*}*/
+
+/*.text-area .content{*/
+/*    -fx-background-color: box-color;*/
+/*}*/
+
+/*.text-input{*/
+/*    -fx-text-fill: text-black;*/
+/*}*/
 
 /*.textbox-base{*/
 /*    -fx-background-color: grey;*/
@@ -314,7 +343,7 @@
 }
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-font-size: 14pt;
+    -fx-font-size: 13pt;
     -fx-font-weight: bold;
     /*-fx-font-family: "Times New Roman";*/
 }

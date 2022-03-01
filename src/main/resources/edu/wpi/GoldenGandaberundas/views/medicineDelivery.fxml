@@ -21,11 +21,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0"  text="Backup Medicine" textAlignment="CENTER" wrapText="true" styleClass="backupButton" />
-            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0"  text="Backup Requests" textAlignment="CENTER" wrapText="true"  styleClass="backupButton" />
-            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0"  text="Load Medicine Backup" textAlignment="CENTER" wrapText="true" styleClass="backupButton" />
-            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0"  text="Load Requests Backup" textAlignment="CENTER" wrapText="true" styleClass="backupButton" />
-            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0"  text="Refresh" textAlignment="CENTER" wrapText="true"  styleClass="backupButton" />
+            <JFXButton fx:id="backupMenuButton" onAction="#backupMedicine" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Medicine" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBMedicine" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Medicine Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
          </children>
       </VBox>
    </right>
@@ -34,7 +34,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox prefHeight="448.0" prefWidth="554.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="488.0" prefWidth="855.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="1104.0" text="Medicine Request Form:" VBox.vgrow="ALWAYS">
                            <font>
@@ -96,38 +96,41 @@
                         </GridPane>
                         <HBox prefHeight="25.0" prefWidth="1433.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="1100.0" text="Submit" HBox.hgrow="ALWAYS" styleClass="actionButton">
+                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="36.0" prefWidth="493.0" styleClass="actionButton" text="Submit" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="140.0" right="65.0" top="20.0" />
-                                 </HBox.margin></Button>
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <TableView fx:id="medicineMenuTable" prefHeight="488.0" prefWidth="496.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="medicineMenuTable" prefHeight="488.0" prefWidth="859.0" tableMenuButtonVisible="true">
                     <columns>
-                      <TableColumn fx:id="medicineID" prefWidth="103.25323486328125" text="Medicine ID" />
-                        <TableColumn fx:id="medName" prefWidth="97.746826171875" text="Name" />
-                      <TableColumn fx:id="description" prefWidth="119.259765625" text="Description" />
-                        <TableColumn fx:id="price" prefWidth="73.1558837890625" text="Price" />
-                        <TableColumn fx:id="inStock" prefWidth="98.2857666015625" text="In Stock" />
+                      <TableColumn fx:id="medicineID" prefWidth="123.13055419921875" text="Medicine ID" />
+                        <TableColumn fx:id="medName" prefWidth="116.37933349609375" text="Name" />
+                      <TableColumn fx:id="description" prefWidth="156.5048828125" text="Description" />
+                        <TableColumn fx:id="price" prefWidth="109.2757568359375" text="Price" />
+                        <TableColumn fx:id="inStock" prefWidth="121.7242431640625" text="In Stock" />
                     </columns>
                   </TableView>
                </children>
             </HBox>
             <TableView fx:id="medicineTbl" prefHeight="312.0" prefWidth="1100.0" style="-fx-padding: 5;" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn fx:id="reqID" prefWidth="75.0" text="Request ID" />
-                  <TableColumn fx:id="nodeID" prefWidth="85.40906524658203" text="Node ID" />
-                  <TableColumn fx:id="submitTime" prefWidth="96.09095764160156" text="Submit Time" />
-                  <TableColumn fx:id="completeTime" prefWidth="115.38302612304688" text="CompleteTime" />
-                  <TableColumn fx:id="patientID" prefWidth="84.33773803710938" text="Patient ID" />
-                  <TableColumn fx:id="requesterID" prefWidth="94.38327026367188" text="Requester ID" />
-                  <TableColumn fx:id="completerID" prefWidth="94.50030517578125" text="Completer ID" />
-                  <TableColumn fx:id="status" prefWidth="124.026123046875" text="Status" />
-                  <TableColumn fx:id="medID" prefWidth="145.2861328125" text="Medicine ID" />
-                  <TableColumn fx:id="quantity" prefWidth="94.0587158203125" text="Quantity" />
-                  <TableColumn fx:id="dosage" prefWidth="196.1109619140625" text="Dosage" />
+                  <TableColumn fx:id="reqID" prefWidth="111.38172769546509" text="Request ID" />
+                  <TableColumn fx:id="nodeID" prefWidth="123.27572631835938" text="Node ID" />
+                  <TableColumn fx:id="submitTime" prefWidth="124.40135192871094" text="Submit Time" />
+                  <TableColumn fx:id="completeTime" prefWidth="116.39892578125" text="CompleteTime" />
+                  <TableColumn fx:id="patientID" prefWidth="113.02691650390625" text="Patient ID" />
+                  <TableColumn fx:id="requesterID" prefWidth="108.7757568359375" text="Requester ID" />
+                  <TableColumn fx:id="completerID" prefWidth="118.27325439453125" text="Completer ID" />
+                  <TableColumn fx:id="status" prefWidth="125.7266845703125" text="Status" />
+                  <TableColumn fx:id="medID" prefWidth="149.6280517578125" text="Medicine ID" />
+                  <TableColumn fx:id="quantity" prefWidth="142.8719482421875" text="Quantity" />
+                  <TableColumn fx:id="dosage" prefWidth="149.246337890625" text="Dosage" />
                </columns>
             </TableView>
          </children>

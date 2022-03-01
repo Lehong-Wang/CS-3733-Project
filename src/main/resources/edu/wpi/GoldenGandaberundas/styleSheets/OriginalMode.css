@@ -2,7 +2,7 @@
 
 .background {
     -fx-background: linear-gradient(to bottom right, #94cbff, #edfbff, white 90%);
-    -fx-background-image: url('../images/mapping.jpg');
+    -fx-background-image: url('../images/MasonCropped.jpg');
     -fx-background-repeat: infinite;
     -fx-background-size: 300 300;
     -fx-background-position: center center;
@@ -11,7 +11,7 @@
 .serviceButton{
     -fx-background-color: yellow;
     -fx-alignment: LEFT;
-    -fx-textFill: white;
+    /*-fx-textFill: white;*/
 }
 
 .serviceButton:hover {
@@ -23,8 +23,8 @@
 
 .serviceButton:pressed {
     -fx-background-insert: 1,1,1,1;
-    -fx-text-fill: green !important;
-    -fx-background-color: purple  !important;
+    -fx-text-fill: green;
+    -fx-background-color: purple;
 
 }
 
@@ -49,15 +49,19 @@
     -fx-text-fill: teal;
 }
 
+/*.topMenuBar .hover {*/
+/*    -fx-background-color: white;*/
+/*}*/
+
 
 
 .label{
     -fx-text-fill: lawnGreen;
 }
-.text{
-    -fx-fill: darkcyan;
+/*.text{*/
+/*    -fx-fill: darkcyan;*/
 
-}
+/*}*/
 
 .backupButton{
     -fx-border-color: green;
@@ -208,12 +212,33 @@
 .text-field{
     -fx-background-color: red;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
 
+
+/*.text-area{*/
+/*    -fx-background-color: darkturquoise;*/
+/*    -fx-effect: dropshadow(three-pass-box , green, 5, 0, 0, 0);*/
+/*}*/
+
+
+.text-area {
+    -fx-background-color: rgba(53,89,119,0.4);
 }
-.text-area{
-    -fx-background-color: darkturquoise;
-    -fx-effect: dropshadow(three-pass-box , green, 5, 0, 0, 0);
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
 }
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+
 
 .text-input{
     -fx-text-fill: green;
@@ -343,6 +368,86 @@
 
 
 
+/***********************************/
+
+
+
+.chart-bar {
+    -fx-background-color: rgba(0,168,355,0.05);
+    -fx-border-color: rgba(0,168,355,0.3) rgba(0,168,355,0.3)
+    transparent rgba(0,168,355,0.3);
+    -fx-background-radius: 0;
+    -fx-background-position: left center;
+}
+
+.axis{
+    /*-fx-tick-label-font-size: 15px;*/
+    /*-fx-text-fill: red;*/
+    /*-fx-label-font-size: 15px;*/
+    -fx-tick-label-fill: yellow;
+}
+
+.axis-tick-mark{
+    -fx-stroke: red;
+}
+.axis-minor-tick-mark{
+    -fx-stroke: red;
+}
+
+.chart-bar-label {
+    -fx-text-fill: blue;
+}
+
+.data0.chart-bar {
+    -fx-background-color: green;
+}
+.data1.chart-bar {
+    -fx-background-color: red;
+}
+.data2.chart-bar {
+    -fx-background-color: darkgreen;
+}
+.data3.chart-bar {
+    -fx-background-color: darkred;
+}
+.data4.chart-bar {
+    -fx-background-color: yellow;
+}
+
+
+
+
+
+
+
+.default-color0.chart-pie { -fx-pie-color: darkblue; }
+.default-color1.chart-pie { -fx-pie-color: darkred; }
+.default-color2.chart-pie { -fx-pie-color: purple; }
+.default-color3.chart-pie { -fx-pie-color: #adff2f; }
+.default-color4.chart-pie { -fx-pie-color: #ff5700; }
+
+.chart-pie{
+    -fx-text-fill: text-black;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: yellow;
+    -fx-fill: green;
+}
+
+.chart-pie-label {
+    -fx-fill: pink;
+    -fx-font-size: 1em;
+}
+.chart-legend {
+    -fx-background-color:  blue;
+    -fx-stroke: orange;
+}
+
+
+
+
+
 
 
 
@@ -375,7 +480,7 @@
 }
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-font-size: 16pt;
+    -fx-font-size: 13pt;
     -fx-font-weight: bold;
     -fx-font-family: "Times New Roman";
     -fx-text-fill: darkred;

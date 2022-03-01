@@ -24,7 +24,7 @@
     -fx-background-color: default-blue;
     -fx-background-radius: 10px;
     /*-fx-text-color: white !important;*/
-    -fx-fill: text-color !important;
+    /*-fx-fill: text-color !important;*/
     /*-fx-wrap-text: white;*/
     -fx-alignment: center-left;
     /*-fx-font-family: "Times New Roman";*/
@@ -35,9 +35,9 @@
     -fx-text-fill: white;
 
 }
-.serviceButton.text {
-    -fx-fill: text-color;
-}
+/*.serviceButton.text {*/
+/*    -fx-fill: text-color;*/
+/*}*/
 
 .serviceButton:hover {
     /*-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;*/
@@ -113,7 +113,7 @@
 
 .actionButton{
     -fx-background-color: default-blue;
-    -fx-text-fill: text-color;
+    -fx-text-fill: text-black;
     -fx-text-font: 16px;
     -fx-alignment: center;
     -fx-background-radius: 30px;
@@ -159,12 +159,44 @@
 }
 
 .combo-box-base > .arrow-button > .arrow {
-    -fx-background-color: #001f73;
+    -fx-background-color: topbar-color;
     -fx-background-insets: 0 0 0 0;
     -fx-padding: 2 4;
     -fx-shape: "M 0 0 H 7 L 3.5 4 z";
 }
 
+.combo-box .list-cell {
+    -fx-text-fill: text-black;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: background-color;
+    -fx-text-fill: text-black;
+}
+
+.combo-box-popup .list-view .list-cell:filled
+{
+    -fx-background-color: box-color;
+    -fx-text-fill: text-black;
+}
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    /*-fx-background: red;*/
+    -fx-background-color: #212121;
+    -fx-text-fill: text-black;
+}
+
+.combo-box-popup .list-view .scroll-bar:vertical .thumb{
+    -fx-background-color:  shadow-color;
+}
+.combo-box-popup .list-view .scroll-bar {
+    -fx-background-color:  box-color;
+}
+
+.combo-box-popup .border {
+    -fx-background-color:  box-color;
+}
 
 /***************************************/
 
@@ -214,6 +246,95 @@
 }
 
 
+/*********************************/
+
+.chart-bar{
+    -fx-background-color: box-color;
+
+}
+
+chart-bar-label{
+    -fx-text-fill: text-black;
+}
+.data0.chart-bar{-fx-background-color: default-blue;}
+.data1.chart-bar{-fx-background-color: default-blue;}
+.data2.chart-bar{-fx-background-color: default-blue;}
+.data3.chart-bar{-fx-background-color: default-blue;}
+.data4.chart-bar{-fx-background-color: default-blue;}
+.data5.chart-bar{-fx-background-color: default-blue;}
+.data6.chart-bar{-fx-background-color: default-blue;}
+.data7.chart-bar{-fx-background-color: default-blue;}
+.data8.chart-bar{-fx-background-color: default-blue;}
+.data9.chart-bar{-fx-background-color: default-blue;}
+.data10.chart-bar{-fx-background-color: default-blue;}
+.data11.chart-bar{-fx-background-color: default-blue;}
+.data12.chart-bar{-fx-background-color: default-blue;}
+.data13.chart-bar{-fx-background-color: default-blue;}
+.data14.chart-bar{-fx-background-color: default-blue;}
+.data15.chart-bar{-fx-background-color: default-blue;}
+
+/*.data1.chart-bar{-fx-background-color: topbar-color;}*/
+/*.data2.chart-bar{-fx-background-color: backup-blue;}*/
+
+.axis-tick-mark{
+    -fx-stroke: text-black;
+}
+.axis-minor-tick-mark{
+    -fx-stroke: text-black;
+}
+
+
+
+.default-color0.chart-pie { -fx-pie-color: #B4D6E7; }
+.default-color1.chart-pie { -fx-pie-color: #9ECBE5; }
+.default-color2.chart-pie { -fx-pie-color: #89C0E1; }
+.default-color3.chart-pie { -fx-pie-color: #75B4DC; }
+.default-color4.chart-pie { -fx-pie-color: #63A7D6; }
+.default-color5.chart-pie { -fx-pie-color: #529ACF; }
+.default-color6.chart-pie { -fx-pie-color: #438CC7; }
+.default-color7.chart-pie { -fx-pie-color: #367FBD; }
+.default-color8.chart-pie { -fx-pie-color: #2A71B2; }
+.default-color9.chart-pie { -fx-pie-color: #2063A5; }
+.default-color10.chart-pie { -fx-pie-color: #185596; }
+.default-color11.chart-pie { -fx-pie-color: #104785; }
+.default-color12.chart-pie { -fx-pie-color: #0B3A73; }
+.default-color13.chart-pie { -fx-pie-color: #062D60; }
+.default-color14.chart-pie { -fx-pie-color: #03214C; }
+.default-color15.chart-pie { -fx-pie-color: #011738; }
+
+.chart-pie{
+    -fx-text-fill: text-black;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: text-black;
+    -fx-fill: text-black;
+}
+
+.chart-pie-label {
+    -fx-fill: text-black;
+    -fx-font-size: 1em;
+}
+.chart-legend {
+    -fx-background-color:  box-color;
+    -fx-text-fill: text-black;
+    -fx-stroke: #daa520;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**********************************/
 /* table */
@@ -248,7 +369,7 @@
 }
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-font-size: 16pt;
+    -fx-font-size: 10pt;
     -fx-font-weight: bold;
     /*-fx-font-family: "Times New Roman";*/
 }

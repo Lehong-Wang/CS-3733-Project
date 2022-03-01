@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,18 +13,21 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="196.0" prefWidth="1500.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="1813.0" text="Service Provider Page" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                  <Label alignment="CENTER" prefHeight="208.0" prefWidth="1500.0" text="Service Provider Page" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="36.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="378.0" prefWidth="1500.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="MedicalEquipmentButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderEquipment" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Equipment Provider" textFill="WHITE">
                            <font>
@@ -51,8 +55,11 @@
                         </JFXButton>
                         <HBox prefHeight="45.0" prefWidth="750.0" />
                      </children>
+                     <HBox.margin>
+                        <Insets left="200.0" right="100.0" />
+                     </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="LaundryButton" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" onAction="#switchProviderLaundry" prefHeight="45.0" prefWidth="314.0" ripplerFill="#ffffff00" styleClass="serviceButton" text="Laundry Provider" textFill="WHITE">
                            <font>
@@ -87,11 +94,14 @@
                            </graphic>
                         </JFXButton>
                      </children>
+                     <HBox.margin>
+                        <Insets left="100.0" right="200.0" />
+                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="285.0" prefWidth="1500.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />

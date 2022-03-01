@@ -45,4 +45,11 @@ public class SettingsPageController {
         .getStylesheets()
         .add(App.class.getResource("styleSheets/WPIMode.css").toExternalForm());
   }
+
+  public void switchBearBone() {
+    WPIModeBtn.getScene().getStylesheets().clear();
+    WPIModeBtn.getScene()
+        .getStylesheets()
+        .add(App.class.getResource("styleSheets/BearBone.css").toExternalForm());
+  }
 }

@@ -132,7 +132,10 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" onAction="#updateStatus" prefWidth="100.0" styleClass="actionButton" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#updateStatus" prefWidth="100.0" styleClass="actionButton" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="7" >
+                            <font>
+                                <Font size="16.0" />
+                            </font></Button>
                         <Label fx:id="timeCompLabel" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font size="16.0" />

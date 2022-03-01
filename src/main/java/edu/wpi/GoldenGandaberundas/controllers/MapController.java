@@ -208,8 +208,12 @@ public class MapController {
     rect.setY(282);
 
     // set up for side view gridpane
-    gridPane.setStyle("-fx-background-color: #f1f1f1");
-    gridPane.setMaxSize(200, 100);
+    //    gridPane.setBackground(new Background(#f1f1f1, ))
+    //    gridPane.setStyle(
+    //        "-fx-background-color: #f1f1f1;  -fx-grid-lines-visible: true; -fx-text-color: black
+    // ");
+    gridPane.setStyle("-fx-background-color: #ffffffc0;");
+    gridPane.setMaxSize(250, 110);
     gridPane.add(floorLabel, 1, 1);
     gridPane.add(cleanLabel, 2, 1);
     gridPane.add(dirtyLabel, 3, 1);
@@ -225,12 +229,30 @@ public class MapController {
     gridPane.add(xrayLabel, 1, 5);
     gridPane.add(xrayLabel2, 2, 5);
     floorLabel.setText("Floor 1: \n");
+    floorLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     cleanLabel.setText("Clean       \n");
+    cleanLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     dirtyLabel.setText("Dirty\n");
+    dirtyLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     bedLabel.setText("Beds:\n");
+    bedLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     reclinerLabel.setText("Recliners:\n");
+    reclinerLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     pumpsLabel.setText("Infusion Pumps:  \n");
+    pumpsLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
     xrayLabel.setText("X-Rays:\n");
+    xrayLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
+
+    cleanBedLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
+    dirtyBedLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
+    cleanReclinerLabel.setStyle(
+        "-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
+    dirtyReclinerLabel.setStyle(
+        "-fx-text-fill: #002D59; -fx-font-weight: bolder; -fx-font-size: 16px;");
+    cleanPumpsLabel.setStyle(
+        "-fx-text-fill: #002D59; -fx-font-weight: bolder; -fx-font-size: 16px;");
+    dirtyPumpsLabel.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
+    xrayLabel2.setStyle("-fx-text-fill: #002D59; -fx-font-weight: bold; -fx-font-size: 16px;");
 
     // Sorts equipments into their floors for display later
     ArrayList<MedEquipment> equipments = menuTableController.readTable();
@@ -414,7 +436,7 @@ public class MapController {
 
     imagePane.getChildren().add(gridPane);
     imagePane.getChildren().add(sideViewPane);
-    gridPane.setTranslateX(600);
+    gridPane.setTranslateX(550);
     setFloorView(getEquipNum(filteredEquipments1));
 
     sideTower.setOnMouseClicked(
@@ -474,7 +496,7 @@ public class MapController {
 
     JFXButton toggleEquip = new JFXButton();
     toggleEquip.setText("Equipment");
-    toggleEquip.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleEquip.getStyleClass().add("actionButton");
     toggleEquip.setPrefWidth(110);
     toggleEquip.setOnMouseReleased(
         e -> {
@@ -484,7 +506,8 @@ public class MapController {
     // imagePane.setAlignment(toggleEquip, Pos.TOP_LEFT);
     JFXButton toggleNodes = new JFXButton();
     toggleNodes.setText("Locations");
-    toggleNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleNodes.getStyleClass().add("actionButton");
+    //    toggleNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
     toggleNodes.setPrefWidth(110);
     toggleNodes.setOnMouseReleased(
         e -> {
@@ -497,12 +520,12 @@ public class MapController {
         e -> {
           requestGroup.setVisible(!requestGroup.isVisible());
         });
-    toggleRequests.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    toggleRequests.getStyleClass().add("actionButton");
 
     // add path planning open button
     JFXButton openNodes = new JFXButton();
     openNodes.setText("Path Planning");
-    openNodes.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    openNodes.getStyleClass().add("actionButton");
     openNodes.setPrefWidth(110);
     openNodes.setMaxWidth(110);
 
@@ -523,13 +546,13 @@ public class MapController {
     // add button to generate path
     JFXButton enterPath = new JFXButton();
     enterPath.setText("Find Path");
-    enterPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    enterPath.getStyleClass().add("actionButton");
     enterPath.setMaxWidth(110);
 
     // clear path button
     JFXButton clearPath = new JFXButton();
     clearPath.setText("Clear Path");
-    clearPath.setStyle("-fx-background-color: #0063a9; -fx-text-fill: white");
+    clearPath.getStyleClass().add("actionButton");
     clearPath.setMaxWidth(110);
 
     clearPath.setOnMouseReleased(
