@@ -31,21 +31,6 @@
                                  </font>
                               </Text>
                            </graphic>
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Main Page" />
-                              <MenuItem mnemonicParsing="false" text="Medical Equipment" />
-                              <MenuItem mnemonicParsing="false" text="Medicine Delivery" />
-                              <MenuItem mnemonicParsing="false" text="Gift/Floral Delivery" />
-                              <MenuItem mnemonicParsing="false" text="Language Interpreter" />
-                              <MenuItem mnemonicParsing="false" text="Laundry Services" />
-                              <MenuItem mnemonicParsing="false" text="Computer Service Requests" />
-                              <MenuItem mnemonicParsing="false" text="Food Delivery" />
-                              <MenuItem mnemonicParsing="false" text="Patient Transportation" />
-                              <MenuItem mnemonicParsing="false" text="Religious Request" />
-                              <MenuItem mnemonicParsing="false" text="Employee Database" />
-                              <MenuItem mnemonicParsing="false" text="Floor Editor" />
-                              <MenuItem mnemonicParsing="false" text="Location Table" />
-                           </items>
                         </Menu>
                         <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
