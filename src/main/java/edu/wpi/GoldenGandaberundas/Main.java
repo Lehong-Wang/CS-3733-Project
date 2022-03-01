@@ -35,7 +35,7 @@ public class Main {
    * @param windowHeight Height of the spawned JFX window
    * @param cssPath path starting from the resources folder
    */
-  public void run(
+  public static void run(
       int xCoord, int yCoord, int windowWidth, int windowHeight, String cssPath, double frequency)
       throws IOException {
     floorMaps.load();
@@ -102,11 +102,11 @@ public class Main {
     SimulatePumps.setFrequency(frequency);
     SimulateXRay.setFrequency(frequency);
 
-    Parent root = FXMLLoader.load(getClass().getResource("views/simulationView.fxml"));
+    Parent root = FXMLLoader.load(Main.class.getResource("views/simulationView.fxml"));
     Scene scene = new Scene(root, windowWidth, windowHeight);
 
     Stage stage2 = new Stage();
-    scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+    scene.getStylesheets().add(Main.class.getResource(cssPath).toExternalForm());
     stage2.setScene(scene);
     // primaryStage.setMaximized(false);
     stage2.setX(xCoord);
@@ -116,7 +116,7 @@ public class Main {
     stage2.show();
   }
 
-  public void run() throws IOException {
+  public static void run() throws IOException {
     run(0, 0, 1000, 1000, "", 1);
   }
 }
