@@ -813,17 +813,6 @@ public class TowerSideViewController {
     public void setText(String text) {
       this.text.setText(text + "");
     }
-
-    /**
-     * sets the location of the pane
-     *
-     * @param x x coordinate
-     * @param y y coordinate
-     */
-    public void setLocation(int x, int y) {
-      super.setTranslateX(x);
-      super.setTranslateY(y);
-    }
   }
 
   /** displays an icon and the amount on each floor with a mouse hover */
@@ -836,6 +825,7 @@ public class TowerSideViewController {
     private final ImageView PUMP_GREEN = new ImageView(floorMaps.greenInfusionPump);
     private final ImageView XRAY = new ImageView(floorMaps.xRayIcon);
     private ImageView icon;
+    private boolean displayed = true;
 
     private EquipLabel label;
 
@@ -872,6 +862,15 @@ public class TowerSideViewController {
       } else {
         this.setVisible(true);
       }
+    }
+
+    /**
+     * gets the display statu
+     *
+     * @return true if icon visible
+     */
+    public boolean getDisplay() {
+      return displayed;
     }
 
     /**

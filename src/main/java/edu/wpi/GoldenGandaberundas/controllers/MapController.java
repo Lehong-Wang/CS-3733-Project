@@ -99,6 +99,19 @@ public class MapController {
 
   private Rectangle rect;
 
+  private IconDisplay bed3;
+  private IconDisplay recliner3;
+  private IconDisplay pump3;
+  private IconDisplay xray3;
+  private IconDisplay bed1;
+  private IconDisplay recliner1;
+  private IconDisplay pump1;
+  private IconDisplay xray1;
+  private IconDisplay bedL1;
+  private IconDisplay reclinerL1;
+  private IconDisplay pumpL1;
+  private IconDisplay xrayL1;
+
   mainController main = null;
 
   @FXML
@@ -219,13 +232,6 @@ public class MapController {
     pumpsLabel.setText("Infusion Pumps:  \n");
     xrayLabel.setText("X-Rays:\n");
 
-    sideTower.setOnMouseClicked(
-        e -> {
-          if (e.getClickCount() > 1) {
-            main.switchSideView();
-          }
-        });
-
     // Sorts equipments into their floors for display later
     ArrayList<MedEquipment> equipments = menuTableController.readTable();
     for (int i = 0; i < equipments.size(); i++) {
@@ -242,7 +248,7 @@ public class MapController {
     // Adding icons on tower
     // floor 3 icons
     int[] equipmentNum = getEquipNum(filteredEquipments3);
-    IconDisplay bed3 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed3 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
     bed3.setTranslateX(102);
     bed3.setTranslateY(160);
     bed3.setOnMouseEntered(
@@ -254,7 +260,7 @@ public class MapController {
           bed3.showIcon();
         });
 
-    IconDisplay recliner3 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner3 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
     recliner3.setTranslateX(162);
     recliner3.setTranslateY(160);
     recliner3.setOnMouseEntered(
@@ -266,7 +272,7 @@ public class MapController {
           recliner3.showIcon();
         });
 
-    IconDisplay pump3 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump3 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
     pump3.setTranslateX(222);
     pump3.setTranslateY(160);
     pump3.setOnMouseEntered(
@@ -278,7 +284,7 @@ public class MapController {
           pump3.showIcon();
         });
 
-    IconDisplay xray3 = new IconDisplay(4, equipmentNum[6]);
+    xray3 = new IconDisplay(4, equipmentNum[6]);
     xray3.setTranslateX(282);
     xray3.setTranslateY(160);
     xray3.setOnMouseEntered(
@@ -292,7 +298,7 @@ public class MapController {
 
     // floor 1 icons
     equipmentNum = getEquipNum(filteredEquipments1);
-    IconDisplay bed1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
     bed1.setTranslateX(102);
     bed1.setTranslateY(238);
     bed1.setOnMouseEntered(
@@ -304,7 +310,7 @@ public class MapController {
           bed1.showIcon();
         });
 
-    IconDisplay recliner1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
     recliner1.setTranslateX(162);
     recliner1.setTranslateY(238);
     recliner1.setOnMouseEntered(
@@ -316,7 +322,7 @@ public class MapController {
           recliner1.showIcon();
         });
 
-    IconDisplay pump1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
     pump1.setTranslateX(222);
     pump1.setTranslateY(238);
     pump1.setOnMouseEntered(
@@ -328,7 +334,7 @@ public class MapController {
           pump1.showIcon();
         });
 
-    IconDisplay xray1 = new IconDisplay(4, equipmentNum[6]);
+    xray1 = new IconDisplay(4, equipmentNum[6]);
     xray1.setTranslateX(282);
     xray1.setTranslateY(238);
     xray1.setOnMouseEntered(
@@ -342,7 +348,7 @@ public class MapController {
 
     // floor L1 icons
     equipmentNum = getEquipNum(filteredEquipmentsL1);
-    IconDisplay bedL1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bedL1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
     bedL1.setTranslateX(102);
     bedL1.setTranslateY(277);
     bedL1.setOnMouseEntered(
@@ -354,7 +360,7 @@ public class MapController {
           bedL1.showIcon();
         });
 
-    IconDisplay reclinerL1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    reclinerL1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
     reclinerL1.setTranslateX(162);
     reclinerL1.setTranslateY(277);
     reclinerL1.setOnMouseEntered(
@@ -366,7 +372,7 @@ public class MapController {
           reclinerL1.showIcon();
         });
 
-    IconDisplay pumpL1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pumpL1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
     pumpL1.setTranslateX(222);
     pumpL1.setTranslateY(277);
     pumpL1.setOnMouseEntered(
@@ -378,7 +384,7 @@ public class MapController {
           pumpL1.showIcon();
         });
 
-    IconDisplay xrayL1 = new IconDisplay(4, equipmentNum[6]);
+    xrayL1 = new IconDisplay(4, equipmentNum[6]);
     xrayL1.setTranslateX(282);
     xrayL1.setTranslateY(277);
     xrayL1.setOnMouseEntered(
@@ -410,6 +416,41 @@ public class MapController {
     imagePane.getChildren().add(sideViewPane);
     gridPane.setTranslateX(600);
     setFloorView(getEquipNum(filteredEquipments1));
+
+    sideTower.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() > 1) {
+            main.switchSideView();
+          } else if (e.getClickCount() == 1) {
+            if (bed3.getDisplay()) {
+              bed3.setDisplay(false);
+              recliner3.setDisplay(false);
+              pump3.setDisplay(false);
+              xray3.setDisplay(false);
+              bed1.setDisplay(false);
+              recliner1.setDisplay(false);
+              pump1.setDisplay(false);
+              xray1.setDisplay(false);
+              bedL1.setDisplay(false);
+              reclinerL1.setDisplay(false);
+              pumpL1.setDisplay(false);
+              xrayL1.setDisplay(false);
+            } else {
+              bed3.setDisplay(true);
+              recliner3.setDisplay(true);
+              pump3.setDisplay(true);
+              xray3.setDisplay(true);
+              bed1.setDisplay(true);
+              recliner1.setDisplay(true);
+              pump1.setDisplay(true);
+              xray1.setDisplay(true);
+              bedL1.setDisplay(true);
+              reclinerL1.setDisplay(true);
+              pumpL1.setDisplay(true);
+              xrayL1.setDisplay(true);
+            }
+          }
+        });
 
     // attempts to center the pane on launch
     gesturePane.zoomBy(0.005, 0.005, new Point2D(2500, 1700));
@@ -1248,7 +1289,7 @@ public class MapController {
      *
      * @param text text to display
      */
-    public void setText(String text) {
+    public void setText(int text) {
       this.text.setText(text + "");
     }
 
@@ -1271,6 +1312,7 @@ public class MapController {
     private final ImageView PUMP = new ImageView(floorMaps.infusionPumpIcon);
     private final ImageView XRAY = new ImageView(floorMaps.xRayIcon);
     private ImageView icon;
+    private boolean displayed = true;
 
     private EquipLabel label;
 
@@ -1295,17 +1337,56 @@ public class MapController {
       this.getChildren().addAll(label, icon);
     }
 
+    /**
+     * gets the display statu
+     *
+     * @return true if icon visible
+     */
+    public boolean getDisplay() {
+      return displayed;
+    }
+
+    /**
+     * sets the display mode
+     *
+     * @param bool
+     */
+    public void setDisplay(boolean bool) {
+      displayed = bool;
+      if (bool) {
+        showIcon();
+      } else {
+        hideIcon();
+      }
+    }
+
+    /**
+     * sets the label to a new number
+     *
+     * @param num the number to change it to
+     */
+    public void setDisplayNum(int num) {
+      label.setText(num);
+    }
+
+    /**
+     * sets the Icon to 0.65 the size
+     *
+     * @param image
+     */
     private void setIcon(ImageView image) {
       image.setScaleX(.65);
       image.setScaleY(.65);
     }
 
+    /** makes the icon invisible */
     public void hideIcon() {
       icon.setVisible(false);
     }
 
+    /** shows the icon */
     public void showIcon() {
-      icon.setVisible(true);
+      if (displayed) icon.setVisible(true);
     }
   }
 }

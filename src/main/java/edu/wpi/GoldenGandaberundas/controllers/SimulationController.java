@@ -34,8 +34,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 
@@ -51,12 +55,15 @@ public class SimulationController {
 
   @FXML private StackPane imagePane;
   @FXML private GesturePane gesturePane = new GesturePane(imagePane);
+  @FXML private GesturePane towerPane = new GesturePane();
 
   @FXML private Pane nodeDataPane;
+  @FXML private Pane sideViewPane;
 
   public TableController<Location, String> locations = null;
   private ImageView mapImage = null;
   private Group imageGroup = null;
+  private ImageView sideTower = null;
   private Pane locNodePane = null;
   private Group animatedPathNodeGroup = null;
   private MapSubController subController = null;
@@ -68,6 +75,8 @@ public class SimulationController {
   private Integer fasterHour = 0;
   private ArrayList<ArrayList<ArrayList<String>>> coord = null;
   private Integer medEquip;
+
+  private Rectangle rect;
 
   // CSS styling strings used to style side panel buttons
   private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #002D59;";
@@ -87,6 +96,27 @@ public class SimulationController {
 
   private PathTbl path = PathTbl.getInstance();
   private TableController locationTableController = LocationTbl.getInstance();
+  private TableController menuTableController = MedEquipmentTbl.getInstance();
+
+  // IconDisplays for the side tower view
+  IconDisplay bed3;
+  IconDisplay recliner3;
+  IconDisplay pump3;
+  IconDisplay xray3;
+
+  IconDisplay bed1;
+  IconDisplay recliner1;
+  IconDisplay pump1;
+  IconDisplay xray1;
+
+  IconDisplay bedL1;
+  IconDisplay reclinerL1;
+  IconDisplay pumpL1;
+  IconDisplay xrayL1;
+
+  ArrayList<MedEquipment> filteredEquipments3 = new ArrayList<>();
+  ArrayList<MedEquipment> filteredEquipments1 = new ArrayList<>();
+  ArrayList<MedEquipment> filteredEquipmentsL1 = new ArrayList<>();
 
   @FXML
   public void initialize() {
@@ -141,6 +171,7 @@ public class SimulationController {
     imageGroup.getChildren().add(requestGroup);
 
     animatedPathNodeGroup = new Group();
+    animatedPathNodeGroup.setStyle("-fx-background-color: red");
     imageGroup.getChildren().add(animatedPathNodeGroup);
 
     // creates button to select visible floor
@@ -152,6 +183,224 @@ public class SimulationController {
 
     // attempts to center the pane on launch
     gesturePane.zoomBy(0.005, 0.005, new Point2D(2500, 1700));
+
+    // Sets the side image
+    sideViewPane = new Pane();
+    sideTower = new ImageView(floorMaps.towerSideview);
+    sideTower.setScaleX(.75);
+    sideTower.setScaleY(.75);
+    towerPane.setContent(sideTower);
+    sideViewPane.getChildren().add(towerPane);
+    sideViewPane.setMaxSize(0, 0);
+    sideViewPane.setTranslateX(350);
+    sideViewPane.setTranslateY(-420);
+    rect = new Rectangle(310, 38);
+    rect.setFill(Color.LIGHTGREEN);
+    sideViewPane.getChildren().add(rect);
+    rect.setX(50);
+    rect.setY(282);
+
+    // Sorts equipments into their floors for display later
+    sortEquipment(menuTableController.readTable());
+    // Adding icons on tower
+    // floor 3 icons
+    int[] equipmentNum = getEquipNum(filteredEquipments3);
+    bed3 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed3.setTranslateX(102);
+    bed3.setTranslateY(160);
+    bed3.setOnMouseEntered(
+        e -> {
+          bed3.hideIcon();
+        });
+    bed3.setOnMouseExited(
+        e -> {
+          bed3.showIcon();
+        });
+    recliner3 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner3.setTranslateX(162);
+    recliner3.setTranslateY(160);
+    recliner3.setOnMouseEntered(
+        e -> {
+          recliner3.hideIcon();
+        });
+    recliner3.setOnMouseExited(
+        e -> {
+          recliner3.showIcon();
+        });
+
+    pump3 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump3.setTranslateX(222);
+    pump3.setTranslateY(160);
+    pump3.setOnMouseEntered(
+        e -> {
+          pump3.hideIcon();
+        });
+    pump3.setOnMouseExited(
+        e -> {
+          pump3.showIcon();
+        });
+
+    xray3 = new IconDisplay(4, equipmentNum[6]);
+    xray3.setTranslateX(282);
+    xray3.setTranslateY(160);
+    xray3.setOnMouseEntered(
+        e -> {
+          xray3.hideIcon();
+        });
+    xray3.setOnMouseExited(
+        e -> {
+          xray3.showIcon();
+        });
+
+    // floor 1 icons
+    equipmentNum = getEquipNum(filteredEquipments1);
+    bed1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bed1.setTranslateX(102);
+    bed1.setTranslateY(238);
+    bed1.setOnMouseEntered(
+        e -> {
+          bed1.hideIcon();
+        });
+    bed1.setOnMouseExited(
+        e -> {
+          bed1.showIcon();
+        });
+
+    recliner1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    recliner1.setTranslateX(162);
+    recliner1.setTranslateY(238);
+    recliner1.setOnMouseEntered(
+        e -> {
+          recliner1.hideIcon();
+        });
+    recliner1.setOnMouseExited(
+        e -> {
+          recliner1.showIcon();
+        });
+
+    pump1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pump1.setTranslateX(222);
+    pump1.setTranslateY(238);
+    pump1.setOnMouseEntered(
+        e -> {
+          pump1.hideIcon();
+        });
+    pump1.setOnMouseExited(
+        e -> {
+          pump1.showIcon();
+        });
+
+    xray1 = new IconDisplay(4, equipmentNum[6]);
+    xray1.setTranslateX(282);
+    xray1.setTranslateY(238);
+    xray1.setOnMouseEntered(
+        e -> {
+          xray1.hideIcon();
+        });
+    xray1.setOnMouseExited(
+        e -> {
+          xray1.showIcon();
+        });
+
+    // floor L1 icons
+    equipmentNum = getEquipNum(filteredEquipmentsL1);
+    bedL1 = new IconDisplay(1, equipmentNum[0] + equipmentNum[1]);
+    bedL1.setTranslateX(102);
+    bedL1.setTranslateY(277);
+    bedL1.setOnMouseEntered(
+        e -> {
+          bedL1.hideIcon();
+        });
+    bedL1.setOnMouseExited(
+        e -> {
+          bedL1.showIcon();
+        });
+
+    reclinerL1 = new IconDisplay(2, equipmentNum[2] + equipmentNum[3]);
+    reclinerL1.setTranslateX(162);
+    reclinerL1.setTranslateY(277);
+    reclinerL1.setOnMouseEntered(
+        e -> {
+          reclinerL1.hideIcon();
+        });
+    reclinerL1.setOnMouseExited(
+        e -> {
+          reclinerL1.showIcon();
+        });
+
+    pumpL1 = new IconDisplay(3, equipmentNum[4] + equipmentNum[5]);
+    pumpL1.setTranslateX(222);
+    pumpL1.setTranslateY(277);
+    pumpL1.setOnMouseEntered(
+        e -> {
+          pumpL1.hideIcon();
+        });
+    pumpL1.setOnMouseExited(
+        e -> {
+          pumpL1.showIcon();
+        });
+
+    xrayL1 = new IconDisplay(4, equipmentNum[6]);
+    xrayL1.setTranslateX(282);
+    xrayL1.setTranslateY(277);
+    xrayL1.setOnMouseEntered(
+        e -> {
+          xrayL1.hideIcon();
+        });
+    xrayL1.setOnMouseExited(
+        e -> {
+          xrayL1.showIcon();
+        });
+
+    sideViewPane
+        .getChildren()
+        .addAll(
+            bed3,
+            recliner3,
+            pump3,
+            xray3,
+            bed1,
+            recliner1,
+            pump1,
+            xray1,
+            bedL1,
+            reclinerL1,
+            pumpL1,
+            xrayL1);
+
+    imagePane.getChildren().add(sideViewPane);
+    sideTower.setOnMouseClicked(
+        e -> {
+          if (e.getClickCount() == 1) {
+            if (bed3.getDisplay()) {
+              bed3.setDisplay(false);
+              recliner3.setDisplay(false);
+              pump3.setDisplay(false);
+              xray3.setDisplay(false);
+              bed1.setDisplay(false);
+              recliner1.setDisplay(false);
+              pump1.setDisplay(false);
+              xray1.setDisplay(false);
+              bedL1.setDisplay(false);
+              reclinerL1.setDisplay(false);
+              pumpL1.setDisplay(false);
+              xrayL1.setDisplay(false);
+            } else {
+              bed3.setDisplay(true);
+              recliner3.setDisplay(true);
+              pump3.setDisplay(true);
+              xray3.setDisplay(true);
+              bed1.setDisplay(true);
+              recliner1.setDisplay(true);
+              pump1.setDisplay(true);
+              xray1.setDisplay(true);
+              bedL1.setDisplay(true);
+              reclinerL1.setDisplay(true);
+              pumpL1.setDisplay(true);
+              xrayL1.setDisplay(true);
+            }
+          }
+        });
 
     try {
       Node subPane = (Node) subControllerLoader.load();
@@ -212,6 +461,7 @@ public class SimulationController {
     nextHour.setStyle("-fx-text-fill: white");
     nextHour.setPrefWidth(110);
     currentHourLabel.setFont(nextHour.getFont());
+
     nextHour.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
@@ -357,6 +607,71 @@ public class SimulationController {
 
     nodeDataPane.setManaged(false);
     nodeDataPane.setVisible(false);
+
+    sideViewPane.toFront();
+  }
+
+  /**
+   * gets an array of the number of each equipment
+   *
+   * @param filteredEquipments a list of equipment to sort
+   * @return int array of the equipment amounts
+   */
+  public int[] getEquipNum(ArrayList<MedEquipment> filteredEquipments) {
+    int cleanBed = 0;
+    int dirtyBed = 0;
+    int cleanRecliner = 0;
+    int dirtyRecliner = 0;
+    int cleanPump = 0;
+    int dirtyPump = 0;
+    int xray = 0;
+    for (int i = 0; i < filteredEquipments.size(); i++) {
+      String type = filteredEquipments.get(i).getMedEquipmentType().trim();
+      String status = filteredEquipments.get(i).getStatus().trim();
+      if (type.equals("Bed")) {
+        if (status.equals("Stored")) {
+          cleanBed++;
+        } else {
+          dirtyBed++;
+        }
+      } else if (type.equals("Recliner")) {
+        if (status.equals("Stored")) {
+          cleanRecliner++;
+        } else {
+          dirtyRecliner++;
+        }
+      } else if (type.equals("Infusion Pump")) {
+        if (status.equals("Stored")) {
+          cleanPump++;
+        } else {
+          dirtyPump++;
+        }
+      } else if (type.equals("X-ray")) {
+        xray++;
+      }
+    }
+    return new int[] {cleanBed, dirtyBed, cleanRecliner, dirtyRecliner, cleanPump, dirtyPump, xray};
+  }
+
+  /**
+   * sorts a list of medical equipments into their respective floors
+   *
+   * @param equipments
+   */
+  private void sortEquipment(ArrayList<MedEquipment> equipments) {
+    filteredEquipments3 = new ArrayList<>();
+    filteredEquipments1 = new ArrayList<>();
+    filteredEquipmentsL1 = new ArrayList<>();
+    for (int i = 0; i < equipments.size(); i++) {
+      String nodeID = equipments.get(i).getCurrLoc();
+      int nodeLength = nodeID.length();
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("03"))
+        filteredEquipments3.add(equipments.get(i));
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("01"))
+        filteredEquipments1.add(equipments.get(i));
+      if (nodeID.substring(nodeLength - 2, nodeLength).equals("L1"))
+        filteredEquipmentsL1.add(equipments.get(i));
+    }
   }
 
   public void createIcon(Location loc) {
@@ -381,27 +696,7 @@ public class SimulationController {
           //          placeHolder.setStyle("-fx-background-color: black");
           placeHolder.setFill(Color.BLACK);
         });
-    placeHolder.setOnMouseDragged(
-        e -> {
-          gesturePane.setGestureEnabled(false);
-          placeHolder.setLayoutX(placeHolder.getLayoutX() + e.getX());
-          placeHolder.setLayoutY(placeHolder.getLayoutY() + e.getY());
-        });
-    placeHolder.setOnMouseReleased(
-        e -> {
-          gesturePane.setGestureEnabled(true);
-          LocationTbl.getInstance()
-              .editEntry(
-                  placeHolder.location.getNodeID(), "xCoord", (int) placeHolder.getLayoutX());
-          LocationTbl.getInstance()
-              .editEntry(
-                  placeHolder.location.getNodeID(), "yCoord", (int) placeHolder.getLayoutY());
-          placeHolder.location.setXcoord((int) placeHolder.getLayoutX());
-          placeHolder.location.setYcoord((int) placeHolder.getLayoutY());
-          System.out.println("drag done");
-          subController.setText(placeHolder.location);
-          System.out.println("clicked");
-        });
+
     placeHolder.setOnContextMenuRequested(
         e -> {
           nodeDataPane.setManaged(true);
@@ -420,7 +715,6 @@ public class SimulationController {
           } catch (IOException exc) {
             exc.printStackTrace();
           }
-          System.out.println("alt click");
         });
   }
 
@@ -497,30 +791,35 @@ public class SimulationController {
           mapImage.setImage(LL2);
           currentFloor = "L2";
           refreshMap();
+          rect.setY(322);
         });
     floorL1.setOnAction(
         e -> {
           mapImage.setImage(LL1);
           currentFloor = "L1";
           refreshMap();
+          rect.setY(282);
         });
     floor01.setOnAction(
         e -> {
           mapImage.setImage(L1);
           currentFloor = "1";
           refreshMap();
+          rect.setY(242);
         });
     floor02.setOnAction(
         e -> {
           mapImage.setImage(L2);
           currentFloor = "2";
           refreshMap();
+          rect.setY(204);
         });
     floor03.setOnAction(
         e -> {
           mapImage.setImage(L3);
           currentFloor = "3";
           refreshMap();
+          rect.setY(166);
         });
 
     return floorSelect;
@@ -602,6 +901,8 @@ public class SimulationController {
       animatedPath();
       medEquip++;
     }
+    updateSideView(MedEquipmentTbl.getInstance().readTable());
+    sideViewPane.toFront();
   }
 
   /**
@@ -625,6 +926,8 @@ public class SimulationController {
       animatedPath();
       medEquip++;
     }
+    updateSideView(MedEquipmentTbl.getInstance().readTable());
+    sideViewPane.toFront();
   }
 
   /**
@@ -808,6 +1111,133 @@ public class SimulationController {
     coord.get(4).get(medEquip).clear();
   }
 
+  public void updateSideView(ArrayList<MedEquipment> equipment) {
+    sortEquipment(equipment);
+    int[] equipmentNum = getEquipNum(filteredEquipments3);
+    bed3.setDisplayNum(equipmentNum[0] + equipmentNum[1]);
+    //    bed3.setOnMouseEntered(
+    //        e -> {
+    //          bed3.hideIcon();
+    //        });
+    //    bed3.setOnMouseExited(
+    //        e -> {
+    //          bed3.showIcon();
+    //        });
+    recliner3.setDisplayNum(equipmentNum[2] + equipmentNum[3]);
+    //    recliner3.setOnMouseEntered(
+    //        e -> {
+    //          recliner3.hideIcon();
+    //        });
+    //    recliner3.setOnMouseExited(
+    //        e -> {
+    //          recliner3.showIcon();
+    //        });
+
+    pump3.setDisplayNum(equipmentNum[4] + equipmentNum[5]);
+    //    pump3.setOnMouseEntered(
+    //        e -> {
+    //          pump3.hideIcon();
+    //        });
+    //    pump3.setOnMouseExited(
+    //        e -> {
+    //          pump3.showIcon();
+    //        });
+
+    xray3.setDisplayNum(equipmentNum[6]);
+    //    xray3.setOnMouseEntered(
+    //        e -> {
+    //          xray3.hideIcon();
+    //        });
+    //    xray3.setOnMouseExited(
+    //        e -> {
+    //          xray3.showIcon();
+    //        });
+
+    // floor 1 icons
+    equipmentNum = getEquipNum(filteredEquipments1);
+    bed1.setDisplayNum(equipmentNum[0] + equipmentNum[1]);
+    //    bed1.setOnMouseEntered(
+    //        e -> {
+    //          bed1.hideIcon();
+    //        });
+    //    bed1.setOnMouseExited(
+    //        e -> {
+    //          bed1.showIcon();
+    //        });
+
+    recliner1.setDisplayNum(equipmentNum[2] + equipmentNum[3]);
+    //    recliner1.setOnMouseEntered(
+    //        e -> {
+    //          recliner1.hideIcon();
+    //        });
+    //    recliner1.setOnMouseExited(
+    //        e -> {
+    //          recliner1.showIcon();
+    //        });
+
+    pump1.setDisplayNum(equipmentNum[4] + equipmentNum[5]);
+    //    pump1.setOnMouseEntered(
+    //        e -> {
+    //          pump1.hideIcon();
+    //        });
+    //    pump1.setOnMouseExited(
+    //        e -> {
+    //          pump1.showIcon();
+    //        });
+
+    xray1.setDisplayNum(equipmentNum[6]);
+    //    xray1.setOnMouseEntered(
+    //        e -> {
+    //          xray1.hideIcon();
+    //        });
+    //    xray1.setOnMouseExited(
+    //        e -> {
+    //          xray1.showIcon();
+    //        });
+
+    // floor L1 icons
+    equipmentNum = getEquipNum(filteredEquipmentsL1);
+    bedL1.setDisplayNum(equipmentNum[0] + equipmentNum[1]);
+    //    bedL1.setOnMouseEntered(
+    //        e -> {
+    //          bedL1.hideIcon();
+    //        });
+    //    bedL1.setOnMouseExited(
+    //        e -> {
+    //          bedL1.showIcon();
+    //        });
+
+    reclinerL1.setDisplayNum(equipmentNum[2] + equipmentNum[3]);
+    //    reclinerL1.setOnMouseEntered(
+    //        e -> {
+    //          reclinerL1.hideIcon();
+    //        });
+    //    reclinerL1.setOnMouseExited(
+    //        e -> {
+    //          reclinerL1.showIcon();
+    //        });
+
+    pumpL1.setDisplayNum(equipmentNum[4] + equipmentNum[5]);
+    //    pumpL1.setOnMouseEntered(
+    //        e -> {
+    //          pumpL1.hideIcon();
+    //        });
+    //    pumpL1.setOnMouseExited(
+    //        e -> {
+    //          pumpL1.showIcon();
+    //        });
+
+    xrayL1.setDisplayNum(equipmentNum[6]);
+    //    xrayL1.setOnMouseEntered(
+    //        e -> {
+    //          xrayL1.hideIcon();
+    //        });
+    //    xrayL1.setOnMouseExited(
+    //        e -> {
+    //          xrayL1.showIcon();
+    //        });
+  }
+
   private class MedEqpImageView extends ImageView {
     public Location location = null;
     public MedEquipment medEquipment = null;
@@ -830,6 +1260,159 @@ public class SimulationController {
 
     void setLocation(Location loc) {
       location = loc;
+    }
+  }
+
+  /** Creates a path bar class for path to follow */
+  private class PathBar extends Line {
+    private String floor = "00";
+
+    public PathBar(Location startLoc, Location endLoc) {
+      super(startLoc.getXcoord(), startLoc.getYcoord(), endLoc.getXcoord(), endLoc.getYcoord());
+      this.setStrokeWidth(15);
+      this.setStroke(Color.rgb(7, 16, 115));
+      if (startLoc.getFloor().equals(endLoc.getFloor())) {
+        floor = startLoc.getFloor();
+      }
+    }
+
+    public String getFloor() {
+      return floor;
+    }
+  }
+
+  /** Class to show the equipment with circles */
+  private class EquipmentCircle extends Circle {
+    private String floor = "00";
+
+    public EquipmentCircle(Location startLoc, Location endLoc) {
+      super();
+      if (startLoc.getFloor().equals(endLoc.getFloor())) {
+        floor = startLoc.getFloor();
+      }
+    }
+
+    public String getFloor() {
+      return floor;
+    }
+  }
+  /** creates a stack pane that displays a number in a navy circle */
+  private class EquipLabel extends StackPane {
+    private Text text;
+    Circle circle;
+
+    public EquipLabel() {
+      super();
+      circle = new Circle(16, Color.rgb(0, 45, 89));
+      text = new Text("");
+      text.setFill(Color.WHITE);
+      text.setBoundsType(TextBoundsType.VISUAL);
+      text.setFont(Font.font("Open Sans", 22));
+      super.getChildren().addAll(circle, text);
+    }
+
+    public EquipLabel(int display) {
+      super();
+      circle = new Circle(16, Color.rgb(0, 45, 89));
+      text = new Text(display + "");
+      text.setFill(Color.WHITE);
+      text.setBoundsType(TextBoundsType.VISUAL);
+      text.setFont(Font.font("Open Sans", 22));
+      super.getChildren().addAll(circle, text);
+    }
+
+    /**
+     * sets the text of the circle
+     *
+     * @param text text to display
+     */
+    public void setText(int text) {
+      this.text.setText(text + "");
+    }
+  }
+
+  /** displays an icon and the amount on each floor with a mouse hover */
+  public class IconDisplay extends StackPane {
+    private final ImageView BED = new ImageView(floorMaps.bedIcon);
+    private final ImageView RECLINER = new ImageView(floorMaps.reclinerIcon);
+    private final ImageView PUMP = new ImageView(floorMaps.infusionPumpIcon);
+    private final ImageView XRAY = new ImageView(floorMaps.xRayIcon);
+    private ImageView icon;
+    private boolean displayed = true;
+
+    private EquipLabel label;
+
+    public IconDisplay(int iconNum, int display) {
+      super();
+      switch (iconNum) {
+        case 1:
+          icon = BED;
+          break;
+        case 2:
+          icon = RECLINER;
+          break;
+        case 3:
+          icon = PUMP;
+          break;
+        default:
+          icon = XRAY;
+          break;
+      }
+      setIcon(icon);
+      label = new EquipLabel(display);
+      this.getChildren().addAll(label, icon);
+    }
+
+    /**
+     * gets the display statu
+     *
+     * @return true if icon visible
+     */
+    public boolean getDisplay() {
+      return displayed;
+    }
+
+    /**
+     * sets the display mode
+     *
+     * @param bool
+     */
+    public void setDisplay(boolean bool) {
+      displayed = bool;
+      if (bool) {
+        showIcon();
+      } else {
+        hideIcon();
+      }
+    }
+
+    /**
+     * sets the label to a new number
+     *
+     * @param num the number to change it to
+     */
+    public void setDisplayNum(int num) {
+      label.setText(num);
+    }
+
+    /**
+     * sets the Icon to 0.65 the size
+     *
+     * @param image
+     */
+    private void setIcon(ImageView image) {
+      image.setScaleX(.65);
+      image.setScaleY(.65);
+    }
+
+    /** makes the icon invisible */
+    public void hideIcon() {
+      icon.setVisible(false);
+    }
+
+    /** makes the icon visible */
+    public void showIcon() {
+      if (displayed) icon.setVisible(true);
     }
   }
 }
