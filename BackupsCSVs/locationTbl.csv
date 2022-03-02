@@ -96,6 +96,11 @@ GSTOR00103,470,468,3,Tower,STOR,Patient StoraGe,PATISTOR103
 GSTOR001L1,625,251,L1,Tower,STOR,OperatinG Room Bed Park ,OR Bed Park
 GSTOR00201,476,324,1,Tower,STOR,West Plaza,W Plaz
 GSTOR00303,485,159,3,Tower,STOR,In-patient Unit StoraGe,StoraGe
+GHALL00103,574,318,3,Tower,HALL,Hallway Connector G1 Floor 3,Hallway H00103
+GELEV00SL1,554,330,L1,Tower,ELEV,Elevator S Floor L1,Elevator SL1
+GELEV00S01,552,337,1,Tower,ELEV,Elevator S Floor 1,Elevator S1
+GELEV00S02,546,334,2,Tower,ELEV,Elevator S Floor 2,Elevator S2
+GELEV00S03,536,320,3,Tower,ELEV,Elevator S Floor 3,Elevator S3
 HBATH00102,568,401,2,Tower,BATH,Bathroom 1 Tower Floor 2,Bathroom 0102
 HBATH00103,748,223,3,Tower,BATH,Bathroom 1 Tower Floor 3,Bathroom 0103
 HBATH00203,713,378,3,Tower,BATH,Bathroom 2 Tower Floor 3,Bathroom 0203

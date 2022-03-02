@@ -94,6 +94,7 @@ public class SimulationController {
   private Integer medEquip;
   private boolean start = true;
   private boolean next = false;
+  private Integer simVal = 0;
   CategoryAxis nodes = new CategoryAxis();
   NumberAxis mostTraveled = new NumberAxis();
 
@@ -480,7 +481,7 @@ public class SimulationController {
       Node subPane = (Node) subControllerLoader.load();
       nodeDataPane.getChildren().add(subPane);
       subController = subControllerLoader.getController();
-      //            subController.setSimulationController(this);
+      //      subController.setSimulationController(this);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -496,6 +497,7 @@ public class SimulationController {
     Label timeLabel = new Label();
     timeLabel.setFont(Font.font(24));
     timeLabel.setStyle("-fx-text-fill: white");
+    timeLabel.setPrefWidth(60);
 
     // creates the slider for the hour simulation
     final Slider timeSlider = new Slider(0.0, 100.0, 48.0);
@@ -518,53 +520,84 @@ public class SimulationController {
     toggleStart.setText("Start Simulation");
     toggleStart.setStyle("-fx-text-fill: white");
     toggleStart.setPrefWidth(110);
-    toggleStart.setOnMouseReleased(
-        e -> {
-          if (start) {
-            Simulation sim = new Simulation();
-            sim.update((int) (timeSlider.getValue() * 4));
-          }
-          animatedPathNodeGroup.getChildren().clear();
-          start = true;
-          next = false;
-          currentHour = 0;
-          createPath(currentHour);
-          toggleStart.setText("Restart Simulation");
-          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
-          setEquipment();
-          updateStats();
-          start = false;
-        });
+
     // creates the next hour button
     JFXButton nextHour = new JFXButton();
     nextHour.setText("Next Interval");
     nextHour.setStyle("-fx-text-fill: white");
     nextHour.setPrefWidth(110);
+    nextHour.setDisable(true);
     currentHourLabel.setFont(nextHour.getFont());
+
+    // previous hour button
+    JFXButton prevHour = new JFXButton();
+    prevHour.setText("Previous Interval");
+    prevHour.setStyle("-fx-text-fill: white");
+    prevHour.setPrefWidth(110);
+    prevHour.setDisable(true);
+
+    JFXButton simulateLonger = new JFXButton();
+    simulateLonger.setText("Simulate");
+    simulateLonger.setStyle(
+        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
+            + "\n"
+            + "    -fx-border-radius: 5px;\n");
+    simulateLonger.setDisable(true);
+    simulateLonger.setFont(Font.font(14));
+    simulateLonger.setPrefWidth(75);
+    simulateLonger.setPrefHeight(25);
+    simulateLonger.setPadding(new Insets(0, 0, 0, 0));
+
+    toggleStart.setOnMouseReleased(
+        e -> {
+          if (start) {
+            Simulation sim = new Simulation();
+            sim.update((int) (timeSlider.getValue() * 4));
+            simVal = (int) (timeSlider.getValue() * 4);
+          }
+          animatedPathNodeGroup.getChildren().clear();
+          nextHour.setDisable(false);
+          prevHour.setDisable(false);
+          simulateLonger.setDisable(false);
+          start = true;
+          next = false;
+          currentHour = 0;
+          createPath(currentHour);
+          toggleStart.setText("Restart Sim");
+          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          setEquipment();
+          updateStats();
+          start = false;
+        });
 
     nextHour.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
           next = true;
           currentHour++;
-          createPath(currentHour);
-          updateStats();
-          setEquipment();
-          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          if (currentHour != simVal) {
+            createPath(currentHour - 1);
+            updateStats();
+            setEquipment();
+            currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          } else {
+            createPath(simVal - 2);
+            nextHour.setDisable(true);
+            simulateLonger.setDisable(true);
+            currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          }
         });
-    // previous hour button
-    JFXButton prevHour = new JFXButton();
-    prevHour.setText("Previous Interval");
-    prevHour.setStyle("-fx-text-fill: white");
-    prevHour.setPrefWidth(110);
+
     prevHour.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
           next = false;
+          nextHour.setDisable(false);
+          simulateLonger.setDisable(false);
           if (currentHour != 0) {
             currentHour--;
           }
-          createPath(currentHour);
+          createPath(currentHour - 1);
           updateStats();
           setEquipment();
           currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
@@ -627,27 +660,26 @@ public class SimulationController {
     moreHourSlider.setPrefHeight(25);
     moreHourSlider.setPadding(new Insets(5, 7, 5, 5));
 
-    JFXButton simulateLonger = new JFXButton();
-    simulateLonger.setText("Simulate");
-    simulateLonger.setStyle(
-        "-fx-background-color: #002D59; -fx-text-fill: white;-fx-background-radius: 5px;\n"
-            + "\n"
-            + "    -fx-border-radius: 5px;\n");
-    simulateLonger.setFont(Font.font(14));
-    simulateLonger.setPrefWidth(75);
-    simulateLonger.setPrefHeight(25);
-    simulateLonger.setPadding(new Insets(0, 0, 0, 0));
-
     simulateLonger.setOnMouseReleased(
         e -> {
           animatedPathNodeGroup.getChildren().clear();
           next = true;
           fasterHour = (int) (moreHourSlider.getValue() * 4);
-          createPathLonger(currentHour, fasterHour);
-          currentHour = currentHour + fasterHour;
-          setEquipment();
-          updateStats();
-          currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          if ((fasterHour + currentHour) < simVal) {
+            createPathLonger(currentHour, fasterHour);
+            currentHour = currentHour + fasterHour;
+            setEquipment();
+            updateStats();
+            currentHourLabel.setText("Current Hour: " + (double) currentHour / 4.0 + " ");
+          } else {
+            createPathLonger(currentHour - 1, simVal - 1);
+            currentHour = simVal;
+            setEquipment();
+            updateStats();
+            currentHourLabel.setText("Current Hour: " + (double) simVal / 4.0 + " ");
+            simulateLonger.setDisable(true);
+            nextHour.setDisable(true);
+          }
         });
 
     JFXNodesList evenMore = new JFXNodesList();
@@ -949,6 +981,7 @@ public class SimulationController {
     }
   }
 
+  /** refreshes the map when needed */
   public void refreshMap() {
     setLocations(currentFloor);
     setEquipment();
@@ -986,7 +1019,7 @@ public class SimulationController {
       dividePath(astar);
       animatedPath();
       medEquip++;
-      if (currentHour == 0 && start) {
+      if (currentHour == 0) {
         PathTbl.zeroPathStats();
       } else if (!start && next) {
         PathTbl.pathStats(astar);
@@ -1018,7 +1051,7 @@ public class SimulationController {
       dividePath(astar);
       animatedPath();
       medEquip++;
-      if (currentHour == 0) {
+      if (fasterHour == 0) {
         PathTbl.zeroPathStats();
       } else if (!start && next) {
         PathTbl.pathStats(astar);
@@ -1090,10 +1123,10 @@ public class SimulationController {
     boolean secondLine = false;
     int tempStop = 0;
     for (int i = 0; i < locs.size() - 1; i++) {
-      if (locs.get(i).substring(0, 5).equals("WELEV")
-              && locs.get(i + 1).substring(0, 5).equals("WELEV")
-          || locs.get(i + 1).substring(0, 5).equals("WELEV")
-              && locs.get(i).substring(0, 5).equals("WELEV")) {
+      if (locs.get(i).substring(1, 5).equals("ELEV")
+              && locs.get(i + 1).substring(1, 5).equals("ELEV")
+          || locs.get(i + 1).substring(1, 5).equals("ELEV")
+              && locs.get(i).substring(1, 5).equals("ELEV")) {
         secondLine = true;
         tempStop = i + 1;
         break;
@@ -1514,13 +1547,14 @@ public class SimulationController {
     }
   }
 
+  /** Updates the most traveled through node based on the top five objects in the sorted hash map */
   public void updateStats() {
-    Map<String, Integer> hm1 = sortByValue(PathTbl.getStatsMap());
+    Map<String, Integer> hm = sortByValue(PathTbl.getStatsMap());
     int count = 0;
     ArrayList<String> nodes = new ArrayList<>();
     ArrayList<Integer> num = new ArrayList<>();
 
-    for (Map.Entry<String, Integer> en : hm1.entrySet()) {
+    for (Map.Entry<String, Integer> en : hm.entrySet()) {
       nodes.add(en.getKey());
       num.add(en.getValue());
       if (count == 4) {
@@ -1542,25 +1576,27 @@ public class SimulationController {
     most5TraveledNum.setText(num.get(4).toString());
   }
 
+  /**
+   * Organizes a given hashmap in decending order to get the most passed through Node
+   *
+   * @param hm the unsorted hash map
+   * @return the sorted hash map
+   */
   public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
-    // Create a list from elements of HashMap
     List<Map.Entry<String, Integer>> list =
         new LinkedList<Map.Entry<String, Integer>>(hm.entrySet());
 
-    // Sort the list
     Collections.sort(
         list,
         new Comparator<Map.Entry<String, Integer>>() {
-          public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-            return (o2.getValue()).compareTo(o1.getValue());
+          public int compare(Map.Entry<String, Integer> obj1, Map.Entry<String, Integer> obj2) {
+            return (obj2.getValue()).compareTo(obj1.getValue());
           }
         });
-
-    // put data from sorted list to hashmap
-    HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
-    for (Map.Entry<String, Integer> aa : list) {
-      temp.put(aa.getKey(), aa.getValue());
+    HashMap<String, Integer> finHash = new LinkedHashMap<String, Integer>();
+    for (Map.Entry<String, Integer> ent : list) {
+      finHash.put(ent.getKey(), ent.getValue());
     }
-    return temp;
+    return finHash;
   }
 }

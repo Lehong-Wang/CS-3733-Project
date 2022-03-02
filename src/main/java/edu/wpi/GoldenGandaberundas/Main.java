@@ -31,6 +31,7 @@ public class Main {
   public static void main(String[] args) throws SQLException {
     LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
     System.out.println(LocationTbl.getInstance().getObjList());
+    //    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
 
     EmployeeTbl.getInstance(); // .loadBackup("BackupsCSVs/employeeTbl.csv");
     PatientTbl.getInstance(); // .loadBackup("BackupsCSVs/patientTbl.csv");
@@ -82,9 +83,9 @@ public class Main {
     //        CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
-    PathTbl.getInstance(); // .loadBackup("BackupsCSVs/pathTbl.csv");
+    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
 
-    MedEquipmentTbl.getInstance(); // .loadBackup("TestCSVs/medEquipSimulation.csv");
+    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
 
     EmployeeTbl.getInstance()
         .addEntry(
