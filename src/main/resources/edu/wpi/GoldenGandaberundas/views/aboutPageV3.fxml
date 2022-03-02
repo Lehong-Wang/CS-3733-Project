@@ -78,7 +78,7 @@
                                     <Image url="@../images/JoshuaCropped.jpg" />
                                  </image>
                               </ImageView>
-                              <Label text="Mason Figler, Algorithm Engineer" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                              <Label text="Mason Figler" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -86,12 +86,12 @@
                                     <Insets left="220.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Joshua Moy, Documentation Analyst" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                              <Label text="Joshua Moy" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="130.0" />
+                                    <Insets left="120.0" />
                                  </GridPane.margin>
                               </Label>
                               <Label text="Eli Hoffberg" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -155,7 +155,7 @@
                                     <Image url="@../images/NeenaCropped.jpg" />
                                  </image>
                               </ImageView>
-                              <Label text="Neena Xiang, Product Owner" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                              <Label text="Neena Xiang" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -171,7 +171,7 @@
                                     <Insets />
                                  </GridPane.margin>
                               </ImageView>
-                              <Label text="Jason Martino, Scrum Master" GridPane.columnIndex="1">
+                              <Label text="Jason Martino" GridPane.columnIndex="1" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -291,6 +291,38 @@
                                  <padding>
                                     <Insets left="220.0" />
                                  </padding>
+                              </Label>
+                              <Label text="Algorithm Engineer" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="220.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Scrum Master" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Documentation Analyst" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Product Owner" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
                               </Label>
                            </children>
                         </GridPane>
