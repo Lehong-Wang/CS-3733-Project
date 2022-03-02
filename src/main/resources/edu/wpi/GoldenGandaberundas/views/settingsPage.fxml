@@ -126,22 +126,22 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="328.0" text="Switch Database Server">
+                        <Label fx:id="SwitchDBLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="328.0" text="Switch Database Server">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <JFXButton onAction="#enableClientServer" prefHeight="39.0" prefWidth="192.0" styleClass="actionButton" text="Client / Server" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <JFXButton fx:id="ClientServerButton" onAction="#enableClientServer" prefHeight="39.0" prefWidth="192.0" styleClass="actionButton" text="Client / Server" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onAction="#enableEmbedded" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Embedded" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                        <JFXButton fx:id="EmbeddedButton" onAction="#enableEmbedded" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Embedded" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onAction="#enableCloud" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Cloud" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                        <JFXButton fx:id="CloudButton" onAction="#enableCloud" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Cloud" GridPane.columnIndex="4" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
