@@ -120,7 +120,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <children>
-                  <JFXButton fx:id="closeBtn" contentDisplay="CENTER" onAction="#clear" text="Close" />
+                  <JFXButton fx:id="closeBtn" contentDisplay="CENTER" text="Close" />
                </children>
             </HBox>
             <MenuButton fx:id="floor" mnemonicParsing="false" text="Floor" GridPane.columnIndex="2" GridPane.rowIndex="3">

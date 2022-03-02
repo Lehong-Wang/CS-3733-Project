@@ -1,7 +1,11 @@
 medicineID,medName,description,price,inStock
-111,tylenol,this is the first med,1.11,TRUE
-222,ibuprofen,this is the second med,2.22,FALSE
-333,nyquil,this is the third med,3.33,TRUE
-444,aspirin,this is the fourth med,4.44,FALSE
-555,zyrtec,this is the fifth med,5.55,TRUE
-666,acetaminophen,this is the sixth med,6.66,FALSE
+111,Tylenol,Pain relief,1.01,true
+222,Vicodin,Pain relief,2.02,true
+333,Aspirin,Pain relief,3.03,true
+444,Albuterol,Migraine relief,4.04,true
+555,Lisinopril,Dizziness,5.05,true
+666,Levothyroxine,Thyroid,6.06,true
+777,Gabapentin,Anti-Seizure,7.07,true
+888,Lipitor,Cholesterol,8.08,true
+999,Metformin,Diabetes,9.09,true
+1000,Amlodipine,Blood Pressure,10.10,true

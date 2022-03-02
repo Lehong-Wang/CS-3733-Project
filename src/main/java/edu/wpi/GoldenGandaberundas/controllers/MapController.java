@@ -1136,10 +1136,10 @@ public class MapController {
     boolean secondLine = false;
     int tempStop = 0;
     for (int i = 0; i < locs.size() - 1; i++) {
-      if (locs.get(i).substring(0, 5).equals("WELEV")
-              && locs.get(i + 1).substring(0, 5).equals("WELEV")
-          || locs.get(i + 1).substring(0, 5).equals("WELEV")
-              && locs.get(i).substring(0, 5).equals("WELEV")) {
+      if (locs.get(i).substring(1, 5).equals("ELEV")
+              && locs.get(i + 1).substring(1, 5).equals("ELEV")
+          || locs.get(i + 1).substring(1, 5).equals("ELEV")
+              && locs.get(i).substring(1, 5).equals("ELEV")) {
         secondLine = true;
         tempStop = i + 1;
         break;

@@ -162,7 +162,9 @@ public class MapSubController {
     clearBtn.setDisable(true);
     submitBtn.setDisable(true);
     deleteBtn.setVisible(false);
-    floor.setText(mapController.getCurrentFloor());
+    if (mapController != null) {
+      floor.setText(mapController.getCurrentFloor());
+    }
     edit = false;
   }
 

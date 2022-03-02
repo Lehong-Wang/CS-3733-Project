@@ -73,7 +73,7 @@ public class Simulation {
 
   public void update(int end) {
     endTime = end;
-    System.out.println(endTime);
+    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
     takeSnapshot();
     sortLists(fullMedList);
     makeSimulationLists(fullMedList);

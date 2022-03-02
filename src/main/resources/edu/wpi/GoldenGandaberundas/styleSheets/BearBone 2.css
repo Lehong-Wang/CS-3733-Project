@@ -1,0 +1,129 @@
+*{
+    default-blue: #002D59;
+    background-color: white;
+    topbar-color: #1776ad;
+    text-color: white;
+    text-black: #000227;
+    shadow-color: #616161;
+    dropdown-shadow-color: #cfcfcf50;
+    /*dropdown-shadow-color: white;*/
+    /*shadow-color: white;*/
+
+    backup-color: #0061ad;
+    backup-background: #c7c7c740;
+    action-color: default-blue;
+    box-color: rgba(255,255,255,0.5);
+    combo-color: rgba(255,255,255,0.3);
+    /*table-head-color: #499cc9;*/
+    table-head-color: linear-gradient(to right, #2a8edb, #80c2e8);
+    table-color1: #f0f0f060;
+    table-color2: #ffffff60;
+}
+
+.background{
+    -fx-background: background-color;
+}
+
+.serviceButton{
+    -fx-background-color: default-blue;
+    -fx-background-radius: 10px;
+    -fx-font-size: 21px;
+    -fx-alignment: LEFT;
+}
+
+.serviceButton.text {
+    -fx-fill: text-color;
+}
+
+
+
+.leftDrawer{
+    -fx-background-color: default-blue default-blue;
+}
+
+.topMenuBar{
+    -fx-background-color: topbar-color;
+    -fx-text-fill: #083770;
+}
+
+.label{
+    -fx-text-fill: text-black;
+}
+
+
+.backupButton{
+    /*-fx-border-color: black;*/
+    -fx-background-radius: 0px;
+    -fx-background-color: backup-background;
+    -fx-text-fill: text-black;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.actionButton{
+    -fx-background-color: default-blue;
+    -fx-text-fill: text-color;
+    -fx-alignment: center;
+    -fx-background-radius: 30px;
+    /*-fx-effect: dropshadow(three-pass-box ,shadow-color , 5, 0, 0, 3);*/
+    -fx-text-font: 30px;
+}
+
+
+.combo-box-base{
+    -fx-background-color: combo-color;
+    -fx-background-radius: 7px;
+    /*-fx-text-fill: white;*/
+    /*-fx-padding: 2 2;*/
+    /*-fx-effect: innershadow(three-pass-box ,dropdown-shadow-color  , 5, 0.5, 0, 2);*/
+}
+
+
+
+
+
+.text-field{
+    -fx-background-color: box-color;
+    -fx-background-radius: 7px;
+    /*-fx-effect: innershadow(three-pass-box ,dropdown-shadow-color , 14, 0, 0, 3);*/
+    /*-fx-border-color: default-blue;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-width: 3px;*/
+    /*-fx-border-radius: 7px;*/
+}
+
+
+/*.text-area{*/
+/*    -fx-background-color: box-color;*/
+/*    !*-fx-effect: innershadow(three-pass-box ,dropdown-shadow-color , 10, 0.5, 0, 2);*!*/
+/*}*/
+
+/*.text-area .content{*/
+/*    -fx-background-color: box-color;*/
+/*    -fx-effect: innershadow(three-pass-box ,dropdown-shadow-color , 10, 0.5, 0, 2);*/
+/*}*/
+
+/*.text-input{*/
+/*    -fx-text-fill: text-black;*/
+/*}*/
+
+.text-area {
+    -fx-background-color: box-color;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.text-input{
+    -fx-text-fill: text-black;
+}
