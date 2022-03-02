@@ -30,13 +30,13 @@ public class Main {
 
   public static void main(String[] args) throws SQLException {
     LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
-    System.out.println(LocationTbl.getInstance().getObjList());
+    //    System.out.println(LocationTbl.getInstance().getObjList());
     //    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
 
     EmployeeTbl.getInstance(); // .loadBackup("BackupsCSVs/employeeTbl.csv");
     PatientTbl.getInstance(); // .loadBackup("BackupsCSVs/patientTbl.csv");
     LaundryTbl.getInstance(); // .loadBackup("BackupsCSVs/laundryTbl.csv");
-    MedEquipmentTbl.getInstance(); // .loadBackup("BackupsCSVs/medEquipmentTbl.csv");
+    MedEquipmentTbl.getInstance(); // .loadBackup("TestCSVs/medEquipSimulation.csv");
     MedicineTbl.getInstance(); // .loadBackup("BackupsCSVs/medicineTbl.csv");
     GiftTbl.getInstance(); // .loadBackup("BackupsCSVs/giftTbl.csv");
     CredentialsTbl.getInstance(); // .loadBackup("BackupsCSVs/credentialsTbl.csv");
@@ -47,15 +47,16 @@ public class Main {
     RequestTable.getInstance();
 
     PermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/PermissionsTbl.csv");
-    EmployeePermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/EmployeePermissionsTbl.csv");
+    EmployeePermissionTbl.getInstance(); // .loadBackup("BackupsCSVs/EmployeePermissions.csv");
 
     MedEquipRequestTbl.getInstance(); // .loadBackup("backups/MedEquipRequests.csv");
     LaundryRequestTbl.getInstance(); // .loadBackup("backups/LaundryRequests.csv");
     GiftRequestTbl.getInstance(); // .loadBackup("backups/GiftRequests.csv");
     MedicineRequestTbl.getInstance(); // .loadBackup("backups/MedicineRequests.csv");
-    FoodRequestTbl.getInstance();
-    ComputerRequestTbl.getInstance();
-    AudioVisualRequestTbl.getInstance();
+    FoodRequestTbl.getInstance(); // .loadBackup("TestCSVs/FoodRequestForTesting.csv");
+    ComputerRequestTbl.getInstance(); // .loadBackup("TestCSVs/ComputerRequestForTesting.csv");
+    AudioVisualRequestTbl
+        .getInstance(); // .loadBackup("TestCSVs/AudioVisualRequestForTesting.csv");
     //    ConnectionHandler.getInstance().setConnection(ConnectionType.clientServer);
     //    System.out.println();
     //    System.out.println();
@@ -83,18 +84,27 @@ public class Main {
     //        CredentialsTbl.getInstance().addEntry(new Credential(96, "p"));
 
     AudioVisualTbl.getInstance(); // .loadBackup("BackupsCSVs/BackupAudioVisualTbl.csv");
-    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+    //    PathTbl.getInstance().loadBackup("BackupsCSVs/pathTbl.csv");
+    //
+    //    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
 
-    MedEquipmentTbl.getInstance().loadBackup("TestCSVs/medEquipSimulation.csv");
-
-    EmployeeTbl.getInstance()
-        .addEntry(
-            new Employee(0, "admin", "admin", "admin", "admin@bhm.org", "1111111111", "I live"));
-    EmployeeTbl.getInstance()
-        .addEntry(
-            new Employee(1, "staff", "staff", "staff", "staff@bhm.org", "2222222222", "I die"));
+    //    EmployeeTbl.getInstance()
+    //        .addEntry(
+    //            new Employee(0, "admin", "admin", "admin", "admin@bhm.org", "1111111111", "I
+    // live"));
+    //    EmployeeTbl.getInstance()
+    //        .addEntry(
+    //            new Employee(1, "staff", "staff", "staff", "staff@bhm.org", "2222222222", "I
+    // die"));
     CredentialsTbl.getInstance().addEntry(new Credential(0, "admin"));
-    CredentialsTbl.getInstance().addEntry(new Credential(123, "password"));
+    CredentialsTbl.getInstance().addEntry(new Credential(123, "123"));
+    CredentialsTbl.getInstance().addEntry(new Credential(69, "69"));
+    CredentialsTbl.getInstance().addEntry(new Credential(70, "70"));
+    CredentialsTbl.getInstance().addEntry(new Credential(96, "96"));
+    CredentialsTbl.getInstance().addEntry(new Credential(420, "420"));
+    CredentialsTbl.getInstance().addEntry(new Credential(456, "456"));
+    CredentialsTbl.getInstance().addEntry(new Credential(777, "777"));
+    CredentialsTbl.getInstance().addEntry(new Credential(888, "888"));
     //    System.out.println(CredentialsTbl.getInstance().getEntry(0).checkPassword("admin"));
     CredentialsTbl.getInstance().addEntry(new Credential(1, "staff"));
     CredentialsTbl.getInstance().addEntry(new Credential(999, "999"));
