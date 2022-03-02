@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: #0485DB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.CS3733.c22.teamG.controllers.loginScreenController">
+   <children>
+      <ImageView fitHeight="870.0" fitWidth="1647.0" style="-fx-opacity: 50%;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/BandW_photo.jpg" />
+         </image>
+      </ImageView>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="276.0" prefWidth="1686.0" style="-fx-background-color: #0063a9;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0063a9;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="logoImg" fitHeight="320.0" fitWidth="249.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Brigham_and_Womens_Hospital_logo.png" />
+                           </image>
+                        </ImageView>
+                     </children></HBox>
+                  <VBox alignment="CENTER" prefHeight="192.0" prefWidth="324.0" style="-fx-background-color: #002D59;">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="184.0" prefWidth="364.0">
+                           <children>
+                              <Text fx:id="userText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="userField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="59.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+                              <VBox alignment="CENTER" prefHeight="141.0" prefWidth="186.0">
+                                 <children>
+                                    <Text fx:id="passText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Text>
+                                    <PasswordField fx:id="passField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="38.0" prefWidth="150.0" VBox.vgrow="NEVER" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <JFXButton fx:id="loginBtn" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#login" style="-fx-background-color: #002D59 #002D59;" text="Login" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0063a9;" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

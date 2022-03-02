@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisual;
-import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.AudioVisualService.AudioVisual;
+import edu.wpi.CS3733.c22.teamG.tableControllers.AudioVisualService.AudioVisualTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

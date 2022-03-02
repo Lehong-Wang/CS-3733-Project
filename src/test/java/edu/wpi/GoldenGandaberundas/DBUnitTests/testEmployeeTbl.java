@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Employee;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.EmployeeObjects.Employee;
+import edu.wpi.CS3733.c22.teamG.tableControllers.EmployeeObjects.EmployeeTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

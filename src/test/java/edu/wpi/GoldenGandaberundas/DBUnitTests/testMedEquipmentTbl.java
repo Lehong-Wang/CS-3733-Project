@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipment;
-import edu.wpi.GoldenGandaberundas.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.MedEquipmentDelivery.MedEquipment;
+import edu.wpi.CS3733.c22.teamG.tableControllers.MedEquipmentDelivery.MedEquipmentTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

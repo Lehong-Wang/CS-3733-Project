@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.CS3733.c22.teamG.controllers.ComputerServiceControllers.computerServiceController">
+   <center>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="900.0" prefWidth="1600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="113.0" prefWidth="1598.0" text="Request IT Service">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="655.0" prefWidth="1600.0">
+               <children>
+                  <VBox prefHeight="786.0" prefWidth="948.0">
+                     <children>
+                        <GridPane prefHeight="858.0" prefWidth="913.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" maxWidth="189.39999389648438" minWidth="10.0" prefWidth="149.39999389648438" />
+                              <ColumnConstraints hgrow="ALWAYS" maxWidth="321.20000610351565" minWidth="10.0" prefWidth="321.20000610351565" />
+                              <ColumnConstraints hgrow="ALWAYS" maxWidth="228.20001220703125" minWidth="10.0" prefWidth="190.60003662109375" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Device ID" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="917.0" text="Location" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Priority" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#submit" prefHeight="40.0" prefWidth="94.0" styleClass="actionButton" text="Submit" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="94.0" styleClass="actionButton" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </JFXButton>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Problem" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="problemField" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="priorityField" prefHeight="26.0" prefWidth="61.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                              <SearchableComboBox fx:id="locationSearchBox" prefHeight="40.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets bottom="25.0" top="25.0" />
+                                 </GridPane.margin>
+                              </SearchableComboBox>
+                              <SearchableComboBox fx:id="deviceSearchBox" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets bottom="25.0" top="25.0" />
+                                 </GridPane.margin>
+                              </SearchableComboBox>
+                              <Label alignment="BOTTOM_CENTER" prefHeight="98.0" prefWidth="914.0" text="Problem Type" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="problemTypeBox" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="424.0" prefWidth="901.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TableView fx:id="computersTable" prefHeight="453.0" prefWidth="901.0" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="computerID" prefWidth="101.59997862577438" text="ComputerID" />
+                              <TableColumn fx:id="computerType" prefWidth="101.5999755859375" text="Computer Type" />
+                              <TableColumn fx:id="os" prefWidth="99.19993591308594" text="OS" />
+                              <TableColumn fx:id="processor" prefWidth="84.0" text="Processor" />
+                              <TableColumn fx:id="hostName" prefWidth="99.9998779296875" text="Host Name" />
+                              <TableColumn fx:id="model" prefWidth="100.7999267578125" text="Model" />
+                              <TableColumn fx:id="manufacturer" prefWidth="116.39990234375" text="Manufacturer" />
+                              <TableColumn fx:id="serialNumber" prefWidth="86.400146484375" text="Serial Number" />
+                           </columns>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TableView fx:id="computerRequestsTbl" prefHeight="548.0" prefWidth="1600.0" style="-fx-padding: 5;" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="requestID" prefWidth="75.0" text="Request ID" />
+                  <TableColumn fx:id="locationID" prefWidth="75.0" text="Location ID" />
+                  <TableColumn fx:id="timeStart" prefWidth="75.0" text="Submit Time" />
+                  <TableColumn fx:id="timeEnd" prefWidth="105.59991455078125" text="CompleteTime" />
+                  <TableColumn fx:id="empInitiated" prefWidth="86.39996337890625" text="Employee Initiated" />
+                  <TableColumn fx:id="empCompleter" prefWidth="90.79998779296875" text="Employee Completed" />
+                  <TableColumn fx:id="requestStatus" prefWidth="120.79998779296875" text="Request Status" />
+                  <TableColumn fx:id="notes" prefWidth="268.4000244140625" text="Notes" />
+                  <TableColumn fx:id="compID" prefWidth="94.4000244140625" text="Computer ID" />
+                  <TableColumn fx:id="problemType" prefWidth="140.40008544921875" text="Problem Type" />
+                  <TableColumn fx:id="priority" minWidth="4.4000244140625" prefWidth="174.39990234375" text="Priority" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Computers" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBComputers" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Computer Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refresh" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

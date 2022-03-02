@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="607.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.CS3733.c22.teamG.controllers.EmployeeDBController">
+   <center>
+      <TableView fx:id="empTable" prefHeight="537.0" prefWidth="675.0" style="-fx-padding: 5;" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="empID" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="firstName" prefWidth="75.0" text="FName" />
+          <TableColumn fx:id="lastName" prefWidth="75.0" text="LName" />
+            <TableColumn fx:id="role" prefWidth="75.0" text="Role" />
+            <TableColumn fx:id="email" prefWidth="102.9053955078125" text="Email" />
+            <TableColumn fx:id="phoneNumber" prefWidth="110.5946044921875" text="Phone Number" />
+            <TableColumn fx:id="address" prefWidth="99.049560546875" text="Address" />
+        </columns>
+      </TableView>
+   </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton onAction="#backup" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#loadDB" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Load" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#addEmployee" prefHeight="69.0" prefWidth="120.0" styleClass="backupButton" text="Add Employee" textAlignment="CENTER" wrapText="true" />
+         </children></VBox>
+   </right>
+</BorderPane>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.CS3733.c22.teamG.controllers.EquipmentControllers.EquipmentDeliveryController">
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="backupMenuButton" onAction="#backupEquipment" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Equipment" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="backupRequestsButton" onAction="#backupRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Backup Requests" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadMenuButton" onAction="#loadDBEquipment" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Equipment Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="loadRequestButton" onAction="#loadDBRequests" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Load Requests Backup" textAlignment="CENTER" wrapText="true" />
+            <JFXButton fx:id="refreshButton" onAction="#refreshTable" prefHeight="64.0" prefWidth="103.0" styleClass="backupButton" text="Refresh" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="564.0" prefWidth="1100.0">
+               <children>
+                  <VBox prefHeight="384.0" prefWidth="504.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <GridPane hgap="10.0" prefHeight="120.0" prefWidth="727.0" vgap="10.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="177.0619354248047" minWidth="10.0" prefWidth="177.0619354248047" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="347.9380645751953" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="180.90872192382812" minWidth="0.0" prefWidth="0.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Item ID:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Destination:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Notes:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="notesField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <SearchableComboBox fx:id="equipmentSearchBox" GridPane.columnIndex="1" />
+                              <SearchableComboBox fx:id="locationSearchBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <HBox alignment="TOP_CENTER" prefHeight="15.0" prefWidth="1100.0">
+                           <children>
+                              <Button fx:id="submitBtn" alignment="CENTER" mnemonicParsing="false" onAction="#submit" prefHeight="26.0" prefWidth="241.0" styleClass="actionButton" text=" Submit Request" HBox.hgrow="ALWAYS" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </HBox>
+                        <TableView fx:id="equipmentTable" prefHeight="277.0" prefWidth="727.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="equipID" prefWidth="104.32075881958008" text="medID" />
+                            <TableColumn fx:id="type" prefWidth="107.76100158691406" text="type" />
+                              <TableColumn fx:id="equipStatus" prefWidth="113.86163330078125" text="status" />
+                              <TableColumn fx:id="loc" minWidth="1.7922515869140625" prefWidth="118.5408935546875" text="loc" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <StackPane fx:id="mapStackPane" prefHeight="474.0" prefWidth="704.0" HBox.hgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="medEqTable" prefHeight="397.0" prefWidth="1400.0" style="-fx-padding: 5;">
+               <columns>
+                  <TableColumn fx:id="reqID" prefWidth="92.08178663253784" text="reqID" />
+                  <TableColumn fx:id="destination" prefWidth="162.6227035522461" text="nodeID" />
+                  <TableColumn fx:id="submitTime" prefWidth="111.87730407714844" text="submitTime" />
+                  <TableColumn fx:id="completeTime" prefWidth="120.13827514648438" text="completeTime" />
+                  <TableColumn fx:id="empID" prefWidth="94.65396118164062" text="requesterID" />
+                  <TableColumn fx:id="completerID" prefWidth="98.33636474609375" text="completerID" />
+                  <TableColumn fx:id="patientID" prefWidth="109.5189208984375" text="patientID" />
+                  <TableColumn fx:id="status" prefWidth="81.2578125" text="status" />
+                  <TableColumn fx:id="notes" prefWidth="202.05657958984375" text="notes" />
+                  <TableColumn fx:id="equipmentID" prefWidth="108.6163330078125" text="equipmentID" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

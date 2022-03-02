@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.Permission;
-import edu.wpi.GoldenGandaberundas.tableControllers.PermissionTbl;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.EmployeeObjects.Permission;
+import edu.wpi.CS3733.c22.teamG.tableControllers.PermissionTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

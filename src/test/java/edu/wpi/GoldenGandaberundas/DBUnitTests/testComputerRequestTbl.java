@@ -1,9 +1,9 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequest;
-import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.ComputerService.ComputerRequest;
+import edu.wpi.CS3733.c22.teamG.tableControllers.ComputerService.ComputerRequestTbl;
+import edu.wpi.CS3733.c22.teamG.tableControllers.Requests.RequestTable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

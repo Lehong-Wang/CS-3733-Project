@@ -1,8 +1,8 @@
 package edu.wpi.GoldenGandaberundas.DBUnitTests;
 
-import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.Laundry;
-import edu.wpi.GoldenGandaberundas.tableControllers.LaundryService.LaundryTbl;
+import edu.wpi.CS3733.c22.teamG.TableController;
+import edu.wpi.CS3733.c22.teamG.tableControllers.LaundryService.Laundry;
+import edu.wpi.CS3733.c22.teamG.tableControllers.LaundryService.LaundryTbl;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
