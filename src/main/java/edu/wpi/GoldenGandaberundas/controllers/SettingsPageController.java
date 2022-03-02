@@ -2,10 +2,14 @@ package edu.wpi.GoldenGandaberundas.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import edu.wpi.GoldenGandaberundas.App;
+import edu.wpi.GoldenGandaberundas.CurrentUser;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
+import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class SettingsPageController {
   @FXML JFXButton NormalModeBtn;
@@ -13,6 +17,41 @@ public class SettingsPageController {
   @FXML JFXButton WatermelonBtn;
   @FXML JFXButton DeveloperModeBtn;
   @FXML JFXButton WPIModeBtn;
+
+  @FXML private Label SwitchDBLabel;
+  @FXML private JFXButton ClientServerButton;
+  @FXML private JFXButton EmbeddedButton;
+  @FXML private JFXButton CloudButton;
+
+  public void initialize() {
+    checkPerms();
+  }
+
+  public void checkPerms() {
+    int currID = CurrentUser.getUser().getEmpID();
+    ArrayList<Integer> perms = EmployeePermissionTbl.getInstance().getPermID(currID);
+    boolean hideShit = true;
+    for (int i = 0; i < perms.size(); i++) {
+      if (perms.get(i) == 111) {
+        hideShit = false;
+        break;
+      }
+    }
+    if (hideShit == true) {
+      hideAdmin();
+    }
+  }
+
+  public void hideAdmin() {
+    SwitchDBLabel.setManaged(false);
+    SwitchDBLabel.setVisible(false);
+    ClientServerButton.setManaged(false);
+    ClientServerButton.setVisible(false);
+    EmbeddedButton.setManaged(false);
+    EmbeddedButton.setVisible(false);
+    CloudButton.setManaged(false);
+    CloudButton.setVisible(false);
+  }
 
   public void switchNormal() {
     NormalModeBtn.getScene().getStylesheets().clear();
