@@ -1,4 +1,11 @@
 avID,deviceType,locID,description
-123,TV,CHALL001L1,zip zap zop
-420,speakers,FDEPT00501,bloop mmmm fish
-669,projector,GPATI01303,it go bruh
+123,TV,CHALL001L1,doesnt work
+222,speakers,FDEPT00501,sound
+333,sound,FDEPT00101,muted
+444,screen,FDEPT00101,flickers
+555,speakers,GPATI00903,loud
+666,projector,GPATI01303,bulb out
+777,strobe,GPATI01003,off
+888,light,GPATI01203,dim
+999,bluetooth,GPATI01103,not connected
+1000,wire,GPATI01003,long wire

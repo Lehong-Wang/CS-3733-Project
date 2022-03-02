@@ -5,3 +5,7 @@ computerID,computerType,os,processor,hostName,model,manufacturer,serialNumber
 444,type4,os4,processor4,host4,model4,manufacturer4,4
 555,type5,os5,processor5,host5,model5,manufacturer5,5
 666,type6,os6,processor6,host6,model6,manufacturer6,6
+777,type7,os7,processor7,host7,model7,manufacturer7,7
+888,type8,os8,processor8,host8,model8,manufacturer8,8
+999,type9,os9,processor9,host9,model9,manufacturer9,9
+1000,type10,os10,processor10,host10,model10,manufacturer10,10
