@@ -23,6 +23,18 @@
                <children>
                   <MenuBar prefHeight="40.0" prefWidth="1537.0" styleClass="topMenuBar" HBox.hgrow="ALWAYS">
                      <menus>
+                        <Menu fx:id="switchServiceMenu" mnemonicParsing="false" styleClass="menuBar">
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Switch Service" textAlignment="CENTER" wrappingWidth="175.83099365234375">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#switchRequestPage" text="Service List" />
+                           </items>
+                        </Menu>
                         <Menu mnemonicParsing="false" styleClass="menuBar">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#switchAVHelpPage" text="Audio/Visual Help Page" />
