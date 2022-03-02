@@ -44,22 +44,11 @@
                               <MenuItem mnemonicParsing="false" onAction="#switchmapViewerHelpPage" text="Map Viewer Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchmedicineDeliveryHelpPage" text="Medicine Delivery Help Page" />
                               <MenuItem mnemonicParsing="false" onAction="#switchsideViewHelpPage" text="Side View Help Page" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
+                              <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
                            </items>
                            <graphic>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" wrappingWidth="55.87416076660156">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Text>
-                           </graphic>
-                        </Menu>
-                        <Menu mnemonicParsing="false" styleClass="menuBar">
-                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#logoutProgram" text="Logout" />
-                              <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
-                           </items>
-                           <graphic>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" textAlignment="CENTER" wrappingWidth="56.523529052734375">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -82,6 +71,19 @@
                               <MenuItem mnemonicParsing="false" onAction="#switchAboutPage" text="About" />
                               <MenuItem mnemonicParsing="false" onAction="#switchCreditsPage" text="Credits" />
                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" styleClass="menuBar">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#logoutProgram" text="Logout" />
+                              <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
+                           </items>
+                           <graphic>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit" textAlignment="CENTER" wrappingWidth="56.523529052734375">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
                         </Menu>
                      </menus>
                   </MenuBar>

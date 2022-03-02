@@ -205,7 +205,7 @@ public class MapController {
     rect.setFill(Color.LIGHTGREEN);
     sideViewPane.getChildren().add(rect);
     rect.setX(50);
-    rect.setY(282);
+    rect.setY(242);
 
     // set up for side view gridpane
     //    gridPane.setBackground(new Background(#f1f1f1, ))

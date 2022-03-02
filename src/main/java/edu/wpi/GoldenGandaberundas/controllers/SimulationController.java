@@ -198,7 +198,7 @@ public class SimulationController {
     rect.setFill(Color.LIGHTGREEN);
     sideViewPane.getChildren().add(rect);
     rect.setX(50);
-    rect.setY(282);
+    rect.setY(242);
 
     // Sorts equipments into their floors for display later
     sortEquipment(menuTableController.readTable());
