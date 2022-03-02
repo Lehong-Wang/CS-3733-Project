@@ -63,4 +63,8 @@ public class SettingsPageController {
   public void enableEmbedded(ActionEvent actionEvent) {
     ConnectionHandler.getInstance().setConnection(ConnectionType.embedded);
   }
+
+  public void enableCloud(ActionEvent actionEvent) {
+    ConnectionHandler.getInstance().setConnection(ConnectionType.cloud);
+  }
 }
