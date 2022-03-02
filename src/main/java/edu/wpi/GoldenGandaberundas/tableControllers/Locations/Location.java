@@ -29,6 +29,8 @@ public class Location {
     this.shortName = shortName;
   }
 
+  public Location() {}
+
   public String getNodeID() {
     return nodeID;
   }

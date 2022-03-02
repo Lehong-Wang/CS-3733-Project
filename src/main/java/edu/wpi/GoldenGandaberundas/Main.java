@@ -7,8 +7,6 @@ import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisu
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.CredentialsTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.EmployeeTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodTbl;
@@ -30,13 +28,12 @@ public class Main {
 
   public static void main(String[] args) throws SQLException {
     LocationTbl.getInstance(); // .loadBackup("BackupsCSVs/locationTbl.csv");
-    //    System.out.println(LocationTbl.getInstance().getObjList());
-    //    LocationTbl.getInstance().loadBackup("BackupsCSVs/locationTbl.csv");
+    System.out.println(LocationTbl.getInstance().getObjList());
 
     EmployeeTbl.getInstance(); // .loadBackup("BackupsCSVs/employeeTbl.csv");
     PatientTbl.getInstance(); // .loadBackup("BackupsCSVs/patientTbl.csv");
     LaundryTbl.getInstance(); // .loadBackup("BackupsCSVs/laundryTbl.csv");
-    MedEquipmentTbl.getInstance(); // .loadBackup("TestCSVs/medEquipSimulation.csv");
+    MedEquipmentTbl.getInstance(); // .loadBackup("BackupsCSVs/medEquipmentTbl.csv");
     MedicineTbl.getInstance(); // .loadBackup("BackupsCSVs/medicineTbl.csv");
     GiftTbl.getInstance(); // .loadBackup("BackupsCSVs/giftTbl.csv");
     CredentialsTbl.getInstance(); // .loadBackup("BackupsCSVs/credentialsTbl.csv");

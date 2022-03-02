@@ -33,6 +33,8 @@ public class RequestTable implements TableController<Request, Integer> {
 
   TableController<Request, Integer> clientServerTable = null;
 
+  TableController<Request, Integer> cloudServerTable = null;
+
   /**
    * creates an instance of the master request table this table holds common and meta data across
    * all data objects
@@ -53,8 +55,10 @@ public class RequestTable implements TableController<Request, Integer> {
     objList = new ArrayList<>();
     embeddedTable = new RequestEmbedded(tbName, cols, pkCols, objList);
     clientServerTable = new RequestClientServer(tbName, cols, pkCols, objList);
+    cloudServerTable = new RequestCloud(objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    connectionHandler.addTable(cloudServerTable, ConnectionType.cloud);
     createTable();
     objList = readTable();
     objList = readTable();
@@ -89,7 +93,7 @@ public class RequestTable implements TableController<Request, Integer> {
       case clientServer:
         return clientServerTable;
       case cloud:
-        return null;
+        return cloudServerTable;
     }
     System.out.println(connectionHandler.getCurrentConnectionType());
     return null;

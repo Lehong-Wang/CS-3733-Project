@@ -1,7 +1,6 @@
 package edu.wpi.GoldenGandaberundas.tableControllers.DBConnection;
 
 import edu.wpi.GoldenGandaberundas.TableController;
-import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionEmbedded;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -138,12 +137,35 @@ public class ConnectionHandler {
   private void transferAllData(ConnectionType old, ConnectionType update) {
     ArrayList<TableController> oldTables = getConnectionSet(old);
     ArrayList<TableController> newTables = getConnectionSet(update);
-    for (int i = 0; i < oldTables.size(); i++) {
-      var objList = oldTables.get(i).getObjList();
-      if (oldTables.get(i) instanceof EmployeePermissionEmbedded) {
-        System.err.println(objList);
+    if (update == ConnectionType.cloud) {
+      newTables.get(0).loadFromArrayList(oldTables.get(0).getObjList());
+      newTables.get(1).loadFromArrayList(oldTables.get(4).getObjList());
+      newTables.get(2).loadFromArrayList(oldTables.get(12).getObjList());
+      newTables.get(3).loadFromArrayList(oldTables.get(15).getObjList());
+      if (old != ConnectionType.embedded) {
+        for (int i = 0; i < oldTables.size(); i++) {
+          var objList = oldTables.get(i).getObjList();
+          getConnectionSet(ConnectionType.embedded).get(i).loadFromArrayList(objList);
+        }
       }
-      newTables.get(i).loadFromArrayList(objList);
+    } else if (old == ConnectionType.cloud) {
+      newTables.get(0).loadFromArrayList(oldTables.get(0).getObjList());
+      newTables.get(4).loadFromArrayList(oldTables.get(1).getObjList());
+      newTables.get(12).loadFromArrayList(oldTables.get(2).getObjList());
+      newTables.get(15).loadFromArrayList(oldTables.get(3).getObjList());
+      if (update != ConnectionType.embedded) {
+        for (int i = 0; i < oldTables.size(); i++) {
+          var objList = oldTables.get(i).getObjList();
+          newTables
+              .get(i)
+              .loadFromArrayList(getConnectionSet(ConnectionType.embedded).get(i).getObjList());
+        }
+      }
+    } else {
+      for (int i = 0; i < oldTables.size(); i++) {
+        var objList = oldTables.get(i).getObjList();
+        newTables.get(i).loadFromArrayList(objList);
+      }
     }
   }
 }

@@ -26,6 +26,8 @@ public class LocationTbl implements TableController<Location, String> {
 
   TableController<Location, String> clientServerTable = null;
 
+  TableController<Location, String> cloudServerTable = null;
+
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
   Connection connection = connectionHandler.getConnection();
 
@@ -43,8 +45,10 @@ public class LocationTbl implements TableController<Location, String> {
     objList = new ArrayList<Location>();
     embeddedTable = new LocationEmbedded(tbName, cols, pkCols, objList);
     clientServerTable = new LocationClientServer(tbName, cols, pkCols, objList);
+    cloudServerTable = new LocationCloud(objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    connectionHandler.addTable(cloudServerTable, ConnectionType.cloud);
     createTable();
     objList = readTable();
     System.out.println("After Create: " + objList);
@@ -73,7 +77,7 @@ public class LocationTbl implements TableController<Location, String> {
       case clientServer:
         return clientServerTable;
       case cloud:
-        return null;
+        return cloudServerTable;
     }
     return null;
   }

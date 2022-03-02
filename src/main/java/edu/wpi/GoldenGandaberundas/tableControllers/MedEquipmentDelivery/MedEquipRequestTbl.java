@@ -26,6 +26,7 @@ public class MedEquipRequestTbl implements TableController<MedEquipRequest, Arra
   TableController<MedEquipRequest, ArrayList<Integer>> embeddedTable = null;
 
   TableController<MedEquipRequest, ArrayList<Integer>> clientServerTable = null;
+  TableController<MedEquipRequest, ArrayList<Integer>> cloudServerTable = null;
 
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
 
@@ -41,8 +42,10 @@ public class MedEquipRequestTbl implements TableController<MedEquipRequest, Arra
         new MedEquipRequestEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
     clientServerTable =
         new MedEquipRequestClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
+    cloudServerTable = new MedEquipRequestCloud(objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
+    connectionHandler.addTable(cloudServerTable, ConnectionType.cloud);
     masterTable = RequestTable.getInstance(); // **
     createTable();
     objList = readTable(); // reads table
@@ -75,7 +78,7 @@ public class MedEquipRequestTbl implements TableController<MedEquipRequest, Arra
       case clientServer:
         return clientServerTable;
       case cloud:
-        return null;
+        return cloudServerTable;
     }
     System.out.println(connectionHandler.getCurrentConnectionType());
     return null;
