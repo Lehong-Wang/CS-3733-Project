@@ -137,9 +137,22 @@ public class ConnectionHandler {
   private void transferAllData(ConnectionType old, ConnectionType update) {
     ArrayList<TableController> oldTables = getConnectionSet(old);
     ArrayList<TableController> newTables = getConnectionSet(update);
-    for (int i = 0; i < oldTables.size(); i++) {
-      var objList = oldTables.get(i).getObjList();
-      newTables.get(i).loadFromArrayList(objList);
+    if (update == ConnectionType.cloud) {
+      newTables.get(0).loadFromArrayList(oldTables.get(0).getObjList());
+      newTables.get(1).loadFromArrayList(oldTables.get(4).getObjList());
+      newTables.get(2).loadFromArrayList(oldTables.get(12).getObjList());
+      newTables.get(3).loadFromArrayList(oldTables.get(15).getObjList());
+      if (old != ConnectionType.embedded) {
+        for (int i = 0; i < oldTables.size(); i++) {
+          var objList = oldTables.get(i).getObjList();
+          getConnectionSet(ConnectionType.embedded).get(i).loadFromArrayList(objList);
+        }
+      }
+    } else {
+      for (int i = 0; i < oldTables.size(); i++) {
+        var objList = oldTables.get(i).getObjList();
+        newTables.get(i).loadFromArrayList(objList);
+      }
     }
   }
 }

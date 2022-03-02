@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
-
   private static MedEquipmentTbl instance = null;
   /** name of table */
   protected String tbName;

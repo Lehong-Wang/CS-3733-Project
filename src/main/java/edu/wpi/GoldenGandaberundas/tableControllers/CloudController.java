@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.wpi.GoldenGandaberundas.Main;
 import edu.wpi.GoldenGandaberundas.TableController;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
 import io.grpc.LoadBalancerRegistry;
 import java.io.File;
 import java.io.FileInputStream;
@@ -169,12 +170,22 @@ public class CloudController {
     Map<String, Object> docData = new HashMap<>();
     final Class<?> type = obj.getClass();
     final ArrayList<Field> classAttributes = new ArrayList<>(List.of(type.getDeclaredFields()));
+    boolean doesExtend = Request.class.isAssignableFrom(type);
+    if (doesExtend) {
+      final Class<?> superType = obj.getClass().getSuperclass();
+      classAttributes.addAll(0, (List.of(superType.getDeclaredFields())));
+    }
     String pk = "";
     for (int i = 0; i < classAttributes.size(); i++) {
       classAttributes.get(i).setAccessible(true);
       try {
         if (i == 0) {
-          pk = classAttributes.get(i).get(obj).toString();
+          pk = classAttributes.get(0).get(obj).toString();
+          if (doesExtend && (obj.getClass() != Request.class)) {
+            classAttributes.get(10).setAccessible(true);
+            pk += classAttributes.get(10).get(obj).toString();
+            System.out.println("PK: " + pk);
+          }
         } // else {
         docData.put(classAttributes.get(i).getName(), classAttributes.get(i).get(obj));
         // }

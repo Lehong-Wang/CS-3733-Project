@@ -70,7 +70,7 @@ public class PermissionTbl implements TableController<Permission, Integer> {
       case clientServer:
         return clientServerTable;
       case cloud:
-        return null;
+        return embeddedTable;
     }
     System.out.println(connectionHandler.getCurrentConnectionType());
     return null;
