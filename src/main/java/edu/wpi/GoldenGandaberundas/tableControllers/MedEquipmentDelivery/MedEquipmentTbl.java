@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
-
   private static MedEquipmentTbl instance = null;
   /** name of table */
   protected String tbName;
@@ -25,6 +24,8 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
 
   TableController<MedEquipment, Integer> clientServerTable = null;
 
+  TableController<MedEquipment, Integer> cloudServer = null;
+
   ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
   Connection connection = connectionHandler.getConnection();
 
@@ -38,9 +39,10 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
         new MedEquipmentEmbedded(tbName, colNames.toArray(new String[4]), pkCols, objList);
     clientServerTable =
         new MedEquipmentClientServer(tbName, colNames.toArray(new String[4]), pkCols, objList);
+    cloudServer = new MedEquipCloud(objList);
     connectionHandler.addTable(embeddedTable, ConnectionType.embedded);
     connectionHandler.addTable(clientServerTable, ConnectionType.clientServer);
-
+    connectionHandler.addTable(cloudServer, ConnectionType.cloud);
     createTable();
 
     objList = readTable();
@@ -69,7 +71,7 @@ public class MedEquipmentTbl implements TableController<MedEquipment, Integer> {
       case clientServer:
         return clientServerTable;
       case cloud:
-        return null;
+        return cloudServer;
     }
     System.out.println(connectionHandler.getCurrentConnectionType());
     return null;
