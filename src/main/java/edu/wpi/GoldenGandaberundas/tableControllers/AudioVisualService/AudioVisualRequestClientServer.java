@@ -3,6 +3,7 @@ package edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService;
 import edu.wpi.GoldenGandaberundas.TableController;
 import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
 import edu.wpi.GoldenGandaberundas.tableControllers.Requests.Request;
+import edu.wpi.GoldenGandaberundas.tableControllers.Requests.RequestTable;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class AudioVisualRequestClientServer
     implements TableController<AudioVisualRequest, ArrayList<Integer>> {
-  private static TableController<Request, Integer> masterTable = null;
+  private static TableController<Request, Integer> masterTable = RequestTable.getInstance();
   /** name of table */
   private String tbName;
   /** name of columns in database table the first entry is the primary key */
