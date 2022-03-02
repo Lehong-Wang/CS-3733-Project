@@ -147,11 +147,13 @@ public class CloudController {
   public ArrayList readTable(String collection, Class objType) {
     try {
       Firestore db = CloudController.getInstance().getDB();
-
+      ArrayList objs = new ArrayList();
       List<QueryDocumentSnapshot> docs = db.collection(collection).get().get().getDocuments();
       for (QueryDocumentSnapshot q : docs) {
+        objs.add(q.toObject(objType));
         System.out.println(q.toObject(objType));
       }
+      return objs;
     } catch (ExecutionException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {

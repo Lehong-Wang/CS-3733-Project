@@ -148,6 +148,19 @@ public class ConnectionHandler {
           getConnectionSet(ConnectionType.embedded).get(i).loadFromArrayList(objList);
         }
       }
+    } else if (old == ConnectionType.cloud) {
+      newTables.get(0).loadFromArrayList(oldTables.get(0).getObjList());
+      newTables.get(4).loadFromArrayList(oldTables.get(1).getObjList());
+      newTables.get(12).loadFromArrayList(oldTables.get(2).getObjList());
+      newTables.get(15).loadFromArrayList(oldTables.get(3).getObjList());
+      if (update != ConnectionType.embedded) {
+        for (int i = 0; i < oldTables.size(); i++) {
+          var objList = oldTables.get(i).getObjList();
+          newTables
+              .get(i)
+              .loadFromArrayList(getConnectionSet(ConnectionType.embedded).get(i).getObjList());
+        }
+      }
     } else {
       for (int i = 0; i < oldTables.size(); i++) {
         var objList = oldTables.get(i).getObjList();

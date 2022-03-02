@@ -1,12 +1,11 @@
 package edu.wpi.GoldenGandaberundas;
 
+import edu.wpi.GoldenGandaberundas.componentObjects.floorMaps;
 import edu.wpi.GoldenGandaberundas.tableControllers.AStar.PathTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.AudioVisualService.AudioVisualTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerRequestTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.ComputerService.ComputerTbl;
-import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionHandler;
-import edu.wpi.GoldenGandaberundas.tableControllers.DBConnection.ConnectionType;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeeObjects.*;
 import edu.wpi.GoldenGandaberundas.tableControllers.EmployeePermissionTbl;
 import edu.wpi.GoldenGandaberundas.tableControllers.FoodService.FoodRequestTbl;
