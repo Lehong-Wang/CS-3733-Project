@@ -114,13 +114,13 @@
             </HBox>
             <HBox prefHeight="158.0" prefWidth="1250.0">
                <children>
-                  <GridPane prefHeight="158.0" prefWidth="930.0">
+                  <GridPane prefHeight="158.0" prefWidth="825.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.5" minWidth="10.0" prefWidth="249.66867065429688" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.81353759765625" minWidth="0.0" prefWidth="34.384246826171875" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="188.00982666015625" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.098388671875" minWidth="10.0" prefWidth="147.49017333984375" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.098388671875" minWidth="10.0" prefWidth="294.91375732421875" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.81353759765625" minWidth="0.0" prefWidth="14.2811279296875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="176.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="176.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="176.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -131,17 +131,17 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <JFXButton onAction="#enableClientServer" prefHeight="26.0" prefWidth="219.0" styleClass="actionButton" text="Client / Server" GridPane.columnIndex="2">
+                        <JFXButton onAction="#enableClientServer" prefHeight="39.0" prefWidth="192.0" styleClass="actionButton" text="Client / Server" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onAction="#enableEmbedded" prefHeight="26.0" prefWidth="238.0" styleClass="actionButton" text="Embedded" GridPane.columnIndex="3">
+                        <JFXButton onAction="#enableEmbedded" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Embedded" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onAction="#enableCloud" prefHeight="26.0" prefWidth="238.0" styleClass="actionButton" text="Cloud" GridPane.columnIndex="4">
+                        <JFXButton onAction="#enableCloud" prefHeight="26.0" prefWidth="176.0" styleClass="actionButton" text="Cloud" GridPane.columnIndex="4" GridPane.halignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
