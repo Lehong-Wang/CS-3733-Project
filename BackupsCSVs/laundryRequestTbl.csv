@@ -1,0 +1,7 @@
+requestID,locationID,empInitiated,empCompleter,timeStart,timeEnd,patientID,requestType,requestStatus,notes,laundryID
+149,FDEPT00101,123,456,0,0,0,LaundryService,Submitted,,111
+150,FDEPT00201,456,456,0,0,0,LaundryService,In_Progress,,222
+151,FDEPT00301,123,666,0,0,0,LaundryService,Completed,,333
+152,FDEPT00401,777,456,0,0,0,LaundryService,Submitted,,444
+153,FDEPT00501,123,888,0,0,0,LaundryService,In_Progress,,555
+154,FDEPT00601,999,456,0,0,0,LaundryService,Submitted,,666
